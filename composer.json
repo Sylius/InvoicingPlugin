@@ -1,7 +1,7 @@
 {
-    "name": "sylius/plugin-skeleton",
+    "name": "sylius/invoicing-plugin",
     "type": "sylius-plugin",
-    "description": "Acme example plugin for Sylius.",
+    "description": "Invoicing plugin for Sylius.",
     "license": "MIT",
     "require": {
         "php": "^7.1",
@@ -29,8 +29,8 @@
     "prefer-stable": true,
     "autoload": {
         "psr-4": {
-            "Acme\\SyliusExamplePlugin\\": "src/",
-            "Tests\\Acme\\SyliusExamplePlugin\\": "tests/"
+            "Sylius\\InvoicingPlugin\\": "src/",
+            "Tests\\Sylius\\InvoicingPlugin\\": "tests/"
         }
     },
     "autoload-dev": {
