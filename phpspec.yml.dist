@@ -1,0 +1,4 @@
+suites:
+    main:
+        namespace: Acme\SyliusExamplePlugin
+        psr4_prefix: Acme\SyliusExamplePlugin

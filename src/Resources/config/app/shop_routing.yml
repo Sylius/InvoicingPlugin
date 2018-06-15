@@ -1,0 +1,11 @@
+acme_sylius_example_static_welcome:
+    path: /static-welcome/{name}
+    defaults:
+        _controller: AcmeSyliusExamplePlugin:Greeting:staticallyGreet
+        name: ~
+
+acme_sylius_example_dynamic_welcome:
+    path: /dynamic-welcome/{name}
+    defaults:
+        _controller: AcmeSyliusExamplePlugin:Greeting:dynamicallyGreet
+        name: ~
