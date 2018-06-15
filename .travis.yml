@@ -72,7 +72,7 @@ script:
 
     - bin/phpunit
     - bin/phpspec run
-    - bin/behat --strict -vvv --no-interaction || bin/behat --strict -vvv --no-interaction --rerun
+    - bin/behat -vvv --no-interaction || bin/behat -vvv --no-interaction --rerun
 
 after_failure:
     - vendor/lakion/mink-debug-extension/travis/tools/upload-textfiles "${SYLIUS_BUILD_DIR}/*.log"
