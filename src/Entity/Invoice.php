@@ -15,10 +15,14 @@ class Invoice
     /** @var string */
     private $orderId;
 
-    public function __construct(string $invoiceId, string $orderId)
+    /** @var \DateTimeInterface */
+    private $issuedAt;
+
+    public function __construct(string $invoiceId, string $orderId, \DateTimeInterface $issuedAt)
     {
         $this->invoiceId = $invoiceId;
         $this->orderId = $orderId;
+        $this->issuedAt = clone $issuedAt;
     }
 
     public function invoiceId(): string
@@ -29,5 +33,10 @@ class Invoice
     public function orderId(): string
     {
         return $this->orderId;
+    }
+
+    public function issuedAt(): \DateTimeInterface
+    {
+        return clone $this->issuedAt;
     }
 }

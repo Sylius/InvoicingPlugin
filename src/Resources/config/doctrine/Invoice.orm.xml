@@ -16,6 +16,7 @@
         <id name="invoiceId" column="invoice_id" type="string" />
 
         <field name="orderId" column="order_id" />
+        <field name="issuedAt" column="issued_at" type="date" />
 
         <indexes>
             <index columns="order_id" />
