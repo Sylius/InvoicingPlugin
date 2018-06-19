@@ -15,11 +15,11 @@
     <entity name="Sylius\InvoicingPlugin\Entity\Invoice" table="sylius_invoicing_plugin_invoice">
         <id name="id" column="id" type="string" />
 
-        <field name="orderId" column="order_id" />
+        <field name="orderNumber" column="order_number" />
         <field name="issuedAt" column="issued_at" type="date" />
 
         <indexes>
-            <index columns="order_id" />
+            <index columns="order_number" />
         </indexes>
     </entity>
 </doctrine-mapping>

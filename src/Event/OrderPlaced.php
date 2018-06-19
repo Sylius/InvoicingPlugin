@@ -4,27 +4,26 @@ declare(strict_types=1);
 
 namespace Sylius\InvoicingPlugin\Event;
 
-final class OrderPlaced
+use Prooph\Common\Messaging\DomainEvent;
+use Prooph\Common\Messaging\PayloadTrait;
+
+final class OrderPlaced extends DomainEvent
 {
-    /** @var string */
-    private $orderId;
+    use PayloadTrait;
 
-    /** @var \DateTimeInterface */
-    private $date;
-
-    public function __construct(string $orderId, \DateTimeInterface $date)
+    public function __construct(string $orderNumber, \DateTimeInterface $date)
     {
-        $this->orderId = $orderId;
-        $this->date = $date;
+        $this->init();
+        $this->setPayload(['order_number' => $orderNumber, 'date' => $date]);
     }
 
-    public function orderId(): string
+    public function orderNumber(): string
     {
-        return $this->orderId;
+        return $this->payload()['order_number'];
     }
 
     public function date(): \DateTimeInterface
     {
-        return $this->date;
+        return $this->payload()['date'];
     }
 }
