@@ -27,7 +27,11 @@ final class CreateInvoiceOnOrderPlacedListener
 
     public function __invoke(OrderPlaced $event): void
     {
-        $invoice = new Invoice($this->invoiceIdentifierGenerator->__invoke(), $event->orderId(), $event->date());
+        $invoice = new Invoice(
+            $this->invoiceIdentifierGenerator->__invoke($event->orderId()),
+            $event->orderId(),
+            $event->date()
+        );
 
         $this->invoiceRepository->add($invoice);
     }

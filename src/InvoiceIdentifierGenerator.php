@@ -6,5 +6,5 @@ namespace Sylius\InvoicingPlugin;
 
 interface InvoiceIdentifierGenerator
 {
-    public function __invoke(): string;
+    public function __invoke(string $orderId): string;
 }

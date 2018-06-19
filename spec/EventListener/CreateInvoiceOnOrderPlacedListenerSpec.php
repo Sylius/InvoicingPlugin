@@ -25,7 +25,7 @@ final class CreateInvoiceOnOrderPlacedListenerSpec extends ObjectBehavior
     ): void {
         $issuedAt = new \DateTimeImmutable('now');
 
-        $invoiceIdentifierGenerator->__invoke()->willReturn('007/1337');
+        $invoiceIdentifierGenerator->__invoke('007')->willReturn('007/1337');
 
         $invoiceRepository->add(new Invoice('007/1337', '007', $issuedAt))->shouldBeCalled();
 
