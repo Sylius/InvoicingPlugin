@@ -6,11 +6,21 @@
 
         <service id="Sylius\InvoicingPlugin\DateTimeProvider" class="Sylius\InvoicingPlugin\SystemDateTimeProvider" />
 
+        <service id="Sylius\InvoicingPlugin\Repository\InvoiceRepository" class="Sylius\InvoicingPlugin\Repository\DoctrineInvoiceRepository" />
+
+        <service id="Sylius\InvoicingPlugin\InvoiceIdentifierGenerator" class="Sylius\InvoicingPlugin\UuidInvoiceIdentifierGenerator" />
+
         <service id="sylius_invoicing.event_bus" alias="prooph_service_bus.sylius_invoicing_event_bus" />
 
         <service id="Sylius\InvoicingPlugin\EventListener\OrderPlacedProducer">
             <argument type="service" id="sylius_invoicing.event_bus" />
             <argument type="service" id="Sylius\InvoicingPlugin\DateTimeProvider" />
+        </service>
+
+        <service id="Sylius\InvoicingPlugin\EventListener\CreateInvoiceOnOrderPlacedListener">
+            <argument type="service" id="Sylius\InvoicingPlugin\Repository\InvoiceRepository" />
+            <argument type="service" id="Sylius\InvoicingPlugin\InvoiceIdentifierGenerator" />
+            <tag name="prooph_service_bus.sylius_invoicing_event_bus.route_target" />
         </service>
     </services>
 </container>

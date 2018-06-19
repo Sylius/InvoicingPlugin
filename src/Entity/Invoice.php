@@ -10,7 +10,7 @@ namespace Sylius\InvoicingPlugin\Entity;
 class Invoice
 {
     /** @var string */
-    private $invoiceId;
+    private $id;
 
     /** @var string */
     private $orderId;
@@ -18,16 +18,16 @@ class Invoice
     /** @var \DateTimeInterface */
     private $issuedAt;
 
-    public function __construct(string $invoiceId, string $orderId, \DateTimeInterface $issuedAt)
+    public function __construct(string $id, string $orderId, \DateTimeInterface $issuedAt)
     {
-        $this->invoiceId = $invoiceId;
+        $this->id = $id;
         $this->orderId = $orderId;
         $this->issuedAt = clone $issuedAt;
     }
 
-    public function invoiceId(): string
+    public function id(): string
     {
-        return $this->invoiceId;
+        return $this->id;
     }
 
     public function orderId(): string
