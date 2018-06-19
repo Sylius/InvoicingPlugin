@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Sylius\InvoicingPlugin\Repository;
 
+use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\EntityRepository;
 use Sylius\InvoicingPlugin\Entity\Invoice;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 
@@ -14,7 +14,7 @@ final class DoctrineInvoiceRepository implements InvoiceRepository
     /** @var EntityManagerInterface */
     private $entityManager;
 
-    /** @var EntityRepository */
+    /** @var ObjectRepository */
     private $entityRepository;
 
     public function __construct(EntityManagerInterface $entityManager)
@@ -25,7 +25,10 @@ final class DoctrineInvoiceRepository implements InvoiceRepository
 
     public function get(string $invoiceId): InvoiceInterface
     {
-        return $this->entityRepository->find($invoiceId);
+        /** @var InvoiceInterface $invoice */
+        $invoice = $this->entityRepository->find($invoiceId);
+
+        return $invoice;
     }
 
     public function add(InvoiceInterface $invoice): void

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Sylius\InvoicingPlugin\Ui\Menu;
 
+use Knp\Menu\ItemInterface;
 use Sylius\Bundle\UiBundle\Menu\Event\MenuBuilderEvent;
 
 final class AdminMenuListener
@@ -12,11 +13,13 @@ final class AdminMenuListener
     {
         $menu = $event->getMenu();
 
-        $menu
-            ->getChild('sales')
-                ->addChild('invoices', ['route' => 'sylius_invoicing_plugin_admin_invoice_index'])
-                    ->setLabel('sylius_invoicing_plugin.invoices')
-                    ->setLabelAttribute('icon', 'star') // TODO: Find out what icon to use lol
+        /** @var ItemInterface $salesMenu */
+        $salesMenu = $menu->getChild('sales');
+
+        $salesMenu
+            ->addChild('invoices', ['route' => 'sylius_invoicing_plugin_admin_invoice_index'])
+                ->setLabel('sylius_invoicing_plugin.invoices')
+                ->setLabelAttribute('icon', 'star') // TODO: Find out what icon to use lol
         ;
     }
 }
