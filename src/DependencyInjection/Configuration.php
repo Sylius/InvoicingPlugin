@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sylius\InvoicingPlugin\Symfony\DependencyInjection;
+namespace Sylius\InvoicingPlugin\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
