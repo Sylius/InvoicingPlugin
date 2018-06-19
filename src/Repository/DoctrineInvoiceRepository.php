@@ -11,7 +11,7 @@ use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 
 final class DoctrineInvoiceRepository implements InvoiceRepository
 {
-    /** @var EntityManagerInterface  */
+    /** @var EntityManagerInterface */
     private $entityManager;
 
     /** @var EntityRepository */

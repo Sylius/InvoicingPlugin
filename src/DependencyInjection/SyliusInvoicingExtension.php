@@ -101,7 +101,7 @@ final class SyliusInvoicingExtension extends AbstractResourceExtension implement
                             'type' => 'datetime',
                             'label' => 'sylius_invoicing_plugin.issued_at',
                             'sortable' => true,
-                        ]
+                        ],
                     ],
                     'filters' => [
                         'id' => [
