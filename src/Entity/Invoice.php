@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Sylius\InvoicingPlugin\Entity;
 
+use Sylius\Component\Resource\Model\ResourceInterface;
+
 /**
  * @final
  */
-class Invoice
+class Invoice implements InvoiceInterface, ResourceInterface
 {
     /** @var string */
     private $id;
@@ -23,6 +25,11 @@ class Invoice
         $this->id = $id;
         $this->orderNumber = $orderNumber;
         $this->issuedAt = clone $issuedAt;
+    }
+
+    public function getId(): string
+    {
+        return $this->id();
     }
 
     public function id(): string

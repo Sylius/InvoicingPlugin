@@ -1,0 +1,30 @@
+sylius_invoicing_plugin_invoice:
+    resource: |
+        alias: sylius_invoicing_plugin.invoice
+        section: admin
+        templates: SyliusAdminBundle:Crud
+        only: ['index']
+        grid: sylius_invoicing_plugin_invoice
+        permission: true
+        vars:
+            all:
+                subheader: sylius.ui.manage_invoices
+            index:
+                icon: star
+    type: sylius.resource
+
+sylius_invoicing_plugin_admin_invoice_show:
+    path: /invoices/{id}
+    methods: [GET]
+    defaults:
+        _controller: sylius_invoicing_plugin.controller.invoice:showAction
+        _sylius:
+            section: admin
+            permission: true
+            template: SyliusInvoicingPlugin:Invoice:show.html.twig
+
+sylius_invoicing_plugin_admin_invoice_download:
+    path: /invoices/{id}/download
+    methods: [GET]
+    defaults:
+        _controller: Sylius\InvoicingPlugin\Ui\Action\DownloadInvoiceAction

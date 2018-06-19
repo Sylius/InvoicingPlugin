@@ -2,3 +2,7 @@ sylius:
     resource: "../../../../vendor/sylius/sylius/app/config/routing.yml"
 
 # Put your own routes here
+
+sylius_invoicing_plugin:
+    resource: "@SyliusInvoicingPlugin/Resources/config/app/routing.yml"
+    prefix: /admin

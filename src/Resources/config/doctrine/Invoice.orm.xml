@@ -16,7 +16,7 @@
         <id name="id" column="id" type="string" />
 
         <field name="orderNumber" column="order_number" />
-        <field name="issuedAt" column="issued_at" type="date" />
+        <field name="issuedAt" column="issued_at" type="datetime" />
 
         <indexes>
             <index columns="order_number" />

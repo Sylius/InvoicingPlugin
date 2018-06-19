@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Sylius\InvoicingPlugin\Repository;
 
-use Sylius\InvoicingPlugin\Entity\Invoice;
+use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 
 interface InvoiceRepository
 {
-    public function add(Invoice $invoice): void;
+    public function get(string $invoiceId): InvoiceInterface;
+
+    public function add(InvoiceInterface $invoice): void;
 }

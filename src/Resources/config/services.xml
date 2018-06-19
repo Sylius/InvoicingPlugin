@@ -22,5 +22,15 @@
             <argument type="service" id="Sylius\InvoicingPlugin\InvoiceIdentifierGenerator" />
             <tag name="prooph_service_bus.sylius_invoicing_event_bus.route_target" message-detection="true" />
         </service>
+
+        <service id="Sylius\InvoicingPlugin\Ui\Menu\AdminMenuListener">
+            <tag name="kernel.event_listener" event="sylius.menu.admin.main" method="__invoke" />
+        </service>
+
+        <service id="Sylius\InvoicingPlugin\Ui\Action\DownloadInvoiceAction" public="true">
+            <argument type="service" id="Sylius\InvoicingPlugin\Repository\InvoiceRepository" />
+            <argument type="service" id="templating.engine.twig" />
+            <argument type="service" id="knp_snappy.pdf" />
+        </service>
     </services>
 </container>

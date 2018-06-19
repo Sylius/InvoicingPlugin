@@ -10,7 +10,8 @@
         "symfony/symfony": "^3.4|^4.1",
         "prooph/service-bus": "^6.2",
         "prooph/service-bus-symfony-bundle": "^0.7.0",
-        "ramsey/uuid": "^3.7"
+        "ramsey/uuid": "^3.7",
+        "knplabs/knp-snappy-bundle": "^1.5"
     },
     "require-dev": {
         "behat/behat": "^3.4",

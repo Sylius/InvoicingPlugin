@@ -19,6 +19,7 @@ final class AppKernel extends Kernel
             new \FOS\OAuthServerBundle\FOSOAuthServerBundle(), // Required by SyliusApiBundle
             new \Sylius\Bundle\AdminApiBundle\SyliusAdminApiBundle(),
 
+            new \Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
             new \Prooph\Bundle\ServiceBus\ProophServiceBusBundle(),
             new \Sylius\InvoicingPlugin\SyliusInvoicingPlugin(),
         ]);
