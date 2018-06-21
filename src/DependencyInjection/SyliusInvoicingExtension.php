@@ -13,9 +13,6 @@ use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 
 final class SyliusInvoicingExtension extends AbstractResourceExtension implements PrependExtensionInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function load(array $config, ContainerBuilder $container): void
     {
         $config = $this->processConfiguration($this->getConfiguration([], $container), $config);
@@ -67,9 +64,6 @@ final class SyliusInvoicingExtension extends AbstractResourceExtension implement
         ]);
     }
 
-    /**
-     * @param ContainerBuilder $container
-     */
     private function prependSyliusGrid(ContainerBuilder $container): void
     {
         if (!$container->hasExtension('sylius_grid')) {
@@ -89,28 +83,31 @@ final class SyliusInvoicingExtension extends AbstractResourceExtension implement
                     'fields' => [
                         'id' => [
                             'type' => 'string',
-                            'label' => 'sylius_invoicing_plugin.invoice_id',
+                            'label' => 'sylius_invoicing_plugin.ui.invoice_id',
                             'sortable' => true,
                         ],
                         'orderNumber' => [
-                            'type' => 'string',
-                            'label' => 'sylius_invoicing_plugin.order_number',
+                            'type' => 'twig',
+                            'label' => 'sylius_invoicing_plugin.ui.order_number',
+                            'options' => [
+                                'template' => '@SyliusInvoicingPlugin/Invoice/Grid/Field/orderNumber.html.twig',
+                            ],
                             'sortable' => true,
                         ],
                         'issuedAt' => [
                             'type' => 'datetime',
-                            'label' => 'sylius_invoicing_plugin.issued_at',
+                            'label' => 'sylius_invoicing_plugin.ui.issued_at',
                             'sortable' => true,
                         ],
                     ],
                     'filters' => [
                         'id' => [
                             'type' => 'string',
-                            'label' => 'sylius_invoicing_plugin.invoice_id',
+                            'label' => 'sylius_invoicing_plugin.ui.invoice_id',
                         ],
                         'orderNumber' => [
                             'type' => 'string',
-                            'label' => 'sylius_invoicing_plugin.order_number',
+                            'label' => 'sylius_invoicing_plugin.ui.order_number',
                         ],
                     ],
                     'actions' => [
@@ -120,7 +117,7 @@ final class SyliusInvoicingExtension extends AbstractResourceExtension implement
                             ],
                             'download' => [
                                 'type' => 'show',
-                                'label' => 'sylius_invoicing_plugin.download_invoice',
+                                'label' => 'sylius_invoicing_plugin.ui.download_invoice',
                                 'options' => [
                                     'link' => [
                                         'route' => 'sylius_invoicing_plugin_admin_invoice_download',

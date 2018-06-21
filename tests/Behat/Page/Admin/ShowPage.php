@@ -20,10 +20,7 @@ final class ShowPage extends SymfonyPage implements ShowPageInterface
         return 'sylius_invoicing_plugin_admin_invoice_show';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function getDefinedElements()
+    protected function getDefinedElements(): array
     {
         return array_merge(parent::getDefinedElements(), [
             'issued_at' => '#invoice-issued-at',

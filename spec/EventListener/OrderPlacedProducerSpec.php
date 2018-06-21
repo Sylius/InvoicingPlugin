@@ -32,6 +32,6 @@ final class OrderPlacedProducerSpec extends ObjectBehavior
             return $event->payload() === (new OrderPlaced('123', $date))->payload();
         }))->shouldBeCalled();
 
-        $this->__invoke($order);
+        $this($order);
     }
 }
