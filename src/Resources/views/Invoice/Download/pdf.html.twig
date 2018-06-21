@@ -1,0 +1,7 @@
+<html lang="en">
+    <body>
+        <h1>{{ invoice.id }}</h1>
+        <p>{{ 'sylius_invoicing_plugin.order_number'|trans }}: {{ invoice.orderNumber }}</p>
+        <p>{{ 'sylius_invoicing_plugin.issued_at'|trans }}: {{ invoice.issuedAt|date('Y-m-d H:i:s') }}</p>
+    </body>
+</html>

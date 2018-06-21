@@ -2,6 +2,17 @@
 
 <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
-        <!-- Put your Behat services here -->
+        <service id="Tests\Sylius\InvoicingPlugin\Behat\Context\Ui\Admin\ManagingInvoicesContext" public="true">
+            <argument type="service" id="Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\IndexPageInterface" />
+            <argument type="service" id="Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\ShowPageInterface" />
+            <tag name="fob.context_service" />
+        </service>
+
+        <service id="Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\IndexPageInterface" class="Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\IndexPage"
+                 parent="sylius.behat.page.admin.crud.index">
+            <argument type="string">sylius_invoicing_plugin_admin_invoice_index</argument>
+        </service>
+
+        <service id="Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\ShowPageInterface" class="Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\ShowPage" parent="sylius.behat.symfony_page" />
     </services>
 </container>

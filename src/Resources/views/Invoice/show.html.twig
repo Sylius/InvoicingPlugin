@@ -1,0 +1,14 @@
+
+{% extends 'SyliusAdminBundle::layout.html.twig' %}
+
+{% block title %}{{ 'sylius.ui.invoice'|trans ~ ' ' ~ invoice.id }} {{ parent() }}{% endblock %}
+
+{% block content %}
+    <div class="ui stackable two column grid">
+        <div class="ten wide column">
+            {% include '@SyliusInvoicingPlugin/Invoice/Show/_header.html.twig' %}
+        </div>
+    </div>
+
+    {% include '@SyliusInvoicingPlugin/Invoice/Show/_breadcrumb.html.twig' %}
+{% endblock %}

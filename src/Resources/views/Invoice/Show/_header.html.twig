@@ -1,0 +1,16 @@
+<h1 class="ui header">
+    <i class="circular star icon"></i>
+    <div class="content">
+        {{ 'sylius_invoicing_plugin.invoice'|trans }} {{ invoice.id }}
+        <div class="sub header">
+            <div class="ui horizontal divided list">
+                <div class="item">
+                    {{ 'sylius_invoicing_plugin.issued_at'|trans }}: <span id="invoice-issued-at">{{ invoice.issuedAt|format_datetime }}</span>
+                </div>
+                <div class="item">
+                    {{ 'sylius_invoicing_plugin.issued_for_order'|trans }}: {{ invoice.orderNumber }}
+                </div>
+            </div>
+        </div>
+    </div>
+</h1>
