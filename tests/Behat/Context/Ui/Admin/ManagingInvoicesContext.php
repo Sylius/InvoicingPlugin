@@ -7,6 +7,7 @@ namespace Tests\Sylius\InvoicingPlugin\Behat\Context\Ui\Admin;
 use Behat\Behat\Context\Context;
 use Sylius\Component\Core\Model\OrderInterface;
 use Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\IndexPageInterface;
+use Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\OrderShowPageInterface;
 use Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\ShowPageInterface;
 use Webmozart\Assert\Assert;
 
@@ -60,6 +61,14 @@ final class ManagingInvoicesContext implements Context
         Assert::true(
             ((new \DateTimeImmutable('now'))->getTimestamp() - $this->showPage->getIssuedAtDate()->getTimestamp()) <= 3600
         );
+    }
+
+    /**
+     * @Then I should see an invoice related to this order
+     */
+    public function shouldSeeAnInvoiceRelatedToTheOrder(): void
+    {
+        Assert::true($this->orderPage->hasRelatedInvoices(1));
     }
 
     /**

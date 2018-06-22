@@ -5,6 +5,7 @@
         <service id="Tests\Sylius\InvoicingPlugin\Behat\Context\Ui\Admin\ManagingInvoicesContext" public="true">
             <argument type="service" id="Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\IndexPageInterface" />
             <argument type="service" id="Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\ShowPageInterface" />
+            <argument type="service" id="Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\OrderShowPageInterface" />
             <tag name="fob.context_service" />
         </service>
 
@@ -16,5 +17,6 @@
         <service id="Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\ShowPageInterface" class="Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\ShowPage" parent="sylius.behat.symfony_page">
             <argument type="service" id="sylius.behat.table_accessor" />
         </service>
+        <service id="Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\OrderShowPageInterface" class="Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\OrderShowPage" parent="sylius.behat.symfony_page" />
     </services>
 </container>

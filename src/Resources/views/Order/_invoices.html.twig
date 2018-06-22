@@ -1,0 +1,8 @@
+<div class="ui segment" id="order-invoices">
+    <h3 class="ui dividing header" id="shipping-state">{{ 'sylius_invoicing_plugin.ui.invoices'|trans }}</h3>
+    <div class="ui relaxed divided list" id="sylius-order-invoices">
+        {% for invoice in invoices %}
+            {#{% include '@SyliusAdmin/Order/Show/_shipment.html.twig' %} todo#}
+        {% endfor %}
+    </div>
+</div>

@@ -9,3 +9,4 @@ sylius_invoicing_plugin:
         issued_for_order: 'Issued for order'
         manage_invoices: 'Manage invoices'
         order_number: 'Order number'
+        invoices: 'Invoices'

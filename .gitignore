@@ -9,3 +9,6 @@
 !/etc/build/.gitkeep
 
 /tests/Application/yarn.lock
+
+.idea/
+/tests/Application/.web-server-pid
