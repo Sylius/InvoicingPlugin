@@ -2,7 +2,7 @@
 
 {% set breadcrumbs = [
     { label: 'sylius.ui.administration'|trans, url: path('sylius_admin_dashboard') },
-    { label: 'sylius_invoicing_plugin.invoices'|trans, url: path('sylius_invoicing_plugin_admin_invoice_index') },
+    { label: 'sylius_invoicing_plugin.ui.invoices'|trans, url: path('sylius_invoicing_plugin_admin_invoice_index') },
     { label: invoice.id, url: path('sylius_invoicing_plugin_admin_invoice_show', { 'id': invoice.id }) }
 ]
 %}

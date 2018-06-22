@@ -29,6 +29,6 @@ final class CreateInvoiceOnOrderPlacedListenerSpec extends ObjectBehavior
 
         $invoiceRepository->add(new Invoice('007/1337', '007', $issuedAt))->shouldBeCalled();
 
-        $this->__invoke(new OrderPlaced('007', $issuedAt));
+        $this(new OrderPlaced('007', $issuedAt));
     }
 }
