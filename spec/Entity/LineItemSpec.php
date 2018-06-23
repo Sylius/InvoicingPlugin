@@ -18,7 +18,9 @@ final class LineItemSpec extends ObjectBehavior
             5000,
             10000,
             300,
-            10300
+            10300,
+            'Blue',
+            '7903c83a-4c5e-4bcf-81d8-9dc304c6a353'
         );
     }
 
@@ -34,17 +36,6 @@ final class LineItemSpec extends ObjectBehavior
 
     function it_has_proper_line_item_data(): void
     {
-        $this->beConstructedWith(
-            'Mjolnir',
-            2,
-            5000,
-            10000,
-            300,
-            10300,
-            'Blue',
-            '7903c83a-4c5e-4bcf-81d8-9dc304c6a353'
-        );
-
         $this->name()->shouldReturn('Mjolnir');
         $this->quantity()->shouldReturn(2);
         $this->unitPrice()->shouldReturn(5000);

@@ -18,7 +18,10 @@ final class BillingDataSpec extends ObjectBehavior
             'US',
             'Foo Street 3/44',
             'New York',
-            '24154'
+            '24154',
+            'IE',
+            'Utah',
+            'Company Ltd.'
         );
     }
 
@@ -34,18 +37,6 @@ final class BillingDataSpec extends ObjectBehavior
 
     function it_has_proper_billing_data(): void
     {
-        $this->beConstructedWith(
-            'John',
-            'Doe',
-            'US',
-            'Foo Street 3/44',
-            'New York',
-            '24154',
-            'IE',
-            'Utah',
-            'Company Ltd.'
-        );
-
         $this->firstName()->shouldReturn('John');
         $this->lastName()->shouldReturn('Doe');
         $this->countryCode()->shouldReturn('US');
