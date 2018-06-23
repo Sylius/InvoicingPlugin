@@ -13,6 +13,8 @@
             <argument type="string">sylius_invoicing_plugin_admin_invoice_index</argument>
         </service>
 
-        <service id="Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\ShowPageInterface" class="Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\ShowPage" parent="sylius.behat.symfony_page" />
+        <service id="Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\ShowPageInterface" class="Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\ShowPage" parent="sylius.behat.symfony_page">
+            <argument type="service" id="sylius.behat.table_accessor" />
+        </service>
     </services>
 </container>

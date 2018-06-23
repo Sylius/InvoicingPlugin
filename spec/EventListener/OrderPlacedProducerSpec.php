@@ -18,7 +18,7 @@ final class OrderPlacedProducerSpec extends ObjectBehavior
         $this->beConstructedWith($eventBus, $dateTimeProvider);
     }
 
-    function it_dispatches_an_order_placed_event_for_an_order_with_string_number(
+    function it_dispatches_an_order_placed_event_for_an_order(
         EventBus $eventBus,
         DateTimeProvider $dateTimeProvider,
         OrderInterface $order
@@ -26,11 +26,13 @@ final class OrderPlacedProducerSpec extends ObjectBehavior
         $date = new \DateTimeImmutable('now');
 
         $dateTimeProvider->__invoke()->willReturn($date);
-        $order->getNumber()->willReturn('123');
 
-        $eventBus->dispatch(Argument::that(function (OrderPlaced $event) use ($date): bool {
-            return $event->payload() === (new OrderPlaced('123', $date))->payload();
-        }))->shouldBeCalled();
+        $eventBus
+            ->dispatch(Argument::that(function (OrderPlaced $event) use ($order, $date): bool {
+                return $event->payload() === (new OrderPlaced($order->getWrappedObject(), $date))->payload();
+            }))
+            ->shouldBeCalled()
+        ;
 
         $this($order);
     }

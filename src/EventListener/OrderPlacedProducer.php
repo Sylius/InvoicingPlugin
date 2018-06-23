@@ -25,6 +25,6 @@ final class OrderPlacedProducer
 
     public function __invoke(OrderInterface $order): void
     {
-        $this->eventBus->dispatch(new OrderPlaced($order->getNumber(), $this->dateTimeProvider->__invoke()));
+        $this->eventBus->dispatch(new OrderPlaced($order, $this->dateTimeProvider->__invoke()));
     }
 }
