@@ -65,6 +65,8 @@ final class InvoiceGenerator implements InvoiceGeneratorInterface
 
         /** @var OrderItemInterface $orderItem */
         foreach ($orderItems as $orderItem) {
+            $variant = $orderItem->getVariant();
+
             $lineItems->add(new LineItem(
                 $orderItem->getProductName(),
                 $orderItem->getQuantity(),
@@ -73,7 +75,7 @@ final class InvoiceGenerator implements InvoiceGeneratorInterface
                 $orderItem->getTaxTotal(),
                 $orderItem->getTotal(),
                 $orderItem->getVariantName(),
-                $orderItem->getVariant()->getCode()
+                $variant !== null ? $variant->getCode() : null
             ));
         }
 

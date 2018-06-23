@@ -18,7 +18,6 @@ Feature: Seeing basic information about an invoice
         And the customer chose "UPS" shipping method with "Cash on Delivery" payment
         And I am logged in as an administrator
 
-    @todo
     Scenario: Seeing basic information about an invoice
         When I view the summary of the invoice for order "#00000666"
         Then it should be issued in the last hour

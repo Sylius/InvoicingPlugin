@@ -1,4 +1,6 @@
-{% extends 'SyliusAdminBundle::layout.html.twig' %}
+{% extends '@SyliusAdmin/layout.html.twig' %}
+
+{% import '@SyliusAdmin/Common/Macro/money.html.twig' as money %}
 
 {% block title %}{{ 'sylius.ui.invoice'|trans ~ ' ' ~ invoice.id }} {{ parent() }}{% endblock %}
 
@@ -10,4 +12,63 @@
     </div>
 
     {% include '@SyliusInvoicingPlugin/Invoice/Show/_breadcrumb.html.twig' %}
+
+    <div class="ui stackable segment grid">
+        <div class="twelve wide column">
+            <table class="ui celled compact small table fixed">
+                <thead>
+                <tr>
+                    <th class="four wide sylius-table-column-name">{{ 'sylius.ui.name'|trans }}</th>
+                    <th class="four wide sylius-table-column-code">{{ 'sylius.ui.code'|trans }}</th>
+                    <th class="sylius-table-column-unit_price">{{ 'sylius.ui.unit_price'|trans }}</th>
+                    <th class="sylius-table-column-quantity">{{ 'sylius.ui.quantity'|trans }}</th>
+                    <th class="sylius-table-column-subtotal">{{ 'sylius.ui.subtotal'|trans }}</th>
+                    <th class="sylius-table-column-tax_total">{{ 'sylius.ui.tax_total'|trans }}</th>
+                    <th class="sylius-table-column-total">{{ 'sylius.ui.total'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in invoice.lineItems %}
+                    <tr>
+                        <td class="single line line-item-name">
+                            {{ item.name }} {% if item.variantName is not null %}({{ item.variantName }}){% endif %}
+                        </td>
+                        <td class="single line line-item-code">
+                            {{ item.variantCode }}
+                        </td>
+                        <td class="right aligned line-item-unit-price">
+                            {{ money.format(item.unitPrice, invoice.currencyCode) }}
+                        </td>
+                        <td class="right aligned line-item-quantity">
+                            {{ item.quantity }}
+                        </td>
+                        <td class="right aligned line-item-subtotal">
+                            {{ money.format(item.subtotal, invoice.currencyCode) }}
+                        </td>
+                        <td class="right aligned line-item-tax-total">
+                            {{ money.format(item.taxTotal, invoice.currencyCode) }}
+                        </td>
+                        <td class="right aligned line-item-total">
+                            {{ money.format(item.total, invoice.currencyCode) }}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th colspan="5"></th>
+                    <th id="invoice-tax-total" class="right aligned">
+                        {{ money.format(invoice.taxTotal, invoice.currencyCode) }}
+                    </th>
+                    <th id="invoice-total" class="right aligned">
+                        <strong>{{ money.format(invoice.total, invoice.currencyCode) }}</strong>
+                    </th>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+        <div class="four wide column">
+            {% include '@SyliusInvoicingPlugin/Invoice/Show/_billingData.html.twig' %}
+        </div>
+    </div>
 {% endblock %}
