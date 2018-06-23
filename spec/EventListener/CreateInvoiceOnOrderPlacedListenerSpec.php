@@ -5,30 +5,33 @@ declare(strict_types=1);
 namespace spec\Sylius\InvoicingPlugin\EventListener;
 
 use PhpSpec\ObjectBehavior;
-use Sylius\InvoicingPlugin\Entity\Invoice;
+use Sylius\Component\Core\Model\OrderInterface;
+use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Sylius\InvoicingPlugin\Event\OrderPlaced;
-use Sylius\InvoicingPlugin\InvoiceIdentifierGenerator;
+use Sylius\InvoicingPlugin\Generator\InvoiceGeneratorInterface;
 use Sylius\InvoicingPlugin\Repository\InvoiceRepository;
 
 final class CreateInvoiceOnOrderPlacedListenerSpec extends ObjectBehavior
 {
     function let(
         InvoiceRepository $invoiceRepository,
-        InvoiceIdentifierGenerator $invoiceIdentifierGenerator
+        InvoiceGeneratorInterface $invoiceGenerator
     ): void {
-        $this->beConstructedWith($invoiceRepository, $invoiceIdentifierGenerator);
+        $this->beConstructedWith($invoiceRepository, $invoiceGenerator);
     }
 
     function it_creates_an_invoice(
         InvoiceRepository $invoiceRepository,
-        InvoiceIdentifierGenerator $invoiceIdentifierGenerator
+        InvoiceGeneratorInterface $invoiceGenerator,
+        OrderInterface $order,
+        InvoiceInterface $invoice
     ): void {
         $issuedAt = new \DateTimeImmutable('now');
 
-        $invoiceIdentifierGenerator->__invoke('007')->willReturn('007/1337');
+        $invoiceGenerator->generateForOrder($order, $issuedAt)->willReturn($invoice);
 
-        $invoiceRepository->add(new Invoice('007/1337', '007', $issuedAt))->shouldBeCalled();
+        $invoiceRepository->add($invoice)->shouldBeCalled();
 
-        $this(new OrderPlaced('007', $issuedAt));
+        $this(new OrderPlaced($order->getWrappedObject(), $issuedAt));
     }
 }

@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace Sylius\InvoicingPlugin\EventListener;
 
-use Sylius\InvoicingPlugin\Entity\Invoice;
 use Sylius\InvoicingPlugin\Event\OrderPlaced;
-use Sylius\InvoicingPlugin\InvoiceIdentifierGenerator;
+use Sylius\InvoicingPlugin\Generator\InvoiceGeneratorInterface;
 use Sylius\InvoicingPlugin\Repository\InvoiceRepository;
 
 final class CreateInvoiceOnOrderPlacedListener
@@ -14,24 +13,20 @@ final class CreateInvoiceOnOrderPlacedListener
     /** @var InvoiceRepository */
     private $invoiceRepository;
 
-    /** @var InvoiceIdentifierGenerator */
-    private $invoiceIdentifierGenerator;
+    /** @var InvoiceGeneratorInterface */
+    private $invoiceGenerator;
 
     public function __construct(
         InvoiceRepository $invoiceRepository,
-        InvoiceIdentifierGenerator $invoiceIdentifierGenerator
+        InvoiceGeneratorInterface $invoiceGenerator
     ) {
         $this->invoiceRepository = $invoiceRepository;
-        $this->invoiceIdentifierGenerator = $invoiceIdentifierGenerator;
+        $this->invoiceGenerator = $invoiceGenerator;
     }
 
     public function __invoke(OrderPlaced $event): void
     {
-        $invoice = new Invoice(
-            $this->invoiceIdentifierGenerator->__invoke($event->orderNumber()),
-            $event->orderNumber(),
-            $event->date()
-        );
+        $invoice = $this->invoiceGenerator->generateForOrder($event->order(), $event->date());
 
         $this->invoiceRepository->add($invoice);
     }
