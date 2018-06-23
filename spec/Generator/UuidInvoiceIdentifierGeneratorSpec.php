@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace spec\Sylius\InvoicingPlugin;
+namespace spec\Sylius\InvoicingPlugin\Generator;
 
 use PhpSpec\ObjectBehavior;
-use Sylius\InvoicingPlugin\InvoiceIdentifierGenerator;
+use Sylius\InvoicingPlugin\Generator\InvoiceIdentifierGenerator;
 
 final class UuidInvoiceIdentifierGeneratorSpec extends ObjectBehavior
 {
