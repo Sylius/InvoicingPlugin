@@ -1,7 +1,75 @@
+{% import '@SyliusAdmin/Common/Macro/money.html.twig' as money %}
+
 <html lang="en">
     <body>
-        <h1>{{ invoice.id }}</h1>
+        <h1>{{ 'sylius_invoicing_plugin.ui.invoice'|trans }} {{ invoice.id }}</h1>
         <p>{{ 'sylius_invoicing_plugin.ui.order_number'|trans }}: {{ invoice.orderNumber }}</p>
         <p>{{ 'sylius_invoicing_plugin.ui.issued_at'|trans }}: {{ invoice.issuedAt|date('Y-m-d H:i:s') }}</p>
+
+        <br /><br />
+
+        <address>
+            <strong>{{ invoice.billingData.firstName }} {{ invoice.billingData.lastName }}</strong>
+            {% if invoice.billingData.company %}
+                {{ invoice.billingData.company }}<br/>
+            {% endif %}
+            {{ invoice.billingData.street }}<br/>
+            {{ invoice.billingData.city }}<br/>
+            {{ invoice.billingData.countryCode|sylius_country_name|upper }} {{ invoice.billingData.postcode }}
+        </address>
+
+        <br /><br />
+
+        <table>
+            <thead>
+            <tr>
+                <th>{{ 'sylius.ui.name'|trans }}</th>
+                <th>{{ 'sylius.ui.code'|trans }}</th>
+                <th>{{ 'sylius.ui.unit_price'|trans }}</th>
+                <th>{{ 'sylius.ui.quantity'|trans }}</th>
+                <th>{{ 'sylius.ui.subtotal'|trans }}</th>
+                <th>{{ 'sylius.ui.tax_total'|trans }}</th>
+                <th>{{ 'sylius.ui.total'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in invoice.lineItems %}
+                <tr>
+                    <td>
+                        {{ item.name }} {% if item.variantName is not null %}({{ item.variantName }}){% endif %}
+                    </td>
+                    <td>
+                        {{ item.variantCode }}
+                    </td>
+                    <td>
+                        {{ money.format(item.unitPrice, invoice.currencyCode) }}
+                    </td>
+                    <td>
+                        {{ item.quantity }}
+                    </td>
+                    <td>
+                        {{ money.format(item.subtotal, invoice.currencyCode) }}
+                    </td>
+                    <td>
+                        {{ money.format(item.taxTotal, invoice.currencyCode) }}
+                    </td>
+                    <td>
+                        {{ money.format(item.total, invoice.currencyCode) }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+            <tfoot>
+            <tr>
+                <th colspan="5"></th>
+                <th>
+                    {{ money.format(invoice.taxTotal, invoice.currencyCode) }}
+                </th>
+                <th>
+                    <strong>{{ money.format(invoice.total, invoice.currencyCode) }}</strong>
+                </th>
+            </tr>
+            </tfoot>
+        </table>
     </body>
 </html>
