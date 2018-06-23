@@ -18,16 +18,3 @@ Feature: Browsing invoices
     Scenario: Seeing a new invoice in the list
         When I browse invoices
         Then I should see a single invoice for order "#00000022"
-
-    @ui
-    Scenario: Seeing a new invoice related to the order
-        When I browse orders
-        And I view the summary of the order "#00000022"
-        Then I should see an invoice related to this order
-
-    @ui
-    Scenario: Seeing invoice details when clicking its id on order view
-        Given I browse orders
-        And I view the summary of the order "#00000022"
-        When I click on first invoice's id
-        Then I should see the summary of the invoice for order "#00000022"

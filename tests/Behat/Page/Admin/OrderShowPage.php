@@ -20,9 +20,6 @@ final class OrderShowPage extends SymfonyPage implements OrderShowPageInterface
         $this->getSession()->getPage()->clickLink($invoice->findAll('css', 'td')[0]->getText());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getRouteName()
     {
         return 'sylius_admin_order_show';
@@ -32,7 +29,8 @@ final class OrderShowPage extends SymfonyPage implements OrderShowPageInterface
     {
         return $this->getSession()
             ->getPage()
-            ->find('css', '#orderInvoices')
-            ->findAll('css', 'tr');
+            ->find('css', '#order-invoices')
+            ->findAll('css', 'tr')
+        ;
     }
 }

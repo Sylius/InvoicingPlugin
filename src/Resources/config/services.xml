@@ -37,7 +37,7 @@
             <argument type="service" id="knp_snappy.pdf" />
         </service>
         
-        <service id="Sylius\InvoicingPlugin\EventListener\AdminOrderShowAfterSummaryEventListener">
+        <service id="Sylius\Bundle\UiBundle\Block\BlockEventListener">
             <argument>@SyliusInvoicingPlugin/Order/fetchInvoices.html.twig</argument>
             <tag name="kernel.event_listener" event="sonata.block.event.sylius.admin.order.show.after_summary" method="onBlockEvent" />
         </service>

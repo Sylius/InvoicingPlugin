@@ -29,8 +29,8 @@ sylius_invoicing_plugin_admin_invoice_download:
     defaults:
         _controller: Sylius\InvoicingPlugin\Ui\Action\DownloadInvoiceAction
 
-sylius_invoicing_plugin_admin_order_invoices:
-    path: /invoices/{orderNumber}/
+sylius_invoicing_plugin_admin_order_invoices_partial:
+    path: /_partial/invoices/{orderNumber}/
     methods: [GET]
     defaults:
         _controller: sylius_invoicing_plugin.controller.invoice:indexAction
