@@ -9,4 +9,6 @@ use Sylius\Behat\Page\SymfonyPageInterface;
 interface OrderShowPageInterface extends SymfonyPageInterface
 {
     public function hasRelatedInvoices(int $count): bool;
+
+    public function clickOnFirstInvoiceId(): void;
 }

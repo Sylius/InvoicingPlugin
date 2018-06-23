@@ -16,13 +16,17 @@ final class ManagingInvoicesContext implements Context
     /** @var IndexPageInterface */
     private $indexPage;
 
-    /** @var ShowPageInterface */
-    private $showPage;
+    /** @var OrderShowPageInterface */
+    private $orderPage;
 
-    public function __construct(IndexPageInterface $indexPage, ShowPageInterface $showPage)
-    {
+    public function __construct(
+        IndexPageInterface $indexPage,
+        ShowPageInterface $showPage,
+        OrderShowPageInterface $orderPage
+    ) {
         $this->indexPage = $indexPage;
         $this->showPage = $showPage;
+        $this->orderPage = $orderPage;
     }
 
     /**
@@ -43,6 +47,7 @@ final class ManagingInvoicesContext implements Context
 
     /**
      * @When I view the summary of the invoice for order :order
+     * @Then I should see the summary of the invoice for order :order
      */
     public function viewSummaryOfInvoiceForOrder(OrderInterface $order): void
     {
@@ -69,6 +74,14 @@ final class ManagingInvoicesContext implements Context
     public function shouldSeeAnInvoiceRelatedToTheOrder(): void
     {
         Assert::true($this->orderPage->hasRelatedInvoices(1));
+    }
+
+    /**
+     * @When I click on first invoice's id
+     */
+    public function clickOnFirstInvoiceId(): void
+    {
+        $this->orderPage->clickOnFirstInvoiceId();
     }
 
     /**
