@@ -28,3 +28,14 @@ sylius_invoicing_plugin_admin_invoice_download:
     methods: [GET]
     defaults:
         _controller: Sylius\InvoicingPlugin\Ui\Action\DownloadInvoiceAction
+
+sylius_invoicing_plugin_admin_order_invoices_partial:
+    path: /_partial/invoices/{orderNumber}/
+    methods: [GET]
+    defaults:
+        _controller: sylius_invoicing_plugin.controller.invoice:indexAction
+        _sylius:
+            template: $template
+            repository:
+                method: findByOrderNumber
+                arguments: $orderNumber

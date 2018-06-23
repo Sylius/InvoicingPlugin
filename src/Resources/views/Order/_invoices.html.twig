@@ -1,0 +1,23 @@
+<div class="ui segment" id="order-invoices">
+    <h3 class="ui dividing header" id="shipping-state">{{ 'sylius_invoicing_plugin.ui.invoices'|trans }}</h3>
+    <table class="ui celled compact small table fixed">
+        <thead>
+        <tr>
+            <th class="center aligned">{{ 'sylius_invoicing_plugin.ui.invoice_id'|trans }}</th>
+            <th class="center aligned">{{ 'sylius_invoicing_plugin.ui.issued_at'|trans }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for invoice in invoices %}
+            <tr>
+                <td class="center aligned">
+                    <a href="{{ path('sylius_invoicing_plugin_admin_invoice_show', {'id': invoice.id}) }}" >{{ invoice.id }}</a>
+                </td>
+                <td class="center aligned">
+                    {{ invoice.issuedAt|date('d-m-Y') }}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
