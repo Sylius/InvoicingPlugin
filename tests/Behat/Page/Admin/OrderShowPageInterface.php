@@ -11,4 +11,8 @@ interface OrderShowPageInterface extends SymfonyPageInterface
     public function hasRelatedInvoices(int $count): bool;
 
     public function clickOnFirstInvoiceId(): void;
+
+    public function downloadFirstInvoice(): void;
+
+    public function isPdfFileDownloaded(): bool;
 }

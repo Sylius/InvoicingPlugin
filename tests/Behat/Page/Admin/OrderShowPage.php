@@ -4,10 +4,16 @@ declare(strict_types=1);
 
 namespace Tests\Sylius\InvoicingPlugin\Behat\Page\Admin;
 
+use Behat\Mink\Element\NodeElement;
 use Sylius\Behat\Page\SymfonyPage;
 
 final class OrderShowPage extends SymfonyPage implements OrderShowPageInterface
 {
+    public function getRouteName()
+    {
+        return 'sylius_admin_order_show';
+    }
+
     public function hasRelatedInvoices(int $count): bool
     {
         return count($this->getInvoiceList()) === $count + 1;
@@ -15,22 +21,44 @@ final class OrderShowPage extends SymfonyPage implements OrderShowPageInterface
 
     public function clickOnFirstInvoiceId(): void
     {
-        $invoice = $this->getInvoiceList()[1];
+        $invoice = $this->getFirstInvoice();
+        $invoiceId = $invoice->findAll('css', 'td')[0]->getText();
 
-        $this->getSession()->getPage()->clickLink($invoice->findAll('css', 'td')[0]->getText());
+        $invoice->clickLink($invoiceId);
     }
 
-    public function getRouteName()
+    public function downloadFirstInvoice(): void
     {
-        return 'sylius_admin_order_show';
+        $invoice = $this->getFirstInvoice();
+        $invoice->clickLink('Download invoice');
+    }
+
+    public function isPdfFileDownloaded(): bool
+    {
+        $session = $this->getSession();
+        $headers = $session->getResponseHeaders();
+
+        if (200 === $session->getStatusCode() && 'application/pdf' === $headers['content-type'][0]) {
+            return true;
+        }
+
+        return false;
+    }
+
+    protected function getDefinedElements(): array
+    {
+        return array_merge(parent::getDefinedElements(), [
+            'invoices' => '#order-invoices',
+        ]);
+    }
+
+    private function getFirstInvoice(): NodeElement
+    {
+        return $this->getInvoiceList()[1];
     }
 
     private function getInvoiceList(): array
     {
-        return $this->getSession()
-            ->getPage()
-            ->find('css', '#order-invoices')
-            ->findAll('css', 'tr')
-        ;
+        return $this->getElement('invoices')->findAll('css', 'tr');
     }
 }

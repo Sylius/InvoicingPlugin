@@ -16,6 +16,9 @@ final class ManagingInvoicesContext implements Context
     /** @var IndexPageInterface */
     private $indexPage;
 
+    /** @var ShowPageInterface */
+    private $showPage;
+
     /** @var OrderShowPageInterface */
     private $orderPage;
 
@@ -85,6 +88,14 @@ final class ManagingInvoicesContext implements Context
     }
 
     /**
+     * @When I click on first invoice's download button
+     */
+    public function iClickOnFirstInvoiceDownloadButton(): void
+    {
+        $this->orderPage->downloadFirstInvoice();
+    }
+
+    /**
      * @Then it should have billing data as :customerName, :street, :postcode :city, :countryName
      */
     public function itShouldHaveBillingDataAs(
@@ -145,5 +156,13 @@ final class ManagingInvoicesContext implements Context
     public function itsTotalShouldBe(string $total): void
     {
         Assert::same($this->showPage->getTotal(), $total);
+    }
+
+    /**
+     * @Then the pdf file for this invoice should be downloaded successfully
+     */
+    public function thePdfFileForThisInvoiceShouldBeDownloadedSuccessfully(): void
+    {
+        Assert::true($this->orderPage->isPdfFileDownloaded());
     }
 }
