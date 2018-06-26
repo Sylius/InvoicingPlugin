@@ -116,8 +116,9 @@ final class SyliusInvoicingExtension extends AbstractResourceExtension implement
                                 'type' => 'show',
                             ],
                             'download' => [
-                                'type' => 'show',
+                                'type' => 'default',
                                 'label' => 'sylius_invoicing_plugin.ui.download_invoice',
+                                'icon' => 'download',
                                 'options' => [
                                     'link' => [
                                         'route' => 'sylius_invoicing_plugin_admin_invoice_download',
