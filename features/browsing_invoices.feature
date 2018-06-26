@@ -1,4 +1,4 @@
-@managing_invoices
+@managing_invoices @ui
 Feature: Browsing invoices
     In order to process invoices
     As an Administrator
@@ -14,7 +14,6 @@ Feature: Browsing invoices
         And the customer chose "Free" shipping method to "United States" with "Cash on Delivery" payment
         And I am logged in as an administrator
 
-    @ui
     Scenario: Seeing a new invoice in the list
         When I browse invoices
         Then I should see a single invoice for order "#00000022"

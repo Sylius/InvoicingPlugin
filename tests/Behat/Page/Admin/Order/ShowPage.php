@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Tests\Sylius\InvoicingPlugin\Behat\Page\Admin;
+namespace Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Order;
 
 use Behat\Mink\Element\NodeElement;
 use Sylius\Behat\Page\SymfonyPage;
 
-final class OrderShowPage extends SymfonyPage implements OrderShowPageInterface
+final class ShowPage extends SymfonyPage implements ShowPageInterface
 {
-    public function getRouteName()
+    public function getRouteName(): string
     {
         return 'sylius_admin_order_show';
     }
