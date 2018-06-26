@@ -1,80 +1,33 @@
-<p align="center">
-    <a href="http://sylius.org" target="_blank">
-        <img src="http://demo.sylius.org/assets/shop/img/logo.png" />
-    </a>
-</p>
-<h1 align="center">Invoicing Plugin</h1>
+# InvoicingPlugin
+
+SyliusInvoicingPlugin creates new immutable invoice once an order is placed and allows
+both customer and admin to download invoices related to the order.   
 
 ## Installation
 
-1. Run `composer create-project sylius/plugin-skeleton ProjectName`.
+Require plugin with composer:
 
-2. From the plugin root directory, run the following commands:
+```bash
+composer require sylius/invoicing-plugin
+```
 
-    ```bash
-    $ (cd tests/Application && yarn install)
-    $ (cd tests/Application && yarn run gulp)
-    $ (cd tests/Application && bin/console assets:install web -e test)
-    
-    $ (cd tests/Application && bin/console doctrine:database:create -e test)
-    $ (cd tests/Application && bin/console doctrine:schema:create -e test)
-    ```
+Import routing:
 
-## Usage
+```yaml
+imports:
+    - { resource: "@SyliusInvoicingPlugin/Resources/config/app/routing.yml" }
+```
 
-### Running plugin tests
+Add plugin class to your `AppKernel`:
 
-  - PHPUnit
+```php
+$bundles = [
+    new \Sylius\InvoicingPlugin\SyliusInvoicingPlugin(),
+];
+```
 
-    ```bash
-    $ bin/phpunit
-    ```
+Clear cache:
 
-  - PHPSpec
-
-    ```bash
-    $ bin/phpspec run
-    ```
-
-  - Behat (non-JS scenarios)
-
-    ```bash
-    $ bin/behat --tags="~@javascript"
-    ```
-
-  - Behat (JS scenarios)
- 
-    1. Download [Chromedriver](https://sites.google.com/a/chromium.org/chromedriver/)
-    
-    2. Run Selenium server with previously downloaded Chromedriver:
-    
-        ```bash
-        $ bin/selenium-server-standalone -Dwebdriver.chrome.driver=chromedriver
-        ```
-    3. Run test application's webserver on `localhost:8080`:
-    
-        ```bash
-        $ (cd tests/Application && bin/console server:run 127.0.0.1:8080 -d web -e test)
-        ```
-    
-    4. Run Behat:
-    
-        ```bash
-        $ bin/behat --tags="@javascript"
-        ```
-
-### Opening Sylius with your plugin
-
-- Using `test` environment:
-
-    ```bash
-    $ (cd tests/Application && bin/console sylius:fixtures:load -e test)
-    $ (cd tests/Application && bin/console server:run -d web -e test)
-    ```
-    
-- Using `dev` environment:
-
-    ```bash
-    $ (cd tests/Application && bin/console sylius:fixtures:load -e dev)
-    $ (cd tests/Application && bin/console server:run -d web -e dev)
-    ```
+```bash
+bin/console cache:clear
+```

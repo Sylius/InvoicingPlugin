@@ -14,7 +14,7 @@ sylius_invoicing_plugin_invoice:
     type: sylius.resource
 
 sylius_invoicing_plugin_admin_invoice_show:
-    path: /invoices/{id}
+    path: /admin/invoices/{id}
     methods: [GET]
     defaults:
         _controller: sylius_invoicing_plugin.controller.invoice:showAction
@@ -24,13 +24,13 @@ sylius_invoicing_plugin_admin_invoice_show:
             template: SyliusInvoicingPlugin:Invoice:show.html.twig
 
 sylius_invoicing_plugin_admin_invoice_download:
-    path: /invoices/{id}/download
+    path: /admin/invoices/{id}/download
     methods: [GET]
     defaults:
         _controller: Sylius\InvoicingPlugin\Ui\Action\DownloadInvoiceAction
 
 sylius_invoicing_plugin_admin_order_invoices_partial:
-    path: /_partial/invoices/{orderNumber}/
+    path: /admin/_partial/invoices/{orderNumber}/
     methods: [GET]
     defaults:
         _controller: sylius_invoicing_plugin.controller.invoice:indexAction
