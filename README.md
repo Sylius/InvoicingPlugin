@@ -1,80 +1,92 @@
-<p align="center">
-    <a href="http://sylius.org" target="_blank">
-        <img src="http://demo.sylius.org/assets/shop/img/logo.png" />
-    </a>
-</p>
-<h1 align="center">Invoicing Plugin</h1>
+# InvoicingPlugin
+
+SyliusInvoicingPlugin creates new immutable invoice when the order is in given state (default: created) and allows
+both customer and admin to download invoices related to the order.   
 
 ## Installation
 
-1. Run `composer create-project sylius/plugin-skeleton ProjectName`.
+Require plugin with composer:
 
-2. From the plugin root directory, run the following commands:
+```bash
+composer require sylius/invoicing-plugin
+```
 
-    ```bash
-    $ (cd tests/Application && yarn install)
-    $ (cd tests/Application && yarn run gulp)
-    $ (cd tests/Application && bin/console assets:install web -e test)
-    
-    $ (cd tests/Application && bin/console doctrine:database:create -e test)
-    $ (cd tests/Application && bin/console doctrine:schema:create -e test)
-    ```
+Import routing:
 
-## Usage
+```yaml
+sylius_invoicing_plugin:
+    resource: "@SyliusInvoicingPlugin/Resources/config/app/routing.yml"
+```
 
-### Running plugin tests
+Add plugin class to your `AppKernel`:
 
-  - PHPUnit
+```php
+$bundles = [
+    new \Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
+    new \Prooph\Bundle\ServiceBus\ProophServiceBusBundle(),
+    new \Sylius\InvoicingPlugin\SyliusInvoicingPlugin(),
+];
+```
 
-    ```bash
-    $ bin/phpunit
-    ```
+Clear cache:
 
-  - PHPSpec
+```bash
+bin/console cache:clear
+```
 
-    ```bash
-    $ bin/phpspec run
-    ```
+## Extension points
 
-  - Behat (non-JS scenarios)
+Majority of actions contained in SyliusInvoicingPlugin is executed once an event after changing the state of
+the Order on `winzou_state_machine` is dispatched.
 
-    ```bash
-    $ bin/behat --tags="~@javascript"
-    ```
+Here is the example:
 
-  - Behat (JS scenarios)
- 
-    1. Download [Chromedriver](https://sites.google.com/a/chromium.org/chromedriver/)
-    
-    2. Run Selenium server with previously downloaded Chromedriver:
-    
-        ```bash
-        $ bin/selenium-server-standalone -Dwebdriver.chrome.driver=chromedriver
-        ```
-    3. Run test application's webserver on `localhost:8080`:
-    
-        ```bash
-        $ (cd tests/Application && bin/console server:run 127.0.0.1:8080 -d web -e test)
-        ```
-    
-    4. Run Behat:
-    
-        ```bash
-        $ bin/behat --tags="@javascript"
-        ```
+```bash
+$container->prependExtensionConfig('winzou_state_machine', [
+    'sylius_order' => [
+        'callbacks' => [
+            'after' => [
+                'sylius_invoicing_plugin_order_created_producer' => [
+                    'on' => ['create'],
+                    'do' => ['@Sylius\InvoicingPlugin\EventListener\OrderPlacedProducer', '__invoke'],
+                    'args' => ['object'],
+                ],
+            ],
+        ],
+    ],
+]);
+```
 
-### Opening Sylius with your plugin
+Code placed above is a part of logic placed in `SyliusInvoicingExtension` class.
+You can customize this class by adding new state machine events listeners or editing existing ones.
 
-- Using `test` environment:
+Apart from that an Invoice model is treated as a Resource.
 
-    ```bash
-    $ (cd tests/Application && bin/console sylius:fixtures:load -e test)
-    $ (cd tests/Application && bin/console server:run -d web -e test)
-    ```
-    
-- Using `dev` environment:
+You can read more about Resources here:
 
-    ```bash
-    $ (cd tests/Application && bin/console sylius:fixtures:load -e dev)
-    $ (cd tests/Application && bin/console server:run -d web -e dev)
-    ```
+<http://docs.sylius.com/en/1.2/components_and_bundles/bundles/SyliusResourceBundle/index.html>.
+
+Hence, template for displaying the list of Invoices is defined in `routing.yml` file:
+
+```
+sylius_invoicing_plugin_invoice:
+    resource: |
+        alias: sylius_invoicing_plugin.invoice
+        section: admin
+        templates: SyliusAdminBundle:Crud
+        only: ['index']
+        grid: sylius_invoicing_plugin_invoice
+        permission: true
+        vars:
+            all:
+                subheader: sylius_invoicing_plugin.ui.manage_invoices
+            index:
+                icon: inbox
+    type: sylius.resource
+```
+
+Another aspect that can be both replaced and customized is displaying Invoices list on Order show view.
+Code responsible for displaying Invoices related to the Order is injected to existing Sylius template using
+Sonata events. You can read about customizing templates via events here:
+
+<http://docs.sylius.com/en/1.2/customization/template.html>
