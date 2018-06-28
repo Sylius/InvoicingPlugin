@@ -1,4 +1,4 @@
-@managing_invoices
+@managing_invoices @ui
 Feature: Seeing invoices on Customer's order view
     In order to be aware of all invoices related to the order placed by Customer
     As an Administrator
@@ -14,12 +14,10 @@ Feature: Seeing invoices on Customer's order view
     And the customer chose "Free" shipping method to "United States" with "Cash on Delivery" payment
     And I am logged in as an administrator
 
-    @ui
     Scenario: Seeing a new invoice related to the order
         When I view the summary of the order "#00000022"
         Then I should see an invoice related to this order
 
-    @ui
     Scenario: Seeing invoice details when clicking its id on order view
         When I view the summary of the order "#00000022"
         And I click on first invoice's id
