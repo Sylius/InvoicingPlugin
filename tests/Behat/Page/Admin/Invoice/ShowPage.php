@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Sylius\InvoicingPlugin\Behat\Page\Admin;
+namespace Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Invoice;
 
 use Behat\Mink\Session;
 use Sylius\Behat\Page\SymfonyPage;

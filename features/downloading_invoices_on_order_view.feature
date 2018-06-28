@@ -1,8 +1,8 @@
 @managing_invoices @ui
-Feature: Browsing invoices
-    In order to process invoices
+Feature: Downloading invoices on a single order view
+    In order to store all invoices related to the order
     As an Administrator
-    I want to be able to browse new invoices
+    I want to be able to download invoices on a single order view
 
     Background:
         Given the store operates on a single channel in "United States"
@@ -14,6 +14,7 @@ Feature: Browsing invoices
         And the customer chose "Free" shipping method to "United States" with "Cash on Delivery" payment
         And I am logged in as an administrator
 
-    Scenario: Seeing a new invoice in the list
-        When I browse invoices
-        Then I should see a single invoice for order "#00000022"
+    Scenario: Downloading an invoice on order view
+        When I view the summary of the order "#00000022"
+        And I click on first invoice's download button
+        Then the pdf file for this invoice should be downloaded successfully

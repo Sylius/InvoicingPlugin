@@ -6,9 +6,9 @@ namespace Tests\Sylius\InvoicingPlugin\Behat\Context\Ui\Admin;
 
 use Behat\Behat\Context\Context;
 use Sylius\Component\Core\Model\OrderInterface;
-use Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\IndexPageInterface;
-use Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\OrderShowPageInterface;
-use Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\ShowPageInterface;
+use Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Invoice\IndexPageInterface;
+use Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Invoice\ShowPageInterface;
+use Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Order\ShowPageInterface as OrderShowPageInterface;
 use Webmozart\Assert\Assert;
 
 final class ManagingInvoicesContext implements Context
@@ -16,17 +16,20 @@ final class ManagingInvoicesContext implements Context
     /** @var IndexPageInterface */
     private $indexPage;
 
+    /** @var ShowPageInterface */
+    private $showPage;
+
     /** @var OrderShowPageInterface */
-    private $orderPage;
+    private $orderShowPage;
 
     public function __construct(
         IndexPageInterface $indexPage,
         ShowPageInterface $showPage,
-        OrderShowPageInterface $orderPage
+        OrderShowPageInterface $orderShowPage
     ) {
         $this->indexPage = $indexPage;
         $this->showPage = $showPage;
-        $this->orderPage = $orderPage;
+        $this->orderShowPage = $orderShowPage;
     }
 
     /**
@@ -73,7 +76,7 @@ final class ManagingInvoicesContext implements Context
      */
     public function shouldSeeAnInvoiceRelatedToTheOrder(): void
     {
-        Assert::true($this->orderPage->hasRelatedInvoices(1));
+        Assert::true($this->orderShowPage->hasRelatedInvoices(1));
     }
 
     /**
@@ -81,7 +84,15 @@ final class ManagingInvoicesContext implements Context
      */
     public function clickOnFirstInvoiceId(): void
     {
-        $this->orderPage->clickOnFirstInvoiceId();
+        $this->orderShowPage->clickOnFirstInvoiceId();
+    }
+
+    /**
+     * @When I click on first invoice's download button
+     */
+    public function iClickOnFirstInvoiceDownloadButton(): void
+    {
+        $this->orderShowPage->downloadFirstInvoice();
     }
 
     /**
@@ -145,5 +156,13 @@ final class ManagingInvoicesContext implements Context
     public function itsTotalShouldBe(string $total): void
     {
         Assert::same($this->showPage->getTotal(), $total);
+    }
+
+    /**
+     * @Then the pdf file for this invoice should be downloaded successfully
+     */
+    public function thePdfFileForThisInvoiceShouldBeDownloadedSuccessfully(): void
+    {
+        Assert::true($this->orderShowPage->isPdfFileDownloaded());
     }
 }
