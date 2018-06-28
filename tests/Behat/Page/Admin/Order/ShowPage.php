@@ -14,9 +14,9 @@ final class ShowPage extends SymfonyPage implements ShowPageInterface
         return 'sylius_admin_order_show';
     }
 
-    public function hasRelatedInvoices(int $count): bool
+    public function countRelatedInvoices(): int
     {
-        return count($this->getInvoiceList()) === $count + 1;
+        return count($this->getInvoicesList()) -1;
     }
 
     public function clickOnFirstInvoiceId(): void
@@ -38,11 +38,10 @@ final class ShowPage extends SymfonyPage implements ShowPageInterface
         $session = $this->getSession();
         $headers = $session->getResponseHeaders();
 
-        if (200 === $session->getStatusCode() && 'application/pdf' === $headers['content-type'][0]) {
-            return true;
-        }
-
-        return false;
+        return
+            200 === $session->getStatusCode() &&
+            'application/pdf' === $headers['content-type'][0]
+        ;
     }
 
     protected function getDefinedElements(): array
@@ -54,10 +53,10 @@ final class ShowPage extends SymfonyPage implements ShowPageInterface
 
     private function getFirstInvoice(): NodeElement
     {
-        return $this->getInvoiceList()[1];
+        return $this->getInvoicesList()[1];
     }
 
-    private function getInvoiceList(): array
+    private function getInvoicesList(): array
     {
         return $this->getElement('invoices')->findAll('css', 'tr');
     }
