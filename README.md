@@ -28,6 +28,55 @@ $bundles = [
 ];
 ```
 
+Copy templates from
+
+```
+vendor/sylius/invoicing-plugin/src/Resources/views/SyliusAdminBundle/
+```
+to
+```
+app/Resources/SyliusAdminBundle/views/
+```
+
+Copy migrations from
+
+```
+vendor/sylius/invoicing-plugin/migrations/
+```
+to your migrations directory and run `bin/console doctrine:migrations:migrate`
+
+Override Channel entity:
+
+Write new class which will use ShopBillingDataTrait and implement ShopBillingDataAwareInterface:
+
+```php
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\Table;
+use Sylius\Component\Core\Model\Channel as BaseChannel;
+use Sylius\InvoicingPlugin\Entity\ShopBillingDataAwareInterface;
+use Sylius\InvoicingPlugin\Entity\ShopBillingDataTrait;
+
+/**
+ * @Entity
+ * @Table(name="sylius_channel")
+ */
+class Channel extends BaseChannel implements ShopBillingDataAwareInterface
+{
+    use ShopBillingDataTrait;
+}
+
+```
+
+And override the model's class in the `app/config/config.yml`:
+
+```
+sylius_channel:
+    resources:
+        channel:
+            classes:
+                model: AppBundle\Entity\Channel
+```
+
 Clear cache:
 
 ```bash

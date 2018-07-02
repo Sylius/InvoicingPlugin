@@ -22,6 +22,8 @@ final class AppKernel extends Kernel
             new \Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
             new \Prooph\Bundle\ServiceBus\ProophServiceBusBundle(),
             new \Sylius\InvoicingPlugin\SyliusInvoicingPlugin(),
+
+            new \Tests\Application\InvoicingPlugin\AppBundle\TestAppBundle(),
         ]);
     }
 
