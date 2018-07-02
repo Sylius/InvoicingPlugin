@@ -10,22 +10,22 @@ class ShopBillingData implements ShopBillingDataInterface
     /** @var string */
     private $id;
 
-    /** @var string */
+    /** @var string|null */
     private $company;
 
-    /** @var string */
+    /** @var string|null */
     private $taxId;
 
-    /** @var string */
+    /** @var string|null */
     private $countryCode;
 
-    /** @var string */
+    /** @var string|null */
     private $street;
 
-    /** @var string */
+    /** @var string|null */
     private $city;
 
-    /** @var string */
+    /** @var string|null */
     private $postcode;
 
     public function getId(): string

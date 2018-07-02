@@ -1,3 +1,0 @@
-imports:
-    - suites/managing_channels.yml
-    - suites/managing_invoices.yml

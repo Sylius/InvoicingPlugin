@@ -7,7 +7,6 @@ namespace Sylius\InvoicingPlugin\Entity;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\OneToOne;
-use Sylius\Component\Core\Model\AddressInterface;
 
 trait ShopBillingDataTrait
 {
@@ -16,32 +15,15 @@ trait ShopBillingDataTrait
      *
      * @var string
      */
-    private $shopName;
-
-    /**
-     * @Column(type="string", nullable=true)
-     *
-     * @var string
-     */
     private $taxId;
 
     /**
-     * @OneToOne(targetEntity="Sylius\Component\Addressing\Model\AddressInterface")
-     * @JoinColumn(name="billing_address_id", referencedColumnName="id")
+     * @OneToOne(targetEntity="Sylius\InvoicingPlugin\Entity\ShopBillingData", cascade={"persist"})
+     * @JoinColumn(name="billing_data_id", referencedColumnName="id")
      *
-     * @var AddressInterface
+     * @var ShopBillingDataInterface
      */
-    private $billingAddress;
-
-    public function getShopName(): ?string
-    {
-        return $this->shopName;
-    }
-
-    public function setShopName(?string $shopName): void
-    {
-        $this->shopName = $shopName;
-    }
+    private $billingData;
 
     public function getTaxId(): ?string
     {
@@ -53,13 +35,13 @@ trait ShopBillingDataTrait
         $this->taxId = $taxId;
     }
 
-    public function getBillingAddress(): ?AddressInterface
+    public function getBillingData(): ?ShopBillingDataInterface
     {
-        return $this->billingAddress;
+        return $this->billingData;
     }
 
-    public function setBillingAddress(?AddressInterface $billingAddress): void
+    public function setBillingData(?ShopBillingDataInterface $billingData): void
     {
-        $this->billingAddress = $billingAddress;
+        $this->billingData = $billingData;
     }
 }

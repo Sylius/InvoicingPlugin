@@ -13,31 +13,31 @@ class BillingData implements BillingDataInterface, ResourceInterface
     private $id;
 
     /** @var string */
-    protected $firstName;
+    private $firstName;
 
     /** @var string */
-    protected $lastName;
+    private $lastName;
 
     /** @var string|null */
-    protected $company;
+    private $company;
 
     /** @var string */
-    protected $countryCode;
+    private $countryCode;
 
     /** @var string|null */
-    protected $provinceCode;
+    private $provinceCode;
 
     /** @var string|null */
-    protected $provinceName;
+    private $provinceName;
 
     /** @var string */
-    protected $street;
+    private $street;
 
     /** @var string */
-    protected $city;
+    private $city;
 
     /** @var string */
-    protected $postcode;
+    private $postcode;
 
     public function __construct(
         string $firstName,
