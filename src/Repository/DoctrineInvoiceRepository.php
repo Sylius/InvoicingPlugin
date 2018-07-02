@@ -36,4 +36,9 @@ final class DoctrineInvoiceRepository implements InvoiceRepository
         $this->entityManager->persist($invoice);
         $this->entityManager->flush();
     }
+
+    public function findOneByOrderNumber(string $orderNumber): InvoiceInterface
+    {
+        return $this->entityRepository->findOneBy(['orderNumber' => $orderNumber]);
+    }
 }

@@ -1,3 +1,4 @@
+@managing_invoices
 Feature: Sending invoice when order is paid
     In order to have a confirmation of order's payment
     As a customer
@@ -14,6 +15,7 @@ Feature: Sending invoice when order is paid
         And I addressed it to "Lucifer Morningstar", "Seaside Fwy", "90802" "Los Angeles" in the "United States"
         And for the billing address of "Mazikeen Lilim" in the "Pacific Coast Hwy", "90806" "Los Angeles", "United States"
 
+    @ui
     Scenario: I receive an email containing invoice once complete payment steps for order
-        When I complete the payment step
-        Then I should receive an email containing invoice for order "#00000666"
+        When I chose "Free" shipping method with "Cash on Delivery" payment
+        Then an email containing invoice should be sent to "sylius@example.com"

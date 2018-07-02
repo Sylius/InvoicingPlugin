@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Sylius\InvoicingPlugin\EventListener;
 
 use Prooph\ServiceBus\EventBus;
+use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\PaymentInterface;
 use Sylius\InvoicingPlugin\DateTimeProvider;
 use Sylius\InvoicingPlugin\Event\OrderPaymentPaid;
@@ -23,10 +24,10 @@ final class OrderPaymentPaidProducer
         $this->dateTimeProvider = $dateTimeProvider;
     }
 
-    public function __invoke(PaymentInterface $payment): void
+    public function __invoke(OrderInterface $order): void
     {
         $this->eventBus->dispatch(new OrderPaymentPaid(
-            $payment->getOrder()->getNumber(),
+            $order->getNumber(),
             $this->dateTimeProvider->__invoke())
         );
     }

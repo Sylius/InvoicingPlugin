@@ -21,6 +21,11 @@
             <argument type="service" id="Sylius\InvoicingPlugin\DateTimeProvider" />
         </service>
 
+        <service id="Sylius\InvoicingPlugin\EventListener\OrderPaymentPaidProducer" public="true">
+            <argument type="service" id="sylius_invoicing.event_bus" />
+            <argument type="service" id="Sylius\InvoicingPlugin\DateTimeProvider" />
+        </service>
+
         <service id="Sylius\InvoicingPlugin\EventListener\CreateInvoiceOnOrderPlacedListener">
             <argument type="service" id="Sylius\InvoicingPlugin\Repository\InvoiceRepository" />
             <argument type="service" id="Sylius\InvoicingPlugin\Generator\InvoiceGenerator" />
@@ -44,12 +49,14 @@
 
         <service id="Sylius\InvoicingPlugin\EventListener\OrderPaymentPaidListener">
             <argument type="service" id="Sylius\InvoicingPlugin\Repository\InvoiceRepository"/>
+            <argument type="service" id="sylius.repository.order" />
             <argument type="service" id="knp_snappy.pdf" />
-            <argument type="service" id="Sylius\InvoicingPlugin\Email\InvoiceEmailManager" />
+            <argument type="service" id="Sylius\InvoicingPlugin\EmailManager\InvoiceEmailManager" />
+            <argument type="service" id="templating.engine.twig" />
             <tag name="prooph_service_bus.sylius_invoicing_event_bus.route_target" message-detection="true" />
         </service>
 
-        <service id="Sylius\InvoicingPlugin\Email\InvoiceEmailManager">
+        <service id="Sylius\InvoicingPlugin\EmailManager\InvoiceEmailManager">
             <argument type="service" id="sylius.email_sender" />
         </service>
     </services>
