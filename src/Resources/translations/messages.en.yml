@@ -1,5 +1,6 @@
 sylius_invoicing_plugin:
     ui:
+        billing_address: 'Billing address'
         billing_data: 'Billing data'
         download_invoice: 'Download'
         invoice: 'Invoice'
@@ -10,3 +11,4 @@ sylius_invoicing_plugin:
         manage_invoices: 'Manage invoices'
         order_number: 'Order number'
         resend_invoice: 'Resend'
+        tax_id: 'Tax ID'

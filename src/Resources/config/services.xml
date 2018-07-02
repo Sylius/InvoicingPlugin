@@ -60,7 +60,7 @@
 
         <service id="sylius_invoicing_plugin.block_event_listener.channel_form" class="Sylius\Bundle\UiBundle\Block\BlockEventListener">
             <argument>@SyliusInvoicingPlugin/Channel/shopBillingDataForm.html.twig</argument>
-            <tag name="kernel.event_listener" event="sonata.block.event.sylius.admin.channel.update.after_content" method="onBlockEvent" />
+            <tag name="kernel.event_listener" event="sonata.block.event.sylius.admin.channel.update.form" method="onBlockEvent" />
         </service>
 
         <service id="Sylius\InvoicingPlugin\Form\Extension\ChannelTypeExtension">

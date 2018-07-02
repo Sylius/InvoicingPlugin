@@ -6,16 +6,16 @@ Feature: Editing shop billing data on channel
 
     Background:
         Given the store operates on a channel named "Web Channel"
+        And the store ships to "United States"
         And I am logged in as an administrator
 
-    @todo
     Scenario: Editing shop billing data on channel
         When I want to modify a channel "Web Channel"
-        And I specify shop name as "Ragnarok"
+        And I specify company as "Ragnarok"
         And I specify tax ID as "1100110011"
         And I specify shop billing address as "Pacific Coast Hwy", "90806" "Los Angeles", "United States"
         And I save my changes
         Then I should be notified that it has been successfully edited
-        And this channel shop name should be "Ragnarok"
+        And this channel company should be "Ragnarok"
         And this channel tax ID should be "1100110011"
         And this channel shop billing address should be "Pacific Coast Hwy", "90806" "Los Angeles", "United States"
