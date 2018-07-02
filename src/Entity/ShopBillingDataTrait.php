@@ -4,26 +4,62 @@ declare(strict_types=1);
 
 namespace Sylius\InvoicingPlugin\Entity;
 
+use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\OneToOne;
+use Sylius\Component\Core\Model\AddressInterface;
 
 trait ShopBillingDataTrait
 {
     /**
-     * @OneToOne(targetEntity="Sylius\InvoicingPlugin\Entity\ShopBillingData", cascade={"persist"})
-     * @JoinColumn(name="billing_data_id", referencedColumnName="id")
+     * @Column(type="string", nullable=true)
      *
-     * @var ShopBillingDataInterface
+     * @var string
      */
-    private $billingData;
+    private $shopName;
 
-    public function getBillingData(): ?ShopBillingDataInterface
+    /**
+     * @Column(type="string", nullable=true)
+     *
+     * @var string
+     */
+    private $taxId;
+
+    /**
+     * @OneToOne(targetEntity="Sylius\Component\Addressing\Model\AddressInterface")
+     * @JoinColumn(name="billing_address_id", referencedColumnName="id")
+     *
+     * @var AddressInterface
+     */
+    private $billingAddress;
+
+    public function getShopName(): ?string
     {
-        return $this->billingData;
+        return $this->shopName;
     }
 
-    public function setBillingData(?ShopBillingDataInterface $billingData): void
+    public function setShopName(?string $shopName): void
     {
-        $this->billingData = $billingData;
+        $this->shopName = $shopName;
+    }
+
+    public function getTaxId(): ?string
+    {
+        return $this->taxId;
+    }
+
+    public function setTaxId(?string $taxId): void
+    {
+        $this->taxId = $taxId;
+    }
+
+    public function getBillingAddress(): ?AddressInterface
+    {
+        return $this->billingAddress;
+    }
+
+    public function setBillingAddress(?AddressInterface $billingAddress): void
+    {
+        $this->billingAddress = $billingAddress;
     }
 }
