@@ -44,10 +44,6 @@ monolog:
 swiftmailer:
     disable_delivery: true
     logging: true
-    transport: gmail
-    host: 127.0.0.1
-    username: bartosz.pietrzak@sylius.com
-    password: 31prerceco1.
     spool:
         type: file
         path: "%kernel.cache_dir%/spool"

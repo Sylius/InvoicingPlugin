@@ -14,8 +14,20 @@ Feature: Sending invoice when order is paid
         And I bought a single "Angel T-Shirt"
         And I addressed it to "Lucifer Morningstar", "Seaside Fwy", "90802" "Los Angeles" in the "United States"
         And for the billing address of "Mazikeen Lilim" in the "Pacific Coast Hwy", "90806" "Los Angeles", "United States"
+        And I chose "Free" shipping method with "Cash on Delivery" payment
+        And I placed an order "#00000667"
+        And I bought a single "Angel T-Shirt"
+        And I addressed it to "Lucifer Morningstar", "Seaside Fwy", "90802" "Los Angeles" in the "United States"
+        And for the billing address of "Mazikeen Lilim" in the "Pacific Coast Hwy", "90806" "Los Angeles", "United States"
+        And I chose "Free" shipping method with "Cash on Delivery" payment
 
     @ui
     Scenario: I receive an email containing invoice once complete payment steps for order
-        When I chose "Free" shipping method with "Cash on Delivery" payment
-        Then an email containing invoice should be sent to "sylius@example.com"
+        When the order "#00000666" is already paid
+        Then an email containing invoice generated for order "#00000666" should be sent to "sylius@example.com"
+
+    @ui
+    Scenario: I don't receive an email containing invoice when the order is not paid
+        When the order "#00000667" was cancelled
+        Then an email containing invoice generated for order "#00000667" should not be sent to "sylius@example.com"
+
