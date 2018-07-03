@@ -26,6 +26,10 @@ final class OrderPaymentPaidProducer
 
     public function __invoke(PaymentInterface $payment): void
     {
+        if (null === $payment->getOrder()) {
+            return;
+        }
+
         $this->eventBus->dispatch(new OrderPaymentPaid(
             $payment->getOrder()->getNumber(),
             $this->dateTimeProvider->__invoke())

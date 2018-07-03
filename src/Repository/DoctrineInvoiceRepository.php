@@ -39,6 +39,9 @@ final class DoctrineInvoiceRepository implements InvoiceRepository
 
     public function findOneByOrderNumber(string $orderNumber): InvoiceInterface
     {
-        return $this->entityRepository->findOneBy(['orderNumber' => $orderNumber]);
+        /** @var InvoiceInterface $invoice */
+        $invoice = $this->entityRepository->findOneBy(['orderNumber' => $orderNumber]);
+
+        return $invoice;
     }
 }

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Sylius\InvoicingPlugin\EmailManager;
 
-use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Sylius\Component\Mailer\Sender\SenderInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 
@@ -25,9 +24,9 @@ final class InvoiceEmailManager implements InvoiceEmailManagerInterface
 
     public function sendInvoiceEmail(
         InvoiceInterface $invoice,
-        PdfResponse $invoiceAttachment,
+        string $invoiceAttachmentPath,
         string $customerEmail
     ): void {
-        $this->emailSender->send(Emails::INVOICE_GENERATED, [$customerEmail], ['invoice' => $invoice], ['invoice' => $invoiceAttachment]);
+        $this->emailSender->send(Emails::INVOICE_GENERATED, [$customerEmail], ['invoice' => $invoice], [$invoiceAttachmentPath]);
     }
 }

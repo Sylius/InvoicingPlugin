@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Sylius\InvoicingPlugin\EventListener;
 
-use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Knp\Snappy\GeneratorInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Repository\OrderRepositoryInterface;
@@ -50,17 +49,24 @@ final class OrderPaymentPaidListener
         /** @var InvoiceInterface $invoice */
         $invoice = $this->invoiceRepository->findOneByOrderNumber($event->orderNumber());
 
-        $invoiceFile = new PdfResponse(
-            $this->pdfGenerator->getOutputFromHtml(
-            $this->templatingEngine->render('@SyliusInvoicingPlugin/Resources/views/Invoice/Email/invoiceGenerated.html.twig', [
+        $filename = sys_get_temp_dir() . '/' . sprintf('invoice-%s.pdf', $invoice->id());
+
+        $this->pdfGenerator->generateFromHtml(
+            $this->templatingEngine->render('@SyliusInvoicingPlugin/Resources/views/Invoice/Download/pdf.html.twig', [
                 'invoice' => $invoice
-            ])),
-            $invoice->id() . '.pdf'
+            ]),
+            $filename
         );
 
         /** @var OrderInterface $order */
         $order = $this->orderRepository->findOneBy(['number' => $event->orderNumber()]);
 
-        $this->emailSender->sendInvoiceEmail($invoice, $invoiceFile, $order->getCustomer()->getEmail());
+        if (null === $order->getCustomer()) {
+            return;
+        }
+
+        $this->emailSender->sendInvoiceEmail($invoice, $filename, $order->getCustomer()->getEmail());
+
+        unlink($filename);
     }
 }
