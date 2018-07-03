@@ -8,7 +8,7 @@ use Sylius\Behat\Page\SymfonyPageInterface;
 
 interface ShowPageInterface extends SymfonyPageInterface
 {
-    public function hasRelatedInvoices(int $count): bool;
+    public function countRelatedInvoices(): int;
 
     public function clickOnFirstInvoiceId(): void;
 
