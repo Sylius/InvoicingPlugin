@@ -28,11 +28,6 @@ final class InvoiceEmailManager implements InvoiceEmailManagerInterface
         PdfResponse $invoiceAttachment,
         string $customerEmail
     ): void {
-        $this->emailSender->send(
-            Emails::INVOICE_GENERATED,
-            [$customerEmail],
-            ['invoice' => $invoice],
-            ['invoice' => $invoiceAttachment]
-        );
+        $this->emailSender->send(Emails::INVOICE_GENERATED, [$customerEmail], ['invoice' => $invoice], ['invoice' => $invoiceAttachment]);
     }
 }

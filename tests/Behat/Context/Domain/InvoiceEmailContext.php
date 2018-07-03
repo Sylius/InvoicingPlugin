@@ -23,8 +23,6 @@ final class InvoiceEmailContext implements Context
      */
     public function emailContainingInvoiceForOrderShouldBeSent(string $orderNumber, string $recipient): void
     {
-        Assert::true($this->emailChecker->hasRecipient($recipient));
-
         Assert::true($this->emailChecker->hasMessageTo(sprintf('was generated for order with number %s', $orderNumber), $recipient));
     }
 

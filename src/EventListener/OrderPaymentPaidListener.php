@@ -39,7 +39,7 @@ final class OrderPaymentPaidListener
         EngineInterface $templatingEngine
     ) {
         $this->invoiceRepository = $invoiceRepository;
-        $this->pdfGenerator= $pdfGenerator;
+        $this->pdfGenerator = $pdfGenerator;
         $this->emailSender = $emailSender;
         $this->orderRepository = $orderRepository;
         $this->templatingEngine = $templatingEngine;

@@ -24,10 +24,10 @@ final class OrderPaymentPaidProducer
         $this->dateTimeProvider = $dateTimeProvider;
     }
 
-    public function __invoke(OrderInterface $order): void
+    public function __invoke(PaymentInterface $payment): void
     {
         $this->eventBus->dispatch(new OrderPaymentPaid(
-            $order->getNumber(),
+            $payment->getOrder()->getNumber(),
             $this->dateTimeProvider->__invoke())
         );
     }
