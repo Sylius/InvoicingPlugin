@@ -32,7 +32,7 @@ final class OrderPaymentPaidProducer
 
         $this->eventBus->dispatch(new OrderPaymentPaid(
             $payment->getOrder()->getNumber(),
-            $this->dateTimeProvider->__invoke())
-        );
+            $this->dateTimeProvider->__invoke()
+        ));
     }
 }

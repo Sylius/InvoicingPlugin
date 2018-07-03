@@ -1,7 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
-namespace Sylius\InvoicingPlugin\EmailManager;
+namespace Sylius\InvoicingPlugin\Email;
 
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 

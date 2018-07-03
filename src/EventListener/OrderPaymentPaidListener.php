@@ -7,7 +7,7 @@ namespace Sylius\InvoicingPlugin\EventListener;
 use Knp\Snappy\GeneratorInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Repository\OrderRepositoryInterface;
-use Sylius\InvoicingPlugin\EmailManager\InvoiceEmailManagerInterface;
+use Sylius\InvoicingPlugin\Email\InvoiceEmailManagerInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Sylius\InvoicingPlugin\Event\OrderPaymentPaid;
 use Sylius\InvoicingPlugin\Repository\InvoiceRepository;

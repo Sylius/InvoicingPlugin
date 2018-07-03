@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sylius\InvoicingPlugin\EmailManager;
+namespace Sylius\InvoicingPlugin\Email;
 
 final class Emails
 {

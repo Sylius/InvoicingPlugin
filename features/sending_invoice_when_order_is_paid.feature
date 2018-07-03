@@ -30,4 +30,3 @@ Feature: Sending invoice when order is paid
     Scenario: I don't receive an email containing invoice when the order is not paid
         When the order "#00000667" was cancelled
         Then an email containing invoice generated for order "#00000667" should not be sent to "sylius@example.com"
-
