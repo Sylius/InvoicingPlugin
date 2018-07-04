@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Sylius\InvoicingPlugin\Ui\Action;
 
+use Sylius\Component\Core\Model\CustomerInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Repository\OrderRepositoryInterface;
 use Sylius\InvoicingPlugin\Email\InvoiceEmailSenderInterface;
@@ -48,7 +49,10 @@ final class ResendInvoiceAction
         /** @var OrderInterface $order */
         $order = $this->orderRepository->findOneBy(['number' => $invoice->orderNumber()]);
 
-        $this->invoiceEmailSender->sendInvoiceEmail($invoice, $order->getCustomer()->getEmail());
+        /** @var CustomerInterface $customer */
+        $customer = $order->getCustomer();
+
+        $this->invoiceEmailSender->sendInvoiceEmail($invoice, $customer->getEmail());
 
         return new RedirectResponse($this->urlGenerator->generate('sylius_admin_order_show', ['id' => $order->getId()]));
     }
