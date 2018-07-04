@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Sylius\InvoicingPlugin\Event;
 
-use DateTime;
 use Prooph\Common\Messaging\DomainEvent;
 use Prooph\Common\Messaging\PayloadTrait;
 
-final class OrderPaymentPaid extends DomainEvent
+/** @final */
+class OrderPaymentPaid extends DomainEvent
 {
     use PayloadTrait;
 
@@ -25,6 +25,6 @@ final class OrderPaymentPaid extends DomainEvent
 
     public function date(): \DateTimeInterface
     {
-        return DateTime::createFromFormat('d-m-Y H:i:s.u', $this->payload()['date']);
+        return \DateTime::createFromFormat('d-m-Y H:i:s.u', $this->payload()['date']);
     }
 }

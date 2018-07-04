@@ -11,11 +11,10 @@ final class OrderPaymentPaidSpec extends ObjectBehavior
     function it_represents_an_immutable_fact_that_payment_related_to_order_was_completed(): void
     {
         $date = new \DateTimeImmutable('now');
-        $orderNumber = '000001';
 
-        $this->beConstructedWith($orderNumber, $date);
+        $this->beConstructedWith('000001', $date);
 
-        $this->orderNumber()->shouldBeEqualTo($orderNumber);
+        $this->orderNumber()->shouldReturn('000001');
         $this->date()->shouldBeLike($date);
     }
 }

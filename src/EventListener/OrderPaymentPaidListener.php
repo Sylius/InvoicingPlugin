@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 namespace Sylius\InvoicingPlugin\EventListener;
 
-use Knp\Snappy\GeneratorInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Repository\OrderRepositoryInterface;
-use Sylius\InvoicingPlugin\Email\InvoiceEmailManagerInterface;
+use Sylius\InvoicingPlugin\Email\InvoiceEmailSenderInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Sylius\InvoicingPlugin\Event\OrderPaymentPaid;
 use Sylius\InvoicingPlugin\Repository\InvoiceRepository;
-use Symfony\Component\Templating\EngineInterface;
 
 final class OrderPaymentPaidListener
 {
@@ -21,42 +19,23 @@ final class OrderPaymentPaidListener
     /** @var OrderRepositoryInterface */
     private $orderRepository;
 
-    /** @var GeneratorInterface */
-    private $pdfGenerator;
-
-    /** @var InvoiceEmailManagerInterface */
+    /** @var InvoiceEmailSenderInterface */
     private $emailSender;
-
-    /** @var EngineInterface */
-    private $templatingEngine;
 
     public function __construct(
         InvoiceRepository $invoiceRepository,
         OrderRepositoryInterface $orderRepository,
-        GeneratorInterface $pdfGenerator,
-        InvoiceEmailManagerInterface $emailSender,
-        EngineInterface $templatingEngine
+        InvoiceEmailSenderInterface $emailSender
     ) {
         $this->invoiceRepository = $invoiceRepository;
-        $this->pdfGenerator = $pdfGenerator;
         $this->emailSender = $emailSender;
         $this->orderRepository = $orderRepository;
-        $this->templatingEngine = $templatingEngine;
     }
 
     public function __invoke(OrderPaymentPaid $event)
     {
         /** @var InvoiceInterface $invoice */
-        $invoice = $this->invoiceRepository->findOneByOrderNumber($event->orderNumber());
-
-        $filename = sys_get_temp_dir() . '/' . sprintf('invoice-%s.pdf', $invoice->id());
-
-        $this->pdfGenerator->generateFromHtml(
-            $this->templatingEngine->render('@SyliusInvoicingPlugin/Resources/views/Invoice/Download/pdf.html.twig', [
-                'invoice' => $invoice
-            ]),
-            $filename
-        );
+        $invoice = $this->invoiceRepository->getOneByOrderNumber($event->orderNumber());
 
         /** @var OrderInterface $order */
         $order = $this->orderRepository->findOneBy(['number' => $event->orderNumber()]);
@@ -65,8 +44,6 @@ final class OrderPaymentPaidListener
             return;
         }
 
-        $this->emailSender->sendInvoiceEmail($invoice, $filename, $order->getCustomer()->getEmail());
-
-        unlink($filename);
+        $this->emailSender->sendInvoiceEmail($invoice, $order->getCustomer()->getEmail());
     }
 }

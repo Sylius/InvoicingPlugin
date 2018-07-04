@@ -14,6 +14,12 @@
             <tag name="fob.context_service" />
         </service>
 
+        <service id="Tests\Sylius\InvoicingPlugin\Behat\Context\Order\OrderContext" public="true">
+            <argument type="service" id="__symfony__.doctrine.orm.entity_manager" />
+            <argument type="service" id="__symfony__.sm.factory" />
+            <tag name="fob.context_service" />
+        </service>
+
         <service id="Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Invoice\IndexPageInterface" class="Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Invoice\IndexPage"
                  parent="sylius.behat.page.admin.crud.index">
             <argument type="string">sylius_invoicing_plugin_admin_invoice_index</argument>

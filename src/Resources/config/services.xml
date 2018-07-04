@@ -50,14 +50,17 @@
         <service id="Sylius\InvoicingPlugin\EventListener\OrderPaymentPaidListener">
             <argument type="service" id="Sylius\InvoicingPlugin\Repository\InvoiceRepository"/>
             <argument type="service" id="sylius.repository.order" />
-            <argument type="service" id="knp_snappy.pdf" />
             <argument type="service" id="Sylius\InvoicingPlugin\Email\InvoiceEmailSender" />
-            <argument type="service" id="templating.engine.twig" />
             <tag name="prooph_service_bus.sylius_invoicing_event_bus.route_target" message-detection="true" />
         </service>
 
         <service id="Sylius\InvoicingPlugin\Email\InvoiceEmailSender">
             <argument type="service" id="sylius.email_sender" />
+            <argument type="service" id="knp_snappy.pdf" />
+            <argument type="service" id="templating.engine.twig" />
+            <argument type="service" id="Sylius\InvoicingPlugin\File\TemporaryFileSystem" />
         </service>
+
+        <service id="Sylius\InvoicingPlugin\File\TemporaryFileSystem" />
     </services>
 </container>

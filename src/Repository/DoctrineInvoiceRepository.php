@@ -8,6 +8,7 @@ use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Sylius\InvoicingPlugin\Entity\Invoice;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
+use Webmozart\Assert\Assert;
 
 final class DoctrineInvoiceRepository implements InvoiceRepository
 {
@@ -37,10 +38,12 @@ final class DoctrineInvoiceRepository implements InvoiceRepository
         $this->entityManager->flush();
     }
 
-    public function findOneByOrderNumber(string $orderNumber): InvoiceInterface
+    public function getOneByOrderNumber(string $orderNumber): InvoiceInterface
     {
         /** @var InvoiceInterface $invoice */
         $invoice = $this->entityRepository->findOneBy(['orderNumber' => $orderNumber]);
+
+        Assert::notNull($invoice, InvoiceInterface::class);
 
         return $invoice;
     }

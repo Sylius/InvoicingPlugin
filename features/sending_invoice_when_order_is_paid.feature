@@ -1,7 +1,7 @@
 @managing_invoices
 Feature: Sending invoice when order is paid
     In order to have a confirmation of order's payment
-    As a customer
+    As a Customer
     I want to receive an invoice via email when my order is paid
 
     Background:
@@ -23,7 +23,7 @@ Feature: Sending invoice when order is paid
 
     @ui
     Scenario: I receive an email containing invoice once complete payment steps for order
-        When the order "#00000666" is already paid
+        When the order "#00000666" has just been paid
         Then an email containing invoice generated for order "#00000666" should be sent to "sylius@example.com"
 
     @ui

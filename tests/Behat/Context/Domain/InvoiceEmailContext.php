@@ -31,6 +31,9 @@ final class InvoiceEmailContext implements Context
      */
     public function emailContainingInvoiceForOrderShouldNotBeSent(string $orderNumber, string $recipient): void
     {
-        Assert::false($this->emailChecker->hasMessageTo(sprintf('was generated for order with number %s', $orderNumber), $recipient));
+        Assert::false($this->emailChecker->hasMessageTo(
+            sprintf('was generated for order with number %s', $orderNumber),
+            $recipient
+        ));
     }
 }
