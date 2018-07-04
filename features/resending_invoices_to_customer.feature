@@ -11,7 +11,7 @@ Feature: Resending an invoice to a Customer
         And it belongs to "Clothes" tax category
         And the store has "UPS" shipping method with "$10.00" fee
         And the store allows paying with "Cash on Delivery"
-        And there is a customer "lucy@teamlucifer.com" that placed an order "#00000666"
+        And there is a customer "lucy@teamlucifer.com" that placed an order "#00000777"
         And the customer bought 2 "Angel T-Shirt" products
         And the customer "Lucifer Morningstar" addressed it to "Seaside Fwy", "90802" "Los Angeles" in the "United States"
         And for the billing address of "Mazikeen Lilim" in the "Pacific Coast Hwy", "90806" "Los Angeles", "United States"
@@ -19,6 +19,6 @@ Feature: Resending an invoice to a Customer
         And I am logged in as an administrator
 
     Scenario: Being able to resend an invoice to Customer
-        When I view the summary of the order "#00000022"
+        When I view the summary of the order "#00000777"
         And I click on first invoice's resend button
-        Then the email containing pdf file should be sent to "lucy@teamlucifer.com"
+        Then an email containing invoice generated for order "#00000777" should be sent to "lucy@teamlucifer.com"

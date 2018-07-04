@@ -96,6 +96,14 @@ final class ManagingInvoicesContext implements Context
     }
 
     /**
+     * @When I click on first invoice's resend button
+     */
+    public function clickOnFirstInvoiceResendButton(): void
+    {
+        $this->orderShowPage->resendFirstInvoice();
+    }
+
+    /**
      * @Then it should have billing data as :customerName, :street, :postcode :city, :countryName
      */
     public function itShouldHaveBillingDataAs(

@@ -42,6 +42,13 @@
             <argument type="service" id="knp_snappy.pdf" />
         </service>
 
+        <service id="Sylius\InvoicingPlugin\Ui\Action\ResendInvoiceAction" public="true">
+            <argument type="service" id="Sylius\InvoicingPlugin\Repository\InvoiceRepository" />
+            <argument type="service" id="Sylius\InvoicingPlugin\Email\InvoiceEmailSender" />
+            <argument type="service" id="sylius.repository.order" />
+        </service>
+
+
         <service id="Sylius\Bundle\UiBundle\Block\BlockEventListener">
             <argument>@SyliusInvoicingPlugin/Order/fetchInvoices.html.twig</argument>
             <tag name="kernel.event_listener" event="sonata.block.event.sylius.admin.order.show.after_summary" method="onBlockEvent" />

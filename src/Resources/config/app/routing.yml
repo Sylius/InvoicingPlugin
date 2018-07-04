@@ -29,6 +29,12 @@ sylius_invoicing_plugin_admin_invoice_download:
     defaults:
         _controller: Sylius\InvoicingPlugin\Ui\Action\DownloadInvoiceAction
 
+sylius_invoicing_plugin_admin_invoice_resend:
+    path: /admin/invoices/{id}/resend
+    methods: [GET]
+    defaults:
+        _controller: Sylius\InvoicingPlugin\Ui\Action\ResendInvoiceAction
+
 sylius_invoicing_plugin_admin_order_invoices_partial:
     path: /admin/_partial/invoices/{orderNumber}/
     methods: [GET]

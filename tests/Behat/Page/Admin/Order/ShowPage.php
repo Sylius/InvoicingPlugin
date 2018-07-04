@@ -30,7 +30,13 @@ final class ShowPage extends SymfonyPage implements ShowPageInterface
     public function downloadFirstInvoice(): void
     {
         $invoice = $this->getFirstInvoice();
-        $invoice->clickLink('Download invoice');
+        $invoice->clickLink('Download');
+    }
+
+    public function resendFirstInvoice(): void
+    {
+        $invoice = $this->getFirstInvoice();
+        $invoice->clickLink('Resend');
     }
 
     public function isPdfFileDownloaded(): bool

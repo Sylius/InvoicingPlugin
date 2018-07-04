@@ -23,6 +23,10 @@
                     {% set path = path('sylius_invoicing_plugin_admin_invoice_download', { 'id': invoice.id }) %}
 
                     {{ buttons.default(path, 'sylius_invoicing_plugin.ui.download_invoice'|trans, invoice.id, 'download') }}
+
+                    {% set path = path('sylius_invoicing_plugin_admin_invoice_resend', { 'id': invoice.id }) %}
+
+                    {{ buttons.default(path, 'sylius_invoicing_plugin.ui.resend_invoice'|trans, invoice.id, 'send') }}
                 </td>
             </tr>
         {% endfor %}
