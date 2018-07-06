@@ -49,7 +49,7 @@ final class OrderPaymentPaidProducerSpec extends ObjectBehavior
     ): void {
         $payment->getOrder()->willReturn(null);
 
-        $eventBus->dispatch(Argument::type(OrderPaymentPaid::class))->shouldNotBeCalled();
+        $eventBus->dispatch(Argument::any())->shouldNotBeCalled();
         
         $dateTimeProvider->__invoke()->shouldNotBeCalled();
 

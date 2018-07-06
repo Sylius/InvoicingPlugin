@@ -96,7 +96,7 @@ final class ManagingInvoicesContext implements Context
     }
 
     /**
-     * @When I click on first invoice's resend button
+     * @When I resend the first invoice
      */
     public function clickOnFirstInvoiceResendButton(): void
     {
