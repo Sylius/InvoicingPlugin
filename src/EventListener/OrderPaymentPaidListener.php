@@ -9,6 +9,7 @@ use Sylius\Component\Core\Repository\OrderRepositoryInterface;
 use Sylius\InvoicingPlugin\Email\InvoiceEmailSenderInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Sylius\InvoicingPlugin\Event\OrderPaymentPaid;
+use Sylius\InvoicingPlugin\Event\OrderPaymentPaidInterface;
 use Sylius\InvoicingPlugin\Repository\InvoiceRepository;
 
 final class OrderPaymentPaidListener

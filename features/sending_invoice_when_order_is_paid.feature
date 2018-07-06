@@ -22,11 +22,11 @@ Feature: Sending invoice when order is paid
         And I chose "Free" shipping method with "Cash on Delivery" payment
 
     @ui
-    Scenario: I receive an email containing invoice once complete payment steps for order
+    Scenario: Receiving an email containing invoice when the order is paid
         When the order "#00000666" has just been paid
         Then an email containing invoice generated for order "#00000666" should be sent to "sylius@example.com"
 
     @ui
-    Scenario: I don't receive an email containing invoice when the order is not paid
+    Scenario: Not receiving an email containing invoice when the order is not paid
         When the order "#00000667" was cancelled
         Then an email containing invoice generated for order "#00000667" should not be sent to "sylius@example.com"

@@ -16,12 +16,12 @@
 
         <service id="sylius_invoicing.event_bus" alias="prooph_service_bus.sylius_invoicing_event_bus" />
 
-        <service id="Sylius\InvoicingPlugin\EventListener\OrderPlacedProducer" public="true">
+        <service id="Sylius\InvoicingPlugin\EventProducer\OrderPlacedProducer" public="true">
             <argument type="service" id="sylius_invoicing.event_bus" />
             <argument type="service" id="Sylius\InvoicingPlugin\DateTimeProvider" />
         </service>
 
-        <service id="Sylius\InvoicingPlugin\EventListener\OrderPaymentPaidProducer" public="true">
+        <service id="Sylius\InvoicingPlugin\EventProducer\OrderPaymentPaidProducer" public="true">
             <argument type="service" id="sylius_invoicing.event_bus" />
             <argument type="service" id="Sylius\InvoicingPlugin\DateTimeProvider" />
         </service>

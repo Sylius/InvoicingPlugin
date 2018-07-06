@@ -42,7 +42,7 @@ final class SyliusInvoicingExtension extends AbstractResourceExtension implement
                     'after' => [
                         'sylius_invoicing_plugin_order_created_producer' => [
                             'on' => ['create'],
-                            'do' => ['@Sylius\InvoicingPlugin\EventListener\OrderPlacedProducer', '__invoke'],
+                            'do' => ['@Sylius\InvoicingPlugin\EventProducer\OrderPlacedProducer', '__invoke'],
                             'args' => ['object'],
                         ],
                     ],
@@ -53,7 +53,7 @@ final class SyliusInvoicingExtension extends AbstractResourceExtension implement
                     'after' => [
                         'sylius_invoicing_plugin_payment_complete_producer' => [
                             'on' => ['complete'],
-                            'do' => ['@Sylius\InvoicingPlugin\EventListener\OrderPaymentPaidProducer', '__invoke'],
+                            'do' => ['@Sylius\InvoicingPlugin\EventProducer\OrderPaymentPaidProducer', '__invoke'],
                             'args' => ['object'],
                     ],
                 ]

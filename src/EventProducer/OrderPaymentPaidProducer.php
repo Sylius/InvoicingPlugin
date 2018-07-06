@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Sylius\InvoicingPlugin\EventListener;
+namespace Sylius\InvoicingPlugin\EventProducer;
 
 use Prooph\ServiceBus\EventBus;
-use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\PaymentInterface;
 use Sylius\InvoicingPlugin\DateTimeProvider;
 use Sylius\InvoicingPlugin\Event\OrderPaymentPaid;
