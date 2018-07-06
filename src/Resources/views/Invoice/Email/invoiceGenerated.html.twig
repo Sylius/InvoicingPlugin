@@ -6,7 +6,7 @@
 
 {% block body %}
     {% autoescape %}
-        Invoice with id {{ invoice.id }} was generated for order with number {{ invoice.orderNumber }}.
+        Invoice with id {{ invoice.id }} was generated for order with number #{{ invoice.orderNumber }}.
         <br/><br/>
         You can find the document in this email's attachments.
     {% endautoescape %}

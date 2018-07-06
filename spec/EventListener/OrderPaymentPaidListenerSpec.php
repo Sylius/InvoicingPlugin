@@ -8,9 +8,11 @@ use PhpSpec\ObjectBehavior;
 use Sylius\Component\Core\Model\CustomerInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Repository\OrderRepositoryInterface;
+use Sylius\InvoicingPlugin\DateTimeProvider;
 use Sylius\InvoicingPlugin\Email\InvoiceEmailSenderInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Sylius\InvoicingPlugin\Event\OrderPaymentPaid;
+use Sylius\InvoicingPlugin\Event\OrderPaymentPaidInterface;
 use Sylius\InvoicingPlugin\EventListener\OrderPaymentPaidListener;
 use Sylius\InvoicingPlugin\Repository\InvoiceRepository;
 
@@ -33,13 +35,10 @@ final class OrderPaymentPaidListenerSpec extends ObjectBehavior
         InvoiceRepository $invoiceRepository,
         OrderRepositoryInterface $orderRepository,
         InvoiceEmailSenderInterface $emailSender,
-        OrderPaymentPaid $event,
         InvoiceInterface $invoice,
         OrderInterface $order,
         CustomerInterface $customer
     ): void {
-        $event->orderNumber()->willReturn('0000001');
-
         $invoiceRepository->getOneByOrderNumber('0000001')->willReturn($invoice);
 
         $orderRepository->findOneBy(['number' => '0000001'])->willReturn($order);
@@ -50,6 +49,6 @@ final class OrderPaymentPaidListenerSpec extends ObjectBehavior
 
         $emailSender->sendInvoiceEmail($invoice, 'shop@example.com')->shouldBeCalled();
 
-        $this->__invoke($event);
+        $this->__invoke(new OrderPaymentPaid('0000001', new \DateTime('now')));
     }
 }

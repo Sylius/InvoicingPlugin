@@ -7,8 +7,7 @@ namespace Sylius\InvoicingPlugin\Event;
 use Prooph\Common\Messaging\DomainEvent;
 use Prooph\Common\Messaging\PayloadTrait;
 
-/** @final */
-class OrderPaymentPaid extends DomainEvent
+final class OrderPaymentPaid extends DomainEvent
 {
     use PayloadTrait;
 
