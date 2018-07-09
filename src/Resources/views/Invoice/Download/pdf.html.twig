@@ -1,5 +1,3 @@
-{% import '@SyliusAdmin/Common/Macro/money.html.twig' as money %}
-
 <html lang="en">
     <body>
         <h1>{{ 'sylius_invoicing_plugin.ui.invoice'|trans }} {{ invoice.id }}</h1>
@@ -42,19 +40,19 @@
                         {{ item.variantCode }}
                     </td>
                     <td>
-                        {{ money.format(item.unitPrice, invoice.currencyCode) }}
+                        {{ item.unitPrice|sylius_format_money(invoice.currencyCode, sylius.localeCode) }}
                     </td>
                     <td>
                         {{ item.quantity }}
                     </td>
                     <td>
-                        {{ money.format(item.subtotal, invoice.currencyCode) }}
+                        {{ item.subtotal|sylius_format_money(invoice.currencyCode, sylius.localeCode) }}
                     </td>
                     <td>
-                        {{ money.format(item.taxTotal, invoice.currencyCode) }}
+                        {{ item.taxTotal|sylius_format_money(invoice.currencyCode, sylius.localeCode) }}
                     </td>
                     <td>
-                        {{ money.format(item.total, invoice.currencyCode) }}
+                        {{ item.total|sylius_format_money(invoice.currencyCode, sylius.localeCode) }}
                     </td>
                 </tr>
             {% endfor %}
@@ -63,10 +61,10 @@
             <tr>
                 <th colspan="5"></th>
                 <th>
-                    {{ money.format(invoice.taxTotal, invoice.currencyCode) }}
+                    {{ invoice.taxTotal|sylius_format_money(invoice.currencyCode, sylius.localeCode) }}
                 </th>
                 <th>
-                    <strong>{{ money.format(invoice.total, invoice.currencyCode) }}</strong>
+                    <strong>{{ invoice.total|sylius_format_money(invoice.currencyCode, sylius.localeCode) }}</strong>
                 </th>
             </tr>
             </tfoot>

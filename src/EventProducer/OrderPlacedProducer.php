@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sylius\InvoicingPlugin\EventListener;
+namespace Sylius\InvoicingPlugin\EventProducer;
 
 use Prooph\ServiceBus\EventBus;
 use Sylius\Component\Core\Model\OrderInterface;

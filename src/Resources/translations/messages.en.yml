@@ -1,7 +1,7 @@
 sylius_invoicing_plugin:
     ui:
         billing_data: 'Billing data'
-        download_invoice: 'Download invoice'
+        download_invoice: 'Download'
         invoice: 'Invoice'
         invoice_id: 'Invoice ID'
         invoices: 'Invoices'
@@ -9,3 +9,4 @@ sylius_invoicing_plugin:
         issued_for_order: 'Issued for order'
         manage_invoices: 'Manage invoices'
         order_number: 'Order number'
+        resend_invoice: 'Resend'

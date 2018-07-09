@@ -27,4 +27,3 @@ Feature: Seeing basic information about an invoice
         And it should have a shipping item "UPS" with unit price "$10.00", quantity 1, tax total "$0.00" and total "$10.00"
         And its tax total should be "$12.00"
         And its total should be "$142.00"
-

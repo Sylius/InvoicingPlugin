@@ -48,7 +48,7 @@ $container->prependExtensionConfig('winzou_state_machine', [
             'after' => [
                 'sylius_invoicing_plugin_order_created_producer' => [
                     'on' => ['create'],
-                    'do' => ['@Sylius\InvoicingPlugin\EventListener\OrderPlacedProducer', '__invoke'],
+                    'do' => ['@Sylius\InvoicingPlugin\EventProducer\OrderPlacedProducer', '__invoke'],
                     'args' => ['object'],
                 ],
             ],

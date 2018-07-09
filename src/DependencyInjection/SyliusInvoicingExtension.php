@@ -42,13 +42,23 @@ final class SyliusInvoicingExtension extends AbstractResourceExtension implement
                     'after' => [
                         'sylius_invoicing_plugin_order_created_producer' => [
                             'on' => ['create'],
-                            'do' => ['@Sylius\InvoicingPlugin\EventListener\OrderPlacedProducer', '__invoke'],
+                            'do' => ['@Sylius\InvoicingPlugin\EventProducer\OrderPlacedProducer', '__invoke'],
                             'args' => ['object'],
                         ],
                     ],
                 ],
             ],
-        ]);
+            'sylius_payment' => [
+                'callbacks' => [
+                    'after' => [
+                        'sylius_invoicing_plugin_payment_complete_producer' => [
+                            'on' => ['complete'],
+                            'do' => ['@Sylius\InvoicingPlugin\EventProducer\OrderPaymentPaidProducer', '__invoke'],
+                            'args' => ['object'],
+                    ],
+                ]
+            ]
+        ]]);
     }
 
     private function prependProophServiceBus(ContainerBuilder $container): void

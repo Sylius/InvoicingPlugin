@@ -76,7 +76,7 @@ final class ManagingInvoicesContext implements Context
      */
     public function shouldSeeAnInvoiceRelatedToTheOrder(): void
     {
-        Assert::true($this->orderShowPage->hasRelatedInvoices(1));
+        Assert::same(1, $this->orderShowPage->countRelatedInvoices());
     }
 
     /**
@@ -90,9 +90,17 @@ final class ManagingInvoicesContext implements Context
     /**
      * @When I click on first invoice's download button
      */
-    public function iClickOnFirstInvoiceDownloadButton(): void
+    public function clickOnFirstInvoiceDownloadButton(): void
     {
         $this->orderShowPage->downloadFirstInvoice();
+    }
+
+    /**
+     * @When I resend the first invoice
+     */
+    public function clickOnFirstInvoiceResendButton(): void
+    {
+        $this->orderShowPage->resendFirstInvoice();
     }
 
     /**
@@ -111,7 +119,7 @@ final class ManagingInvoicesContext implements Context
     /**
      * @Then it should have :amountOfItems items in the list
      */
-    public function iShouldHaveItemsInTheList(int $amountOfItems): void
+    public function itShouldHaveItemsInTheList(int $amountOfItems): void
     {
         Assert::same($this->showPage->countItems(), $amountOfItems);
     }
@@ -119,7 +127,7 @@ final class ManagingInvoicesContext implements Context
     /**
      * @Then it should have an item :name with unit price :unitPrice, quantity :quantity, tax total :taxTotal and total :total
      */
-    public function iShouldHaveAnItemWithData(
+    public function itShouldHaveAnItemWithData(
         string $name,
         string $unitPrice,
         int $quantity,
@@ -132,7 +140,7 @@ final class ManagingInvoicesContext implements Context
     /**
      * @Then it should have a shipping item :name with unit price :unitPrice, quantity :quantity, tax total :taxTotal and total :total
      */
-    public function iShouldHaveAShippingItemWithData(
+    public function itShouldHaveAShippingItemWithData(
         string $name,
         string $unitPrice,
         int $quantity,
@@ -161,7 +169,7 @@ final class ManagingInvoicesContext implements Context
     /**
      * @Then the pdf file for this invoice should be downloaded successfully
      */
-    public function thePdfFileForThisInvoiceShouldBeDownloadedSuccessfully(): void
+    public function pdfFileForThisInvoiceShouldBeDownloadedSuccessfully(): void
     {
         Assert::true($this->orderShowPage->isPdfFileDownloaded());
     }
