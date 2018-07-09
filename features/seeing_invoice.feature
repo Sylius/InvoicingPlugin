@@ -27,3 +27,8 @@ Feature: Seeing basic information about an invoice
         And it should have a shipping item "UPS" with unit price "$10.00", quantity 1, tax total "$0.00" and total "$10.00"
         And its tax total should be "$12.00"
         And its total should be "$142.00"
+
+    Scenario: Downloading invoice
+        Given I view the summary of the invoice for order "#00000666"
+        When I click on download button
+        Then the pdf file for this invoice should be downloaded successfully
