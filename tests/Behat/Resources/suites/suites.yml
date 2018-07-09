@@ -1,0 +1,3 @@
+imports:
+    - admin_suites.yml
+    - customer_suites.yml
