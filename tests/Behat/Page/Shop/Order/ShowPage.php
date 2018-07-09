@@ -9,7 +9,7 @@ use Behat\Mink\Element\NodeElement;
 
 final class ShowPage extends SymfonyPage implements ShowPageInterface
 {
-    public function getRouteName()
+    public function getRouteName(): string
     {
         return 'sylius_shop_account_order_show';
     }

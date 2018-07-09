@@ -17,6 +17,6 @@ Feature: Downloading invoices on a single order view
         And I chose "Free" shipping method with "Cash on Delivery" payment
 
     Scenario: Downloading an invoice on order view
-        Given I view the summary of the order "#00000666"
-        When I click on first invoice's download button
+        When I view the summary of the order "#00000666"
+        And I click on first invoice's download button
         Then the pdf file for this invoice should be downloaded successfully
