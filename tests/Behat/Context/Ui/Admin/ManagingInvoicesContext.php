@@ -175,9 +175,9 @@ final class ManagingInvoicesContext implements Context
     }
 
     /**
-     * @When I click on download button
+     * @When I download the invoice
      */
-    public function iClickOnDownloadButton()
+    public function downloadInvoice(): void
     {
         $this->showPage->download();
     }

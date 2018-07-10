@@ -30,5 +30,5 @@ Feature: Seeing basic information about an invoice
 
     Scenario: Downloading invoice
         Given I view the summary of the invoice for order "#00000666"
-        When I click on download button
+        When I download the invoice
         Then the pdf file for this invoice should be downloaded successfully

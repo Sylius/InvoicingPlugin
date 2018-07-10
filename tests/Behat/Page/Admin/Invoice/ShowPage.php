@@ -89,7 +89,7 @@ final class ShowPage extends SymfonyPage implements ShowPageInterface
 
     public function download(): void
     {
-        $this->getSession()->getPage()->clickLink('Download');
+        $this->getDocument()->clickLink('Download');
     }
 
     protected function getDefinedElements(): array
