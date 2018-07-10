@@ -173,4 +173,12 @@ final class ManagingInvoicesContext implements Context
     {
         Assert::true($this->orderShowPage->isPdfFileDownloaded());
     }
+
+    /**
+     * @When I download the invoice
+     */
+    public function downloadInvoice(): void
+    {
+        $this->showPage->download();
+    }
 }

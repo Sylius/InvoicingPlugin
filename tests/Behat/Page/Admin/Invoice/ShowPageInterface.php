@@ -31,4 +31,6 @@ interface ShowPageInterface extends SymfonyPageInterface
     public function getTaxTotal(): string;
 
     public function getTotal(): string;
+
+    public function download(): void;
 }

@@ -19,9 +19,9 @@ final class CustomerBrowsingInvoicesContext implements Context
     }
 
     /**
-     * @When I click on first invoice's download button
+     * @When I download the first invoice
      */
-    public function clickOnFirstInvoiceDownloadButton(): void
+    public function downloadFirstInvoice(): void
     {
         $this->orderShowPage->downloadFirstInvoice();
     }
