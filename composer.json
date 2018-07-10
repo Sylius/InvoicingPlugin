@@ -34,7 +34,8 @@
     "autoload": {
         "psr-4": {
             "Sylius\\InvoicingPlugin\\": "src/",
-            "Tests\\Sylius\\InvoicingPlugin\\": "tests/"
+            "Tests\\Sylius\\InvoicingPlugin\\": "tests/",
+            "Tests\\Application\\InvoicingPlugin\\": "tests/Application/src/"
         }
     },
     "autoload-dev": {

@@ -1,3 +1,4 @@
 imports:
-    - admin.yml
+    - admin/managing_channels.yml
+    - admin/managing_invoices.yml
     - customer.yml

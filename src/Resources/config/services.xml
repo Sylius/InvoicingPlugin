@@ -48,14 +48,24 @@
             <argument type="service" id="sylius.repository.order" />
         </service>
 
-        <service id="sylius.admin.order.show.after_summary.event_listener" class="Sylius\Bundle\UiBundle\Block\BlockEventListener">
+        <service id="sylius_invoicing_plugin.block_event_listener.account.order_show" class="Sylius\Bundle\UiBundle\Block\BlockEventListener">
+            <argument>@SyliusInvoicingPlugin/Order/Shop/fetchInvoices.html.twig</argument>
+            <tag name="kernel.event_listener" event="sonata.block.event.sylius.shop.account.order.show.after_summary" method="onBlockEvent" />
+        </service>
+
+        <service id="sylius_invoicing_plugin.block_event_listener.order_show" class="Sylius\Bundle\UiBundle\Block\BlockEventListener">
             <argument>@SyliusInvoicingPlugin/Order/Admin/fetchInvoices.html.twig</argument>
             <tag name="kernel.event_listener" event="sonata.block.event.sylius.admin.order.show.after_summary" method="onBlockEvent" />
         </service>
 
-        <service id="sylius.shop.account.order.show.after_summary.event_listener" class="Sylius\Bundle\UiBundle\Block\BlockEventListener">
-            <argument>@SyliusInvoicingPlugin/Order/Shop/fetchInvoices.html.twig</argument>
-            <tag name="kernel.event_listener" event="sonata.block.event.sylius.shop.account.order.show.after_summary" method="onBlockEvent" />
+        <service id="sylius_invoicing_plugin.block_event_listener.channel_form" class="Sylius\Bundle\UiBundle\Block\BlockEventListener">
+            <argument>@SyliusInvoicingPlugin/Channel/shopBillingDataForm.html.twig</argument>
+            <tag name="kernel.event_listener" event="sonata.block.event.sylius.admin.channel.update.form" method="onBlockEvent" />
+        </service>
+
+        <service id="Sylius\InvoicingPlugin\Form\Extension\ChannelTypeExtension">
+            <argument type="service" id="sylius.repository.channel" />
+            <tag name="form.type_extension" extended-type="Sylius\Bundle\ChannelBundle\Form\Type\ChannelType" />
         </service>
 
         <service id="Sylius\InvoicingPlugin\EventListener\OrderPaymentPaidListener">

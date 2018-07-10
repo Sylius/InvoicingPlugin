@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <parameters>
+        <parameter key="sylius.behat.page.admin.channel.update.class">Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Channel\UpdatePage</parameter>
+    </parameters>
+
     <services>
         <service id="Tests\Sylius\InvoicingPlugin\Behat\Context\Ui\Admin\ManagingInvoicesContext" public="true">
             <argument type="service" id="Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Invoice\IndexPageInterface" />
@@ -22,6 +26,11 @@
         <service id="Tests\Sylius\InvoicingPlugin\Behat\Context\Order\OrderContext" public="true">
             <argument type="service" id="__symfony__.doctrine.orm.entity_manager" />
             <argument type="service" id="__symfony__.sm.factory" />
+            <tag name="fob.context_service" />
+        </service>
+
+        <service id="Tests\Sylius\InvoicingPlugin\Behat\Context\Ui\Admin\ManagingChannelsContext" public="true">
+            <argument type="service" id="sylius.behat.page.admin.channel.update" />
             <tag name="fob.context_service" />
         </service>
 
