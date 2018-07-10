@@ -16,18 +16,14 @@ class TaxItem implements TaxItemInterface, ResourceInterface
     private $invoice;
 
     /** @var string */
-    private $name;
-
-    /** @var float */
-    private $rate;
+    private $label;
 
     /** @var int */
     private $amount;
 
-    public function __construct(string $name, float $rate, int $amount)
+    public function __construct(string $label, int $amount)
     {
-        $this->name = $name;
-        $this->rate = $rate;
+        $this->label = $label;
         $this->amount = $amount;
     }
 
@@ -51,14 +47,9 @@ class TaxItem implements TaxItemInterface, ResourceInterface
         $this->invoice = $invoice;
     }
 
-    public function name(): string
+    public function label(): string
     {
-        return $this->name;
-    }
-
-    public function rate(): float
-    {
-        return $this->rate;
+        return $this->label;
     }
 
     public function amount(): int

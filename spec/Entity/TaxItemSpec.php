@@ -12,7 +12,7 @@ use Sylius\InvoicingPlugin\Entity\TaxItemInterface;
 final class TaxItemSpec extends ObjectBehavior
 {
     function let(): void {
-        $this->beConstructedWith('VAT', 23.0, 2300);
+        $this->beConstructedWith('VAT (23%)', 2300);
     }
 
     function it_implements_tax_item_interface(): void
@@ -27,8 +27,7 @@ final class TaxItemSpec extends ObjectBehavior
 
     function it_has_proper_tax_item_data(): void
     {
-        $this->name()->shouldReturn('VAT');
-        $this->rate()->shouldReturn(23.0);
+        $this->label()->shouldReturn('VAT (23%)');
         $this->amount()->shouldReturn(2300);
     }
 

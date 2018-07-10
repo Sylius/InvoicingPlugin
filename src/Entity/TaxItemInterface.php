@@ -12,9 +12,7 @@ interface TaxItemInterface
 
     public function setInvoice(InvoiceInterface $invoice): void;
 
-    public function name(): string;
-
-    public function rate(): float;
+    public function label(): string;
 
     public function amount(): int;
 }

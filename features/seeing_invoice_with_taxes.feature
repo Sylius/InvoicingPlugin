@@ -22,12 +22,11 @@ Feature: Seeing taxes on an invoice
         And the customer chose "UPS" shipping method with "Cash on Delivery" payment
         And I am logged in as an administrator
 
-    @todo
     Scenario: Seeing proper taxes on an invoice
         When I view the summary of the invoice for order "#00000666"
         Then it should have an item "PHP T-Shirt" with unit price "$60.00", quantity 2, tax total "$27.60" and total "$147.60"
         And it should have an item "Symfony Mug" with unit price "$40.00", quantity 3, tax total "$12.00" and total "$132.00"
-        And its subtotal should be "$240.00"
+        And its subtotal should be "$250.00"
         And it should have a tax item "US VAT (23%)" with amount "$27.60"
         And it should have a tax item "Low VAT (10%)" with amount "$12.00"
-        And its total should be "$279.60"
+        And its total should be "$289.60"

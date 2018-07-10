@@ -27,7 +27,6 @@ final class InvoiceSpec extends ObjectBehavior
             $issuedAt,
             $billingData,
             'USD',
-            300,
             10300,
             new ArrayCollection([$lineItem->getWrappedObject()]),
             new ArrayCollection([$taxItem->getWrappedObject()])

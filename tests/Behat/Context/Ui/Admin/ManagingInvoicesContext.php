@@ -138,6 +138,14 @@ final class ManagingInvoicesContext implements Context
     }
 
     /**
+     * @Then it should have a tax item :label with amount :amount
+     */
+    public function itShouldHaveATaxItemWithAmount(string $label, string $amount): void
+    {
+        Assert::true($this->showPage->hasTaxItem($label, $amount));
+    }
+
+    /**
      * @Then it should have a shipping item :name with unit price :unitPrice, quantity :quantity, tax total :taxTotal and total :total
      */
     public function itShouldHaveAShippingItemWithData(
@@ -156,6 +164,14 @@ final class ManagingInvoicesContext implements Context
     public function itsTaxTotalShouldBe(string $taxTotal): void
     {
         Assert::same($this->showPage->getTaxTotal(), $taxTotal);
+    }
+
+    /**
+     * @Then its subtotal should be :total
+     */
+    public function itsSubtotalShouldBe(string $subtotal): void
+    {
+        Assert::same($this->showPage->getSubtotal(), $subtotal);
     }
 
     /**

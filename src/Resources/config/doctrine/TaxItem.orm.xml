@@ -6,8 +6,7 @@
             <generator strategy="AUTO" />
         </id>
 
-        <field name="name" />
-        <field name="rate" type="decimal" />
+        <field name="label" />
         <field name="amount" type="integer" />
 
         <many-to-one field="invoice" target-entity="Sylius\InvoicingPlugin\Entity\InvoiceInterface" inversed-by="taxItems">

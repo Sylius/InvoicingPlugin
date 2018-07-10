@@ -15,6 +15,7 @@ use Sylius\InvoicingPlugin\Entity\BillingDataInterface;
 use Sylius\InvoicingPlugin\Entity\Invoice;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Sylius\InvoicingPlugin\Entity\LineItem;
+use Sylius\InvoicingPlugin\Entity\TaxItem;
 
 final class InvoiceGenerator implements InvoiceGeneratorInterface
 {
@@ -36,9 +37,9 @@ final class InvoiceGenerator implements InvoiceGeneratorInterface
             $date,
             $this->prepareBillingData($billingAddress),
             $order->getCurrencyCode(),
-            $order->getTaxTotal(),
             $order->getTotal(),
-            $this->prepareLineItems($order)
+            $this->prepareLineItems($order),
+            $this->prepareTaxItems($order)
         );
     }
 
@@ -92,5 +93,28 @@ final class InvoiceGenerator implements InvoiceGeneratorInterface
         }
 
         return $lineItems;
+    }
+
+    private function prepareTaxItems(OrderInterface $order): Collection
+    {
+        $temporaryTaxItems = [];
+        $taxItems = new ArrayCollection();
+
+        $taxAdjustments = $order->getAdjustmentsRecursively(AdjustmentInterface::TAX_ADJUSTMENT);
+        foreach ($taxAdjustments as $taxAdjustment) {
+            if (array_key_exists($taxAdjustment->getLabel(), $temporaryTaxItems)) {
+                $temporaryTaxItems[$taxAdjustment->getLabel()] += $taxAdjustment->getAmount();
+
+                continue;
+            }
+
+            $temporaryTaxItems[$taxAdjustment->getLabel()] = $taxAdjustment->getAmount();
+        }
+
+        foreach ($temporaryTaxItems as $label => $amount) {
+            $taxItems->add(new TaxItem($label, $amount));
+        }
+
+        return $taxItems;
     }
 }
