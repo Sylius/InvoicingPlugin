@@ -32,7 +32,7 @@ final class InvoiceGenerator implements InvoiceGeneratorInterface
         $billingAddress = $order->getBillingAddress();
 
         return new Invoice(
-            $this->invoiceIdentifierGenerator->__invoke($order->getNumber()),
+            $this->invoiceIdentifierGenerator->generate(),
             $order->getNumber(),
             $date,
             $this->prepareBillingData($billingAddress),

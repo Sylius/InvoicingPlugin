@@ -38,7 +38,7 @@ final class InvoiceGeneratorSpec extends ObjectBehavior
     ): void {
         $date = new \DateTimeImmutable('now');
 
-        $invoiceIdentifierGenerator->__invoke('007')->willReturn('7903c83a-4c5e-4bcf-81d8-9dc304c6a353');
+        $invoiceIdentifierGenerator->generate()->willReturn($date->format('y-m-d-' . '0000001'));
 
         $order->getNumber()->willReturn('007');
         $order->getCurrencyCode()->willReturn('USD');
@@ -69,7 +69,7 @@ final class InvoiceGeneratorSpec extends ObjectBehavior
         $orderItem->getVariantName()->willReturn('Blue');
         $orderItem->getVariant()->willReturn($variant);
 
-        $variant->getCode()->willReturn('7903c83a-4c5e-4bcf-81d8-9dc304c6a353');
+        $variant->getCode()->willReturn($date->format('y-m-d-' . '0000001'));
 
         $shippingAdjustment->getLabel()->willReturn('UPS');
         $shippingAdjustment->getAmount()->willReturn(800);
