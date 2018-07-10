@@ -15,7 +15,7 @@ final class UpdatePage extends BaseUpdatePage implements UpdatePageInterface
 
     public function hasCompany(string $company): bool
     {
-        return $this->getElement('company')->getValue() === $company;
+        return $company === $this->getElement('company')->getValue();
     }
 
     public function specifyTaxId(string $taxId): void
@@ -25,7 +25,7 @@ final class UpdatePage extends BaseUpdatePage implements UpdatePageInterface
 
     public function hasTaxId(string $taxId): bool
     {
-        return $this->getElement('tax_id')->getValue() === $taxId;
+        return $taxId === $this->getElement('tax_id')->getValue();
     }
 
     public function specifyBillingAddress(string $street, string $postcode, string $city, string $countryCode): void
@@ -39,10 +39,10 @@ final class UpdatePage extends BaseUpdatePage implements UpdatePageInterface
     public function hasBillingAddress(string $street, string $postcode, string $city, string $countryCode): bool
     {
         return
-            $this->getElement('street')->getValue() === $street &&
-            $this->getElement('postcode')->getValue() === $postcode &&
-            $this->getElement('city')->getValue() === $city &&
-            $this->getElement('country_code')->getValue() === $countryCode
+            $street === $this->getElement('street')->getValue() &&
+            $postcode === $this->getElement('postcode')->getValue() &&
+            $city === $this->getElement('city')->getValue() &&
+            $countryCode === $this->getElement('country_code')->getValue()
         ;
     }
 
