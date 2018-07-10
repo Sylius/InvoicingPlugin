@@ -48,9 +48,14 @@
             <argument type="service" id="sylius.repository.order" />
         </service>
 
-        <service id="Sylius\Bundle\UiBundle\Block\BlockEventListener">
-            <argument>@SyliusInvoicingPlugin/Order/fetchInvoices.html.twig</argument>
+        <service id="sylius.admin.order.show.after_summary.event_listener" class="Sylius\Bundle\UiBundle\Block\BlockEventListener">
+            <argument>@SyliusInvoicingPlugin/Order/Admin/fetchInvoices.html.twig</argument>
             <tag name="kernel.event_listener" event="sonata.block.event.sylius.admin.order.show.after_summary" method="onBlockEvent" />
+        </service>
+
+        <service id="sylius.shop.account.order.show.after_summary.event_listener" class="Sylius\Bundle\UiBundle\Block\BlockEventListener">
+            <argument>@SyliusInvoicingPlugin/Order/Shop/fetchInvoices.html.twig</argument>
+            <tag name="kernel.event_listener" event="sonata.block.event.sylius.shop.account.order.show.after_summary" method="onBlockEvent" />
         </service>
 
         <service id="Sylius\InvoicingPlugin\EventListener\OrderPaymentPaidListener">
