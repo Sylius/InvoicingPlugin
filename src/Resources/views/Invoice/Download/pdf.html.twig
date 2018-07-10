@@ -59,12 +59,29 @@
             </tbody>
             <tfoot>
             <tr>
-                <th colspan="5"></th>
-                <th>
-                    {{ invoice.taxTotal|sylius_format_money(invoice.currencyCode, sylius.localeCode) }}
+                <th colspan="6">
+                    <strong>{{ 'sylius.ui.subtotal'|trans }}</strong>:
                 </th>
                 <th>
-                    <strong>{{ invoice.total|sylius_format_money(invoice.currencyCode, sylius.localeCode) }}</strong>
+                    {{ invoice.subtotal|sylius_format_money(invoice.currencyCode, sylius.localeCode) }}
+                </th>
+            </tr>
+            {% for item in invoice.taxItems %}
+                <tr>
+                    <th colspan="6">
+                        <strong>{{ item.label }}</strong>:
+                    </th>
+                    <th>
+                        {{ item.amount|sylius_format_money(invoice.currencyCode, sylius.localeCode) }}
+                    </th>
+                </tr>
+            {% endfor %}
+            <tr>
+                <th colspan="6">
+                    <strong>{{ 'sylius.ui.total'|trans }}</strong>:
+                </th>
+                <th>
+                    {{ invoice.total|sylius_format_money(invoice.currencyCode, sylius.localeCode) }}
                 </th>
             </tr>
             </tfoot>
