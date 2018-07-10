@@ -11,15 +11,17 @@
         <div class="ten wide column">
             {% include '@SyliusInvoicingPlugin/Invoice/Show/_header.html.twig' %}
         </div>
+        <div class="six wide right aligned column">
+            {% set path = path('sylius_invoicing_plugin_admin_invoice_download', { 'id': invoice.id }) %}
+
+            {{ buttons.default(path, 'sylius_invoicing_plugin.ui.download_invoice'|trans, invoice.id, 'download') }}
+        </div>
     </div>
 
     {% include '@SyliusInvoicingPlugin/Invoice/Show/_breadcrumb.html.twig' %}
 
-    {% set path = path('sylius_invoicing_plugin_admin_invoice_download', { 'id': invoice.id }) %}
-
     <div class="ui stackable segment grid">
         <div class="twelve wide column">
-            {{ buttons.default(path, 'sylius_invoicing_plugin.ui.download_invoice'|trans, invoice.id, 'download') }}
             <table class="ui celled compact small table fixed">
                 <thead>
                 <tr>
