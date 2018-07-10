@@ -7,7 +7,6 @@
         <field name="orderNumber" column="order_number" />
         <field name="issuedAt" column="issued_at" type="datetime" />
         <field name="currencyCode" column="currency_code" length="3" />
-        <field name="taxTotal" column="tax_total" type="integer" />
         <field name="total" column="total" type="integer" />
 
         <one-to-one field="billingData" target-entity="Sylius\InvoicingPlugin\Entity\BillingDataInterface">
@@ -18,6 +17,12 @@
         </one-to-one>
 
         <one-to-many field="lineItems" target-entity="Sylius\InvoicingPlugin\Entity\LineItemInterface" mapped-by="invoice" orphan-removal="true">
+            <cascade>
+                <cascade-all/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many field="taxItems" target-entity="Sylius\InvoicingPlugin\Entity\TaxItemInterface" mapped-by="invoice" orphan-removal="true">
             <cascade>
                 <cascade-all/>
             </cascade>
