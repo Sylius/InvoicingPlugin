@@ -1,0 +1,16 @@
+sylius_invoicing_plugin_shop_invoice_download:
+    path: /invoices/{id}/download
+    methods: [GET]
+    defaults:
+        _controller: Sylius\InvoicingPlugin\Ui\Action\DownloadInvoiceAction
+
+sylius_invoicing_plugin_shop_order_invoices_partial:
+    path: /_partial/invoices/{orderNumber}/
+    methods: [GET]
+    defaults:
+        _controller: sylius_invoicing_plugin.controller.invoice:indexAction
+        _sylius:
+            template: $template
+            repository:
+                method: findByOrderNumber
+                arguments: $orderNumber

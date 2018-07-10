@@ -9,6 +9,11 @@
             <tag name="fob.context_service" />
         </service>
 
+        <service id="Tests\Sylius\InvoicingPlugin\Behat\Context\Ui\Shop\CustomerBrowsingInvoicesContext" public="true">
+            <argument type="service" id="Tests\Sylius\InvoicingPlugin\Behat\Page\Shop\Order\ShowPageInterface" />
+            <tag name="fob.context_service" />
+        </service>
+
         <service id="Tests\Sylius\InvoicingPlugin\Behat\Context\Domain\InvoiceEmailContext" public="true" >
             <argument type="service" id="__symfony__.sylius.behat.email_checker"/>
             <tag name="fob.context_service" />
@@ -30,5 +35,7 @@
         </service>
 
         <service id="Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Order\ShowPageInterface" class="Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Order\ShowPage" parent="sylius.behat.symfony_page" />
+
+        <service id="Tests\Sylius\InvoicingPlugin\Behat\Page\Shop\Order\ShowPageInterface" class="Tests\Sylius\InvoicingPlugin\Behat\Page\Shop\Order\ShowPage" parent="sylius.behat.symfony_page" />
     </services>
 </container>

@@ -1,0 +1,3 @@
+imports:
+    - admin.yml
+    - customer.yml
