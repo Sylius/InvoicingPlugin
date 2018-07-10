@@ -2,6 +2,8 @@
 
 {% import '@SyliusAdmin/Common/Macro/money.html.twig' as money %}
 
+{% import '@SyliusUi/Macro/buttons.html.twig' as buttons %}
+
 {% block title %}{{ 'sylius.ui.invoice'|trans ~ ' ' ~ invoice.id }} {{ parent() }}{% endblock %}
 
 {% block content %}
@@ -13,8 +15,11 @@
 
     {% include '@SyliusInvoicingPlugin/Invoice/Show/_breadcrumb.html.twig' %}
 
+    {% set path = path('sylius_invoicing_plugin_admin_invoice_download', { 'id': invoice.id }) %}
+
     <div class="ui stackable segment grid">
         <div class="twelve wide column">
+            {{ buttons.default(path, 'sylius_invoicing_plugin.ui.download_invoice'|trans, invoice.id, 'download') }}
             <table class="ui celled compact small table fixed">
                 <thead>
                 <tr>

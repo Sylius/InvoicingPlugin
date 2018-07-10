@@ -87,6 +87,11 @@ final class ShowPage extends SymfonyPage implements ShowPageInterface
         return $this->getElement('invoice_total')->getText();
     }
 
+    public function download(): void
+    {
+        $this->getDocument()->clickLink('Download');
+    }
+
     protected function getDefinedElements(): array
     {
         return array_merge(parent::getDefinedElements(), [
