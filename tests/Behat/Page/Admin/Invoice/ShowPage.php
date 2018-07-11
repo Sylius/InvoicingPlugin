@@ -77,9 +77,16 @@ final class ShowPage extends SymfonyPage implements ShowPageInterface
         return null !== $row;
     }
 
-    public function getTaxTotal(): string
+    public function hasTaxItem(string $label, string $amount): bool
     {
-        return $this->getElement('invoice_tax_total')->getText();
+        $taxItemAmountElement = $this->getElement('tax_item_amount', ['%label%' => $label]);
+
+        return $amount === $taxItemAmountElement->getText();
+    }
+
+    public function getSubtotal(): string
+    {
+        return $this->getElement('invoice_subtotal')->getText();
     }
 
     public function getTotal(): string
@@ -96,10 +103,11 @@ final class ShowPage extends SymfonyPage implements ShowPageInterface
     {
         return array_merge(parent::getDefinedElements(), [
             'billing_address' => '#billing-data',
-            'invoice_tax_total' => '#invoice-tax-total',
+            'invoice_subtotal' => '#invoice-subtotal',
             'invoice_total' => '#invoice-total',
             'issued_at' => '#invoice-issued-at',
             'table' => '.table',
+            'tax_item_amount' => 'tr.tax-item:contains("%label%") .tax-item-amount',
         ]);
     }
 }

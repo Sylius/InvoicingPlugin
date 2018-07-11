@@ -18,9 +18,11 @@ interface InvoiceInterface
 
     public function currencyCode(): string;
 
-    public function taxTotal(): int;
-
     public function total(): int;
 
     public function lineItems(): Collection;
+
+    public function taxItems(): Collection;
+
+    public function subtotal(): int;
 }

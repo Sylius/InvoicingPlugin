@@ -33,7 +33,8 @@ final class InvoiceGeneratorSpec extends ObjectBehavior
         AddressInterface $billingAddress,
         AdjustmentInterface $shippingAdjustment,
         ProductVariantInterface $variant,
-        OrderItemInterface $orderItem
+        OrderItemInterface $orderItem,
+        AdjustmentInterface $taxAdjustment
     ): void {
         $date = new \DateTimeImmutable('now');
 
@@ -41,11 +42,13 @@ final class InvoiceGeneratorSpec extends ObjectBehavior
 
         $order->getNumber()->willReturn('007');
         $order->getCurrencyCode()->willReturn('USD');
-        $order->getTaxTotal()->willReturn(300);
         $order->getTotal()->willReturn(10300);
         $order->getBillingAddress()->willReturn($billingAddress);
         $order->getItems()->willReturn(new ArrayCollection([$orderItem->getWrappedObject()]));
-        $order->getAdjustments(AdjustmentInterface::SHIPPING_ADJUSTMENT)->willReturn(new ArrayCollection([$shippingAdjustment->getWrappedObject()]));
+        $order
+            ->getAdjustments(AdjustmentInterface::SHIPPING_ADJUSTMENT)
+            ->willReturn(new ArrayCollection([$shippingAdjustment->getWrappedObject()]))
+        ;
 
         $billingAddress->getFirstName()->willReturn('John');
         $billingAddress->getLastName()->willReturn('Doe');
@@ -61,7 +64,7 @@ final class InvoiceGeneratorSpec extends ObjectBehavior
         $orderItem->getQuantity()->willReturn(2);
         $orderItem->getUnitPrice()->willReturn(5000);
         $orderItem->getSubtotal()->willReturn(10000);
-        $orderItem->getTaxTotal()->willReturn(300);
+        $orderItem->getTaxTotal()->willReturn(500);
         $orderItem->getTotal()->willReturn(10300);
         $orderItem->getVariantName()->willReturn('Blue');
         $orderItem->getVariant()->willReturn($variant);
@@ -70,6 +73,14 @@ final class InvoiceGeneratorSpec extends ObjectBehavior
 
         $shippingAdjustment->getLabel()->willReturn('UPS');
         $shippingAdjustment->getAmount()->willReturn(800);
+
+        $order
+            ->getAdjustmentsRecursively(AdjustmentInterface::TAX_ADJUSTMENT)
+            ->willReturn(new ArrayCollection([$taxAdjustment->getWrappedObject()]))
+        ;
+
+        $taxAdjustment->getLabel()->willReturn('VAT (10%)');
+        $taxAdjustment->getAmount()->willReturn(500);
 
         $this->generateForOrder($order, $date)->shouldReturnAnInstanceOf(Invoice::class);
     }

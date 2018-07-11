@@ -10,12 +10,14 @@ use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\InvoicingPlugin\Entity\BillingDataInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Sylius\InvoicingPlugin\Entity\LineItemInterface;
+use Sylius\InvoicingPlugin\Entity\TaxItemInterface;
 
 final class InvoiceSpec extends ObjectBehavior
 {
     function let(
         BillingDataInterface $billingData,
-        LineItemInterface $lineItem
+        LineItemInterface $lineItem,
+        TaxItemInterface $taxItem
     ): void {
         $issuedAt = new \DateTimeImmutable('now');
 
@@ -25,9 +27,9 @@ final class InvoiceSpec extends ObjectBehavior
             $issuedAt,
             $billingData,
             'USD',
-            300,
             10300,
-            new ArrayCollection([$lineItem->getWrappedObject()])
+            new ArrayCollection([$lineItem->getWrappedObject()]),
+            new ArrayCollection([$taxItem->getWrappedObject()])
         );
     }
 
@@ -43,10 +45,12 @@ final class InvoiceSpec extends ObjectBehavior
 
     function it_has_an_id(
         BillingDataInterface $billingData,
-        LineItemInterface $lineItem
+        LineItemInterface $lineItem,
+        TaxItemInterface $taxItem
     ): void {
         $issuedAt = new \DateTimeImmutable('now');
         $lineItems = new ArrayCollection([$lineItem->getWrappedObject()]);
+        $taxItems = new ArrayCollection([$taxItem->getWrappedObject()]);
 
         $this->beConstructedWith(
             '7903c83a-4c5e-4bcf-81d8-9dc304c6a353',
@@ -54,17 +58,17 @@ final class InvoiceSpec extends ObjectBehavior
             $issuedAt,
             $billingData,
             'USD',
-            300,
             10300,
-            $lineItems
+            $lineItems,
+            $taxItems
         );
 
         $this->id()->shouldReturn('7903c83a-4c5e-4bcf-81d8-9dc304c6a353');
         $this->orderNumber()->shouldReturn('007');
         $this->billingData()->shouldReturn($billingData);
         $this->currencyCode()->shouldReturn('USD');
-        $this->taxTotal()->shouldReturn(300);
         $this->total()->shouldReturn(10300);
         $this->lineItems()->shouldReturn($lineItems);
+        $this->taxItems()->shouldReturn($taxItems);
     }
 }

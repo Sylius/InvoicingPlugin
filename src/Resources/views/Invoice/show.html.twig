@@ -11,15 +11,17 @@
         <div class="ten wide column">
             {% include '@SyliusInvoicingPlugin/Invoice/Show/_header.html.twig' %}
         </div>
+        <div class="six wide right aligned column">
+            {% set path = path('sylius_invoicing_plugin_admin_invoice_download', { 'id': invoice.id }) %}
+
+            {{ buttons.default(path, 'sylius_invoicing_plugin.ui.download_invoice'|trans, invoice.id, 'download') }}
+        </div>
     </div>
 
     {% include '@SyliusInvoicingPlugin/Invoice/Show/_breadcrumb.html.twig' %}
 
-    {% set path = path('sylius_invoicing_plugin_admin_invoice_download', { 'id': invoice.id }) %}
-
     <div class="ui stackable segment grid">
         <div class="twelve wide column">
-            {{ buttons.default(path, 'sylius_invoicing_plugin.ui.download_invoice'|trans, invoice.id, 'download') }}
             <table class="ui celled compact small table fixed">
                 <thead>
                 <tr>
@@ -61,12 +63,29 @@
                 </tbody>
                 <tfoot>
                 <tr>
-                    <th colspan="5"></th>
-                    <th id="invoice-tax-total" class="right aligned">
-                        {{ money.format(invoice.taxTotal, invoice.currencyCode) }}
+                    <th colspan="6" class="right aligned">
+                        <strong>{{ 'sylius.ui.subtotal'|trans }}</strong>:
+                    </th>
+                    <th id="invoice-subtotal" class="right aligned">
+                        {{ money.format(invoice.subtotal, invoice.currencyCode) }}
+                    </th>
+                </tr>
+                {% for item in invoice.taxItems %}
+                    <tr class="tax-item">
+                        <th colspan="6" class="right aligned">
+                            <strong>{{ item.label }}</strong>:
+                        </th>
+                        <th class="right aligned tax-item-amount">
+                            {{ money.format(item.amount, invoice.currencyCode) }}
+                        </th>
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <th colspan="6" class="right aligned">
+                        <strong>{{ 'sylius.ui.total'|trans }}</strong>:
                     </th>
                     <th id="invoice-total" class="right aligned">
-                        <strong>{{ money.format(invoice.total, invoice.currencyCode) }}</strong>
+                        {{ money.format(invoice.total, invoice.currencyCode) }}
                     </th>
                 </tr>
                 </tfoot>

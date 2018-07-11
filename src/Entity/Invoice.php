@@ -26,13 +26,13 @@ class Invoice implements InvoiceInterface, ResourceInterface
     private $currencyCode;
 
     /** @var int */
-    private $taxTotal;
-
-    /** @var int */
     private $total;
 
     /** @var Collection|LineItemInterface[] */
     private $lineItems;
+
+    /** @var Collection|TaxItemInterface[] */
+    private $taxItems;
 
     public function __construct(
         string $id,
@@ -40,22 +40,27 @@ class Invoice implements InvoiceInterface, ResourceInterface
         \DateTimeInterface $issuedAt,
         BillingDataInterface $billingData,
         string $currencyCode,
-        int $taxTotal,
         int $total,
-        Collection $lineItems
+        Collection $lineItems,
+        Collection $taxItems
     ) {
         $this->id = $id;
         $this->orderNumber = $orderNumber;
         $this->issuedAt = clone $issuedAt;
         $this->billingData = $billingData;
         $this->currencyCode = $currencyCode;
-        $this->taxTotal = $taxTotal;
         $this->total = $total;
         $this->lineItems = $lineItems;
+        $this->taxItems = $taxItems;
 
         /** @var LineItemInterface $lineItem */
         foreach ($lineItems as $lineItem) {
             $lineItem->setInvoice($this);
+        }
+
+        /** @var TaxItemInterface $taxItem */
+        foreach ($taxItems as $taxItem) {
+            $taxItem->setInvoice($this);
         }
     }
 
@@ -89,11 +94,6 @@ class Invoice implements InvoiceInterface, ResourceInterface
         return $this->currencyCode;
     }
 
-    public function taxTotal(): int
-    {
-        return $this->taxTotal;
-    }
-
     public function total(): int
     {
         return $this->total;
@@ -102,5 +102,22 @@ class Invoice implements InvoiceInterface, ResourceInterface
     public function lineItems(): Collection
     {
         return $this->lineItems;
+    }
+
+    public function taxItems(): Collection
+    {
+        return $this->taxItems;
+    }
+
+    public function subtotal(): int
+    {
+        $subtotal = 0;
+
+        /** @var LineItemInterface $lineItem */
+        foreach ($this->lineItems as $lineItem) {
+            $subtotal += $lineItem->subtotal();
+        }
+
+        return $subtotal;
     }
 }

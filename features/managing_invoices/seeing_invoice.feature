@@ -25,7 +25,6 @@ Feature: Seeing basic information about an invoice
         And it should have 2 items in the list
         And it should have an item "Angel T-Shirt" with unit price "$60.00", quantity 2, tax total "$12.00" and total "$132.00"
         And it should have a shipping item "UPS" with unit price "$10.00", quantity 1, tax total "$0.00" and total "$10.00"
-        And its tax total should be "$12.00"
         And its total should be "$142.00"
 
     Scenario: Downloading invoice
