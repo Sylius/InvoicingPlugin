@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Sylius\InvoicingPlugin\Generator;
 
-interface InvoiceIdentifierGenerator
+interface InvoiceNumberGenerator
 {
     public function generate(): string;
 }

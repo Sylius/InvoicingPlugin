@@ -14,6 +14,9 @@ class Invoice implements InvoiceInterface, ResourceInterface
     private $id;
 
     /** @var string */
+    private $number;
+
+    /** @var string */
     private $orderNumber;
 
     /** @var \DateTimeInterface */
@@ -36,6 +39,7 @@ class Invoice implements InvoiceInterface, ResourceInterface
 
     public function __construct(
         string $id,
+        string $number,
         string $orderNumber,
         \DateTimeInterface $issuedAt,
         BillingDataInterface $billingData,
@@ -45,6 +49,7 @@ class Invoice implements InvoiceInterface, ResourceInterface
         Collection $taxItems
     ) {
         $this->id = $id;
+        $this->number = $number;
         $this->orderNumber = $orderNumber;
         $this->issuedAt = clone $issuedAt;
         $this->billingData = $billingData;
@@ -72,6 +77,11 @@ class Invoice implements InvoiceInterface, ResourceInterface
     public function id(): string
     {
         return $this->id;
+    }
+
+    public function number(): string
+    {
+        return $this->number;
     }
 
     public function orderNumber(): string

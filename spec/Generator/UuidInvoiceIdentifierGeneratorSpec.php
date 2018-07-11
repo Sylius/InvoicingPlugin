@@ -16,11 +16,11 @@ final class UuidInvoiceIdentifierGeneratorSpec extends ObjectBehavior
 
     function it_returns_a_string(): void
     {
-        $this('order id')->shouldBeString();
+        $this->generate()->shouldBeString();
     }
 
     function it_returns_two_different_strings_on_subsequent_calls(): void
     {
-        $this('order id')->shouldNotReturn($this('order id'));
+        $this->generate()->shouldNotReturn($this->generate());
     }
 }

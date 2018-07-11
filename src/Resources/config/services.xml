@@ -6,12 +6,13 @@
 
         <service id="Sylius\InvoicingPlugin\DateTimeProvider" class="Sylius\InvoicingPlugin\SystemDateTimeProvider" />
 
-        <service id="Sylius\InvoicingPlugin\Repository\InvoiceRepository" class="Sylius\InvoicingPlugin\Repository\DoctrineInvoiceRepository" />
+        <service id="Sylius\InvoicingPlugin\Repository\InvoiceRepository" class="Sylius\InvoicingPlugin\Repository\DoctrineInvoiceRepository" public="true" />
 
         <service id="Sylius\InvoicingPlugin\Generator\InvoiceIdentifierGenerator" class="Sylius\InvoicingPlugin\Generator\UuidInvoiceIdentifierGenerator" />
 
         <service id="Sylius\InvoicingPlugin\Generator\InvoiceGenerator">
-            <argument type="service" id="Sylius\InvoicingPlugin\Generator\InvoiceIdentifierGenerator" />
+            <argument type="service" id="Sylius\InvoicingPlugin\Generator\UuidInvoiceIdentifierGenerator" />
+            <argument type="service" id="Sylius\InvoicingPlugin\Generator\SequentialInvoiceNumberGenerator" />
         </service>
 
         <service id="sylius_invoicing.event_bus" alias="prooph_service_bus.sylius_invoicing_event_bus" />
@@ -83,5 +84,15 @@
         </service>
 
         <service id="Sylius\InvoicingPlugin\File\TemporaryFileSystem" />
+
+        <service id="Sylius\InvoicingPlugin\Generator\SequentialInvoiceNumberGenerator">
+            <argument type="service" id="sylius_invoicing.repository.invoice_sequence" />
+            <argument type="service" id="sylius_invoicing.factory.invoice_sequence" />
+            <argument type="service" id="sylius_invoicing.manager.invoice_sequence" />
+            <argument type="service" id="Sylius\InvoicingPlugin\DateTimeProvider" />
+        </service>
+
+        <service id="Sylius\InvoicingPlugin\Generator\UuidInvoiceIdentifierGenerator" />
+
     </services>
 </container>

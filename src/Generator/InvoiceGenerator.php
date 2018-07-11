@@ -16,15 +16,22 @@ use Sylius\InvoicingPlugin\Entity\Invoice;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Sylius\InvoicingPlugin\Entity\LineItem;
 use Sylius\InvoicingPlugin\Entity\TaxItem;
+use Sylius\InvoicingPlugin\Generator\InvoiceNumberGenerator;
 
 final class InvoiceGenerator implements InvoiceGeneratorInterface
 {
     /** @var InvoiceIdentifierGenerator */
-    private $invoiceIdentifierGenerator;
+    private $uuidInvoiceIdentifierGenerator;
 
-    public function __construct(InvoiceIdentifierGenerator $invoiceIdentifierGenerator)
-    {
-        $this->invoiceIdentifierGenerator = $invoiceIdentifierGenerator;
+    /** @var InvoiceNumberGenerator */
+    private $sequentialInvoiceNumberGenerator;
+
+    public function __construct(
+        InvoiceIdentifierGenerator $uuidInvoiceIdentifierGenerator,
+        InvoiceNumberGenerator $sequentialInvoiceNumberGenerator
+    ) {
+        $this->uuidInvoiceIdentifierGenerator = $uuidInvoiceIdentifierGenerator;
+        $this->sequentialInvoiceNumberGenerator = $sequentialInvoiceNumberGenerator;
     }
 
     public function generateForOrder(OrderInterface $order, \DateTimeInterface $date): InvoiceInterface
@@ -32,7 +39,8 @@ final class InvoiceGenerator implements InvoiceGeneratorInterface
         $billingAddress = $order->getBillingAddress();
 
         return new Invoice(
-            $this->invoiceIdentifierGenerator->__invoke($order->getNumber()),
+            $this->uuidInvoiceIdentifierGenerator->generate(),
+            $this->sequentialInvoiceNumberGenerator->generate(),
             $order->getNumber(),
             $date,
             $this->prepareBillingData($billingAddress),

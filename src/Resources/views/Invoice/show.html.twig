@@ -4,7 +4,7 @@
 
 {% import '@SyliusUi/Macro/buttons.html.twig' as buttons %}
 
-{% block title %}{{ 'sylius.ui.invoice'|trans ~ ' ' ~ invoice.id }} {{ parent() }}{% endblock %}
+{% block title %}{{ 'sylius.ui.invoice'|trans ~ ' ' ~ invoice.number }} {{ parent() }}{% endblock %}
 
 {% block content %}
     <div class="ui stackable two column grid">
