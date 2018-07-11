@@ -91,9 +91,9 @@ final class SyliusInvoicingExtension extends AbstractResourceExtension implement
                         'issuedAt' => 'desc',
                     ],
                     'fields' => [
-                        'id' => [
+                        'number' => [
                             'type' => 'string',
-                            'label' => 'sylius_invoicing_plugin.ui.invoice_id',
+                            'label' => 'sylius_invoicing_plugin.ui.invoice_number',
                             'sortable' => true,
                         ],
                         'orderNumber' => [

@@ -14,36 +14,24 @@ use Sylius\Component\Resource\Repository\RepositoryInterface;
 
 use Webmozart\Assert\Assert;
 
-final class SequentialInvoiceIdentifierGenerator implements InvoiceIdentifierGenerator
+final class SequentialInvoiceNumberGenerator implements InvoiceNumberGenerator
 {
-    /**
-     * @var RepositoryInterface
-     */
+    /** @var RepositoryInterface */
     private $sequenceRepository;
 
-    /**
-     * @var FactoryInterface
-     */
+    /** @var FactoryInterface */
     private $sequenceFactory;
 
-    /**
-     * @var EntityManagerInterface
-     */
+    /** @var EntityManagerInterface */
     private $sequenceManager;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     private $startNumber;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     private $numberLength;
 
-    /**
-     * @var DateTimeProvider
-     */
+    /** @var DateTimeProvider */
     private $dateTimeProvider;
 
     public function __construct(
@@ -64,7 +52,7 @@ final class SequentialInvoiceIdentifierGenerator implements InvoiceIdentifierGen
 
     public function generate(): string
     {
-        $invoiceIdentifierPrefix = $this->dateTimeProvider->__invoke()->format('y-m-d') . '-';
+        $invoiceIdentifierPrefix = $this->dateTimeProvider->__invoke()->format('y-m') . '-';
 
         /** @var InvoiceSequenceInterface $sequence */
         $sequence = $this->getSequence();

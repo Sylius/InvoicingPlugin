@@ -4,6 +4,7 @@
     <entity name="Sylius\InvoicingPlugin\Entity\Invoice" table="sylius_invoicing_plugin_invoice">
         <id name="id" column="id" type="string" />
 
+        <field name="number" column="number" />
         <field name="orderNumber" column="order_number" />
         <field name="issuedAt" column="issued_at" type="datetime" />
         <field name="currencyCode" column="currency_code" length="3" />

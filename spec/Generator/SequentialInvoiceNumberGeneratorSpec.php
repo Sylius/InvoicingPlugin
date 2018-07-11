@@ -10,12 +10,12 @@ use PhpSpec\ObjectBehavior;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Sylius\InvoicingPlugin\DateTimeProvider;
-use Sylius\InvoicingPlugin\Generator\InvoiceIdentifierGenerator;
-use Sylius\InvoicingPlugin\Generator\SequentialInvoiceIdentifierGenerator;
+use Sylius\InvoicingPlugin\Generator\InvoiceNumberGenerator;
+use Sylius\InvoicingPlugin\Generator\SequentialInvoiceNumberGenerator;
 use Sylius\InvoicingPlugin\Entity\InvoiceSequenceInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 
-final class SequentialInvoiceIdentifierGeneratorSpec extends ObjectBehavior
+final class SequentialInvoiceNumberGeneratorSpec extends ObjectBehavior
 {
     function let(
         RepositoryInterface $sequenceRepository,
@@ -35,15 +35,15 @@ final class SequentialInvoiceIdentifierGeneratorSpec extends ObjectBehavior
 
     function it_is_initializable(): void
     {
-        $this->shouldHaveType(SequentialInvoiceIdentifierGenerator::class);
+        $this->shouldHaveType(SequentialInvoiceNumberGenerator::class);
     }
 
     function it_implements_invoice_identifier_generator_interface(): void
     {
-        $this->shouldImplement(InvoiceIdentifierGenerator::class);
+        $this->shouldImplement(InvoiceNumberGenerator::class);
     }
 
-    function it_generates_invoice_identifier(
+    function it_generates_invoice_number(
         RepositoryInterface $sequenceRepository,
         EntityManagerInterface $sequenceManager,
         DateTimeProvider $dateTimeProvider,
@@ -62,10 +62,10 @@ final class SequentialInvoiceIdentifierGeneratorSpec extends ObjectBehavior
 
         $sequence->incrementIndex()->shouldBeCalled();
 
-        $this->generate()->shouldReturn($dateTime->format('y-m-d' . '-000000001'));
+        $this->generate()->shouldReturn($dateTime->format('y-m' . '-000000001'));
     }
 
-    function it_generates_invoice_identifier_when_sequence_is_null(
+    function it_generates_invoice_number_when_sequence_is_null(
         RepositoryInterface $sequenceRepository,
         FactoryInterface $sequenceFactory,
         EntityManagerInterface $sequenceManager,
@@ -89,6 +89,6 @@ final class SequentialInvoiceIdentifierGeneratorSpec extends ObjectBehavior
 
         $sequence->incrementIndex()->shouldBeCalled();
 
-        $this->generate()->shouldReturn($dateTime->format('y-m-d' . '-000000001'));
+        $this->generate()->shouldReturn($dateTime->format('y-m' . '-000000001'));
     }
 }

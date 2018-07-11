@@ -23,6 +23,7 @@ final class InvoiceSpec extends ObjectBehavior
 
         $this->beConstructedWith(
             '7903c83a-4c5e-4bcf-81d8-9dc304c6a353',
+            $issuedAt->format('y/m') . '/000000001',
             '007',
             $issuedAt,
             $billingData,
@@ -54,6 +55,7 @@ final class InvoiceSpec extends ObjectBehavior
 
         $this->beConstructedWith(
             '7903c83a-4c5e-4bcf-81d8-9dc304c6a353',
+            $issuedAt->format('y/m') . '/000000001',
             '007',
             $issuedAt,
             $billingData,
