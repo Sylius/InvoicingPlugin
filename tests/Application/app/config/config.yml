@@ -88,9 +88,3 @@ sylius_channel:
         channel:
             classes:
                 model: Tests\Application\InvoicingPlugin\AppBundle\Entity\Channel
-
-sylius_resource:
-    resources:
-        sylius_invoicing.invoice_sequence:
-            classes:
-                model: Sylius\InvoicingPlugin\Entity\InvoiceSequence
