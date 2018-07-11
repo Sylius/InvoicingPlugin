@@ -28,6 +28,18 @@ $bundles = [
 ];
 ```
 
+Configure `KnpSnappyBundle` with your path to `wkhtmltopdf`:
+
+```yaml
+knp_snappy:
+    pdf:
+        enabled: true
+        binary: /usr/local/bin/wkhtmltopdf
+        options: []
+```
+
+If you do not have this binary, you can download it [here](https://wkhtmltopdf.org/downloads.html).
+
 Copy templates from
 
 ```
