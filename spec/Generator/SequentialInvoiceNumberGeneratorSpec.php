@@ -38,7 +38,7 @@ final class SequentialInvoiceNumberGeneratorSpec extends ObjectBehavior
         $this->shouldHaveType(SequentialInvoiceNumberGenerator::class);
     }
 
-    function it_implements_invoice_identifier_generator_interface(): void
+    function it_implements_invoice_number_generator_interface(): void
     {
         $this->shouldImplement(InvoiceNumberGenerator::class);
     }
@@ -62,7 +62,7 @@ final class SequentialInvoiceNumberGeneratorSpec extends ObjectBehavior
 
         $sequence->incrementIndex()->shouldBeCalled();
 
-        $this->generate()->shouldReturn($dateTime->format('y-m' . '-000000001'));
+        $this->generate()->shouldReturn($dateTime->format('y/m') . '/000000001');
     }
 
     function it_generates_invoice_number_when_sequence_is_null(
@@ -89,6 +89,6 @@ final class SequentialInvoiceNumberGeneratorSpec extends ObjectBehavior
 
         $sequence->incrementIndex()->shouldBeCalled();
 
-        $this->generate()->shouldReturn($dateTime->format('y-m' . '-000000001'));
+        $this->generate()->shouldReturn($dateTime->format('y/m') . '/000000001');
     }
 }

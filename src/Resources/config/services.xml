@@ -6,7 +6,7 @@
 
         <service id="Sylius\InvoicingPlugin\DateTimeProvider" class="Sylius\InvoicingPlugin\SystemDateTimeProvider" />
 
-        <service id="Sylius\InvoicingPlugin\Repository\InvoiceRepository" class="Sylius\InvoicingPlugin\Repository\DoctrineInvoiceRepository" />
+        <service id="Sylius\InvoicingPlugin\Repository\InvoiceRepository" class="Sylius\InvoicingPlugin\Repository\DoctrineInvoiceRepository" public="true" />
 
         <service id="Sylius\InvoicingPlugin\Generator\InvoiceIdentifierGenerator" class="Sylius\InvoicingPlugin\Generator\UuidInvoiceIdentifierGenerator" />
 

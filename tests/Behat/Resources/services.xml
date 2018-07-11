@@ -10,6 +10,7 @@
             <argument type="service" id="Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Invoice\IndexPageInterface" />
             <argument type="service" id="Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Invoice\ShowPageInterface" />
             <argument type="service" id="Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Order\ShowPageInterface" />
+            <argument type="service" id="__symfony__.Sylius\InvoicingPlugin\Repository\InvoiceRepository" />
             <tag name="fob.context_service" />
         </service>
 

@@ -6,6 +6,7 @@ namespace Tests\Sylius\InvoicingPlugin\Behat\Context\Ui\Admin;
 
 use Behat\Behat\Context\Context;
 use Sylius\Component\Core\Model\OrderInterface;
+use Sylius\InvoicingPlugin\Repository\InvoiceRepository;
 use Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Invoice\IndexPageInterface;
 use Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Invoice\ShowPageInterface;
 use Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Order\ShowPageInterface as OrderShowPageInterface;
@@ -22,14 +23,19 @@ final class ManagingInvoicesContext implements Context
     /** @var OrderShowPageInterface */
     private $orderShowPage;
 
+    /** @var InvoiceRepository */
+    private $invoiceRepository;
+
     public function __construct(
         IndexPageInterface $indexPage,
         ShowPageInterface $showPage,
-        OrderShowPageInterface $orderShowPage
+        OrderShowPageInterface $orderShowPage,
+        InvoiceRepository $invoiceRepository
     ) {
         $this->indexPage = $indexPage;
         $this->showPage = $showPage;
         $this->orderShowPage = $orderShowPage;
+        $this->invoiceRepository = $invoiceRepository;
     }
 
     /**
@@ -56,7 +62,7 @@ final class ManagingInvoicesContext implements Context
     {
         $this->indexPage->open();
 
-        $invoiceId = $this->indexPage->getInvoiceIdForOrder($order->getNumber());
+        $invoiceId = $this->invoiceRepository->getOneByOrderNumber($order->getNumber())->id();
 
         $this->showPage->open(['id' => $invoiceId]);
     }

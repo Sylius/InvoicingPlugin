@@ -52,7 +52,7 @@ final class SequentialInvoiceNumberGenerator implements InvoiceNumberGenerator
 
     public function generate(): string
     {
-        $invoiceIdentifierPrefix = $this->dateTimeProvider->__invoke()->format('y-m') . '-';
+        $invoiceIdentifierPrefix = $this->dateTimeProvider->__invoke()->format('y/m') . '/';
 
         /** @var InvoiceSequenceInterface $sequence */
         $sequence = $this->getSequence();
