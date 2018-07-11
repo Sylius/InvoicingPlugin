@@ -159,14 +159,6 @@ final class ManagingInvoicesContext implements Context
     }
 
     /**
-     * @Then its tax total should be :taxTotal
-     */
-    public function itsTaxTotalShouldBe(string $taxTotal): void
-    {
-        Assert::same($this->showPage->getTaxTotal(), $taxTotal);
-    }
-
-    /**
      * @Then its subtotal should be :total
      */
     public function itsSubtotalShouldBe(string $subtotal): void

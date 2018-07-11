@@ -11,7 +11,8 @@ use Sylius\InvoicingPlugin\Entity\TaxItemInterface;
 
 final class TaxItemSpec extends ObjectBehavior
 {
-    function let(): void {
+    function let(): void
+    {
         $this->beConstructedWith('VAT (23%)', 2300);
     }
 
