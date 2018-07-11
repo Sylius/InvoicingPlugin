@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Sylius\InvoicingPlugin\Entity;
 
-final class InvoiceSequence implements InvoiceSequenceInterface
+/** @final */
+class InvoiceSequence implements InvoiceSequenceInterface
 {
     /** @var mixed */
     protected $id;
