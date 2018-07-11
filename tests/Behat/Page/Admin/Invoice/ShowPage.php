@@ -46,12 +46,33 @@ final class ShowPage extends SymfonyPage implements ShowPageInterface
     ): bool {
         $billingDataText = $this->getElement('billing_address')->getText();
 
-        return
-            (stripos($billingDataText, $customerName) !== false) &&
-            (stripos($billingDataText, $street) !== false) &&
-            (stripos($billingDataText, $city) !== false) &&
-            (stripos($billingDataText, $countryName . ' ' . $postcode) !== false)
-        ;
+        return $this->doesTextContainPhrases(
+            $billingDataText,
+            $customerName,
+            $street,
+            $city,
+            $countryName . ' ' . $postcode
+        );
+    }
+
+    public function hasShopBillingData(
+        string $company,
+        string $taxId,
+        string $countryName,
+        string $street,
+        string $city,
+        string $postcode
+    ): bool {
+        $billingDataText = $this->getElement('shop_billing_data')->getText();
+
+        return $this->doesTextContainPhrases(
+            $billingDataText,
+            $company,
+            $taxId,
+            $street,
+            $city,
+            $countryName . ' ' . $postcode
+        );
     }
 
     public function countItems(): int
@@ -103,11 +124,24 @@ final class ShowPage extends SymfonyPage implements ShowPageInterface
     {
         return array_merge(parent::getDefinedElements(), [
             'billing_address' => '#billing-data',
+            'shop_billing_data' => '#shop-billing-data',
+            'invoice_tax_total' => '#invoice-tax-total',
             'invoice_subtotal' => '#invoice-subtotal',
             'invoice_total' => '#invoice-total',
             'issued_at' => '#invoice-issued-at',
             'table' => '.table',
             'tax_item_amount' => 'tr.tax-item:contains("%label%") .tax-item-amount',
         ]);
+    }
+
+    private function doesTextContainPhrases(string $text, string...$phrases): bool
+    {
+        foreach ($phrases as $phrase) {
+            if (!stripos($billingDataText, $company)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

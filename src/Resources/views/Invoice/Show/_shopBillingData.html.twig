@@ -1,0 +1,15 @@
+{% set billingData = sylius.channel.billingData %}
+
+<h4 class="ui top attached styled header">
+    {{ 'sylius_invoicing_plugin.ui.billing_data'|trans }}
+</h4>
+<div class="ui attached segment" id="shop-billing-data">
+    <address>
+        <strong>{{ billingData.company }}</strong>
+        {{ billingData.street }}<br/>
+        {{ billingData.city }}<br/>
+        {{ billingData.taxId }}<br/>
+        <i class="{{ billingData.countryCode|lower }} flag"></i>
+        {{ billingData.countryCode|sylius_country_name|upper }} {{ billingData.postcode }}
+    </address>
+</div>
