@@ -86,9 +86,9 @@
         <service id="Sylius\InvoicingPlugin\File\TemporaryFileSystem" />
 
         <service id="Sylius\InvoicingPlugin\Generator\SequentialInvoiceNumberGenerator">
-            <argument type="service" id="sylius_invoicing.repository.invoice_sequence" />
-            <argument type="service" id="sylius_invoicing.factory.invoice_sequence" />
-            <argument type="service" id="sylius_invoicing.manager.invoice_sequence" />
+            <argument type="service" id="sylius_invoicing_plugin.repository.invoice_sequence" />
+            <argument type="service" id="sylius_invoicing_plugin.factory.invoice_sequence" />
+            <argument type="service" id="sylius_invoicing_plugin.manager.invoice_sequence" />
             <argument type="service" id="Sylius\InvoicingPlugin\DateTimeProvider" />
         </service>
 
