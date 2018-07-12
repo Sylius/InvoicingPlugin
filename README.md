@@ -1,7 +1,17 @@
-# InvoicingPlugin
+<p align="center">
+    <a href="https://sylius.com" target="_blank">
+        <img src="https://demo.sylius.com/assets/shop/img/logo.png" />
+    </a>
+</p>
+
+<h1 align="center">Invoicing Plugin</h1>
+
+<p align="center">This plugin creates an invoice related to the order.</p>
 
 SyliusInvoicingPlugin creates new immutable invoice when the order is in given state (default: created) and allows
-both customer and admin to download invoices related to the order.   
+both customer and admin to download invoices related to the order.
+
+![Screenshot showing invoice browsing page in administration panel](docs/screenshot.png)
 
 ## Installation
 
@@ -9,6 +19,13 @@ Require plugin with composer:
 
 ```bash
 composer require sylius/invoicing-plugin
+```
+
+Import configuration:
+
+```yaml
+imports:
+    - { resource: "@SyliusInvoicingPlugin/Resources/config/config.yml" }
 ```
 
 Import routing:
@@ -28,14 +45,10 @@ $bundles = [
 ];
 ```
 
-Configure `KnpSnappyBundle` with your path to `wkhtmltopdf`:
+Configure `KnpSnappyBundle` with your path to `wkhtmltopdf` in your `services.xml` file:
 
-```yaml
-knp_snappy:
-    pdf:
-        enabled: true
-        binary: /usr/local/bin/wkhtmltopdf
-        options: []
+```xml
+<parameter key="sylius_invoicing_plugin.knp_snappy.pdf.binary">/usr/local/bin/wkhtmltopdf</parameter>
 ```
 
 If you do not have this binary, you can download it [here](https://wkhtmltopdf.org/downloads.html).

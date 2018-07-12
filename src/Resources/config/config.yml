@@ -1,0 +1,11 @@
+sylius_mailer:
+    emails:
+        invoice_generated:
+            subject: sylius.emails.invoice_generated.subject
+            template: "@SyliusInvoicingPlugin/Resources/views/Invoice/Email/invoiceGenerated.html.twig"
+
+knp_snappy:
+    pdf:
+        enabled: true
+        binary: %sylius_invoicing_plugin.knp_snappy.pdf.binary%
+        options: []
