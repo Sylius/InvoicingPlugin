@@ -166,6 +166,5 @@ sylius-standard project:
 ```yaml
 knp_snappy:
     pdf:
-        enabled: true
         binary: path_to_binary
 ```

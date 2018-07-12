@@ -66,11 +66,6 @@ before_script:
     # Run webserver
     - (cd tests/Application && bin/console server:run 127.0.0.1:8080 -d web --env=test --quiet > /dev/null 2>&1 &)
 
-    # Download and configure wkhtmltopdf
-    - wget https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.4/wkhtmltox-0.12.4_linux-generic-amd64.tar.xz
-    - tar xf  wkhtmltox-0.12.4_linux-generic-amd64.tar.xz
-    - sudo mv ./wkhtmltox/bin/wkhtmltopdf /usr/local/bin/
-
 script:
     - composer validate --strict
     - bin/phpstan.phar analyse -c phpstan.neon -l max src/
