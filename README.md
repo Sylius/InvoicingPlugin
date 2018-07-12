@@ -1,7 +1,17 @@
-# InvoicingPlugin
+<p align="center">
+    <a href="https://sylius.com" target="_blank">
+        <img src="https://demo.sylius.com/assets/shop/img/logo.png" />
+    </a>
+</p>
+
+<h1 align="center">Invoicing Plugin</h1>
+
+<p align="center">This plugin creates an invoice related to the order.</p>
 
 SyliusInvoicingPlugin creates new immutable invoice when the order is in given state (default: created) and allows
-both customer and admin to download invoices related to the order.   
+both customer and admin to download invoices related to the order.
+
+![Screenshot showing invoice browsing page in administration panel](docs/screenshot.png)
 
 ## Installation
 
@@ -9,6 +19,13 @@ Require plugin with composer:
 
 ```bash
 composer require sylius/invoicing-plugin
+```
+
+Import configuration:
+
+```yaml
+imports:
+    - { resource: "@SyliusInvoicingPlugin/Resources/config/config.yml" }
 ```
 
 Import routing:
@@ -28,17 +45,7 @@ $bundles = [
 ];
 ```
 
-Configure `KnpSnappyBundle` with your path to `wkhtmltopdf`:
-
-```yaml
-knp_snappy:
-    pdf:
-        enabled: true
-        binary: /usr/local/bin/wkhtmltopdf
-        options: []
-```
-
-If you do not have this binary, you can download it [here](https://wkhtmltopdf.org/downloads.html).
+Check if you have wkhtmltopdf binary. If not, you can download it [here](https://wkhtmltopdf.org/downloads.html).
 
 Copy templates from
 
@@ -151,3 +158,13 @@ Code responsible for displaying Invoices related to the Order is injected to exi
 Sonata events. You can read about customizing templates via events here:
 
 <http://docs.sylius.com/en/1.2/customization/template.html>
+
+Since InvoicingPlugin is not the only plugin that uses `wkhtmltopdf` binary, 
+you can customize the global path to `wkhtmltopdf` using following structure in `config.yml` file placed in your 
+sylius-standard project:
+
+```yaml
+knp_snappy:
+    pdf:
+        binary: path_to_binary
+```
