@@ -7,5 +7,5 @@ sylius_mailer:
 knp_snappy:
     pdf:
         enabled: true
-        binary: %sylius_invoicing_plugin.knp_snappy.pdf.binary%
+        binary: /usr/local/bin/wkhtmltopdf
         options: []

@@ -45,13 +45,7 @@ $bundles = [
 ];
 ```
 
-Configure `KnpSnappyBundle` with your path to `wkhtmltopdf` in your `services.xml` file:
-
-```xml
-<parameter key="sylius_invoicing_plugin.knp_snappy.pdf.binary">/usr/local/bin/wkhtmltopdf</parameter>
-```
-
-If you do not have this binary, you can download it [here](https://wkhtmltopdf.org/downloads.html).
+Check if you have wkhtmltopdf binary. If not, you can download it [here](https://wkhtmltopdf.org/downloads.html).
 
 Copy templates from
 
@@ -164,3 +158,14 @@ Code responsible for displaying Invoices related to the Order is injected to exi
 Sonata events. You can read about customizing templates via events here:
 
 <http://docs.sylius.com/en/1.2/customization/template.html>
+
+Since InvoicingPlugin is not the only plugin that uses `wkhtmltopdf` binary, 
+you can customize the global path to `wkhtmltopdf` using following structure in `config.yml` file placed in your 
+sylius-standard project:
+
+```yaml
+knp_snappy:
+    pdf:
+        enabled: true
+        binary: path_to_binary
+```
