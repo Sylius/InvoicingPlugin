@@ -30,6 +30,7 @@
         "phpunit/phpunit": "^6.5",
         "sylius-labs/coding-standard": "^2.0"
     },
+    "minimum-stability": "dev",
     "prefer-stable": true,
     "autoload": {
         "psr-4": {
