@@ -15,92 +15,94 @@ both customer and admin to download invoices related to the order.
 
 ## Installation
 
-Require plugin with composer:
+1. Require plugin with composer:
 
-```bash
-composer require sylius/invoicing-plugin
-```
+    ```bash
+    composer require sylius/invoicing-plugin
+    ```
 
-Import configuration:
+2. Import configuration:
 
-```yaml
-imports:
-    - { resource: "@SyliusInvoicingPlugin/Resources/config/config.yml" }
-```
+    ```yaml
+    imports:
+        - { resource: "@SyliusInvoicingPlugin/Resources/config/config.yml" }
+    ```
 
-Import routing:
+3. Import routing:
 
-```yaml
-sylius_invoicing_plugin:
-    resource: "@SyliusInvoicingPlugin/Resources/config/app/routing.yml"
-```
+    ```yaml
+    sylius_invoicing_plugin_admin:
+        resource: "@SyliusInvoicingPlugin/Resources/config/app/routing/admin_invoicing.yml"
+        prefix: /admin
+    
+    sylius_invoicing_plugin_shop:
+        resource: "@SyliusInvoicingPlugin/Resources/config/app/routing/shop_invoicing.yml"
+        prefix: /{_locale}
+        requirements:
+            _locale: ^[a-z]{2}(?:_[A-Z]{2})?$
+    ```
 
-Add plugin class to your `AppKernel`:
+4. Add plugin class to your `AppKernel`:
 
-```php
-$bundles = [
-    new \Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
-    new \Prooph\Bundle\ServiceBus\ProophServiceBusBundle(),
-    new \Sylius\InvoicingPlugin\SyliusInvoicingPlugin(),
-];
-```
+    ```php
+    $bundles = [
+        new \Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
+        new \Prooph\Bundle\ServiceBus\ProophServiceBusBundle(),
+        new \Sylius\InvoicingPlugin\SyliusInvoicingPlugin(),
+    ];
+    ```
 
-Check if you have wkhtmltopdf binary. If not, you can download it [here](https://wkhtmltopdf.org/downloads.html).
+5. Check if you have `wkhtmltopdf` binary. If not, you can download it [here](https://wkhtmltopdf.org/downloads.html).
 
-Copy templates from
+    In case `wkhtmltopdf` is not located in `/usr/local/bin/wkhtmltopdf`, add a following snippet at the end of your application's `config.yml`:
+    
+    ```yaml
+    knp_snappy:
+        pdf:
+            enabled: true
+            binary: /usr/local/bin/wkhtmltopdf # Change this! :)
+            options: []
+    ```   
 
-```
-vendor/sylius/invoicing-plugin/src/Resources/views/SyliusAdminBundle/
-```
-to
-```
-app/Resources/SyliusAdminBundle/views/
-```
+6. Copy migrations from `vendor/sylius/invoicing-plugin/migrations/` to your migrations directory and run `bin/console doctrine:migrations:migrate`.
 
-Copy migrations from
+7. Override Channel entity:
 
-```
-vendor/sylius/invoicing-plugin/migrations/
-```
-to your migrations directory and run `bin/console doctrine:migrations:migrate`
+    a) Write new class which will use `ShopBillingDataTrait` and implement `ShopBillingDataAwareInterface`:
 
-Override Channel entity:
+    ```php
+    use Doctrine\ORM\Mapping\MappedSuperclass;
+    use Doctrine\ORM\Mapping\Table;
+    use Sylius\Component\Core\Model\Channel as BaseChannel;
+    use Sylius\InvoicingPlugin\Entity\ShopBillingDataAwareInterface;
+    use Sylius\InvoicingPlugin\Entity\ShopBillingDataTrait;
+    
+    /**
+     * @MappedSuperclass
+     * @Table(name="sylius_channel")
+     */
+    class Channel extends BaseChannel implements ShopBillingDataAwareInterface
+    {
+        use ShopBillingDataTrait;
+    }
+    
+    ```
 
-Write new class which will use ShopBillingDataTrait and implement ShopBillingDataAwareInterface:
+    b) And override the model's class in the `app/config/config.yml`:
 
-```php
-use Doctrine\ORM\Mapping\MappedSuperclass;
-use Doctrine\ORM\Mapping\Table;
-use Sylius\Component\Core\Model\Channel as BaseChannel;
-use Sylius\InvoicingPlugin\Entity\ShopBillingDataAwareInterface;
-use Sylius\InvoicingPlugin\Entity\ShopBillingDataTrait;
+    ```yaml
+    sylius_channel:
+        resources:
+            channel:
+                classes:
+                    model: AppBundle\Entity\Channel
+    ```
 
-/**
- * @MappedSuperclass
- * @Table(name="sylius_channel")
- */
-class Channel extends BaseChannel implements ShopBillingDataAwareInterface
-{
-    use ShopBillingDataTrait;
-}
+8. Clear cache:
 
-```
-
-And override the model's class in the `app/config/config.yml`:
-
-```
-sylius_channel:
-    resources:
-        channel:
-            classes:
-                model: AppBundle\Entity\Channel
-```
-
-Clear cache:
-
-```bash
-bin/console cache:clear
-```
+    ```bash
+    bin/console cache:clear
+    ```
 
 ## Extension points
 
