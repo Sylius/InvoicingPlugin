@@ -17,11 +17,7 @@ Feature: Seeing basic information about an invoice
         And for the billing address of "Mazikeen Lilim" in the "Pacific Coast Hwy", "90806" "Los Angeles", "United States"
         And the customer chose "UPS" shipping method with "Cash on Delivery" payment
         And I am logged in as an administrator
-        And I want to modify a channel "United States"
-        And I specify company as "Ragnarok"
-        And I specify tax ID as "1100110011"
-        And I specify shop billing address as "Pacific Coast Hwy", "90806" "Los Angeles", "United States"
-        And I save my changes
+        And I set shop billing data for channel "United States" as "Ragnarok", "1100110011", "Pacific Coast Hwy", "90806" "Los Angeles", "United States"
 
     Scenario: Seeing basic information about an invoice
         When I view the summary of the invoice for order "#00000666"

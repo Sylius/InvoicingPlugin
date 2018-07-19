@@ -54,6 +54,7 @@ default:
                 - Tests\Sylius\InvoicingPlugin\Behat\Context\Domain\InvoiceEmailContext
                 - Tests\Sylius\InvoicingPlugin\Behat\Context\Order\OrderContext
                 - Tests\Sylius\InvoicingPlugin\Behat\Context\Ui\Admin\ManagingInvoicesContext
+                - Tests\Sylius\InvoicingPlugin\Behat\Context\Ui\Admin\ManagingChannelsSetupContext
 
             filters:
                 tags: "@managing_invoices && @ui"

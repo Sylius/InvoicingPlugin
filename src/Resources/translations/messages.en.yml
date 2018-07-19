@@ -12,4 +12,5 @@ sylius_invoicing_plugin:
         manage_invoices: 'Manage invoices'
         order_number: 'Order number'
         resend_invoice: 'Resend'
+        shop_billing_data: 'Shop billing data'
         tax_id: 'Tax ID'
