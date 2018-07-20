@@ -35,8 +35,8 @@
             <tag name="fob.context_service" />
         </service>
 
-        <service id="Tests\Sylius\InvoicingPlugin\Behat\Context\Ui\Admin\ManagingChannelsSetupContext" public="true">
-            <argument type="service" id="sylius.behat.page.admin.channel.update" />
+        <service id="Tests\Sylius\InvoicingPlugin\Behat\Context\Setup\ChannelContext" public="true">
+            <argument type="service" id="__symfony__.sylius.manager.channel" />
             <tag name="fob.context_service" />
         </service>
 
