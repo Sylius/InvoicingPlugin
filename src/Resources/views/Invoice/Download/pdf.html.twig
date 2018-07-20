@@ -1,3 +1,5 @@
+{% set shopBillingData = sylius.channel.billingData %}
+
 <html lang="en">
     <body>
         <h1>{{ 'sylius_invoicing_plugin.ui.invoice'|trans }} {{ invoice.number }}</h1>
@@ -6,6 +8,9 @@
 
         <br /><br />
 
+        <h4 class="ui top attached styled header">
+            {{ 'sylius_invoicing_plugin.ui.billing_data'|trans }}
+        </h4>
         <address>
             <strong>{{ invoice.billingData.firstName }} {{ invoice.billingData.lastName }}</strong>
             {% if invoice.billingData.company %}
@@ -15,6 +20,22 @@
             {{ invoice.billingData.city }}<br/>
             {{ invoice.billingData.countryCode|sylius_country_name|upper }} {{ invoice.billingData.postcode }}
         </address>
+
+        <br /><br />
+
+        {% if shopBillingData %}
+            <h4 class="ui top attached styled header">
+                {{ 'sylius_invoicing_plugin.ui.shop_billing_data'|trans }}
+            </h4>
+            <address>
+                <strong>{{ shopBillingData.company }}</strong>
+                {{ shopBillingData.street }}<br/>
+                {{ shopBillingData.city }}<br/>
+                {{ shopBillingData.taxId }}<br/>
+                <i class="{{ shopBillingData.countryCode|lower }} flag"></i>
+                {{ shopBillingData.countryCode|sylius_country_name|upper }} {{ shopBillingData.postcode }}
+            </address>
+        {% endif %}
 
         <br /><br />
 

@@ -9,9 +9,3 @@ knp_snappy:
         enabled: true
         binary: /usr/local/bin/wkhtmltopdf
         options: []
-
-sylius_channel:
-    resources:
-        channel:
-            classes:
-                model: Tests\Application\InvoicingPlugin\AppBundle\Entity\Channel
