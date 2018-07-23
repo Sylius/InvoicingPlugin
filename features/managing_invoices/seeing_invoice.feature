@@ -17,11 +17,13 @@ Feature: Seeing basic information about an invoice
         And for the billing address of "Mazikeen Lilim" in the "Pacific Coast Hwy", "90806" "Los Angeles", "United States"
         And the customer chose "UPS" shipping method with "Cash on Delivery" payment
         And I am logged in as an administrator
+        And I set shop billing data for channel "United States" as "Ragnarok", "1100110011", "Pacific Coast Hwy", "90806" "Los Angeles", "United States"
 
     Scenario: Seeing basic information about an invoice
         When I view the summary of the invoice for order "#00000666"
         Then it should be issued in the last hour
         And it should have billing data as "Mazikeen Lilim", "Pacific Coast Hwy", "90806" "Los Angeles", "United States"
+        And it should have shop billing data as "Ragnarok", "1100110011", "Pacific Coast Hwy", "90806" "Los Angeles", "United States"
         And it should have 2 items in the list
         And it should have an item "Angel T-Shirt" with unit price "$60.00", quantity 2, tax total "$12.00" and total "$132.00"
         And it should have a shipping item "UPS" with unit price "$10.00", quantity 1, tax total "$0.00" and total "$10.00"

@@ -1,3 +1,5 @@
+{% set shopBillingData = sylius.channel.billingData %}
+
 <html lang="en">
     <body>
         <h1>{{ 'sylius_invoicing_plugin.ui.invoice'|trans }} {{ invoice.number }}</h1>
@@ -6,28 +8,54 @@
 
         <br /><br />
 
-        <address>
-            <strong>{{ invoice.billingData.firstName }} {{ invoice.billingData.lastName }}</strong>
-            {% if invoice.billingData.company %}
-                {{ invoice.billingData.company }}<br/>
+        <table width="100%">
+            <thead>
+                <tr>
+                    <th align="left">{{ 'sylius_invoicing_plugin.ui.buyer'|trans }}</th>
+                    {% if shopBillingData %}
+                        <th align="left">{{ 'sylius_invoicing_plugin.ui.seller'|trans }}</th>
+                    {% endif %}
+                </tr>
+            </thead>
+        <tbody>
+            <td width="50%">
+                <address>
+                    <strong>{{ invoice.billingData.firstName }} {{ invoice.billingData.lastName }}</strong>
+                    {% if invoice.billingData.company %}
+                        {{ invoice.billingData.company }}<br/>
+                    {% endif %}
+                    {{ invoice.billingData.street }}<br/>
+                    {{ invoice.billingData.city }}<br/>
+                    {{ invoice.billingData.countryCode|sylius_country_name|upper }} {{ invoice.billingData.postcode }}
+                </address>
+            </td>
+            {% if shopBillingData %}
+                <td width="50%">
+                    <address>
+                        <strong>{{ shopBillingData.company }}</strong>
+                        {{ shopBillingData.street }}<br/>
+                        {{ shopBillingData.city }}<br/>
+                        {{ shopBillingData.taxId }}<br/>
+                        <i class="{{ shopBillingData.countryCode|lower }} flag"></i>
+                        {{ shopBillingData.countryCode|sylius_country_name|upper }} {{ shopBillingData.postcode }}
+                    </address>
+                </td>
             {% endif %}
-            {{ invoice.billingData.street }}<br/>
-            {{ invoice.billingData.city }}<br/>
-            {{ invoice.billingData.countryCode|sylius_country_name|upper }} {{ invoice.billingData.postcode }}
-        </address>
+        </tbody>
+        </table>
 
         <br /><br />
 
         <table>
             <thead>
             <tr>
-                <th>{{ 'sylius.ui.name'|trans }}</th>
-                <th>{{ 'sylius.ui.code'|trans }}</th>
-                <th>{{ 'sylius.ui.unit_price'|trans }}</th>
-                <th>{{ 'sylius.ui.quantity'|trans }}</th>
-                <th>{{ 'sylius.ui.subtotal'|trans }}</th>
-                <th>{{ 'sylius.ui.tax_total'|trans }}</th>
-                <th>{{ 'sylius.ui.total'|trans }}</th>
+                <th align="left">{{ 'sylius.ui.name'|trans }}</th>
+                <th align="left">{{ 'sylius.ui.code'|trans }}</th>
+                <th align="left">{{ 'sylius.ui.unit_price'|trans }}</th>
+                <th align="left">{{ 'sylius.ui.quantity'|trans }}</th>
+                <th align="left">{{ 'sylius.ui.subtotal'|trans }}</th>
+                <th align="left">{{ 'sylius.ui.tax_total'|trans }}</th>
+                <th align="left">{{ 'sylius.ui.total'|trans }}</th>
             </tr>
             </thead>
             <tbody>

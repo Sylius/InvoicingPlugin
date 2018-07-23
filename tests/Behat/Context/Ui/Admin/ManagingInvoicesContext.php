@@ -123,6 +123,20 @@ final class ManagingInvoicesContext implements Context
     }
 
     /**
+     * @Then it should have shop billing data as :company, :taxId, :street, :postCode :city, :countryName
+     */
+    public function itShouldHaveShopBillingDataAs(
+        string $company,
+        string $taxId,
+        string $countryName,
+        string $street,
+        string $postcode,
+        string $city
+    ): void {
+        Assert::true($this->showPage->hasShopBillingData($company, $taxId, $countryName, $street, $city, $postcode));
+    }
+
+    /**
      * @Then it should have :amountOfItems items in the list
      */
     public function itShouldHaveItemsInTheList(int $amountOfItems): void

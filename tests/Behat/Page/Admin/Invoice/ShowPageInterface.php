@@ -18,6 +18,15 @@ interface ShowPageInterface extends SymfonyPageInterface
         string $countryName
     ): bool;
 
+    public function hasShopBillingData(
+        string $company,
+        string $taxId,
+        string $countryName,
+        string $street,
+        string $city,
+        string $postcode
+    ): bool;
+
     public function countItems(): int;
 
     public function hasItemWithData(

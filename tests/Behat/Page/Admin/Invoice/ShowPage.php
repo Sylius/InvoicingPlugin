@@ -54,6 +54,25 @@ final class ShowPage extends SymfonyPage implements ShowPageInterface
         ;
     }
 
+    public function hasShopBillingData(
+        string $company,
+        string $taxId,
+        string $countryName,
+        string $street,
+        string $city,
+        string $postcode
+    ): bool {
+        $billingDataText = $this->getElement('shop_billing_data')->getText();
+
+        return
+            (stripos($billingDataText, $company) !== false) &&
+            (stripos($billingDataText, $taxId) !== false) &&
+            (stripos($billingDataText, $city) !== false) &&
+            (stripos($billingDataText, $street) !== false) &&
+            (stripos($billingDataText, $countryName . ' ' . $postcode) !== false)
+        ;
+    }
+
     public function countItems(): int
     {
         return $this->tableAccessor->countTableBodyRows($this->getElement('table'));
@@ -104,8 +123,10 @@ final class ShowPage extends SymfonyPage implements ShowPageInterface
         return array_merge(parent::getDefinedElements(), [
             'billing_address' => '#billing-data',
             'invoice_subtotal' => '#invoice-subtotal',
+            'invoice_tax_total' => '#invoice-tax-total',
             'invoice_total' => '#invoice-total',
             'issued_at' => '#invoice-issued-at',
+            'shop_billing_data' => '#shop-billing-data',
             'table' => '.table',
             'tax_item_amount' => 'tr.tax-item:contains("%label%") .tax-item-amount',
         ]);
