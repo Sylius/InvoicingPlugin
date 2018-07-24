@@ -43,7 +43,7 @@ final class InvoiceGeneratorSpec extends ObjectBehavior
         $date = new \DateTimeImmutable('now');
 
         $uuidInvoiceIdentifierGenerator->generate()->willReturn('7903c83a-4c5e-4bcf-81d8-9dc304c6a353');
-        $sequentialInvoiceNumberGenerator->generate()->willReturn($date->format('y/m') . '0000001');
+        $sequentialInvoiceNumberGenerator->generate()->willReturn($date->format('Y/m') . '0000001');
 
         $order->getNumber()->willReturn('007');
         $order->getCurrencyCode()->willReturn('USD');
