@@ -5,7 +5,7 @@
     <table class="ui celled compact small table fixed">
         <thead>
         <tr>
-            <th>{{ 'sylius_invoicing_plugin.ui.invoice_id'|trans }}</th>
+            <th>{{ 'sylius.ui.number'|trans }}</th>
             <th>{{ 'sylius_invoicing_plugin.ui.issued_at'|trans }}</th>
             <th>{{ 'sylius.ui.actions'|trans }}</th>
         </tr>
@@ -14,7 +14,7 @@
         {% for invoice in invoices %}
             <tr>
                 <td>
-                    {{ invoice.id }}
+                    {{ invoice.number }}
                 </td>
                 <td>
                     {{ invoice.issuedAt|date('d-m-Y') }}
