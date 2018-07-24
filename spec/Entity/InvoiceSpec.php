@@ -66,6 +66,7 @@ final class InvoiceSpec extends ObjectBehavior
         );
 
         $this->id()->shouldReturn('7903c83a-4c5e-4bcf-81d8-9dc304c6a353');
+        $this->number()->shouldReturn($issuedAt->format('y/m') . '/000000001');
         $this->orderNumber()->shouldReturn('007');
         $this->billingData()->shouldReturn($billingData);
         $this->currencyCode()->shouldReturn('USD');
