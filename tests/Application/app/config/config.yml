@@ -80,7 +80,7 @@ liip_imagine:
 knp_snappy:
     pdf:
         enabled: true
-        binary: "%kernel.project_dir%/app/etc/wkhtmltopdf"
+        binary: /usr/local/bin/wkhtmltopdf
         options: []
 
 sylius_channel:
