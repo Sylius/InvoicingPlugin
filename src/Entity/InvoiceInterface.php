@@ -10,6 +10,8 @@ interface InvoiceInterface
 {
     public function id(): string;
 
+    public function number(): string;
+
     public function orderNumber(): string;
 
     public function issuedAt(): \DateTimeInterface;
