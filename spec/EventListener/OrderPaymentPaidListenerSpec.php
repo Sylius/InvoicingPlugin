@@ -8,11 +8,9 @@ use PhpSpec\ObjectBehavior;
 use Sylius\Component\Core\Model\CustomerInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Repository\OrderRepositoryInterface;
-use Sylius\InvoicingPlugin\DateTimeProvider;
 use Sylius\InvoicingPlugin\Email\InvoiceEmailSenderInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Sylius\InvoicingPlugin\Event\OrderPaymentPaid;
-use Sylius\InvoicingPlugin\Event\OrderPaymentPaidInterface;
 use Sylius\InvoicingPlugin\EventListener\OrderPaymentPaidListener;
 use Sylius\InvoicingPlugin\Repository\InvoiceRepository;
 

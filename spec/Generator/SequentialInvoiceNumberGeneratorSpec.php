@@ -10,10 +10,9 @@ use PhpSpec\ObjectBehavior;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Sylius\InvoicingPlugin\DateTimeProvider;
+use Sylius\InvoicingPlugin\Entity\InvoiceSequenceInterface;
 use Sylius\InvoicingPlugin\Generator\InvoiceNumberGenerator;
 use Sylius\InvoicingPlugin\Generator\SequentialInvoiceNumberGenerator;
-use Sylius\InvoicingPlugin\Entity\InvoiceSequenceInterface;
-use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 
 final class SequentialInvoiceNumberGeneratorSpec extends ObjectBehavior
 {

@@ -6,7 +6,6 @@ namespace spec\Sylius\InvoicingPlugin\Email;
 
 use Knp\Snappy\GeneratorInterface;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 use Sylius\Component\Mailer\Sender\SenderInterface;
 use Sylius\InvoicingPlugin\Email\Emails;
 use Sylius\InvoicingPlugin\Email\InvoiceEmailSender;
@@ -23,7 +22,7 @@ final class InvoiceEmailSenderSpec extends ObjectBehavior
         GeneratorInterface $pdfGenerator,
         EngineInterface $templatingEngine,
         TemporaryFileSystemInterface $temporaryFilePathGenerator
-    ) : void {
+    ): void {
         $this->beConstructedWith($sender, $pdfGenerator, $templatingEngine, $temporaryFilePathGenerator);
     }
 
@@ -50,7 +49,7 @@ final class InvoiceEmailSenderSpec extends ObjectBehavior
 
         $templatingEngine->render(
             '@SyliusInvoicingPlugin/Resources/views/Invoice/Download/pdf.html.twig', [
-                'invoice' => $invoice
+                'invoice' => $invoice,
             ]
         )->willReturn($templateReference);
 
