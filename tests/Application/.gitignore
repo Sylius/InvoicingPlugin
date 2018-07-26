@@ -4,6 +4,11 @@
 !/var/.gitkeep
 
 /web/*
+!/web/media/
+/web/media/*
+!/web/media/image/
+/web/media/image/*
+!/web/media/image/.gitkeep
 !/web/app.php
 !/web/app_dev.php
 !/web/app_test.php
