@@ -21,15 +21,19 @@ final class OrderPlacedProducerSpec extends ObjectBehavior
     function it_dispatches_an_order_placed_event_for_an_order(
         EventBus $eventBus,
         DateTimeProvider $dateTimeProvider,
-        OrderInterface $order
+        OrderInterface $order,
+        \DateTime $dateTime
     ): void {
-        $date = new \DateTimeImmutable('now');
+        $dateTimeProvider->__invoke()->willReturn($dateTime);
 
-        $dateTimeProvider->__invoke()->willReturn($date);
+        $order->getNumber()->willReturn('000666');
 
         $eventBus
-            ->dispatch(Argument::that(function (OrderPlaced $event) use ($order, $date): bool {
-                return $event->payload() === (new OrderPlaced($order->getWrappedObject(), $date))->payload();
+            ->dispatch(Argument::that(function (OrderPlaced $event) use ($dateTime): bool {
+                return
+                    $event->orderNumber() === '000666' &&
+                    $event->date() === $dateTime->getWrappedObject()
+                ;
             }))
             ->shouldBeCalled()
         ;

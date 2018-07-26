@@ -6,13 +6,10 @@ namespace Sylius\InvoicingPlugin\Generator;
 
 use Doctrine\DBAL\LockMode;
 use Doctrine\ORM\EntityManagerInterface;
-use Sylius\InvoicingPlugin\DateTimeProvider;
-use Sylius\InvoicingPlugin\Entity\InvoiceSequenceInterface;
-use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
-
-use Webmozart\Assert\Assert;
+use Sylius\InvoicingPlugin\DateTimeProvider;
+use Sylius\InvoicingPlugin\Entity\InvoiceSequenceInterface;
 
 final class SequentialInvoiceNumberGenerator implements InvoiceNumberGenerator
 {

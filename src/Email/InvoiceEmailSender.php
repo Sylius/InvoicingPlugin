@@ -42,7 +42,7 @@ final class InvoiceEmailSender implements InvoiceEmailSenderInterface
     ): void {
         $pdfFileContent = $this->pdfGenerator->getOutputFromHtml(
             $this->templatingEngine->render('@SyliusInvoicingPlugin/Resources/views/Invoice/Download/pdf.html.twig', [
-                'invoice' => $invoice
+                'invoice' => $invoice,
         ]));
 
         $filePath = $this->preparePdfFilePath('invoice-%s.pdf', $invoice->id());
@@ -59,7 +59,7 @@ final class InvoiceEmailSender implements InvoiceEmailSenderInterface
         }
     }
 
-    private function preparePdfFilePath(string $filePathPattern, string...$filePathParameters): string
+    private function preparePdfFilePath(string $filePathPattern, string ...$filePathParameters): string
     {
         return sys_get_temp_dir() . '/' . vsprintf($filePathPattern, $filePathParameters);
     }

@@ -11,7 +11,8 @@ use Sylius\InvoicingPlugin\Entity\LineItemInterface;
 
 final class LineItemSpec extends ObjectBehavior
 {
-    function let(): void {
+    function let(): void
+    {
         $this->beConstructedWith(
             'Mjolnir',
             2,

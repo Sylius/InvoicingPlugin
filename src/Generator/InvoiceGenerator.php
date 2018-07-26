@@ -16,7 +16,6 @@ use Sylius\InvoicingPlugin\Entity\Invoice;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Sylius\InvoicingPlugin\Entity\LineItem;
 use Sylius\InvoicingPlugin\Entity\TaxItem;
-use Sylius\InvoicingPlugin\Generator\InvoiceNumberGenerator;
 
 final class InvoiceGenerator implements InvoiceGeneratorInterface
 {
