@@ -37,17 +37,6 @@ final class SyliusInvoicingExtension extends AbstractResourceExtension implement
         }
 
         $container->prependExtensionConfig('winzou_state_machine', [
-            'sylius_order' => [
-                'callbacks' => [
-                    'after' => [
-                        'sylius_invoicing_plugin_order_created_producer' => [
-                            'on' => ['create'],
-                            'do' => ['@Sylius\InvoicingPlugin\EventProducer\OrderPlacedProducer', '__invoke'],
-                            'args' => ['object'],
-                        ],
-                    ],
-                ],
-            ],
             'sylius_payment' => [
                 'callbacks' => [
                     'after' => [

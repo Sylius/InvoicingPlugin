@@ -37,6 +37,9 @@ before_script:
     - (cd tests/Application && bin/console assets:install web --env=test -vvv)
     - (cd tests/Application && yarn build)
 
+    # Running fixtures to be sure they're not failing
+    - (cd tests/Application && bin/console sylius:fixtures:load -n --env test)
+
     # Configure display
     - /sbin/start-stop-daemon --start --quiet --pidfile /tmp/xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1680x1050x16
     - export DISPLAY=:99

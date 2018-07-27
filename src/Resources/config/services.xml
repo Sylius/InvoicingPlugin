@@ -20,6 +20,8 @@
         <service id="Sylius\InvoicingPlugin\EventProducer\OrderPlacedProducer" public="true">
             <argument type="service" id="sylius_invoicing.event_bus" />
             <argument type="service" id="Sylius\InvoicingPlugin\DateTimeProvider" />
+            <tag name="doctrine.event_listener" event="postPersist" />
+            <tag name="doctrine.event_listener" event="postUpdate" />
         </service>
 
         <service id="Sylius\InvoicingPlugin\EventProducer\OrderPaymentPaidProducer" public="true">
