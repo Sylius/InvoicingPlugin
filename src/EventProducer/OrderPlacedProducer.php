@@ -27,16 +27,6 @@ final class OrderPlacedProducer
 
     public function postPersist(LifecycleEventArgs $event): void
     {
-        $this->dispatchOrderPlacedEventIfNecessary($event);
-    }
-
-    public function postUpdate(LifecycleEventArgs $event): void
-    {
-        $this->dispatchOrderPlacedEventIfNecessary($event);
-    }
-
-    private function dispatchOrderPlacedEventIfNecessary(LifecycleEventArgs $event): void
-    {
         $order = $event->getEntity();
 
         if (
@@ -46,6 +36,34 @@ final class OrderPlacedProducer
             return;
         }
 
+        $this->dispatchOrderPlacedEvent($order);
+    }
+
+    public function postUpdate(LifecycleEventArgs $event): void
+    {
+        $order = $event->getEntity();
+
+        if (!$order instanceof OrderInterface) {
+            return;
+        }
+
+        $entityManager = $event->getEntityManager();
+
+        $unitOfWork = $entityManager->getUnitOfWork();
+        $changeSet = $unitOfWork->getEntityChangeSet($order);
+
+        if (
+            !isset($changeSet['checkoutState']) ||
+            $changeSet['checkoutState'][1] !== OrderCheckoutStates::STATE_COMPLETED
+        ) {
+            return;
+        }
+
+        $this->dispatchOrderPlacedEvent($order);
+    }
+
+    private function dispatchOrderPlacedEvent(OrderInterface $order): void
+    {
         $this->eventBus->dispatch(
             new OrderPlaced($order->getNumber(), $this->dateTimeProvider->__invoke())
         );
