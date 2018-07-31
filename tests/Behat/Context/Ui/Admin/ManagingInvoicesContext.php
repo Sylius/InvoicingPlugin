@@ -209,4 +209,20 @@ final class ManagingInvoicesContext implements Context
     {
         $this->showPage->download();
     }
+
+    /**
+     * @When I want to go back to invoices view
+     */
+    public function wantToGoBackToInvoicesView(): void
+    {
+        $this->showPage->goBack();
+    }
+
+    /**
+     * @Then I should see all invoices
+     */
+    public function shouldSeeAllInvoices(): void
+    {
+        $this->indexPage->verify();
+    }
 }

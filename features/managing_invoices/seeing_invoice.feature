@@ -33,3 +33,8 @@ Feature: Seeing basic information about an invoice
         Given I view the summary of the invoice for order "#00000666"
         When I download the invoice
         Then the pdf file for this invoice should be downloaded successfully
+
+    Scenario: Going back to invoices view
+        Given I view the summary of the invoice for order "#00000666"
+        When I want to go back to invoices view
+        Then I should see all invoices
