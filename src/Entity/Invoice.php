@@ -28,6 +28,9 @@ class Invoice implements InvoiceInterface, ResourceInterface
     /** @var string */
     private $currencyCode;
 
+    /** @var string */
+    private $localeCode;
+
     /** @var int */
     private $total;
 
@@ -44,6 +47,7 @@ class Invoice implements InvoiceInterface, ResourceInterface
         \DateTimeInterface $issuedAt,
         BillingDataInterface $billingData,
         string $currencyCode,
+        string $localeCode,
         int $total,
         Collection $lineItems,
         Collection $taxItems
@@ -54,6 +58,7 @@ class Invoice implements InvoiceInterface, ResourceInterface
         $this->issuedAt = clone $issuedAt;
         $this->billingData = $billingData;
         $this->currencyCode = $currencyCode;
+        $this->localeCode = $localeCode;
         $this->total = $total;
         $this->lineItems = $lineItems;
         $this->taxItems = $taxItems;
@@ -102,6 +107,11 @@ class Invoice implements InvoiceInterface, ResourceInterface
     public function currencyCode(): string
     {
         return $this->currencyCode;
+    }
+
+    public function localeCode(): string
+    {
+        return $this->localeCode;
     }
 
     public function total(): int
