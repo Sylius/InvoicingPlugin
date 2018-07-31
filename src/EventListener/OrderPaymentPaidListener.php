@@ -23,7 +23,7 @@ final class OrderPaymentPaidListener
         $this->commandBus = $commandBus;
     }
 
-    public function __invoke(OrderPaymentPaid $event)
+    public function __invoke(OrderPaymentPaid $event): void
     {
         $this->commandBus->dispatch(new SendInvoiceEmail($event->orderNumber()));
     }

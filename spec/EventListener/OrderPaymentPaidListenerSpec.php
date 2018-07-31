@@ -10,7 +10,6 @@ use Prophecy\Argument;
 use Sylius\InvoicingPlugin\Command\SendInvoiceEmail;
 use Sylius\InvoicingPlugin\Event\OrderPaymentPaid;
 use Sylius\InvoicingPlugin\EventListener\OrderPaymentPaidListener;
-use Symfony\Component\Validator\Constraints\Date;
 
 final class OrderPaymentPaidListenerSpec extends ObjectBehavior
 {
