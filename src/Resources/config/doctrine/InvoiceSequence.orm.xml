@@ -10,6 +10,7 @@
             <generator strategy="AUTO" />
         </id>
         <field name="index" column="idx" type="integer" />
+        <field name="lastGeneratedAt" column="last_generated_at" type="datetime" />
         <field name="version" type="integer" version="true" />
     </mapped-superclass>
 

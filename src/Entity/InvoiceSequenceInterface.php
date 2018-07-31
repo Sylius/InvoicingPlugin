@@ -12,4 +12,10 @@ interface InvoiceSequenceInterface extends ResourceInterface, VersionedInterface
     public function getIndex(): int;
 
     public function incrementIndex(): void;
+
+    public function resetIndex(): void;
+
+    public function getLastGeneratedAt(): ?\DateTimeInterface;
+
+    public function setLastGeneratedAt(\DateTimeInterface $lastGeneratedAt): void;
 }

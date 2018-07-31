@@ -12,7 +12,6 @@ Feature: Generating an invoice with a proper sequential number
         And the store allows paying with "Cash on Delivery"
         And I am logged in as an administrator
 
-    @todo
     Scenario: Generating an invoice with a proper sequential number
         Given the last invoice has been generated today as 4th in this month
         And there is a customer "lucy@teamlucifer.com" that placed an order "#000000666"
@@ -23,7 +22,6 @@ Feature: Generating an invoice with a proper sequential number
         When I view the summary of the invoice for order "#000000666"
         And it should have sequential number generated with "000000005" and current month and year
 
-    @todo
     Scenario: Generating an invoice with a proper sequential number
         Given the last invoice has been generated two months ago as 9th in that month
         And there is a customer "lucy@teamlucifer.com" that placed an order "#000000666"

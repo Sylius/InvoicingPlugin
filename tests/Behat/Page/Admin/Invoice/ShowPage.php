@@ -103,6 +103,11 @@ final class ShowPage extends SymfonyPage implements ShowPageInterface
         return $amount === $taxItemAmountElement->getText();
     }
 
+    public function getNumber(): string
+    {
+        return $this->getElement('invoice_number')->getText();
+    }
+
     public function getSubtotal(): string
     {
         return $this->getElement('invoice_subtotal')->getText();
@@ -122,6 +127,7 @@ final class ShowPage extends SymfonyPage implements ShowPageInterface
     {
         return array_merge(parent::getDefinedElements(), [
             'billing_address' => '#billing-data',
+            'invoice_number' => '#invoice-number',
             'invoice_subtotal' => '#invoice-subtotal',
             'invoice_tax_total' => '#invoice-tax-total',
             'invoice_total' => '#invoice-total',

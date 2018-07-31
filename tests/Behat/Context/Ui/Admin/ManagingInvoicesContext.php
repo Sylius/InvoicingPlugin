@@ -209,4 +209,15 @@ final class ManagingInvoicesContext implements Context
     {
         $this->showPage->download();
     }
+
+    /**
+     * @Then it should have sequential number generated with :index and current month and year
+     */
+    public function shouldHaveSequentialNumberGeneratedWithIndexAndCurrentMonthAndYear(string $index): void
+    {
+        Assert::same(
+            $this->showPage->getNumber(),
+            (new \DateTime())->format('Y/m') . '/' . $index
+        );
+    }
 }

@@ -48,20 +48,51 @@ final class SequentialInvoiceNumberGeneratorSpec extends ObjectBehavior
         DateTimeProvider $dateTimeProvider,
         InvoiceSequenceInterface $sequence
     ): void {
-        $dateTime = new \DateTime('now');
+        $lastGenerationDate = new \DateTime('now');
+        $currentDate = new \DateTime('now');
 
-        $dateTimeProvider->__invoke()->willReturn($dateTime);
+        $dateTimeProvider->__invoke()->willReturn($currentDate);
 
         $sequenceRepository->findOneBy([])->willReturn($sequence);
 
         $sequence->getVersion()->willReturn(1);
         $sequence->getIndex()->willReturn(0);
+        $sequence->getLastGeneratedAt()->willReturn($lastGenerationDate);
 
         $sequenceManager->lock($sequence, LockMode::OPTIMISTIC, 1)->shouldBeCalled();
 
         $sequence->incrementIndex()->shouldBeCalled();
+        $sequence->setLastGeneratedAt($currentDate)->shouldBeCalled();
 
-        $this->generate()->shouldReturn($dateTime->format('Y/m') . '/000000001');
+        $this->generate()->shouldReturn($currentDate->format('Y/m') . '/000000001');
+    }
+
+    function it_resets_index_if_month_and_year_have_changed(
+        RepositoryInterface $sequenceRepository,
+        EntityManagerInterface $sequenceManager,
+        DateTimeProvider $dateTimeProvider,
+        InvoiceSequenceInterface $sequence
+    ): void {
+        $lastGenerationDate = new \DateTime('-2 months');
+        $currentDate = new \DateTime('now');
+
+        $dateTimeProvider->__invoke()->willReturn($currentDate);
+
+        $sequenceRepository->findOneBy([])->willReturn($sequence);
+
+        $sequence->getVersion()->willReturn(1);
+        $sequence->getLastGeneratedAt()->willReturn($lastGenerationDate);
+
+        $sequenceManager->lock($sequence, LockMode::OPTIMISTIC, 1)->shouldBeCalled();
+
+        $sequence->resetIndex()->shouldBeCalled();
+
+        $sequence->getIndex()->willReturn(0);
+
+        $sequence->incrementIndex()->shouldBeCalled();
+        $sequence->setLastGeneratedAt($currentDate)->shouldBeCalled();
+
+        $this->generate()->shouldReturn($currentDate->format('Y/m') . '/000000001');
     }
 
     function it_generates_invoice_number_when_sequence_is_null(
@@ -71,9 +102,9 @@ final class SequentialInvoiceNumberGeneratorSpec extends ObjectBehavior
         DateTimeProvider $dateTimeProvider,
         InvoiceSequenceInterface $sequence
     ): void {
-        $dateTime = new \DateTime('now');
+        $currentDate = new \DateTime('now');
 
-        $dateTimeProvider->__invoke()->willReturn($dateTime);
+        $dateTimeProvider->__invoke()->willReturn($currentDate);
 
         $sequenceRepository->findOneBy([])->willReturn(null);
 
@@ -83,11 +114,13 @@ final class SequentialInvoiceNumberGeneratorSpec extends ObjectBehavior
 
         $sequence->getVersion()->willReturn(1);
         $sequence->getIndex()->willReturn(0);
+        $sequence->getLastGeneratedAt()->willReturn(null);
 
         $sequenceManager->lock($sequence, LockMode::OPTIMISTIC, 1)->shouldBeCalled();
 
         $sequence->incrementIndex()->shouldBeCalled();
+        $sequence->setLastGeneratedAt($currentDate)->shouldBeCalled();
 
-        $this->generate()->shouldReturn($dateTime->format('Y/m') . '/000000001');
+        $this->generate()->shouldReturn($currentDate->format('Y/m') . '/000000001');
     }
 }

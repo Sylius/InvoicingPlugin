@@ -39,6 +39,8 @@ interface ShowPageInterface extends SymfonyPageInterface
 
     public function hasTaxItem(string $label, string $amount): bool;
 
+    public function getNumber(): string;
+
     public function getSubtotal(): string;
 
     public function getTotal(): string;

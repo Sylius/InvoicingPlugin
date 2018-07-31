@@ -49,15 +49,22 @@ final class SequentialInvoiceNumberGenerator implements InvoiceNumberGenerator
 
     public function generate(): string
     {
-        $invoiceIdentifierPrefix = $this->dateTimeProvider->__invoke()->format('Y/m') . '/';
+        $currentDate = $this->dateTimeProvider->__invoke();
+
+        $invoiceIdentifierPrefix = $currentDate->format('Y/m') . '/';
 
         /** @var InvoiceSequenceInterface $sequence */
         $sequence = $this->getSequence();
 
         $this->sequenceManager->lock($sequence, LockMode::OPTIMISTIC, $sequence->getVersion());
 
+        if ($this->isMonthChanged($currentDate, $sequence->getLastGeneratedAt())) {
+            $sequence->resetIndex();
+        }
+
         $number = $this->generateNumber($sequence->getIndex());
         $sequence->incrementIndex();
+        $sequence->setLastGeneratedAt($currentDate);
 
         return $invoiceIdentifierPrefix . $number;
     }
@@ -83,5 +90,14 @@ final class SequentialInvoiceNumberGenerator implements InvoiceNumberGenerator
         $this->sequenceManager->persist($sequence);
 
         return $sequence;
+    }
+
+    private function isMonthChanged(\DateTimeInterface $currentDate, ?\DateTimeInterface $lastGenerationDate): bool
+    {
+        if ($lastGenerationDate === null) {
+            return false;
+        }
+
+        return $lastGenerationDate->format('Y/m') !== $currentDate->format('Y/m');
     }
 }

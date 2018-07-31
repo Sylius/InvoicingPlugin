@@ -1,7 +1,7 @@
 <h1 class="ui header">
     <i class="circular inbox icon"></i>
     <div class="content">
-        {{ 'sylius_invoicing_plugin.ui.invoice'|trans }} {{ invoice.number }}
+        {{ 'sylius_invoicing_plugin.ui.invoice'|trans }} <span id="invoice-number">{{ invoice.number }}</span>
         <div class="sub header">
             <div class="ui horizontal divided list">
                 <div class="item">

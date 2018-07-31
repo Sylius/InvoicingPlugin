@@ -13,6 +13,9 @@ class InvoiceSequence implements InvoiceSequenceInterface
     /** @var int */
     protected $index = 0;
 
+    /** @var \DateTimeInterface|null */
+    protected $lastGeneratedAt;
+
     /** @var int|null */
     protected $version = 1;
 
@@ -29,6 +32,21 @@ class InvoiceSequence implements InvoiceSequenceInterface
     public function incrementIndex(): void
     {
         ++$this->index;
+    }
+
+    public function resetIndex(): void
+    {
+        $this->index = 0;
+    }
+
+    public function getLastGeneratedAt(): ?\DateTimeInterface
+    {
+        return $this->lastGeneratedAt;
+    }
+
+    public function setLastGeneratedAt(\DateTimeInterface $lastGeneratedAt): void
+    {
+        $this->lastGeneratedAt = $lastGeneratedAt;
     }
 
     public function getVersion(): ?int
