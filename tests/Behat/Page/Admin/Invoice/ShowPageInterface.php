@@ -44,4 +44,6 @@ interface ShowPageInterface extends SymfonyPageInterface
     public function getTotal(): string;
 
     public function download(): void;
+
+    public function goBack(): void;
 }

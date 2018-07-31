@@ -118,9 +118,15 @@ final class ShowPage extends SymfonyPage implements ShowPageInterface
         $this->getDocument()->clickLink('Download');
     }
 
+    public function goBack(): void
+    {
+        $this->getElement('back')->click();
+    }
+
     protected function getDefinedElements(): array
     {
         return array_merge(parent::getDefinedElements(), [
+            'back' => '#back',
             'billing_address' => '#billing-data',
             'invoice_subtotal' => '#invoice-subtotal',
             'invoice_tax_total' => '#invoice-tax-total',
