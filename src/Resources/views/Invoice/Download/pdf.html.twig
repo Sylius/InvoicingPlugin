@@ -1,6 +1,9 @@
 {% set shopBillingData = sylius.channel.billingData %}
 
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+    </head>
     <body>
         <h1>{{ 'sylius_invoicing_plugin.ui.invoice'|trans }} {{ invoice.number }}</h1>
         <p>{{ 'sylius_invoicing_plugin.ui.order_number'|trans }}: {{ invoice.orderNumber }}</p>
