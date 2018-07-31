@@ -5,23 +5,18 @@ declare(strict_types=1);
 namespace spec\Sylius\InvoicingPlugin\EventListener;
 
 use PhpSpec\ObjectBehavior;
-use Sylius\Component\Core\Model\CustomerInterface;
-use Sylius\Component\Core\Model\OrderInterface;
-use Sylius\Component\Core\Repository\OrderRepositoryInterface;
-use Sylius\InvoicingPlugin\Email\InvoiceEmailSenderInterface;
-use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
+use Prooph\ServiceBus\CommandBus;
+use Prophecy\Argument;
+use Sylius\InvoicingPlugin\Command\SendInvoiceEmail;
 use Sylius\InvoicingPlugin\Event\OrderPaymentPaid;
 use Sylius\InvoicingPlugin\EventListener\OrderPaymentPaidListener;
-use Sylius\InvoicingPlugin\Repository\InvoiceRepository;
+use Symfony\Component\Validator\Constraints\Date;
 
 final class OrderPaymentPaidListenerSpec extends ObjectBehavior
 {
-    function let(
-        InvoiceRepository $invoiceRepository,
-        OrderRepositoryInterface $orderRepository,
-        InvoiceEmailSenderInterface $emailSender
-    ): void {
-        $this->beConstructedWith($invoiceRepository, $orderRepository, $emailSender);
+    function let(CommandBus $commandBus): void
+    {
+        $this->beConstructedWith($commandBus);
     }
 
     function it_is_initializable(): void
@@ -29,24 +24,12 @@ final class OrderPaymentPaidListenerSpec extends ObjectBehavior
         $this->shouldHaveType(OrderPaymentPaidListener::class);
     }
 
-    function it_requests_an_email_with_an_invoice_to_be_sent(
-        InvoiceRepository $invoiceRepository,
-        OrderRepositoryInterface $orderRepository,
-        InvoiceEmailSenderInterface $emailSender,
-        InvoiceInterface $invoice,
-        OrderInterface $order,
-        CustomerInterface $customer
-    ): void {
-        $invoiceRepository->getOneByOrderNumber('0000001')->willReturn($invoice);
+    function it_dispatches_send_invoice_email_command(CommandBus $commandBus): void
+    {
+        $commandBus->dispatch(Argument::that(function (SendInvoiceEmail $command): bool {
+            return $command->orderNumber() === '00000001';
+        }))->shouldBeCalled();
 
-        $orderRepository->findOneBy(['number' => '0000001'])->willReturn($order);
-
-        $order->getCustomer()->willReturn($customer);
-
-        $customer->getEmail()->willReturn('shop@example.com');
-
-        $emailSender->sendInvoiceEmail($invoice, 'shop@example.com')->shouldBeCalled();
-
-        $this->__invoke(new OrderPaymentPaid('0000001', new \DateTime('now')));
+        $this(new OrderPaymentPaid('00000001', new \DateTime()));
     }
 }

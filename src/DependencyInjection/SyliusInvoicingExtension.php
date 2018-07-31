@@ -60,6 +60,9 @@ final class SyliusInvoicingExtension extends AbstractResourceExtension implement
             'event_buses' => [
                 'sylius_invoicing_event_bus' => null,
             ],
+            'command_buses' => [
+                'sylius_invoicing_command_bus' => null,
+            ],
         ]);
     }
 
