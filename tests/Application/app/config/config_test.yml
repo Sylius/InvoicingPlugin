@@ -7,4 +7,4 @@ doctrine:
 
 knp_snappy:
     pdf:
-        binary: "/usr/local/bin/wkhtmltopdf"
+        binary: "%kernel.project_dir%/app/etc/wkhtmltopdf"
