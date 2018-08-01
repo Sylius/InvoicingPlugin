@@ -71,19 +71,19 @@
                         {{ item.variantCode }}
                     </td>
                     <td>
-                        {{ item.unitPrice|sylius_format_money(invoice.currencyCode, sylius.localeCode) }}
+                        {{ item.unitPrice|sylius_format_money(invoice.currencyCode, invoice.localeCode) }}
                     </td>
                     <td>
                         {{ item.quantity }}
                     </td>
                     <td>
-                        {{ item.subtotal|sylius_format_money(invoice.currencyCode, sylius.localeCode) }}
+                        {{ item.subtotal|sylius_format_money(invoice.currencyCode, invoice.localeCode) }}
                     </td>
                     <td>
-                        {{ item.taxTotal|sylius_format_money(invoice.currencyCode, sylius.localeCode) }}
+                        {{ item.taxTotal|sylius_format_money(invoice.currencyCode, invoice.localeCode) }}
                     </td>
                     <td>
-                        {{ item.total|sylius_format_money(invoice.currencyCode, sylius.localeCode) }}
+                        {{ item.total|sylius_format_money(invoice.currencyCode, invoice.localeCode) }}
                     </td>
                 </tr>
             {% endfor %}
@@ -94,7 +94,7 @@
                     <strong>{{ 'sylius.ui.subtotal'|trans }}</strong>:
                 </th>
                 <th>
-                    {{ invoice.subtotal|sylius_format_money(invoice.currencyCode, sylius.localeCode) }}
+                    {{ invoice.subtotal|sylius_format_money(invoice.currencyCode, invoice.localeCode) }}
                 </th>
             </tr>
             {% for item in invoice.taxItems %}
@@ -103,7 +103,7 @@
                         <strong>{{ item.label }}</strong>:
                     </th>
                     <th>
-                        {{ item.amount|sylius_format_money(invoice.currencyCode, sylius.localeCode) }}
+                        {{ item.amount|sylius_format_money(invoice.currencyCode, invoice.localeCode) }}
                     </th>
                 </tr>
             {% endfor %}
@@ -112,7 +112,7 @@
                     <strong>{{ 'sylius.ui.total'|trans }}</strong>:
                 </th>
                 <th>
-                    {{ invoice.total|sylius_format_money(invoice.currencyCode, sylius.localeCode) }}
+                    {{ invoice.total|sylius_format_money(invoice.currencyCode, invoice.localeCode) }}
                 </th>
             </tr>
             </tfoot>

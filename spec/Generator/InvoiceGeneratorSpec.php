@@ -47,6 +47,7 @@ final class InvoiceGeneratorSpec extends ObjectBehavior
 
         $order->getNumber()->willReturn('007');
         $order->getCurrencyCode()->willReturn('USD');
+        $order->getLocaleCode()->willReturn('en_US');
         $order->getTotal()->willReturn(10300);
         $order->getBillingAddress()->willReturn($billingAddress);
         $order->getItems()->willReturn(new ArrayCollection([$orderItem->getWrappedObject()]));

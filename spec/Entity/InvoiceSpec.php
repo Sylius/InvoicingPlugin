@@ -28,6 +28,7 @@ final class InvoiceSpec extends ObjectBehavior
             $issuedAt,
             $billingData,
             'USD',
+            'en_US',
             10300,
             new ArrayCollection([$lineItem->getWrappedObject()]),
             new ArrayCollection([$taxItem->getWrappedObject()])
@@ -60,6 +61,7 @@ final class InvoiceSpec extends ObjectBehavior
             $issuedAt,
             $billingData,
             'USD',
+            'en_US',
             10300,
             $lineItems,
             $taxItems
@@ -70,6 +72,7 @@ final class InvoiceSpec extends ObjectBehavior
         $this->orderNumber()->shouldReturn('007');
         $this->billingData()->shouldReturn($billingData);
         $this->currencyCode()->shouldReturn('USD');
+        $this->localeCode()->shouldReturn('en_US');
         $this->total()->shouldReturn(10300);
         $this->lineItems()->shouldReturn($lineItems);
         $this->taxItems()->shouldReturn($taxItems);

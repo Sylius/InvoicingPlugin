@@ -20,6 +20,8 @@ interface InvoiceInterface
 
     public function currencyCode(): string;
 
+    public function localeCode(): string;
+
     public function total(): int;
 
     public function lineItems(): Collection;

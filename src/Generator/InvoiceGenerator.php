@@ -44,6 +44,7 @@ final class InvoiceGenerator implements InvoiceGeneratorInterface
             $date,
             $this->prepareBillingData($billingAddress),
             $order->getCurrencyCode(),
+            $order->getLocaleCode(),
             $order->getTotal(),
             $this->prepareLineItems($order),
             $this->prepareTaxItems($order)
