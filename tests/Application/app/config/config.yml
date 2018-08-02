@@ -7,14 +7,9 @@ imports:
     - { resource: "@SyliusAdminBundle/Resources/config/app/config.yml" }
     - { resource: "@SyliusShopBundle/Resources/config/app/config.yml" }
     - { resource: "@SyliusAdminApiBundle/Resources/config/app/config.yml" }
+    - { resource: "@SyliusInvoicingPlugin/Resources/config/config.yml" }
 
     - { resource: "../../../../vendor/sylius/sylius/app/config/security.yml" }
-
-sylius_mailer:
-    emails:
-        invoice_generated:
-            subject: sylius.emails.invoice_generated.subject
-            template: "@SyliusInvoicingPlugin/Resources/views/Invoice/Email/invoiceGenerated.html.twig"
 
 framework:
     translator: { fallbacks: ["%locale%", "en"] }
@@ -76,12 +71,6 @@ liip_imagine:
             web_path:
                 web_root: "%kernel.project_dir%/web"
                 cache_prefix: "media/cache"
-
-knp_snappy:
-    pdf:
-        enabled: true
-        binary: /usr/local/bin/wkhtmltopdf
-        options: []
 
 sylius_channel:
     resources:
