@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sylius\InvoicingPlugin\Ui\Action;
+namespace Sylius\InvoicingPlugin\Ui\Action\Admin;
 
 use Sylius\Component\Core\Model\CustomerInterface;
 use Sylius\Component\Core\Model\OrderInterface;
@@ -41,7 +41,7 @@ final class ResendInvoiceAction
         $this->urlGenerator = $urlGenerator;
     }
 
-    public function __invoke(Request $request, string $id): Response
+    public function __invoke(string $id): Response
     {
         /** @var InvoiceInterface $invoice */
         $invoice = $this->invoiceRepository->get($id);
