@@ -9,4 +9,12 @@ use Sylius\Behat\Page\Admin\Crud\IndexPageInterface as BaseIndexPageInterface;
 interface IndexPageInterface extends BaseIndexPageInterface
 {
     public function hasInvoiceForOrder(string $orderNumber): bool;
+
+    public function isInvoiceIdFilterAvailable(): bool;
+
+    public function isInvoiceNumberFilterAvailable(): bool;
+
+    public function isOrderNumberFilterAvailable(): bool;
+
+    public function isIssuedAtFilterAvailable(): bool;
 }

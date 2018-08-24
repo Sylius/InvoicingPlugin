@@ -17,3 +17,10 @@ Feature: Browsing invoices
     Scenario: Seeing a new invoice in the list
         When I browse invoices
         Then I should see a single invoice for order "#00000022"
+
+    Scenario: Filtering invoices
+        When I browse invoices
+        Then I should be able to filter them by invoice number
+        And I should be able to filter them by invoice id
+        And I should be able to filter them by order number
+        And I should be able to filter them by date of being issued

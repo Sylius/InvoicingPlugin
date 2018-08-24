@@ -56,6 +56,12 @@ sylius_grid:
                 orderNumber:
                     type: string
                     label: sylius_invoicing_plugin.ui.order_number
+                number:
+                    type: string
+                    label: sylius_invoicing_plugin.ui.invoice_number
+                issuedAt:
+                    type: date
+                    label: sylius_invoicing_plugin.ui.issued_at
             actions:
                 item:
                     show:
