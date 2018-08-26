@@ -29,4 +29,6 @@ interface InvoiceInterface
     public function taxItems(): Collection;
 
     public function subtotal(): int;
+
+    public function channel(): InvoiceChannelInterface;
 }

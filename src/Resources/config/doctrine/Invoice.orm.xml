@@ -30,6 +30,8 @@
             </cascade>
         </one-to-many>
 
+        <embedded name="channel" class="Sylius\InvoicingPlugin\Entity\InvoiceChannel" />
+
         <indexes>
             <index columns="order_number" />
         </indexes>

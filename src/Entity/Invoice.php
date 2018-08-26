@@ -40,6 +40,9 @@ class Invoice implements InvoiceInterface, ResourceInterface
     /** @var Collection|TaxItemInterface[] */
     private $taxItems;
 
+    /** @var InvoiceChannelInterface */
+    private $channel;
+
     public function __construct(
         string $id,
         string $number,
@@ -50,7 +53,8 @@ class Invoice implements InvoiceInterface, ResourceInterface
         string $localeCode,
         int $total,
         Collection $lineItems,
-        Collection $taxItems
+        Collection $taxItems,
+        InvoiceChannelInterface $channel
     ) {
         $this->id = $id;
         $this->number = $number;
@@ -62,6 +66,7 @@ class Invoice implements InvoiceInterface, ResourceInterface
         $this->total = $total;
         $this->lineItems = $lineItems;
         $this->taxItems = $taxItems;
+        $this->channel = $channel;
 
         /** @var LineItemInterface $lineItem */
         foreach ($lineItems as $lineItem) {
@@ -139,5 +144,10 @@ class Invoice implements InvoiceInterface, ResourceInterface
         }
 
         return $subtotal;
+    }
+
+    public function channel(): InvoiceChannelInterface
+    {
+        return $this->channel;
     }
 }
