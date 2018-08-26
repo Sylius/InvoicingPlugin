@@ -13,6 +13,13 @@ final class IndexPage extends BaseIndexPage implements IndexPageInterface
         return $this->isSingleResourceOnPage(['orderNumber' => $orderNumber]);
     }
 
+    public function hasInvoiceWithChannel(int $index, string $channel): bool
+    {
+        $invoice = $this->getDocument()->findAll('css', 'table tbody tr')[$index-1];
+
+        return $invoice->find('css', sprintf('td:contains("%s")', $channel)) !== null;
+    }
+
     public function isInvoiceIdFilterAvailable(): bool
     {
         return $this->hasElement('invoiceIdFilterType') && $this->hasElement('invoiceIdFilterValue');
@@ -38,9 +45,15 @@ final class IndexPage extends BaseIndexPage implements IndexPageInterface
         ;
     }
 
+    public function isChannelFilterAvailable(): bool
+    {
+        return $this->hasElement('channelFilter');
+    }
+
     protected function getDefinedElements(): array
     {
         return array_merge(parent::getDefinedElements(), [
+            'channelFilter' => '#criteria_channel_channel',
             'invoiceIdFilterType' => '#criteria_id_type',
             'invoiceIdFilterValue' => '#criteria_id_value',
             'invoiceNumberFilterType' => '#criteria_number_type',

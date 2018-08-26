@@ -12,7 +12,7 @@ final class InvoiceChannelSpec extends ObjectBehavior
 {
     public function let(): void
     {
-        $this->beConstructedWith('en_US', 'United States');
+        $this->beConstructedWith('WEB-US', 'United States');
     }
 
     public function it_is_initializable(): void
@@ -27,7 +27,7 @@ final class InvoiceChannelSpec extends ObjectBehavior
 
     public function it_has_code(): void
     {
-        $this->getCode()->shouldReturn('en_US');
+        $this->getCode()->shouldReturn('WEB-US');
     }
 
     public function it_has_name(): void

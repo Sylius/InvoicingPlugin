@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Core\Model\AddressInterface;
 use Sylius\Component\Core\Model\AdjustmentInterface;
+use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\OrderItemInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
@@ -38,7 +39,8 @@ final class InvoiceGeneratorSpec extends ObjectBehavior
         AdjustmentInterface $shippingAdjustment,
         ProductVariantInterface $variant,
         OrderItemInterface $orderItem,
-        AdjustmentInterface $taxAdjustment
+        AdjustmentInterface $taxAdjustment,
+        ChannelInterface $channel
     ): void {
         $date = new \DateTimeImmutable('now');
 
@@ -55,6 +57,10 @@ final class InvoiceGeneratorSpec extends ObjectBehavior
             ->getAdjustments(AdjustmentInterface::SHIPPING_ADJUSTMENT)
             ->willReturn(new ArrayCollection([$shippingAdjustment->getWrappedObject()]))
         ;
+        $order->getChannel()->willReturn($channel);
+
+        $channel->getCode()->willReturn('WEB-US');
+        $channel->getName()->willReturn('United States');
 
         $billingAddress->getFirstName()->willReturn('John');
         $billingAddress->getLastName()->willReturn('Doe');

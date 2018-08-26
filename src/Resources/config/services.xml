@@ -102,5 +102,14 @@
             <tag name="prooph_service_bus.sylius_invoicing_command_bus.route_target" message-detection="true" />
         </service>
 
+        <service id="Sylius\InvoicingPlugin\Form\Type\ChannelFilterType">
+            <argument type="service" id="sylius.repository.channel" />
+            <tag name="form.type" />
+        </service>
+
+        <service id="Sylius\InvoicingPlugin\Grid\Filter\ChannelFilter">
+            <tag name="sylius.grid_filter" type="channel" form_type="Sylius\InvoicingPlugin\Form\Type\ChannelFilterType" />
+        </service>
+
     </services>
 </container>

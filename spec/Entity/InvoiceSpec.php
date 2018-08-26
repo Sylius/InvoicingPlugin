@@ -34,7 +34,7 @@ final class InvoiceSpec extends ObjectBehavior
             10300,
             new ArrayCollection([$lineItem->getWrappedObject()]),
             new ArrayCollection([$taxItem->getWrappedObject()]),
-            new InvoiceChannel('en_US', 'United States')
+            new InvoiceChannel('WEB-US', 'United States')
         );
     }
 
@@ -56,7 +56,7 @@ final class InvoiceSpec extends ObjectBehavior
         $issuedAt = new \DateTimeImmutable('now');
         $lineItems = new ArrayCollection([$lineItem->getWrappedObject()]);
         $taxItems = new ArrayCollection([$taxItem->getWrappedObject()]);
-        $invoiceChannel = new InvoiceChannel('en_US', 'United States');
+        $invoiceChannel = new InvoiceChannel('WEB-US', 'United States');
 
         $this->beConstructedWith(
             '7903c83a-4c5e-4bcf-81d8-9dc304c6a353',

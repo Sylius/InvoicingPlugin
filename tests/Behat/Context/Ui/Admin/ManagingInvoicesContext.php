@@ -55,6 +55,14 @@ final class ManagingInvoicesContext implements Context
     }
 
     /**
+     * @Then /^(\d+)(?:st|nd|rd) invoice should be issued in "([^"]+)" channel$/
+     */
+    public function shouldBeIssuedInChannel(int $index, string $channel): void
+    {
+        Assert::true($this->indexPage->hasInvoiceWithChannel($index, $channel));
+    }
+
+    /**
      * @When I view the summary of the invoice for order :order
      * @Then I should see the summary of the invoice for order :order
      */
@@ -195,6 +203,14 @@ final class ManagingInvoicesContext implements Context
     }
 
     /**
+     * @Then it should be issued in :channel channel
+     */
+    public function itShouldBeIssuedInChannel(string $channel): void
+    {
+        Assert::same($this->showPage->getChannel(), $channel);
+    }
+
+    /**
      * @Then the pdf file for this invoice should be downloaded successfully
      */
     public function pdfFileForThisInvoiceShouldBeDownloadedSuccessfully(): void
@@ -256,5 +272,13 @@ final class ManagingInvoicesContext implements Context
     public function shouldBeAbleToFilterThemByDateOfBeingIssued(): void
     {
         Assert::true($this->indexPage->isIssuedAtFilterAvailable());
+    }
+
+    /**
+     * @Then I should be able to filter them by channel
+     */
+    public function shouldBeAbleToFilterThemByChannel(): void
+    {
+        Assert::true($this->indexPage->isChannelFilterAvailable());
     }
 }

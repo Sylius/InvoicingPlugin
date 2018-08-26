@@ -28,6 +28,7 @@ Feature: Seeing basic information about an invoice
         And it should have an item "Angel T-Shirt" with unit price "$60.00", quantity 2, tax total "$12.00" and total "$132.00"
         And it should have a shipping item "UPS" with unit price "$10.00", quantity 1, tax total "$0.00" and total "$10.00"
         And its total should be "$142.00"
+        And it should be issued in "United States" channel
 
     Scenario: Downloading invoice
         Given I view the summary of the invoice for order "#00000666"

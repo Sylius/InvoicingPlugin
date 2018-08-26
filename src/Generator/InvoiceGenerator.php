@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Core\Model\AddressInterface;
 use Sylius\Component\Core\Model\AdjustmentInterface;
+use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\OrderItemInterface;
 use Sylius\InvoicingPlugin\Entity\BillingData;
@@ -37,6 +38,8 @@ final class InvoiceGenerator implements InvoiceGeneratorInterface
     public function generateForOrder(OrderInterface $order, \DateTimeInterface $date): InvoiceInterface
     {
         $billingAddress = $order->getBillingAddress();
+
+        /** @var ChannelInterface $channel */
         $channel = $order->getChannel();
 
         return new Invoice(
