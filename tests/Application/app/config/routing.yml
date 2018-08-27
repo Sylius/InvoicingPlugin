@@ -1,14 +1,5 @@
-sylius_admin:
-    resource: "../../../../vendor/sylius/sylius/config/routes/sylius_admin.yaml"
-
-sylius_admin_api:
-    resource: "../../../../vendor/sylius/sylius/config/routes/sylius_admin_api.yaml"
-
-sylius_shop:
-    resource: "../../../../vendor/sylius/sylius/config/routes/sylius_shop.yaml"
-
-liip_imagine:
-    resource: "../../../../vendor/sylius/sylius/config/routes/liip_imagine.yaml"
+sylius:
+    resource: "../../../../vendor/sylius/sylius/app/config/routing.yml"
 
 sylius_invoicing_plugin_admin:
     resource: "@SyliusInvoicingPlugin/Resources/config/app/routing/admin_invoicing.yml"
