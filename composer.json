@@ -11,7 +11,8 @@
         "prooph/service-bus": "^6.2",
         "prooph/service-bus-symfony-bundle": "^0.7.0",
         "ramsey/uuid": "^3.7",
-        "knplabs/knp-snappy-bundle": "^1.5"
+        "knplabs/knp-snappy-bundle": "^1.5",
+        "friends-of-behat/page-object-extension": "^0.2.0"
     },
     "require-dev": {
         "behat/behat": "^3.4",
