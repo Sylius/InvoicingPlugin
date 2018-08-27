@@ -10,4 +10,4 @@
 
 /tests/Application/yarn.lock
 
-.env.test
+/.env.test
