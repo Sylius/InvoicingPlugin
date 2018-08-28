@@ -7,8 +7,6 @@ sylius_mailer:
 knp_snappy:
     pdf:
         enabled: true
-        binary: /usr/local/bin/wkhtmltopdf
-        options: []
 
 prooph_service_bus:
     event_buses:
