@@ -18,11 +18,3 @@ Feature: Browsing invoices
         When I browse invoices
         Then I should see a single invoice for order "#00000022"
         And 1st invoice should be issued in "United States" channel
-
-    Scenario: Filtering invoices
-        When I browse invoices
-        Then I should be able to filter them by invoice number
-        And I should be able to filter them by invoice id
-        And I should be able to filter them by order number
-        And I should be able to filter them by date of being issued
-        And I should be able to filter them by channel

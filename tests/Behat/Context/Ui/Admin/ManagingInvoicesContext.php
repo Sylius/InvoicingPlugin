@@ -241,44 +241,4 @@ final class ManagingInvoicesContext implements Context
     {
         $this->indexPage->verify();
     }
-
-    /**
-     * @Then I should be able to filter them by invoice id
-     */
-    public function shouldBeAbleToFilterThemByInvoiceId(): void
-    {
-        Assert::true($this->indexPage->isInvoiceIdFilterAvailable());
-    }
-
-    /**
-     * @Then I should be able to filter them by invoice number
-     */
-    public function shouldBeAbleToFilterThemByInvoiceNumber(): void
-    {
-        Assert::true($this->indexPage->isInvoiceNumberFilterAvailable());
-    }
-
-    /**
-     * @Then I should be able to filter them by order number
-     */
-    public function shouldBeAbleToFilterThemByOrderNumber(): void
-    {
-        Assert::true($this->indexPage->isOrderNumberFilterAvailable());
-    }
-
-    /**
-     * @Then I should be able to filter them by date of being issued
-     */
-    public function shouldBeAbleToFilterThemByDateOfBeingIssued(): void
-    {
-        Assert::true($this->indexPage->isIssuedAtFilterAvailable());
-    }
-
-    /**
-     * @Then I should be able to filter them by channel
-     */
-    public function shouldBeAbleToFilterThemByChannel(): void
-    {
-        Assert::true($this->indexPage->isChannelFilterAvailable());
-    }
 }
