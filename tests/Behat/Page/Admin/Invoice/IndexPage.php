@@ -19,4 +19,9 @@ final class IndexPage extends BaseIndexPage implements IndexPageInterface
 
         return $invoice->find('css', sprintf('td:contains("%s")', $channel)) !== null;
     }
+
+    public function filterByChannel(string $channelName): void
+    {
+        $this->getDocument()->find('css', '#criteria_channel_channel')->selectOption($channelName);
+    }
 }

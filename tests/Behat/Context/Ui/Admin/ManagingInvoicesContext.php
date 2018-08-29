@@ -63,6 +63,14 @@ final class ManagingInvoicesContext implements Context
     }
 
     /**
+     * @Then there should be :count invoice(s) generated
+     */
+    public function thereShouldBeInvoiceGenerated(int $count): void
+    {
+        Assert::eq($this->indexPage->countItems(), $count);
+    }
+
+    /**
      * @When I view the summary of the invoice for order :order
      * @Then I should see the summary of the invoice for order :order
      */
@@ -115,6 +123,15 @@ final class ManagingInvoicesContext implements Context
     public function clickOnFirstInvoiceResendButton(): void
     {
         $this->orderShowPage->resendFirstInvoice();
+    }
+
+    /**
+     * @When I filter invoices by :channelName channel
+     */
+    public function filterCreditMemosByChannel(string $channelName): void
+    {
+        $this->indexPage->filterByChannel($channelName);
+        $this->indexPage->filter();
     }
 
     /**
