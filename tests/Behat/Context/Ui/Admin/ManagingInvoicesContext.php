@@ -55,6 +55,22 @@ final class ManagingInvoicesContext implements Context
     }
 
     /**
+     * @Then /^(\d+)(?:st|nd|rd) invoice should be issued in "([^"]+)" channel$/
+     */
+    public function shouldBeIssuedInChannel(int $index, string $channel): void
+    {
+        Assert::true($this->indexPage->hasInvoiceWithChannel($index, $channel));
+    }
+
+    /**
+     * @Then there should be :count invoice(s) generated
+     */
+    public function thereShouldBeInvoiceGenerated(int $count): void
+    {
+        Assert::eq($this->indexPage->countItems(), $count);
+    }
+
+    /**
      * @When I view the summary of the invoice for order :order
      * @Then I should see the summary of the invoice for order :order
      */
@@ -107,6 +123,15 @@ final class ManagingInvoicesContext implements Context
     public function clickOnFirstInvoiceResendButton(): void
     {
         $this->orderShowPage->resendFirstInvoice();
+    }
+
+    /**
+     * @When I filter invoices by :channelName channel
+     */
+    public function filterCreditMemosByChannel(string $channelName): void
+    {
+        $this->indexPage->filterByChannel($channelName);
+        $this->indexPage->filter();
     }
 
     /**
@@ -192,6 +217,14 @@ final class ManagingInvoicesContext implements Context
     public function itsTotalShouldBe(string $total): void
     {
         Assert::same($this->showPage->getTotal(), $total);
+    }
+
+    /**
+     * @Then it should be issued in :channel channel
+     */
+    public function itShouldBeIssuedInChannel(string $channel): void
+    {
+        Assert::same($this->showPage->getChannel(), $channel);
     }
 
     /**

@@ -113,6 +113,11 @@ final class ShowPage extends SymfonyPage implements ShowPageInterface
         return $this->getElement('invoice_total')->getText();
     }
 
+    public function getChannel(): string
+    {
+        return $this->getElement('invoice_channel_name')->getText();
+    }
+
     public function download(): void
     {
         $this->getDocument()->clickLink('Download');
@@ -128,6 +133,7 @@ final class ShowPage extends SymfonyPage implements ShowPageInterface
         return array_merge(parent::getDefinedElements(), [
             'back' => '#back',
             'billing_address' => '#billing-data',
+            'invoice_channel_name' => '#invoice-channel-name',
             'invoice_subtotal' => '#invoice-subtotal',
             'invoice_tax_total' => '#invoice-tax-total',
             'invoice_total' => '#invoice-total',

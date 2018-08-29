@@ -17,3 +17,4 @@ Feature: Browsing invoices
     Scenario: Seeing a new invoice in the list
         When I browse invoices
         Then I should see a single invoice for order "#00000022"
+        And 1st invoice should be issued in "United States" channel

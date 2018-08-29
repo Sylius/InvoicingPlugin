@@ -8,6 +8,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\InvoicingPlugin\Entity\BillingDataInterface;
+use Sylius\InvoicingPlugin\Entity\Invoice;
+use Sylius\InvoicingPlugin\Entity\InvoiceChannel;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Sylius\InvoicingPlugin\Entity\LineItemInterface;
 use Sylius\InvoicingPlugin\Entity\TaxItemInterface;
@@ -31,7 +33,8 @@ final class InvoiceSpec extends ObjectBehavior
             'en_US',
             10300,
             new ArrayCollection([$lineItem->getWrappedObject()]),
-            new ArrayCollection([$taxItem->getWrappedObject()])
+            new ArrayCollection([$taxItem->getWrappedObject()]),
+            new InvoiceChannel('WEB-US', 'United States')
         );
     }
 
@@ -53,6 +56,7 @@ final class InvoiceSpec extends ObjectBehavior
         $issuedAt = new \DateTimeImmutable('now');
         $lineItems = new ArrayCollection([$lineItem->getWrappedObject()]);
         $taxItems = new ArrayCollection([$taxItem->getWrappedObject()]);
+        $invoiceChannel = new InvoiceChannel('WEB-US', 'United States');
 
         $this->beConstructedWith(
             '7903c83a-4c5e-4bcf-81d8-9dc304c6a353',
@@ -64,7 +68,8 @@ final class InvoiceSpec extends ObjectBehavior
             'en_US',
             10300,
             $lineItems,
-            $taxItems
+            $taxItems,
+            $invoiceChannel
         );
 
         $this->id()->shouldReturn('7903c83a-4c5e-4bcf-81d8-9dc304c6a353');
@@ -76,5 +81,6 @@ final class InvoiceSpec extends ObjectBehavior
         $this->total()->shouldReturn(10300);
         $this->lineItems()->shouldReturn($lineItems);
         $this->taxItems()->shouldReturn($taxItems);
+        $this->channel()->shouldReturn($invoiceChannel);
     }
 }

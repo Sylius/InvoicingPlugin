@@ -8,11 +8,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Core\Model\AddressInterface;
 use Sylius\Component\Core\Model\AdjustmentInterface;
+use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\OrderItemInterface;
 use Sylius\InvoicingPlugin\Entity\BillingData;
 use Sylius\InvoicingPlugin\Entity\BillingDataInterface;
 use Sylius\InvoicingPlugin\Entity\Invoice;
+use Sylius\InvoicingPlugin\Entity\InvoiceChannel;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Sylius\InvoicingPlugin\Entity\LineItem;
 use Sylius\InvoicingPlugin\Entity\TaxItem;
@@ -37,6 +39,9 @@ final class InvoiceGenerator implements InvoiceGeneratorInterface
     {
         $billingAddress = $order->getBillingAddress();
 
+        /** @var ChannelInterface $channel */
+        $channel = $order->getChannel();
+
         return new Invoice(
             $this->uuidInvoiceIdentifierGenerator->generate(),
             $this->sequentialInvoiceNumberGenerator->generate(),
@@ -47,7 +52,8 @@ final class InvoiceGenerator implements InvoiceGeneratorInterface
             $order->getLocaleCode(),
             $order->getTotal(),
             $this->prepareLineItems($order),
-            $this->prepareTaxItems($order)
+            $this->prepareTaxItems($order),
+            new InvoiceChannel($channel->getCode(), $channel->getName())
         );
     }
 

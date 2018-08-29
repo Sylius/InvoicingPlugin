@@ -10,6 +10,10 @@
                 <div class="item">
                     {{ 'sylius_invoicing_plugin.ui.issued_for_order'|trans }}: #{{ invoice.orderNumber }}
                 </div>
+                <div class="item">
+                    {{ 'sylius_invoicing_plugin.ui.issued_from'|trans }}
+                    <span class="ui large empty horizontal circular label"></span> <strong id="invoice-channel-name">{{ invoice.channel.name }}</strong>
+                </div>
             </div>
         </div>
     </div>
