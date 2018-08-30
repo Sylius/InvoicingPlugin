@@ -1,6 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Application\Migrations;
+declare(strict_types=1);
+
+namespace Sylius\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
