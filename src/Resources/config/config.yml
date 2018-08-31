@@ -26,7 +26,7 @@ winzou_state_machine:
 sylius_grid:
     templates:
         filter:
-            channel: '@SyliusInvoicingPlugin/Grid/Filter/channel.html.twig'
+            invoice_channel: '@SyliusInvoicingPlugin/Grid/Filter/channel.html.twig'
     grids:
         sylius_invoicing_plugin_invoice:
             driver:
@@ -68,7 +68,7 @@ sylius_grid:
                     type: date
                     label: sylius_invoicing_plugin.ui.issued_at
                 channel:
-                    type: channel
+                    type: invoice_channel
                     label: sylius.ui.channel
             actions:
                 item:

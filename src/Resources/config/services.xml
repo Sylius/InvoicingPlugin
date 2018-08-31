@@ -108,7 +108,7 @@
         </service>
 
         <service id="Sylius\InvoicingPlugin\Grid\Filter\ChannelFilter">
-            <tag name="sylius.grid_filter" type="channel" form_type="Sylius\InvoicingPlugin\Form\Type\ChannelFilterType" />
+            <tag name="sylius.grid_filter" type="invoice_channel" form_type="Sylius\InvoicingPlugin\Form\Type\ChannelFilterType" />
         </service>
     </services>
 </container>
