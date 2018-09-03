@@ -6,10 +6,13 @@ namespace spec\Sylius\InvoicingPlugin\Email;
 
 use Knp\Snappy\GeneratorInterface;
 use PhpSpec\ObjectBehavior;
+use Sylius\Component\Channel\Repository\ChannelRepositoryInterface;
+use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Mailer\Sender\SenderInterface;
 use Sylius\InvoicingPlugin\Email\Emails;
 use Sylius\InvoicingPlugin\Email\InvoiceEmailSender;
 use Sylius\InvoicingPlugin\Email\InvoiceEmailSenderInterface;
+use Sylius\InvoicingPlugin\Entity\InvoiceChannelInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Sylius\InvoicingPlugin\File\TemporaryFileSystemInterface;
 use Symfony\Component\Templating\EngineInterface;
@@ -21,9 +24,16 @@ final class InvoiceEmailSenderSpec extends ObjectBehavior
         SenderInterface $sender,
         GeneratorInterface $pdfGenerator,
         EngineInterface $templatingEngine,
-        TemporaryFileSystemInterface $temporaryFilePathGenerator
+        TemporaryFileSystemInterface $temporaryFilePathGenerator,
+        ChannelRepositoryInterface $channelRepository
     ): void {
-        $this->beConstructedWith($sender, $pdfGenerator, $templatingEngine, $temporaryFilePathGenerator);
+        $this->beConstructedWith(
+            $sender,
+            $pdfGenerator,
+            $templatingEngine,
+            $temporaryFilePathGenerator,
+            $channelRepository
+        );
     }
 
     public function it_is_initializable(): void
@@ -42,14 +52,23 @@ final class InvoiceEmailSenderSpec extends ObjectBehavior
         InvoiceInterface $invoice,
         SenderInterface $sender,
         TemporaryFileSystemInterface $temporaryFilePathGenerator,
-        TemplateReferenceInterface $templateReference
+        ChannelRepositoryInterface $channelRepository,
+        TemplateReferenceInterface $templateReference,
+        InvoiceChannelInterface $invoiceChannel,
+        ChannelInterface $channel
     ): void {
         $invoice->id()->willReturn('0000001');
         $filePath = sys_get_temp_dir() . '/' . 'invoice-0000001.pdf';
 
+        $invoice->channel()->willReturn($invoiceChannel);
+        $invoiceChannel->getCode()->willReturn('en_US');
+
+        $channelRepository->findOneByCode('en_US')->willReturn($channel);
+
         $templatingEngine->render(
             '@SyliusInvoicingPlugin/Resources/views/Invoice/Download/pdf.html.twig', [
                 'invoice' => $invoice,
+                'channel' => $channel
             ]
         )->willReturn($templateReference);
 

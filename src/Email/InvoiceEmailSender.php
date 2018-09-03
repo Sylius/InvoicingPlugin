@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Sylius\InvoicingPlugin\Email;
 
 use Knp\Snappy\GeneratorInterface;
+use Sylius\Component\Channel\Repository\ChannelRepositoryInterface;
 use Sylius\Component\Mailer\Sender\SenderInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Sylius\InvoicingPlugin\File\TemporaryFileSystemInterface;
@@ -24,25 +25,33 @@ final class InvoiceEmailSender implements InvoiceEmailSenderInterface
     /** @var TemporaryFileSystemInterface */
     private $temporaryFilePathGenerator;
 
+    /** @var ChannelRepositoryInterface */
+    private $channelRepository;
+
     public function __construct(
         SenderInterface $emailSender,
         GeneratorInterface $pdfGenerator,
         EngineInterface $templatingEngine,
-        TemporaryFileSystemInterface $temporaryFilePathGenerator
+        TemporaryFileSystemInterface $temporaryFilePathGenerator,
+        ChannelRepositoryInterface $channelRepository
     ) {
         $this->emailSender = $emailSender;
         $this->pdfGenerator = $pdfGenerator;
         $this->templatingEngine = $templatingEngine;
         $this->temporaryFilePathGenerator = $temporaryFilePathGenerator;
+        $this->channelRepository = $channelRepository;
     }
 
     public function sendInvoiceEmail(
         InvoiceInterface $invoice,
         string $customerEmail
     ): void {
+        $channel = $this->channelRepository->findOneByCode($invoice->channel()->getCode());
+
         $pdfFileContent = $this->pdfGenerator->getOutputFromHtml(
             $this->templatingEngine->render('@SyliusInvoicingPlugin/Resources/views/Invoice/Download/pdf.html.twig', [
                 'invoice' => $invoice,
+                'channel' => $channel,
         ]));
 
         $filePath = $this->preparePdfFilePath('invoice-%s.pdf', $invoice->id());
