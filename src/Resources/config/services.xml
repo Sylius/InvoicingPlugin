@@ -44,6 +44,7 @@
             <argument type="service" id="Sylius\InvoicingPlugin\Repository\InvoiceRepository" />
             <argument type="service" id="templating.engine.twig" />
             <argument type="service" id="knp_snappy.pdf" />
+            <argument type="service" id="sylius.repository.channel" />
         </service>
 
         <service id="Sylius\InvoicingPlugin\Ui\Action\ResendInvoiceAction" public="true">
@@ -82,6 +83,7 @@
             <argument type="service" id="knp_snappy.pdf" />
             <argument type="service" id="templating.engine.twig" />
             <argument type="service" id="Sylius\InvoicingPlugin\File\TemporaryFileSystem" />
+            <argument type="service" id="sylius.repository.channel" />
         </service>
 
         <service id="Sylius\InvoicingPlugin\File\TemporaryFileSystem" />

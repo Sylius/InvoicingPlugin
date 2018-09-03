@@ -1,6 +1,6 @@
 sylius_invoicing_plugin:
     ui:
-        billing_address: 'Billing address'
+        billing_data: 'Billing data'
         buyer: 'Buyer'
         download_invoice: 'Download'
         invoice: 'Invoice'
