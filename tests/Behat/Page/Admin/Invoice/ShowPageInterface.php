@@ -47,5 +47,7 @@ interface ShowPageInterface extends SymfonyPageInterface
 
     public function download(): void;
 
+    public function resend(): void;
+
     public function goBack(): void;
 }

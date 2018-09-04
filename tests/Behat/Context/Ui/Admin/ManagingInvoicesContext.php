@@ -102,7 +102,7 @@ final class ManagingInvoicesContext implements Context
     }
 
     /**
-     * @When I click on first invoice's id
+     * @When I proceed to the first invoice summary
      */
     public function clickOnFirstInvoiceId(): void
     {
@@ -110,7 +110,7 @@ final class ManagingInvoicesContext implements Context
     }
 
     /**
-     * @When I click on first invoice's download button
+     * @When I download the first invoice
      */
     public function clickOnFirstInvoiceDownloadButton(): void
     {
@@ -120,9 +120,17 @@ final class ManagingInvoicesContext implements Context
     /**
      * @When I resend the first invoice
      */
-    public function clickOnFirstInvoiceResendButton(): void
+    public function resendTheFirstInvoice(): void
     {
         $this->orderShowPage->resendFirstInvoice();
+    }
+
+    /**
+     * @When I resend invoice
+     */
+    public function resendInvoice(): void
+    {
+        $this->showPage->resend();
     }
 
     /**

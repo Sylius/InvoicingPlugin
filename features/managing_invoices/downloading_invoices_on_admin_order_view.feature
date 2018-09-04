@@ -16,5 +16,5 @@ Feature: Downloading invoices on a single order view
 
     Scenario: Downloading an invoice on order view
         When I view the summary of the order "#00000022"
-        And I click on first invoice's download button
+        And I download the first invoice
         Then the pdf file for this invoice should be downloaded successfully

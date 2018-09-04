@@ -18,7 +18,7 @@ Feature: Seeing invoices on Customer's order view
         When I view the summary of the order "#00000022"
         Then I should see an invoice related to this order
 
-    Scenario: Seeing invoice details when clicking its id on order view
+    Scenario: Seeing invoice details
         When I view the summary of the order "#00000022"
-        And I click on first invoice's id
+        And I proceed to the first invoice summary
         Then I should see the summary of the invoice for order "#00000022"
