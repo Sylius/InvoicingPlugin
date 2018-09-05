@@ -42,5 +42,5 @@ Feature: Seeing basic information about an invoice
 
     Scenario: Resending invoice
         Given I view the summary of the invoice for order "#00000666"
-        And I resend invoice
+        When I resend invoice
         Then an email containing invoice generated for order "#00000777" should be sent to "lucy@teamlucifer.com"
