@@ -55,9 +55,6 @@ sylius_grid:
                     label: sylius.ui.channel
                     path: channel.name
             filters:
-                id:
-                    type: string
-                    label: sylius_invoicing_plugin.ui.invoice_id
                 orderNumber:
                     type: string
                     label: sylius_invoicing_plugin.ui.order_number
