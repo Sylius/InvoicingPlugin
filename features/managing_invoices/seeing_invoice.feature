@@ -39,3 +39,8 @@ Feature: Seeing basic information about an invoice
         Given I view the summary of the invoice for order "#00000666"
         When I want to go back to invoices view
         Then I should see all invoices
+
+    Scenario: Resending invoice
+        Given I view the summary of the invoice for order "#00000666"
+        When I resend invoice
+        Then an email containing invoice generated for order "#00000777" should be sent to "lucy@teamlucifer.com"

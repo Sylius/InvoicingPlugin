@@ -123,6 +123,11 @@ final class ShowPage extends SymfonyPage implements ShowPageInterface
         $this->getDocument()->clickLink('Download');
     }
 
+    public function resend(): void
+    {
+        $this->getDocument()->clickLink('Resend');
+    }
+
     public function goBack(): void
     {
         $this->getElement('back')->click();
