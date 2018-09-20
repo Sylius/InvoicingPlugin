@@ -13,6 +13,16 @@ both customer and admin to download invoices related to the order.
 
 ![Screenshot showing invoice browsing page in administration panel](docs/screenshot.png)
 
+## Business value
+
+The primary aim of Invoicing Plugin is to create an immutable entity (Invoice) representing Customer's will to buy 
+particular products (LineItems) and pay for them.
+
+An Invoice can also be treated as a proof of placing an Order. Thus, it is downloadable as .pdf file and can be sent to 
+Customer manually by the Administrator or automatically once an Order is paid.
+
+Additional feature of the plugin that fulfills Invoicing domain is the ability to set billing data on a Seller.
+
 ## Installation
 
 1. Require plugin with composer:
@@ -111,24 +121,19 @@ the Order on `winzou_state_machine` is dispatched.
 
 Here is the example:
 
-```bash
-$container->prependExtensionConfig('winzou_state_machine', [
-    'sylius_order' => [
-        'callbacks' => [
-            'after' => [
-                'sylius_invoicing_plugin_order_created_producer' => [
-                    'on' => ['create'],
-                    'do' => ['@Sylius\InvoicingPlugin\EventProducer\OrderPlacedProducer', '__invoke'],
-                    'args' => ['object'],
-                ],
-            ],
-        ],
-    ],
-]);
+```yaml
+winzou_state_machine:
+    sylius_payment:
+        callbacks:
+            after:
+                sylius_invoicing_plugin_payment_complete_producer:
+                    on: ['complete']
+                    do: ['@Sylius\InvoicingPlugin\EventProducer\OrderPaymentPaidProducer', '__invoke']
+                    args: ['object']
 ```
 
-Code placed above is a part of logic placed in `SyliusInvoicingExtension` class.
-You can customize this class by adding new state machine events listeners or editing existing ones.
+Code placed above is a part of configuration placed in `config.yml` file.
+You can customize this file by adding new state machine events listeners or editing existing ones.
 
 Apart from that an Invoice model is treated as a Resource.
 
