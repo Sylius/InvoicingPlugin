@@ -15,8 +15,8 @@ both customer and admin to download invoices related to the order.
 
 ## Business value
 
-The primary aim of Invoicing Plugin is to create an immutable entity (Invoice) representing Customer's will to buy 
-particular products (LineItems) and pay for them.
+The primary aim of Invoicing Plugin is to create a document representing Customer's will to buy particular products and 
+pay for them.
 
 An Invoice can also be treated as a proof of placing an Order. Thus, it is downloadable as .pdf file and can be sent to 
 Customer manually by the Administrator or automatically once an Order is paid.
