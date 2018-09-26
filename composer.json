@@ -1,6 +1,6 @@
 {
     "name": "sylius/invoicing-plugin",
-    "type": "symfony-bundle",
+    "type": "sylius-plugin",
     "keywords": ["sylius", "sylius-plugin", "symfony", "e-commerce", "invoicing"],
     "description": "Invoicing plugin for Sylius.",
     "license": "MIT",
