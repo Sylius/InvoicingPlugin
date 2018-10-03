@@ -25,8 +25,8 @@ before_install:
     - phpenv config-rm xdebug.ini
     - echo "memory_limit=4096M" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
     - mkdir -p "${SYLIUS_CACHE_DIR}"
-    - mv .env.test.dist .env.test
-    - set -a && source .env.test && set +a
+    - cp tests/Application/.env.test.dist tests/Application/.env.test
+    - set -a && source tests/Application/.env.test && set +a
 
 install:
     - composer require "symfony/symfony:${SYMFONY_VERSION}" --no-interaction --no-update
@@ -36,7 +36,8 @@ install:
 before_script:
     - (cd tests/Application && bin/console doctrine:database:create --env=test -vvv)
     - (cd tests/Application && bin/console doctrine:schema:create --env=test -vvv)
-    - (cd tests/Application && bin/console assets:install web --env=test -vvv)
+    - (cd tests/Application && bin/console assets:install --env=test -vvv)
+    - (cd tests/Application && bin/console cache:warmup --env=test -vvv)
     - (cd tests/Application && yarn build)
 
     # Running fixtures to be sure they're not failing
@@ -69,15 +70,15 @@ before_script:
     - java -Dwebdriver.chrome.driver=$SYLIUS_CACHE_DIR/chromedriver -jar $SYLIUS_CACHE_DIR/selenium.jar > /dev/null 2>&1 &
 
     # Run webserver
-    - (cd tests/Application && bin/console server:run 127.0.0.1:8080 -d web --env=test --quiet > /dev/null 2>&1 &)
+    - (cd tests/Application && bin/console server:run 127.0.0.1:8080 -d --env=test --quiet > /dev/null 2>&1 &)
 
 script:
     - composer validate --strict
     - bin/phpstan.phar analyse -c phpstan.neon -l max src/
 
-    - bin/phpunit
-    - bin/phpspec run
-    - bin/behat -vvv --no-interaction || bin/behat -vvv --no-interaction --rerun
+    - vendor/bin/phpunit
+    - vendor/bin/phpspec run
+    - vendor/bin/behat -vvv --no-interaction || bin/behat -vvv --no-interaction --rerun
 
 after_failure:
     - vendor/lakion/mink-debug-extension/travis/tools/upload-textfiles "${SYLIUS_BUILD_DIR}/*.log"
