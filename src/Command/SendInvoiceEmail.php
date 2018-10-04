@@ -6,7 +6,6 @@ namespace Sylius\InvoicingPlugin\Command;
 
 use Prooph\Common\Messaging\Command;
 use Prooph\Common\Messaging\PayloadTrait;
-use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 
 final class SendInvoiceEmail extends Command
 {
