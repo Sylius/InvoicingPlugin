@@ -19,7 +19,7 @@ final class AdminMenuListener
         $salesMenu
             ->addChild('invoices', ['route' => 'sylius_invoicing_plugin_admin_invoice_index'])
                 ->setLabel('sylius_invoicing_plugin.ui.invoices')
-                ->setLabelAttribute('icon', 'inbox')
+                ->setLabelAttribute('icon', 'file')
         ;
     }
 }
