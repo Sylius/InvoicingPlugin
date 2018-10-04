@@ -51,7 +51,7 @@
             "vendor/bin/phpstan.phar analyse -c phpstan.neon -l max src/",
             "vendor/bin/ecs check src/ spec/"
         ]
-    }
+    },
     "extra": {
         "branch-alias": {
             "dev-master": "1.0-dev"
