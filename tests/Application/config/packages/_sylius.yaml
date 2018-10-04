@@ -12,3 +12,82 @@ parameters:
 sylius_shop:
     product_grid:
         include_all_descendants: true
+
+sylius_grid:
+    templates:
+        filter:
+            invoice_channel: '@SyliusInvoicingPlugin/Grid/Filter/channel.html.twig'
+    grids:
+        sylius_invoicing_plugin_invoice:
+            driver:
+                name: doctrine/orm
+                options:
+                    class: 'expr:parameter("sylius_invoicing_plugin.model.invoice.class")'
+            sorting:
+                issuedAt: desc
+            fields:
+                number:
+                    type: string
+                    label: sylius_invoicing_plugin.ui.invoice_number
+                    sortable: true
+                orderNumber:
+                    type: twig
+                    label: sylius_invoicing_plugin.ui.order_number
+                    options:
+                        template: '@SyliusInvoicingPlugin/Invoice/Grid/Field/orderNumber.html.twig'
+                    sortable: true
+                issuedAt:
+                    type: datetime
+                    label: sylius_invoicing_plugin.ui.issued_at
+                    sortable: true
+                channel:
+                    type: string
+                    label: sylius.ui.channel
+                    path: channel.name
+            filters:
+                orderNumber:
+                    type: string
+                    label: sylius_invoicing_plugin.ui.order_number
+                number:
+                    type: string
+                    label: sylius_invoicing_plugin.ui.invoice_number
+                issuedAt:
+                    type: date
+                    label: sylius_invoicing_plugin.ui.issued_at
+                channel:
+                    type: invoice_channel
+                    label: sylius.ui.channel
+            actions:
+                item:
+                    show:
+                        type: show
+                    download:
+                        type: default
+                        label: sylius_invoicing_plugin.ui.download_invoice
+                        icon: download
+                        options:
+                            link:
+                                route: sylius_invoicing_plugin_admin_invoice_download
+                                parameters:
+                                    id: resource.id
+
+sylius_mailer:
+    emails:
+        invoice_generated:
+            subject: sylius.emails.invoice_generated.subject
+            template: "@SyliusInvoicingPlugin/Resources/views/Invoice/Email/invoiceGenerated.html.twig"
+
+sylius_channel:
+    resources:
+        channel:
+            classes:
+                model: Tests\Application\InvoicingPlugin\Entity\Channel
+
+doctrine:
+    orm:
+        mappings:
+            sylius_channel:
+                type: annotation
+                dir: '%kernel.project_dir%/src/Entity'
+                is_bundle: false
+                prefix: Tests\Application\InvoicingPlugin\Entity

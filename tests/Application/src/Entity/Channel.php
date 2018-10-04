@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Application\InvoicingPlugin\AppBundle\Entity;
+namespace Tests\Application\InvoicingPlugin\Entity;
 
 use Doctrine\ORM\Mapping\MappedSuperclass;
 use Doctrine\ORM\Mapping\Table;
