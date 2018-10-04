@@ -47,7 +47,7 @@ final class DownloadInvoiceAction
         $response = new Response($this->pdfGenerator->getOutputFromHtml(
             $this->templatingEngine->render('@SyliusInvoicingPlugin/Resources/views/Invoice/Download/pdf.html.twig', [
                 'invoice' => $invoice,
-                'channel' => $channel
+                'channel' => $channel,
             ])
         ));
 
