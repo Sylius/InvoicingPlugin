@@ -30,57 +30,25 @@ Additional feature of the plugin that fulfills Invoicing domain is the ability t
     ```bash
     composer require sylius/invoicing-plugin
     ```
-
-2. Import configuration:
-
-    ```yaml
-    imports:
-        - { resource: "@SyliusInvoicingPlugin/Resources/config/config.yml" }
-    ```
-
-3. Import routing:
-
-    ```yaml
-    sylius_invoicing_plugin_admin:
-        resource: "@SyliusInvoicingPlugin/Resources/config/app/routing/admin_invoicing.yml"
-        prefix: /admin
     
-    sylius_invoicing_plugin_shop:
-        resource: "@SyliusInvoicingPlugin/Resources/config/app/routing/shop_invoicing.yml"
-        prefix: /{_locale}
-        requirements:
-            _locale: ^[a-z]{2}(?:_[A-Z]{2})?$
+    > Remember to allow community recipes with `composer config extra.symfony.allow-contrib true` or during plugin installation process
+
+2. Copy plugin migrations to your migrations directory (e.g. `src/Migrations`) and apply them to your database:
+
+    ```bash
+    cp -R vendor/sylius/invoicing-plugin/migrations/* src/Migrations
+    bin/console doctrine:migrations:migrate
     ```
 
-4. Add plugin class to your `AppKernel`:
-
-    ```php
-    $bundles = [
-        new \Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
-        new \Prooph\Bundle\ServiceBus\ProophServiceBusBundle(),
-        new \Sylius\InvoicingPlugin\SyliusInvoicingPlugin(),
-    ];
-    ```
-
-5. Check if you have `wkhtmltopdf` binary. If not, you can download it [here](https://wkhtmltopdf.org/downloads.html).
-
-    In case `wkhtmltopdf` is not located in `/usr/local/bin/wkhtmltopdf`, add a following snippet at the end of your application's `config.yml`:
-    
-    ```yaml
-    knp_snappy:
-        pdf:
-            enabled: true
-            binary: /usr/local/bin/wkhtmltopdf # Change this! :)
-            options: []
-    ```   
-
-6. Copy migrations from `vendor/sylius/invoicing-plugin/migrations/` to your migrations directory and run `bin/console doctrine:migrations:migrate`.
-
-7. Override Channel entity:
+3. Override Channel entity:
 
     a) Write new class which will use `ShopBillingDataTrait` and implement `ShopBillingDataAwareInterface`:
 
     ```php
+    <?php
+
+    namespace App\Entity;
+
     use Doctrine\ORM\Mapping\MappedSuperclass;
     use Doctrine\ORM\Mapping\Table;
     use Sylius\Component\Core\Model\Channel as BaseChannel;
@@ -98,21 +66,21 @@ Additional feature of the plugin that fulfills Invoicing domain is the ability t
     
     ```
 
-    b) And override the model's class in the `app/config/config.yml`:
+    b) And override the model's class in chosen configuration file (e.g. `config/_sylius.yml`):
 
     ```yaml
     sylius_channel:
         resources:
             channel:
                 classes:
-                    model: AppBundle\Entity\Channel
+                    model: App\Entity\Channel
     ```
 
-8. Clear cache:
+#### Beware!
 
-    ```bash
-    bin/console cache:clear
-    ```
+This installation instruction assumes that you're using Symfony Flex. If you don't, take a look at the
+[legacy installation instruction](docs/legacy_installation.md). However, we strongly encourage you to use
+Symfony Flex, it's much quicker! :)
 
 ## Extension points
 
@@ -143,7 +111,7 @@ You can read more about Resources here:
 
 Hence, template for displaying the list of Invoices is defined in `routing.yml` file:
 
-```
+```yaml
 sylius_invoicing_plugin_invoice:
     resource: |
         alias: sylius_invoicing_plugin.invoice
@@ -165,13 +133,3 @@ Code responsible for displaying Invoices related to the Order is injected to exi
 Sonata events. You can read about customizing templates via events here:
 
 <http://docs.sylius.com/en/1.2/customization/template.html>
-
-Since InvoicingPlugin is not the only plugin that uses `wkhtmltopdf` binary, 
-you can customize the global path to `wkhtmltopdf` using following structure in `config.yml` file placed in your 
-sylius-standard project:
-
-```yaml
-knp_snappy:
-    pdf:
-        binary: path_to_binary
-```
