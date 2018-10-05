@@ -68,7 +68,7 @@ final class InvoiceEmailSenderSpec extends ObjectBehavior
         $templatingEngine->render(
             '@SyliusInvoicingPlugin/Resources/views/Invoice/Download/pdf.html.twig', [
                 'invoice' => $invoice,
-                'channel' => $channel
+                'channel' => $channel,
             ]
         )->willReturn($templateReference);
 

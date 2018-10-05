@@ -1,0 +1,5 @@
+prooph_service_bus:
+    event_buses:
+        sylius_invoicing_event_bus: ~
+    command_buses:
+        sylius_invoicing_command_bus: ~

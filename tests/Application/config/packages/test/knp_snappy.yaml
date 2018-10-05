@@ -1,0 +1,3 @@
+knp_snappy:
+    pdf:
+        binary: "%kernel.project_dir%/etc/wkhtmltopdf"
