@@ -17,7 +17,7 @@ final class InvoiceFileResponseBuilderSpec extends ObjectBehavior
         $this->shouldHaveType(InvoiceFileResponseBuilder::class);
     }
 
-    function it_implements_credit_memo_file_response_builder_interface(): void
+    function it_implements_invoice_file_response_builder_interface(): void
     {
         $this->shouldImplement(InvoiceFileResponseBuilderInterface::class);
     }

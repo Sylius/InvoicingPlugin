@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace spec\Sylius\InvoicingPlugin\Email;
 
-use Knp\Snappy\GeneratorInterface;
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Mailer\Sender\SenderInterface;
 use Sylius\InvoicingPlugin\Email\Emails;
@@ -14,8 +13,6 @@ use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Sylius\InvoicingPlugin\File\TemporaryFileSystemInterface;
 use Sylius\InvoicingPlugin\Generator\InvoicePdfFileGeneratorInterface;
 use Sylius\InvoicingPlugin\Model\InvoicePdf;
-use Symfony\Component\Templating\EngineInterface;
-use Symfony\Component\Templating\TemplateReferenceInterface;
 
 final class InvoiceEmailSenderSpec extends ObjectBehavior
 {

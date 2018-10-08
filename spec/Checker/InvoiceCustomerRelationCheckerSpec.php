@@ -9,7 +9,6 @@ use Sylius\Component\Core\Model\CustomerInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Repository\OrderRepositoryInterface;
 use Sylius\Component\Customer\Context\CustomerContextInterface;
-use Sylius\InvoicingPlugin\Checker\InvoiceCustomerRelationChecker;
 use Sylius\InvoicingPlugin\Checker\InvoiceCustomerRelationCheckerInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Sylius\InvoicingPlugin\Exception\InvoiceNotAccessible;
@@ -18,16 +17,10 @@ use Sylius\InvoicingPlugin\Repository\InvoiceRepository;
 final class InvoiceCustomerRelationCheckerSpec extends ObjectBehavior
 {
     function let(
-        CustomerContextInterface $customerContext,
         InvoiceRepository $invoiceRepository,
         OrderRepositoryInterface $orderRepository
     ): void {
-        $this->beConstructedWith($customerContext, $invoiceRepository, $orderRepository);
-    }
-
-    function it_is_initializable(): void
-    {
-        $this->shouldHaveType(InvoiceCustomerRelationChecker::class);
+        $this->beConstructedWith($invoiceRepository, $orderRepository);
     }
 
     function it_implements_invoice_customer_relation_checker_interface(): void
@@ -50,11 +43,10 @@ final class InvoiceCustomerRelationCheckerSpec extends ObjectBehavior
         $orderRepository->findOneByNumber('00002')->willReturn($order);
 
         $order->getCustomer()->willReturn($customer);
-        $customerContext->getCustomer()->willReturn($customer);
 
         $customer->getId()->willReturn(1);
 
-        $this->check('00001');
+        $this->check('00001', $customer);
     }
 
     function it_throws_exception_if_customer_id_from_order_is_not_equal_to_id_from_context(
@@ -73,11 +65,10 @@ final class InvoiceCustomerRelationCheckerSpec extends ObjectBehavior
         $orderRepository->findOneByNumber('00002')->willReturn($order);
 
         $order->getCustomer()->willReturn($firstCustomer);
-        $customerContext->getCustomer()->willReturn($secondCustomer);
 
         $firstCustomer->getId()->willReturn(1);
         $secondCustomer->getId()->willReturn(2);
 
-        $this->shouldThrow(InvoiceNotAccessible::class)->during('check', ['00001']);
+        $this->shouldThrow(InvoiceNotAccessible::class)->during('check', ['00001', $secondCustomer]);
     }
 }

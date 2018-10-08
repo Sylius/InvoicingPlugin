@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace Sylius\InvoicingPlugin\Email;
 
-use Knp\Snappy\GeneratorInterface;
 use Sylius\Component\Mailer\Sender\SenderInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Sylius\InvoicingPlugin\File\TemporaryFileSystemInterface;
 use Sylius\InvoicingPlugin\Generator\InvoicePdfFileGeneratorInterface;
-use Symfony\Component\Templating\EngineInterface;
 
 final class InvoiceEmailSender implements InvoiceEmailSenderInterface
 {

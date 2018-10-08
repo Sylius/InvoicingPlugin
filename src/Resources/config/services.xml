@@ -41,13 +41,13 @@
         </service>
 
         <service id="Sylius\InvoicingPlugin\Ui\Action\Shop\DownloadInvoiceAction" public="true">
-            <argument type="service" id="Sylius\InvoicingPlugin\Generator\InvoicePdfFileGenerator" />
-            <argument type="service" id="Sylius\InvoicingPlugin\Checker\InvoiceCustomerRelationChecker" />
+            <argument type="service" id="Sylius\InvoicingPlugin\Invoice\Shop\ShopInvoiceDownloader" />
             <argument type="service" id="Sylius\InvoicingPlugin\ResponseBuilder\InvoiceFileResponseBuilder" />
+            <argument type="service" id="sylius.context.customer" />
         </service>
 
         <service id="Sylius\InvoicingPlugin\Ui\Action\Admin\DownloadInvoiceAction" public="true">
-            <argument type="service" id="Sylius\InvoicingPlugin\Generator\InvoicePdfFileGenerator" />
+            <argument type="service" id="Sylius\InvoicingPlugin\Invoice\Admin\AdminInvoiceDownloader" />
             <argument type="service" id="Sylius\InvoicingPlugin\ResponseBuilder\InvoiceFileResponseBuilder" />
             <argument type="service" id="knp_snappy.pdf" />
         </service>
@@ -107,19 +107,37 @@
             <tag name="prooph_service_bus.sylius_invoicing_command_bus.route_target" message-detection="true" />
         </service>
 
+        <service id="Sylius\InvoicingPlugin\Form\Type\ChannelFilterType">
+            <argument type="service" id="sylius.repository.channel" />
+            <tag name="form.type" />
+        </service>
+
+        <service id="Sylius\InvoicingPlugin\Grid\Filter\ChannelFilter">
+            <tag name="sylius.grid_filter" type="invoice_channel" form_type="Sylius\InvoicingPlugin\Form\Type\ChannelFilterType" />
+        </service>
+
         <service id="Sylius\InvoicingPlugin\ResponseBuilder\InvoiceFileResponseBuilder" />
 
         <service id="Sylius\InvoicingPlugin\Generator\InvoicePdfFileGenerator">
             <argument type="service" id="Sylius\InvoicingPlugin\Repository\InvoiceRepository"/>
+            <argument type="service" id="sylius.repository.channel"/>
             <argument type="service" id="templating.engine.twig" />
             <argument type="service" id="knp_snappy.pdf" />
             <argument>@SyliusInvoicingPlugin/Resources/views/Invoice/Download/pdf.html.twig</argument>
         </service>
 
         <service id="Sylius\InvoicingPlugin\Checker\InvoiceCustomerRelationChecker">
-            <argument type="service" id="sylius.context.customer"/>
             <argument type="service" id="Sylius\InvoicingPlugin\Repository\InvoiceRepository" />
-            <argument type="service" id="sylius.repository.order" />
+            <argument type="service" id="sylius.repository.order"/>
+        </service>
+
+        <service id="Sylius\InvoicingPlugin\Invoice\Admin\AdminInvoiceDownloader">
+            <argument type="service" id="Sylius\InvoicingPlugin\Generator\InvoicePdfFileGenerator"/>
+        </service>
+
+        <service id="Sylius\InvoicingPlugin\Invoice\Shop\ShopInvoiceDownloader" public="true">
+            <argument type="service" id="Sylius\InvoicingPlugin\Generator\InvoicePdfFileGenerator"/>
+            <argument type="service" id="Sylius\InvoicingPlugin\Checker\InvoiceCustomerRelationChecker"/>
         </service>
     </services>
 </container>

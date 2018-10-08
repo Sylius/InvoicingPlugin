@@ -4,30 +4,29 @@ declare(strict_types=1);
 
 namespace Sylius\InvoicingPlugin\Ui\Action\Admin;
 
-use Sylius\InvoicingPlugin\Generator\InvoicePdfFileGeneratorInterface;
-use Sylius\InvoicingPlugin\ResponseBuilder\InvoiceFileResponseBuilder;
+use Sylius\InvoicingPlugin\Invoice\Admin\AdminInvoiceDownloaderInterface;
 use Sylius\InvoicingPlugin\ResponseBuilder\InvoiceFileResponseBuilderInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 final class DownloadInvoiceAction
 {
-    /** @var InvoicePdfFileGeneratorInterface */
-    private $invoicePdfFileGenerator;
+    /** @var AdminInvoiceDownloaderInterface */
+    private $invoiceDownloader;
 
     /** @var InvoiceFileResponseBuilderInterface */
     private $invoiceFileResponseBuilder;
 
     public function __construct(
-        InvoicePdfFileGeneratorInterface $invoicePdfFileGenerator,
-        InvoiceFileResponseBuilder $invoiceFileResponseBuilder
+        AdminInvoiceDownloaderInterface $invoiceDownloader,
+        InvoiceFileResponseBuilderInterface $invoiceFileResponseBuilder
     ) {
-        $this->invoicePdfFileGenerator = $invoicePdfFileGenerator;
+        $this->invoiceDownloader = $invoiceDownloader;
         $this->invoiceFileResponseBuilder = $invoiceFileResponseBuilder;
     }
 
     public function __invoke(string $id): Response
     {
-        $invoicePdfFile = $this->invoicePdfFileGenerator->generate($id);
+        $invoicePdfFile = $this->invoiceDownloader->download($id);
 
         return $this->invoiceFileResponseBuilder->build(Response::HTTP_OK, $invoicePdfFile);
     }
