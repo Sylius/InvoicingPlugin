@@ -52,7 +52,7 @@ final class DownloadInvoiceAction
         ));
 
         $response->headers->add(['Content-Type' => 'application/pdf']);
-        $response->headers->add(['Content-Disposition' => $response->headers->makeDisposition('attachment', $filename)]);
+        $response->headers->add(['Content-Disposition' => $response->headers->makeDisposition('attachment', $filename.'.pdf')]);
 
         return $response;
     }
