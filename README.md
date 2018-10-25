@@ -133,3 +133,8 @@ Code responsible for displaying Invoices related to the Order is injected to exi
 Sonata events. You can read about customizing templates via events here:
 
 <http://docs.sylius.com/en/1.2/customization/template.html>
+
+## Security issues
+
+If you think that you have found a security issue, please do not use the issue tracker and do not post it publicly. 
+Instead, all security issues must be sent to `security@sylius.com`.
