@@ -24,7 +24,7 @@ final class ShopBillingDataFixture extends AbstractResourceFixture
     {
         $resourceNode
             ->children()
-                ->scalarNode('channel')->cannotBeEmpty()->end()
+                ->scalarNode('channel_code')->cannotBeEmpty()->end()
                 ->scalarNode('company')->cannotBeEmpty()->end()
                 ->scalarNode('country_code')->cannotBeEmpty()->end()
                 ->scalarNode('city')->cannotBeEmpty()->end()

@@ -6,27 +6,22 @@ namespace Sylius\InvoicingPlugin\Fixture\Factory;
 
 use Sylius\Bundle\CoreBundle\Fixture\Factory\AbstractExampleFactory;
 use Sylius\Bundle\CoreBundle\Fixture\Factory\ExampleFactoryInterface;
-use Sylius\Component\Addressing\Model\CountryInterface;
 use Sylius\Component\Channel\Context\ChannelNotFoundException;
 use Sylius\Component\Channel\Repository\ChannelRepositoryInterface;
-use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\InvoicingPlugin\Entity\ShopBillingData;
 use Sylius\InvoicingPlugin\Entity\ShopBillingDataAwareInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class ShopBillingDataExampleFactory extends AbstractExampleFactory implements ExampleFactoryInterface
 {
-    /**
-     * @var ChannelRepositoryInterface
-     */
+    /** @var ChannelRepositoryInterface */
     private $channelRepository;
 
-    /**
-     * @var OptionsResolver
-     */
+    /** @var OptionsResolver */
     private $optionsResolver;
 
-    public function __construct(ChannelRepositoryInterface $channelRepository) {
+    public function __construct(ChannelRepositoryInterface $channelRepository)
+    {
         $this->channelRepository = $channelRepository;
 
         $this->optionsResolver = new OptionsResolver();
@@ -42,7 +37,7 @@ final class ShopBillingDataExampleFactory extends AbstractExampleFactory impleme
         $options = $this->optionsResolver->resolve($options);
 
         /** @var ShopBillingDataAwareInterface $channel */
-        $channel = $this->channelRepository->findOneByCode($options['channel']);
+        $channel = $this->channelRepository->findOneByCode($options['channel_code']);
         if ($channel === null) {
             throw new ChannelNotFoundException(sprintf('Channel %s has not been found, please create it before adding this fixture !', $options['code']));
         }
@@ -66,12 +61,12 @@ final class ShopBillingDataExampleFactory extends AbstractExampleFactory impleme
     protected function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
-            ->setRequired('channel')
-            ->setAllowedTypes('channel', ['string', ChannelInterface::class])
+            ->setRequired('channel_code')
+            ->setAllowedTypes('channel_code', 'string')
             ->setRequired('company')
             ->setAllowedTypes('company', 'string')
             ->setRequired('country_code')
-            ->setAllowedTypes('country_code', ['string', CountryInterface::class])
+            ->setAllowedTypes('country_code', 'string')
             ->setRequired('city')
             ->setAllowedTypes('city', 'string')
             ->setRequired('postcode')
