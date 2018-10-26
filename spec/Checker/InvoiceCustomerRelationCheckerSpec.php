@@ -28,13 +28,13 @@ final class InvoiceCustomerRelationCheckerSpec extends ObjectBehavior
         $this->shouldImplement(InvoiceCustomerRelationCheckerInterface::class);
     }
 
-    function it_checks_if_customer_id_from_order_is_equal_to_customer_id_from_customer_context(
-        CustomerContextInterface $customerContext,
+    function it_checks_if_customer_id_from_order_is_equal_to_passed_customer_id(
         InvoiceRepository $invoiceRepository,
         OrderRepositoryInterface $orderRepository,
         InvoiceInterface $invoice,
         OrderInterface $order,
-        CustomerInterface $customer
+        CustomerInterface $firstCustomer,
+        CustomerInterface $secondCustomer
     ): void {
         $invoiceRepository->get('00001')->willReturn($invoice);
 
@@ -42,11 +42,13 @@ final class InvoiceCustomerRelationCheckerSpec extends ObjectBehavior
 
         $orderRepository->findOneByNumber('00002')->willReturn($order);
 
-        $order->getCustomer()->willReturn($customer);
+        $order->getCustomer()->willReturn($firstCustomer);
 
-        $customer->getId()->willReturn(1);
+        $firstCustomer->getId()->willReturn(1);
 
-        $this->check('00001', $customer);
+        $secondCustomer->getId()->willReturn(1);
+
+        $this->check('00001', $secondCustomer);
     }
 
     function it_throws_exception_if_customer_id_from_order_is_not_equal_to_id_from_context(

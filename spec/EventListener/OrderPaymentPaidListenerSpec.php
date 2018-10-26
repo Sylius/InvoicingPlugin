@@ -9,18 +9,12 @@ use Prooph\ServiceBus\CommandBus;
 use Prophecy\Argument;
 use Sylius\InvoicingPlugin\Command\SendInvoiceEmail;
 use Sylius\InvoicingPlugin\Event\OrderPaymentPaid;
-use Sylius\InvoicingPlugin\EventListener\OrderPaymentPaidListener;
 
 final class OrderPaymentPaidListenerSpec extends ObjectBehavior
 {
     function let(CommandBus $commandBus): void
     {
         $this->beConstructedWith($commandBus);
-    }
-
-    function it_is_initializable(): void
-    {
-        $this->shouldHaveType(OrderPaymentPaidListener::class);
     }
 
     function it_dispatches_send_invoice_email_command(CommandBus $commandBus): void

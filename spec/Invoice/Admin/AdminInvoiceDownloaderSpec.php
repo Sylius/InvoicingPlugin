@@ -23,7 +23,7 @@ final class AdminInvoiceDownloaderSpec extends ObjectBehavior
 
     function it_returns_pdf_file_with_an_invoice(InvoicePdfFileGeneratorInterface $invoicePdfFileGenerator): void
     {
-        $invoicePdf = new InvoicePdf('', '');
+        $invoicePdf = new InvoicePdf('sampleInvoice.pdf', 'invoiceData');
 
         $invoicePdfFileGenerator->generate('0000001')->willReturn($invoicePdf);
 

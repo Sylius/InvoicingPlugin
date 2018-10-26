@@ -7,7 +7,6 @@ namespace spec\Sylius\InvoicingPlugin\Email;
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Mailer\Sender\SenderInterface;
 use Sylius\InvoicingPlugin\Email\Emails;
-use Sylius\InvoicingPlugin\Email\InvoiceEmailSender;
 use Sylius\InvoicingPlugin\Email\InvoiceEmailSenderInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Sylius\InvoicingPlugin\File\TemporaryFileSystemInterface;
@@ -22,11 +21,6 @@ final class InvoiceEmailSenderSpec extends ObjectBehavior
         InvoicePdfFileGeneratorInterface $invoicePdfFileGenerator
     ): void {
         $this->beConstructedWith($sender, $temporaryFilePathGenerator, $invoicePdfFileGenerator);
-    }
-
-    public function it_is_initializable(): void
-    {
-        $this->shouldHaveType(InvoiceEmailSender::class);
     }
 
     public function it_implements_invoice_email_sender_interface(): void

@@ -10,7 +10,6 @@ use Sylius\Component\Channel\Repository\ChannelRepositoryInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceChannelInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
-use Sylius\InvoicingPlugin\Generator\InvoicePdfFileGenerator;
 use Sylius\InvoicingPlugin\Generator\InvoicePdfFileGeneratorInterface;
 use Sylius\InvoicingPlugin\Model\InvoicePdf;
 use Sylius\InvoicingPlugin\Repository\InvoiceRepository;
@@ -31,11 +30,6 @@ final class InvoicePdfFileGeneratorSpec extends ObjectBehavior
             $pdfGenerator,
             'invoiceTemplate.html.twig'
         );
-    }
-
-    function it_is_initializable(): void
-    {
-        $this->shouldHaveType(InvoicePdfFileGenerator::class);
     }
 
     function it_implements_invoice_pdf_file_generator_interface(): void
