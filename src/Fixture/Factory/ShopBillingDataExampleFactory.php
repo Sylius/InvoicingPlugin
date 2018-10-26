@@ -1,7 +1,8 @@
 <?php
 
-namespace Sylius\InvoicingPlugin\Fixture\Factory;
+declare(strict_types=1);
 
+namespace Sylius\InvoicingPlugin\Fixture\Factory;
 
 use Sylius\Bundle\CoreBundle\Fixture\Factory\AbstractExampleFactory;
 use Sylius\Bundle\CoreBundle\Fixture\Factory\ExampleFactoryInterface;
@@ -13,7 +14,7 @@ use Sylius\InvoicingPlugin\Entity\ShopBillingData;
 use Sylius\InvoicingPlugin\Entity\ShopBillingDataAwareInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ShopBillingDataExampleFactory extends AbstractExampleFactory implements ExampleFactoryInterface
+final class ShopBillingDataExampleFactory extends AbstractExampleFactory implements ExampleFactoryInterface
 {
     /**
      * @var ChannelRepositoryInterface
@@ -25,13 +26,7 @@ class ShopBillingDataExampleFactory extends AbstractExampleFactory implements Ex
      */
     private $optionsResolver;
 
-    /**
-     * BillingDataExampleFactory constructor.
-     * @param ChannelRepositoryInterface $channelRepository
-     */
-    public function __construct(
-        ChannelRepositoryInterface $channelRepository
-    ) {
+    public function __construct(ChannelRepositoryInterface $channelRepository) {
         $this->channelRepository = $channelRepository;
 
         $this->optionsResolver = new OptionsResolver();
@@ -48,7 +43,7 @@ class ShopBillingDataExampleFactory extends AbstractExampleFactory implements Ex
 
         /** @var ShopBillingDataAwareInterface $channel */
         $channel = $this->channelRepository->findOneByCode($options['channel']);
-        if (!$channel) {
+        if ($channel === null) {
             throw new ChannelNotFoundException(sprintf('Channel %s has not been found, please create it before adding this fixture !', $options['code']));
         }
 

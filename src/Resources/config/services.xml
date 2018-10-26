@@ -122,6 +122,5 @@
             <argument id="sylius_invoicing_plugin.fixture.example_factory.invoicing_plugin_shop_billing_data" type="service"/>
             <tag name="sylius_fixtures.fixture"/>
         </service>
-
     </services>
 </container>

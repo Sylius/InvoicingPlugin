@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sylius\InvoicingPlugin\Fixture;
 
 use Sylius\Bundle\CoreBundle\Fixture\AbstractResourceFixture;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 
-class ShopBillingDataFixture extends AbstractResourceFixture
+final class ShopBillingDataFixture extends AbstractResourceFixture
 {
     /**
      * {@inheritdoc}
