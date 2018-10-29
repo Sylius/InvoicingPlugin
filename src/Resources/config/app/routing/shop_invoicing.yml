@@ -2,7 +2,7 @@ sylius_invoicing_plugin_shop_invoice_download:
     path: /invoices/{id}/download
     methods: [GET]
     defaults:
-        _controller: Sylius\InvoicingPlugin\Ui\Action\DownloadInvoiceAction
+        _controller: Sylius\InvoicingPlugin\Ui\Action\Shop\DownloadInvoiceAction
 
 sylius_invoicing_plugin_shop_order_invoices_partial:
     path: /_partial/invoices/{orderNumber}/

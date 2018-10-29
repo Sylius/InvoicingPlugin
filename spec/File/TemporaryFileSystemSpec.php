@@ -5,16 +5,10 @@ declare(strict_types=1);
 namespace spec\Sylius\InvoicingPlugin\File;
 
 use PhpSpec\ObjectBehavior;
-use Sylius\InvoicingPlugin\File\TemporaryFileSystem;
 use Sylius\InvoicingPlugin\File\TemporaryFileSystemInterface;
 
 final class TemporaryFileSystemSpec extends ObjectBehavior
 {
-    public function it_is_initializable(): void
-    {
-        $this->shouldHaveType(TemporaryFileSystem::class);
-    }
-
     public function it_implements_temporary_file_path_generator_interface(): void
     {
         $this->shouldImplement(TemporaryFileSystemInterface::class);

@@ -40,14 +40,19 @@
             <tag name="kernel.event_listener" event="sylius.menu.admin.main" method="__invoke" />
         </service>
 
-        <service id="Sylius\InvoicingPlugin\Ui\Action\DownloadInvoiceAction" public="true">
-            <argument type="service" id="Sylius\InvoicingPlugin\Repository\InvoiceRepository" />
-            <argument type="service" id="templating.engine.twig" />
-            <argument type="service" id="knp_snappy.pdf" />
-            <argument type="service" id="sylius.repository.channel" />
+        <service id="Sylius\InvoicingPlugin\Ui\Action\Shop\DownloadInvoiceAction" public="true">
+            <argument type="service" id="Sylius\InvoicingPlugin\Invoice\Shop\ShopInvoiceDownloader" />
+            <argument type="service" id="Sylius\InvoicingPlugin\ResponseBuilder\InvoiceFileResponseBuilder" />
+            <argument type="service" id="sylius.context.customer" />
         </service>
 
-        <service id="Sylius\InvoicingPlugin\Ui\Action\ResendInvoiceAction" public="true">
+        <service id="Sylius\InvoicingPlugin\Ui\Action\Admin\DownloadInvoiceAction" public="true">
+            <argument type="service" id="Sylius\InvoicingPlugin\Invoice\Admin\AdminInvoiceDownloader" />
+            <argument type="service" id="Sylius\InvoicingPlugin\ResponseBuilder\InvoiceFileResponseBuilder" />
+            <argument type="service" id="knp_snappy.pdf" />
+        </service>
+
+        <service id="Sylius\InvoicingPlugin\Ui\Action\Admin\ResendInvoiceAction" public="true">
             <argument type="service" id="Sylius\InvoicingPlugin\Repository\InvoiceRepository" />
             <argument type="service" id="Sylius\InvoicingPlugin\Email\InvoiceEmailSender" />
             <argument type="service" id="sylius.repository.order" />
@@ -80,10 +85,8 @@
 
         <service id="Sylius\InvoicingPlugin\Email\InvoiceEmailSender">
             <argument type="service" id="sylius.email_sender" />
-            <argument type="service" id="knp_snappy.pdf" />
-            <argument type="service" id="templating.engine.twig" />
             <argument type="service" id="Sylius\InvoicingPlugin\File\TemporaryFileSystem" />
-            <argument type="service" id="sylius.repository.channel" />
+            <argument type="service" id="Sylius\InvoicingPlugin\Generator\InvoicePdfFileGenerator" />
         </service>
 
         <service id="Sylius\InvoicingPlugin\File\TemporaryFileSystem" />
@@ -111,6 +114,30 @@
 
         <service id="Sylius\InvoicingPlugin\Grid\Filter\ChannelFilter">
             <tag name="sylius.grid_filter" type="invoice_channel" form_type="Sylius\InvoicingPlugin\Form\Type\ChannelFilterType" />
+        </service>
+
+        <service id="Sylius\InvoicingPlugin\ResponseBuilder\InvoiceFileResponseBuilder" />
+
+        <service id="Sylius\InvoicingPlugin\Generator\InvoicePdfFileGenerator">
+            <argument type="service" id="Sylius\InvoicingPlugin\Repository\InvoiceRepository"/>
+            <argument type="service" id="sylius.repository.channel"/>
+            <argument type="service" id="templating.engine.twig" />
+            <argument type="service" id="knp_snappy.pdf" />
+            <argument>@SyliusInvoicingPlugin/Resources/views/Invoice/Download/pdf.html.twig</argument>
+        </service>
+
+        <service id="Sylius\InvoicingPlugin\Checker\InvoiceCustomerRelationChecker">
+            <argument type="service" id="Sylius\InvoicingPlugin\Repository\InvoiceRepository" />
+            <argument type="service" id="sylius.repository.order"/>
+        </service>
+
+        <service id="Sylius\InvoicingPlugin\Invoice\Admin\AdminInvoiceDownloader">
+            <argument type="service" id="Sylius\InvoicingPlugin\Generator\InvoicePdfFileGenerator"/>
+        </service>
+
+        <service id="Sylius\InvoicingPlugin\Invoice\Shop\ShopInvoiceDownloader" public="true">
+            <argument type="service" id="Sylius\InvoicingPlugin\Generator\InvoicePdfFileGenerator"/>
+            <argument type="service" id="Sylius\InvoicingPlugin\Checker\InvoiceCustomerRelationChecker"/>
         </service>
     </services>
 </container>

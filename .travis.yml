@@ -78,7 +78,7 @@ script:
 
     - vendor/bin/phpunit tests/
     - vendor/bin/phpspec run
-    - vendor/bin/behat -vvv --no-interaction || bin/behat -vvv --no-interaction --rerun
+    - vendor/bin/behat -vvv --no-interaction || vendor/bin/behat -vvv --no-interaction --rerun
 
 after_failure:
     - vendor/lakion/mink-debug-extension/travis/tools/upload-textfiles "${SYLIUS_BUILD_DIR}/*.log"
