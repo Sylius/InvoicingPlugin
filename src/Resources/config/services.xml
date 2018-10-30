@@ -79,11 +79,8 @@
 
         <service id="Sylius\InvoicingPlugin\Email\InvoiceEmailSender">
             <argument type="service" id="sylius.email_sender" />
-            <argument type="service" id="Sylius\InvoicingPlugin\File\TemporaryFileSystem" />
             <argument type="service" id="Sylius\InvoicingPlugin\Generator\InvoicePdfFileGenerator" />
         </service>
-
-        <service id="Sylius\InvoicingPlugin\File\TemporaryFileSystem" />
 
         <service id="Sylius\InvoicingPlugin\Generator\SequentialInvoiceNumberGenerator">
             <argument type="service" id="sylius_invoicing_plugin.repository.invoice_sequence" />

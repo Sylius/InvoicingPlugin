@@ -6,7 +6,7 @@ namespace Sylius\InvoicingPlugin\Email;
 
 use Sylius\Component\Mailer\Sender\SenderInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
-use Sylius\InvoicingPlugin\File\TemporaryFileSystemInterface;
+use Sylius\InvoicingPlugin\Filesystem\TemporaryFilesystem;
 use Sylius\InvoicingPlugin\Generator\InvoicePdfFileGeneratorInterface;
 
 final class InvoiceEmailSender implements InvoiceEmailSenderInterface
@@ -14,41 +14,36 @@ final class InvoiceEmailSender implements InvoiceEmailSenderInterface
     /** @var SenderInterface */
     private $emailSender;
 
-    /** @var TemporaryFileSystemInterface */
-    private $temporaryFilePathGenerator;
-
     /** @var InvoicePdfFileGeneratorInterface */
     private $invoicePdfFileGenerator;
 
+    /** @var TemporaryFilesystem */
+    private $temporaryFilesystem;
+
     public function __construct(
         SenderInterface $emailSender,
-        TemporaryFileSystemInterface $temporaryFilePathGenerator,
         InvoicePdfFileGeneratorInterface $invoicePdfFileGenerator
     ) {
         $this->emailSender = $emailSender;
-        $this->temporaryFilePathGenerator = $temporaryFilePathGenerator;
         $this->invoicePdfFileGenerator = $invoicePdfFileGenerator;
+        $this->temporaryFilesystem = new TemporaryFilesystem();
     }
 
     public function sendInvoiceEmail(
         InvoiceInterface $invoice,
         string $customerEmail
     ): void {
-        $invoicePdfFile = $this->invoicePdfFileGenerator->generate($invoice->id());
+        $pdfInvoice = $this->invoicePdfFileGenerator->generate($invoice->id());
 
-        $fileName = $invoicePdfFile->filename();
-
-        $this->temporaryFilePathGenerator->create($invoicePdfFile->content(), $fileName);
-
-        try {
-            $this->emailSender->send(Emails::INVOICE_GENERATED, [$customerEmail], ['invoice' => $invoice], [$fileName]);
-        } finally {
-            $this->temporaryFilePathGenerator->removeFile($fileName);
-        }
-    }
-
-    private function preparePdfFilePath(string $filePathPattern, string ...$filePathParameters): string
-    {
-        return sys_get_temp_dir() . '/' . vsprintf($filePathPattern, $filePathParameters);
+        // Since Sylius' Mailer does not support sending attachments which aren't real files
+        // we have to simulate the file being on the local filesystem, so that we save the PDF,
+        // run the callable and delete it when the callable is finished.
+        $this->temporaryFilesystem->executeWithFile(
+            $pdfInvoice->filename(),
+            $pdfInvoice->content(),
+            function (string $filepath) use ($invoice, $customerEmail): void {
+                $this->emailSender->send(Emails::INVOICE_GENERATED, [$customerEmail], ['invoice' => $invoice], [$filepath]);
+            }
+        );
     }
 }
