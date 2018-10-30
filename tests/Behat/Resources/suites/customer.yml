@@ -91,6 +91,5 @@ default:
 
                 - sylius.behat.context.transform.shared_storage
 
-                - Tests\Sylius\InvoicingPlugin\Behat\Context\Application\InvoiceContext
             filters:
                 tags: "@customer_browsing_invoices && @application"
