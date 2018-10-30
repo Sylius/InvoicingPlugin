@@ -1,4 +1,4 @@
-@customer_browsing_invoices @application
+@customer_browsing_invoices
 Feature: Being unable to download other user's invoice
     In order to maintain shop security
     As a Store Owner
@@ -15,6 +15,8 @@ Feature: Being unable to download other user's invoice
         And the customer bought a single "Angel T-Shirt"
         And the customer chose "Free" shipping method to "United States" with "Cash on Delivery" payment
 
+    @ui
     Scenario: Being unable to download other user's invoice
-        When the customer "rick.sanchez@wubba-lubba-dub-dub.com" tries to download the invoice for the order "#00000666"
+        Given I am logged in as "rick.sanchez@wubba-lubba-dub-dub.com"
+        When I try to download the invoice for the order "#00000666"
         Then the invoice for the order "#00000666" should not be downloaded
