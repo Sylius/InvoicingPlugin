@@ -27,7 +27,7 @@ sylius_invoicing_plugin_admin_invoice_download:
     path: /invoices/{id}/download
     methods: [GET]
     defaults:
-        _controller: Sylius\InvoicingPlugin\Ui\Action\Admin\DownloadInvoiceAction
+        _controller: Sylius\InvoicingPlugin\Ui\Action\DownloadInvoiceAction
 
 sylius_invoicing_plugin_admin_invoice_resend:
     path: /invoices/{id}/resend
