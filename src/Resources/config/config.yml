@@ -8,11 +8,14 @@ knp_snappy:
     pdf:
         enabled: true
 
-prooph_service_bus:
-    event_buses:
-        sylius_invoicing_event_bus: ~
-    command_buses:
-        sylius_invoicing_command_bus: ~
+framework:
+    messenger:
+        default_bus: sylius_invoicing_plugin.command_bus
+        buses:
+            sylius_invoicing_plugin.command_bus: ~
+            sylius_invoicing_plugin.event_bus:
+                middleware:
+                    - messenger.middleware.allow_no_handler
 
 winzou_state_machine:
     sylius_payment:

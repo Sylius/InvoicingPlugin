@@ -8,8 +8,7 @@
         "php": "^7.2",
 
         "sylius/sylius": "^1.3",
-        "prooph/service-bus": "^6.2",
-        "prooph/service-bus-symfony-bundle": "^0.7.0",
+        "symfony/messenger": "^4.1",
         "ramsey/uuid": "^3.7",
         "knplabs/knp-snappy-bundle": "^1.5"
     },
