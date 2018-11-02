@@ -11,7 +11,6 @@
     ```php
     $bundles = [
         new \Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
-        new \Prooph\Bundle\ServiceBus\ProophServiceBusBundle(),
         new \Sylius\InvoicingPlugin\SyliusInvoicingPlugin(),
     ];
     ```

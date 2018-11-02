@@ -5,19 +5,19 @@ declare(strict_types=1);
 namespace spec\Sylius\InvoicingPlugin\EventListener;
 
 use PhpSpec\ObjectBehavior;
-use Prooph\ServiceBus\CommandBus;
 use Prophecy\Argument;
 use Sylius\InvoicingPlugin\Command\SendInvoiceEmail;
 use Sylius\InvoicingPlugin\Event\OrderPaymentPaid;
+use Symfony\Component\Messenger\MessageBusInterface;
 
 final class OrderPaymentPaidListenerSpec extends ObjectBehavior
 {
-    function let(CommandBus $commandBus): void
+    function let(MessageBusInterface $commandBus): void
     {
         $this->beConstructedWith($commandBus);
     }
 
-    function it_dispatches_send_invoice_email_command(CommandBus $commandBus): void
+    function it_dispatches_send_invoice_email_command(MessageBusInterface $commandBus): void
     {
         $commandBus->dispatch(Argument::that(function (SendInvoiceEmail $command): bool {
             return $command->orderNumber() === '00000001';
