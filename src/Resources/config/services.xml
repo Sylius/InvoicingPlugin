@@ -40,16 +40,10 @@
             <tag name="kernel.event_listener" event="sylius.menu.admin.main" method="__invoke" />
         </service>
 
-        <service id="Sylius\InvoicingPlugin\Ui\Action\Shop\DownloadInvoiceAction" public="true">
-            <argument type="service" id="Sylius\InvoicingPlugin\Invoice\Shop\ShopInvoiceDownloader" />
-            <argument type="service" id="Sylius\InvoicingPlugin\ResponseBuilder\InvoiceFileResponseBuilder" />
-            <argument type="service" id="sylius.context.customer" />
-        </service>
-
-        <service id="Sylius\InvoicingPlugin\Ui\Action\Admin\DownloadInvoiceAction" public="true">
-            <argument type="service" id="Sylius\InvoicingPlugin\Invoice\Admin\AdminInvoiceDownloader" />
-            <argument type="service" id="Sylius\InvoicingPlugin\ResponseBuilder\InvoiceFileResponseBuilder" />
-            <argument type="service" id="knp_snappy.pdf" />
+        <service id="Sylius\InvoicingPlugin\Ui\Action\DownloadInvoiceAction" public="true">
+            <argument type="service" id="Sylius\InvoicingPlugin\Repository\InvoiceRepository" />
+            <argument type="service" id="security.authorization_checker" />
+            <argument type="service" id="Sylius\InvoicingPlugin\Generator\InvoicePdfFileGenerator" />
         </service>
 
         <service id="Sylius\InvoicingPlugin\Ui\Action\Admin\ResendInvoiceAction" public="true">
@@ -99,7 +93,7 @@
         </service>
 
         <service id="Sylius\InvoicingPlugin\Generator\UuidInvoiceIdentifierGenerator" />
-        
+
         <service id="Sylius\InvoicingPlugin\CommandHandler\SendInvoiceEmailHandler" >
             <argument type="service" id="Sylius\InvoicingPlugin\Repository\InvoiceRepository" />
             <argument type="service" id="sylius.repository.order" />
@@ -116,8 +110,6 @@
             <tag name="sylius.grid_filter" type="invoice_channel" form_type="Sylius\InvoicingPlugin\Form\Type\ChannelFilterType" />
         </service>
 
-        <service id="Sylius\InvoicingPlugin\ResponseBuilder\InvoiceFileResponseBuilder" />
-
         <service id="Sylius\InvoicingPlugin\Generator\InvoicePdfFileGenerator">
             <argument type="service" id="Sylius\InvoicingPlugin\Repository\InvoiceRepository"/>
             <argument type="service" id="sylius.repository.channel"/>
@@ -126,18 +118,9 @@
             <argument>@SyliusInvoicingPlugin/Resources/views/Invoice/Download/pdf.html.twig</argument>
         </service>
 
-        <service id="Sylius\InvoicingPlugin\Checker\InvoiceCustomerRelationChecker">
-            <argument type="service" id="Sylius\InvoicingPlugin\Repository\InvoiceRepository" />
-            <argument type="service" id="sylius.repository.order"/>
-        </service>
-
-        <service id="Sylius\InvoicingPlugin\Invoice\Admin\AdminInvoiceDownloader">
-            <argument type="service" id="Sylius\InvoicingPlugin\Generator\InvoicePdfFileGenerator"/>
-        </service>
-
-        <service id="Sylius\InvoicingPlugin\Invoice\Shop\ShopInvoiceDownloader" public="true">
-            <argument type="service" id="Sylius\InvoicingPlugin\Generator\InvoicePdfFileGenerator"/>
-            <argument type="service" id="Sylius\InvoicingPlugin\Checker\InvoiceCustomerRelationChecker"/>
+        <service id="Sylius\InvoicingPlugin\Security\Voter\InvoiceVoter">
+            <argument type="service" id="sylius.repository.order" />
+            <tag name="security.voter" />
         </service>
     </services>
 </container>
