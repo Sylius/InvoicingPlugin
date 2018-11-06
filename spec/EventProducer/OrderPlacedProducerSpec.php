@@ -10,22 +10,22 @@ use Doctrine\ORM\UnitOfWork;
 use Mockery;
 use Mockery\MockInterface;
 use PhpSpec\ObjectBehavior;
-use Prooph\ServiceBus\EventBus;
 use Prophecy\Argument;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\OrderCheckoutStates;
 use Sylius\InvoicingPlugin\DateTimeProvider;
 use Sylius\InvoicingPlugin\Event\OrderPlaced;
+use Symfony\Component\Messenger\MessageBusInterface;
 
 final class OrderPlacedProducerSpec extends ObjectBehavior
 {
-    function let(EventBus $eventBus, DateTimeProvider $dateTimeProvider): void
+    function let(MessageBusInterface $eventBus, DateTimeProvider $dateTimeProvider): void
     {
         $this->beConstructedWith($eventBus, $dateTimeProvider);
     }
 
     function it_dispatches_an_order_placed_event_for_persited_order(
-        EventBus $eventBus,
+        MessageBusInterface $eventBus,
         DateTimeProvider $dateTimeProvider,
         LifecycleEventArgs $event,
         OrderInterface $order,
@@ -42,7 +42,7 @@ final class OrderPlacedProducerSpec extends ObjectBehavior
             ->dispatch(Argument::that(function (OrderPlaced $event) use ($dateTime): bool {
                 return
                     $event->orderNumber() === '000666' &&
-                    $event->date() === $dateTime->getWrappedObject()
+                    $event->date()->format(\DateTimeInterface::RFC3339_EXTENDED) === $dateTime->getWrappedObject()->format(\DateTimeInterface::RFC3339_EXTENDED)
                 ;
             }))
             ->shouldBeCalled()
@@ -52,7 +52,7 @@ final class OrderPlacedProducerSpec extends ObjectBehavior
     }
 
     function it_dispatches_an_order_placed_event_for_updated_order(
-        EventBus $eventBus,
+        MessageBusInterface $eventBus,
         DateTimeProvider $dateTimeProvider,
         LifecycleEventArgs $event,
         EntityManagerInterface $entityManager,
@@ -79,7 +79,7 @@ final class OrderPlacedProducerSpec extends ObjectBehavior
             ->dispatch(Argument::that(function (OrderPlaced $event) use ($dateTime): bool {
                 return
                     $event->orderNumber() === '000666' &&
-                    $event->date() === $dateTime->getWrappedObject()
+                    $event->date()->format(\DateTimeInterface::RFC3339_EXTENDED) === $dateTime->getWrappedObject()->format(\DateTimeInterface::RFC3339_EXTENDED)
                 ;
             }))
             ->shouldBeCalled()
@@ -89,7 +89,7 @@ final class OrderPlacedProducerSpec extends ObjectBehavior
     }
 
     function it_does_nothing_after_persisting_if_event_entity_is_not_order(
-        EventBus $eventBus,
+        MessageBusInterface $eventBus,
         LifecycleEventArgs $event
     ): void {
         $event->getEntity()->willReturn('notAnOrder');
@@ -100,7 +100,7 @@ final class OrderPlacedProducerSpec extends ObjectBehavior
     }
 
     function it_does_nothing_after_update_if_event_entity_is_not_order(
-        EventBus $eventBus,
+        MessageBusInterface $eventBus,
         LifecycleEventArgs $event
     ): void {
         $event->getEntity()->willReturn('notAnOrder');
@@ -111,7 +111,7 @@ final class OrderPlacedProducerSpec extends ObjectBehavior
     }
 
     function it_does_nothing_after_persisting_if_order_is_not_completed(
-        EventBus $eventBus,
+        MessageBusInterface $eventBus,
         LifecycleEventArgs $event,
         OrderInterface $order
     ): void {
@@ -125,7 +125,7 @@ final class OrderPlacedProducerSpec extends ObjectBehavior
     }
 
     function it_does_nothing_after_update_if_order_checkout_state_has_not_changed(
-        EventBus $eventBus,
+        MessageBusInterface $eventBus,
         LifecycleEventArgs $event,
         EntityManagerInterface $entityManager,
         OrderInterface $order
@@ -146,7 +146,7 @@ final class OrderPlacedProducerSpec extends ObjectBehavior
     }
 
     function it_does_nothing_after_update_if_order_checkout_state_has_not_changed_to_completed(
-        EventBus $eventBus,
+        MessageBusInterface $eventBus,
         LifecycleEventArgs $event,
         EntityManagerInterface $entityManager,
         OrderInterface $order

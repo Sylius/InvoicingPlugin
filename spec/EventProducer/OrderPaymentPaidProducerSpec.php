@@ -5,28 +5,22 @@ declare(strict_types=1);
 namespace spec\Sylius\InvoicingPlugin\EventProducer;
 
 use PhpSpec\ObjectBehavior;
-use Prooph\ServiceBus\EventBus;
 use Prophecy\Argument;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\PaymentInterface;
 use Sylius\InvoicingPlugin\DateTimeProvider;
 use Sylius\InvoicingPlugin\Event\OrderPaymentPaid;
-use Sylius\InvoicingPlugin\EventProducer\OrderPaymentPaidProducer;
+use Symfony\Component\Messenger\MessageBusInterface;
 
 final class OrderPaymentPaidProducerSpec extends ObjectBehavior
 {
-    function let(EventBus $eventBus, DateTimeProvider $dateTimeProvider): void
+    function let(MessageBusInterface $eventBus, DateTimeProvider $dateTimeProvider): void
     {
         $this->beConstructedWith($eventBus, $dateTimeProvider);
     }
 
-    function it_is_initializable(): void
-    {
-        $this->shouldHaveType(OrderPaymentPaidProducer::class);
-    }
-
     function it_dispatches_order_payment_paid_event_for_payment(
-        EventBus $eventBus,
+        MessageBusInterface $eventBus,
         DateTimeProvider $dateTimeProvider,
         PaymentInterface $payment,
         OrderInterface $order
@@ -43,7 +37,7 @@ final class OrderPaymentPaidProducerSpec extends ObjectBehavior
     }
 
     function it_does_not_dispatch_event_when_payment_is_not_related_to_order(
-        EventBus $eventBus,
+        MessageBusInterface $eventBus,
         DateTimeProvider $dateTimeProvider,
         PaymentInterface $payment
     ): void {

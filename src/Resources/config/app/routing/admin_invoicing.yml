@@ -33,7 +33,7 @@ sylius_invoicing_plugin_admin_invoice_resend:
     path: /invoices/{id}/resend
     methods: [GET]
     defaults:
-        _controller: Sylius\InvoicingPlugin\Ui\Action\ResendInvoiceAction
+        _controller: Sylius\InvoicingPlugin\Ui\Action\Admin\ResendInvoiceAction
 
 sylius_invoicing_plugin_admin_order_invoices_partial:
     path: /_partial/invoices/{orderNumber}/

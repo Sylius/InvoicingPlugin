@@ -12,7 +12,6 @@ use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Sylius\InvoicingPlugin\DateTimeProvider;
 use Sylius\InvoicingPlugin\Entity\InvoiceSequenceInterface;
 use Sylius\InvoicingPlugin\Generator\InvoiceNumberGenerator;
-use Sylius\InvoicingPlugin\Generator\SequentialInvoiceNumberGenerator;
 
 final class SequentialInvoiceNumberGeneratorSpec extends ObjectBehavior
 {
@@ -30,11 +29,6 @@ final class SequentialInvoiceNumberGeneratorSpec extends ObjectBehavior
             1,
             9
         );
-    }
-
-    function it_is_initializable(): void
-    {
-        $this->shouldHaveType(SequentialInvoiceNumberGenerator::class);
     }
 
     function it_implements_invoice_number_generator_interface(): void

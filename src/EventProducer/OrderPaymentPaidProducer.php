@@ -4,20 +4,20 @@ declare(strict_types=1);
 
 namespace Sylius\InvoicingPlugin\EventProducer;
 
-use Prooph\ServiceBus\EventBus;
 use Sylius\Component\Core\Model\PaymentInterface;
 use Sylius\InvoicingPlugin\DateTimeProvider;
 use Sylius\InvoicingPlugin\Event\OrderPaymentPaid;
+use Symfony\Component\Messenger\MessageBusInterface;
 
 final class OrderPaymentPaidProducer
 {
-    /** @var EventBus */
+    /** @var MessageBusInterface */
     private $eventBus;
 
     /** @var DateTimeProvider */
     private $dateTimeProvider;
 
-    public function __construct(EventBus $eventBus, DateTimeProvider $dateTimeProvider)
+    public function __construct(MessageBusInterface $eventBus, DateTimeProvider $dateTimeProvider)
     {
         $this->eventBus = $eventBus;
         $this->dateTimeProvider = $dateTimeProvider;

@@ -4,55 +4,48 @@ declare(strict_types=1);
 
 namespace Sylius\InvoicingPlugin\Ui\Action;
 
-use Knp\Snappy\GeneratorInterface;
-use Sylius\Component\Channel\Repository\ChannelRepositoryInterface;
+use Sylius\InvoicingPlugin\Generator\InvoicePdfFileGeneratorInterface;
 use Sylius\InvoicingPlugin\Repository\InvoiceRepository;
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
-use Symfony\Component\HttpFoundation\Request;
+use Sylius\InvoicingPlugin\Security\Voter\InvoiceVoter;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 final class DownloadInvoiceAction
 {
     /** @var InvoiceRepository */
     private $invoiceRepository;
 
-    /** @var EngineInterface */
-    private $templatingEngine;
+    /** @var AuthorizationCheckerInterface */
+    private $authorizationChecker;
 
-    /** @var GeneratorInterface */
-    private $pdfGenerator;
-
-    /** @var ChannelRepositoryInterface */
-    private $channelRepository;
+    /** @var InvoicePdfFileGeneratorInterface */
+    private $invoicePdfFileGenerator;
 
     public function __construct(
         InvoiceRepository $invoiceRepository,
-        EngineInterface $templatingEngine,
-        GeneratorInterface $pdfGenerator,
-        ChannelRepositoryInterface $channelRepository
+        AuthorizationCheckerInterface $authorizationChecker,
+        InvoicePdfFileGeneratorInterface $invoicePdfFileGenerator
     ) {
         $this->invoiceRepository = $invoiceRepository;
-        $this->templatingEngine = $templatingEngine;
-        $this->pdfGenerator = $pdfGenerator;
-        $this->channelRepository = $channelRepository;
+        $this->authorizationChecker = $authorizationChecker;
+        $this->invoicePdfFileGenerator = $invoicePdfFileGenerator;
     }
 
-    public function __invoke(Request $request, string $id): Response
+    public function __invoke(string $id): Response
     {
         $invoice = $this->invoiceRepository->get($id);
-        $filename = str_replace('/', '_', $invoice->number());
 
-        $channel = $this->channelRepository->findOneByCode($invoice->channel()->getCode());
+        if (!$this->authorizationChecker->isGranted(InvoiceVoter::ACCESS, $invoice)) {
+            throw new AccessDeniedHttpException();
+        }
 
-        $response = new Response($this->pdfGenerator->getOutputFromHtml(
-            $this->templatingEngine->render('@SyliusInvoicingPlugin/Resources/views/Invoice/Download/pdf.html.twig', [
-                'invoice' => $invoice,
-                'channel' => $channel,
-            ])
-        ));
+        $invoicePdf = $this->invoicePdfFileGenerator->generate($id);
 
-        $response->headers->add(['Content-Type' => 'application/pdf']);
-        $response->headers->add(['Content-Disposition' => $response->headers->makeDisposition('attachment', $filename . '.pdf')]);
+        $response = new Response($invoicePdf->content(), Response::HTTP_OK, ['Content-Type' => 'application/pdf']);
+        $response->headers->add([
+            'Content-Disposition' => $response->headers->makeDisposition('attachment', $invoicePdf->filename()),
+        ]);
 
         return $response;
     }

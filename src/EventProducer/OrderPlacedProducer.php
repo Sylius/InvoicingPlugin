@@ -5,21 +5,21 @@ declare(strict_types=1);
 namespace Sylius\InvoicingPlugin\EventProducer;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
-use Prooph\ServiceBus\EventBus;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\OrderCheckoutStates;
 use Sylius\InvoicingPlugin\DateTimeProvider;
 use Sylius\InvoicingPlugin\Event\OrderPlaced;
+use Symfony\Component\Messenger\MessageBusInterface;
 
 final class OrderPlacedProducer
 {
-    /** @var EventBus */
+    /** @var MessageBusInterface */
     private $eventBus;
 
     /** @var DateTimeProvider */
     private $dateTimeProvider;
 
-    public function __construct(EventBus $eventBus, DateTimeProvider $dateTimeProvider)
+    public function __construct(MessageBusInterface $eventBus, DateTimeProvider $dateTimeProvider)
     {
         $this->eventBus = $eventBus;
         $this->dateTimeProvider = $dateTimeProvider;

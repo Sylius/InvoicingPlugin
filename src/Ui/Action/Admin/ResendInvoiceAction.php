@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sylius\InvoicingPlugin\Ui\Action;
+namespace Sylius\InvoicingPlugin\Ui\Action\Admin;
 
 use Sylius\Component\Core\Model\CustomerInterface;
 use Sylius\Component\Core\Model\OrderInterface;
@@ -11,7 +11,6 @@ use Sylius\InvoicingPlugin\Email\InvoiceEmailSenderInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Sylius\InvoicingPlugin\Repository\InvoiceRepository;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -41,7 +40,7 @@ final class ResendInvoiceAction
         $this->urlGenerator = $urlGenerator;
     }
 
-    public function __invoke(Request $request, string $id): Response
+    public function __invoke(string $id): Response
     {
         /** @var InvoiceInterface $invoice */
         $invoice = $this->invoiceRepository->get($id);
