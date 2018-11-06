@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Sylius\InvoicingPlugin\Entity;
 
-use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\OneToOne;
 
