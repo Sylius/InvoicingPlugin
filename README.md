@@ -107,7 +107,7 @@ Apart from that an Invoice model is treated as a Resource.
 
 You can read more about Resources here:
 
-<http://docs.sylius.com/en/1.2/components_and_bundles/bundles/SyliusResourceBundle/index.html>.
+<http://docs.sylius.com/en/latest/components_and_bundles/bundles/SyliusResourceBundle/index.html>.
 
 Hence, template for displaying the list of Invoices is defined in `routing.yml` file:
 
@@ -132,7 +132,14 @@ Another aspect that can be both replaced and customized is displaying Invoices l
 Code responsible for displaying Invoices related to the Order is injected to existing Sylius template using
 Sonata events. You can read about customizing templates via events here:
 
-<http://docs.sylius.com/en/1.2/customization/template.html>
+<http://docs.sylius.com/en/latest/customization/template.html>
+
+## Fixtures
+
+You can add `ShopBillingData` fixtures into a yaml to add Channel ShopBillingData infos to your installation.
+More instructions on the [fixtures configuration instructions](docs/fixtures.md)
+
+<https://docs.sylius.com/en/latest/components_and_bundles/bundles/SyliusFixturesBundle/custom_fixture.html>
 
 ## Security issues
 
