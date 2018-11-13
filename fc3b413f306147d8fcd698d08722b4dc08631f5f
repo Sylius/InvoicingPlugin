@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by Prometee at 2018-11-06T15:33:41Z
+
+@pamil I already add ECS to my current Sylius project (git hooks) but I need a way to do it on plugins projects too... I'll put it in a php docker container to access it anywhere on my machine.
+
+---------------------------------------------------------------------------
+
+by Zales0123 at 2018-11-13T20:34:24Z
+
+Thanks, Francis! :tada:
