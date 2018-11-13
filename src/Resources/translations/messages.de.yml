@@ -1,0 +1,17 @@
+sylius_invoicing_plugin:
+    ui:
+        billing_data: 'Rechnungsdaten'
+        buyer: 'Käufer'
+        download_invoice: 'Herunterladen'
+        invoice: 'Rechnung'
+        invoice_id: 'Rechnungs ID'
+        invoice_number: 'Rechnungnummer'
+        invoices: 'Rechnungen'
+        issued_at: 'Ausgestellt am'
+        issued_for_order: 'Ausgestellt für Bestellung'
+        issued_from: 'Ausgestellt von'
+        manage_invoices: 'Rechnungen verwalten'
+        order_number: 'Bestellnummer'
+        resend_invoice: 'Erneut versenden'
+        seller: 'Verkäufer'
+        tax_id: 'Steuernummer'
