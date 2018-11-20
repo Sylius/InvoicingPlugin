@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Tests\Sylius\InvoicingPlugin\Behat\Context\Ui\Admin;
 
 use Behat\Behat\Context\Context;
+use Sylius\Behat\NotificationType;
+use Sylius\Behat\Service\NotificationCheckerInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\InvoicingPlugin\Repository\InvoiceRepository;
 use Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Invoice\IndexPageInterface;
@@ -26,16 +28,21 @@ final class ManagingInvoicesContext implements Context
     /** @var InvoiceRepository */
     private $invoiceRepository;
 
+    /** @var NotificationCheckerInterface */
+    private $notificationChecker;
+
     public function __construct(
         IndexPageInterface $indexPage,
         ShowPageInterface $showPage,
         OrderShowPageInterface $orderShowPage,
-        InvoiceRepository $invoiceRepository
+        InvoiceRepository $invoiceRepository,
+        NotificationCheckerInterface $notificationChecker
     ) {
         $this->indexPage = $indexPage;
         $this->showPage = $showPage;
         $this->orderShowPage = $orderShowPage;
         $this->invoiceRepository = $invoiceRepository;
+        $this->notificationChecker = $notificationChecker;
     }
 
     /**
@@ -265,5 +272,16 @@ final class ManagingInvoicesContext implements Context
     public function shouldSeeAllInvoices(): void
     {
         $this->indexPage->verify();
+    }
+
+    /**
+     * @Then I should be notified that the email was sent successfully
+     */
+    public function shouldBeNotifiedThatEmailWasSentSuccessfully(): void
+    {
+        $this->notificationChecker->checkNotification(
+            'Invoice has been successfully resent to the customer',
+            NotificationType::success()
+        );
     }
 }

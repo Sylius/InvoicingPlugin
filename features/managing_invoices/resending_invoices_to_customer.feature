@@ -22,3 +22,4 @@ Feature: Resending an invoice to a Customer
         When I view the summary of the order "#00000777"
         And I resend the first invoice
         Then an email containing invoice generated for order "#00000777" should be sent to "lucy@teamlucifer.com"
+        And I should be notified that the email was sent successfully

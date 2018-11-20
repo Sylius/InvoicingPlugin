@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Order;
 
 use Behat\Mink\Element\NodeElement;
-use Sylius\Behat\Page\SymfonyPage;
+use FriendsOfBehat\PageObjectExtension\Page\SymfonyPage;
 
 final class ShowPage extends SymfonyPage implements ShowPageInterface
 {

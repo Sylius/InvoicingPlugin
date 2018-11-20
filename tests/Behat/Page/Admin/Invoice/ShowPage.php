@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Invoice;
 
 use Behat\Mink\Session;
-use Sylius\Behat\Page\SymfonyPage;
+use FriendsOfBehat\PageObjectExtension\Page\SymfonyPage;
 use Sylius\Behat\Service\Accessor\TableAccessorInterface;
 use Symfony\Component\Routing\RouterInterface;
 

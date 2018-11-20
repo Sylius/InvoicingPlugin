@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Invoice;
 
-use Sylius\Behat\Page\SymfonyPageInterface;
+use FriendsOfBehat\PageObjectExtension\Page\SymfonyPageInterface;
 
 interface ShowPageInterface extends SymfonyPageInterface
 {

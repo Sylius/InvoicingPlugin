@@ -48,6 +48,8 @@
             <argument type="service" id="Sylius\InvoicingPlugin\Repository\InvoiceRepository" />
             <argument type="service" id="Sylius\InvoicingPlugin\Email\InvoiceEmailSender" />
             <argument type="service" id="sylius.repository.order" />
+            <argument type="service" id="router" />
+            <argument type="service" id="session" />
         </service>
 
         <service id="sylius_invoicing_plugin.block_event_listener.account.order_show" class="Sylius\Bundle\UiBundle\Block\BlockEventListener">
