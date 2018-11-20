@@ -75,6 +75,18 @@ Additional feature of the plugin that fulfills Invoicing domain is the ability t
                 classes:
                     model: App\Entity\Channel
     ```
+    
+4. Check if you have wkhtmltopdf binary. If not, you can download it [here](https://wkhtmltopdf.org/downloads.html).
+   
+In case wkhtmltopdf is not located in /usr/local/bin/wkhtmltopdf, add a following snippet at the end of your application's config.yml:
+
+```
+knp_snappy:
+    pdf:
+        enabled: true
+        binary: /usr/local/bin/wkhtmltopdf # Change this! :)
+        options: []
+```
 
 #### Beware!
 
