@@ -11,6 +11,7 @@
             <argument type="service" id="Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Invoice\ShowPageInterface" />
             <argument type="service" id="Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Order\ShowPageInterface" />
             <argument type="service" id="__symfony__.Sylius\InvoicingPlugin\Repository\InvoiceRepository" />
+            <argument type="service" id="sylius.behat.notification_checker"/>
             <tag name="fob.context_service" />
         </service>
 
