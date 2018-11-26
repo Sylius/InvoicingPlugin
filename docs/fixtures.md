@@ -1,30 +1,22 @@
 ### Fixtures configuration instructions
 
-1. Add a new yaml file to the folder `config/packages` and name it `my_own_company_fixtures.yaml`
+1. Add a new yaml file to the folder `config/packages` and name it as you wish, e.g. `my_own_company_fixtures.yaml`.
 
 2. Fill this yaml with your own company fixtures and don't forget to put first the definition of
-   your channel(s)
-   
-   You must define the channel which you will use before the definition of `invoicing_plugin_shop_billing_data`.
+   your channel(s) or use an existing one.
    
    ```yaml
    sylius_fixtures:
        suites:
            my_own_company_fixtures:
-   
-               listeners:
-                   orm_purger: ~
-                   logger: ~
-   
                fixtures:
-   
                    channel:
                        options:
                            custom:
                                default_web_store:
                                    enabled: true
                                    name: "Web Store"
-                                   code: "default"
+                                   code: "DEFAULT"
                                    contact_email: "support@exemple.com"
                                    default_locale: "%locale%"
                                    hostname: null
@@ -37,7 +29,6 @@
                                    currencies:
                                        - "USD"
                                        - "EUR"
-   
                    invoicing_plugin_shop_billing_data:
                        options:
                            custom:
@@ -54,5 +45,5 @@
  3. Load your fixtures
  
     ```bash
-    php bin/console -vvv sylius:fixture:load my_own_company_fixtures
+    php bin/console sylius:fixture:load my_own_company_fixtures
     ```

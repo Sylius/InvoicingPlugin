@@ -136,10 +136,8 @@ Sonata events. You can read about customizing templates via events here:
 
 ## Fixtures
 
-You can add `ShopBillingData` fixtures into a yaml to add Channel ShopBillingData infos to your installation.
-More instructions on the [fixtures configuration instructions](docs/fixtures.md)
-
-<https://docs.sylius.com/en/latest/components_and_bundles/bundles/SyliusFixturesBundle/custom_fixture.html>
+You can add `ShopBillingData` fixtures into a yaml to add Channel ShopBillingData info to your installation.
+More instructions on the [fixtures configuration instructions](docs/fixtures.md).
 
 ## Security issues
 
