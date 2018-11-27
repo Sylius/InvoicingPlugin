@@ -1,4 +1,4 @@
-@managing_channels @ui
+@invoicing_managing_channels @ui
 Feature: Editing shop billing data on channel
     In order to have proper shop billing data on invoices
     As an Administrator
