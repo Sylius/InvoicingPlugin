@@ -1,6 +1,6 @@
 default:
     suites:
-        ui_managing_channels:
+        ui_invoicing_managing_channels:
             contexts_services:
                 - sylius.behat.context.hook.doctrine_orm
 
@@ -25,4 +25,4 @@ default:
 
                 - Tests\Sylius\InvoicingPlugin\Behat\Context\Ui\Admin\ManagingChannelsContext
             filters:
-                tags: "@managing_channels && @ui"
+                tags: "@invoicing_managing_channels && @ui"
