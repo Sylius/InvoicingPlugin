@@ -1,4 +1,4 @@
-{% set billingData = sylius.channel.billingData %}
+{% set billingData = invoice.channel.code|invoice_channel_code_to_channel %}
 
 {% if billingData %}
     <h4 class="ui top attached styled header">
