@@ -1,4 +1,4 @@
-{% set billingData = invoice.channel.code|invoice_channel_code_to_channel %}
+{% set billingData = get_channel_by_invoice_channel_code(invoice.channel.code).billingData %}
 
 {% if billingData %}
     <h4 class="ui top attached styled header">

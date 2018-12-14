@@ -6,11 +6,9 @@ namespace Sylius\InvoicingPlugin\Twig;
 
 use Sylius\Component\Channel\Repository\ChannelRepositoryInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
-use Sylius\InvoicingPlugin\Repository\InvoiceRepository;
-use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-final class FindChannelByInvoiceChannelCodeExtension extends AbstractExtension
-    implements FindChannelByInvoiceChannelCodeExtensionInterface
+final class FindChannelByInvoiceChannelCodeExtension extends \Twig_Extension implements FindChannelByInvoiceChannelCodeExtensionInterface
 {
     /** @var ChannelRepositoryInterface */
     private $channelRepository;
@@ -20,13 +18,16 @@ final class FindChannelByInvoiceChannelCodeExtension extends AbstractExtension
         $this->channelRepository = $channelRepository;
     }
 
-    public function getFilters(): array
+    public function getFunctions(): array
     {
-        return array(new TwigFilter('invoice_channel_code_to_channel', array($this, 'findByInvoiceChannelCode')));
+        return [new TwigFunction('get_channel_by_invoice_channel_code', [$this, 'findByInvoiceChannelCode'])];
     }
 
     public function findByInvoiceChannelCode(string $invoiceChannelCode): ChannelInterface
     {
-        return $this->channelRepository->findOneByCode($invoiceChannelCode);
+        /** @var ChannelInterface $channel */
+        $channel = $this->channelRepository->findOneByCode($invoiceChannelCode);
+
+        return $channel;
     }
 }

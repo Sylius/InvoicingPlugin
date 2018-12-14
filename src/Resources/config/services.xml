@@ -129,5 +129,10 @@
             <argument id="sylius_invoicing_plugin.fixture.example_factory.invoicing_plugin_shop_billing_data" type="service"/>
             <tag name="sylius_fixtures.fixture"/>
         </service>
+
+        <service id="Sylius\InvoicingPlugin\Twig\FindChannelByInvoiceChannelCodeExtension">
+            <argument type="service" id="sylius.repository.channel"/>
+            <tag name="twig.extension"/>
+        </service>
     </services>
 </container>
