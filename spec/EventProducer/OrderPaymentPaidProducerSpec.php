@@ -29,7 +29,7 @@ final class OrderPaymentPaidProducerSpec extends ObjectBehavior
         $payment->getOrder()->willReturn($order);
         $order->getNumber()->willReturn('0000001');
 
-        $dateTime = new \DateTime('now');
+        $dateTime = new \DateTime();
         $dateTimeProvider->__invoke()->willReturn($dateTime);
 
         $event = new OrderPaymentPaid('0000001', $dateTime);
