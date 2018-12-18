@@ -18,5 +18,7 @@ interface UpdatePageInterface extends BaseUpdatePageInterface
 
     public function specifyBillingAddress(string $street, string $postcode, string $city, string $countryCode): void;
 
-    public function hasBillingAddress(string $street, string $postcode, string $city, string $countryCode): bool ;
+    public function hasBillingAddress(string $street, string $postcode, string $city, string $countryCode): bool;
+
+    public function hasValidationError(string $message): bool;
 }

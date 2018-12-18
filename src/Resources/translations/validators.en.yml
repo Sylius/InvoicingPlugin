@@ -9,6 +9,6 @@ sylius_admin_order_creation:
         city:
             not_blank: 'City cannot be blank'
         postcode:
-            not_blank: 'Post code cannot be blank'
+            not_blank: 'Postcode cannot be blank'
         countryCode:
-            not_blank: 'Country code cannot be blank'
+            not_blank: 'Country cannot be blank'

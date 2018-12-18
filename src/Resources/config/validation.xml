@@ -11,43 +11,33 @@
             </constraint>
         </property>
         <property name="taxId">
-            <constraint name="NotNull">
+            <constraint name="NotBlank">
                 <option name="message">sylius_admin_order_creation.channel.taxId.not_blank</option>
-                <option name="groups">
-                    <value>sylius</value>
-                </option>
+                <option name="groups">sylius</option>
             </constraint>
         </property>
         <property name="street">
             <constraint name="NotBlank">
                 <option name="message">sylius_admin_order_creation.channel.street.not_blank</option>
-                <option name="groups">
-                    <value>sylius</value>
-                </option>
+                <option name="groups">sylius</option>
             </constraint>
         </property>
         <property name="city">
             <constraint name="NotBlank">
                 <option name="message">sylius_admin_order_creation.channel.city.not_blank</option>
-                <option name="groups">
-                    <value>sylius</value>
-                </option>
+                <option name="groups">sylius</option>
             </constraint>
         </property>
         <property name="postcode">
             <constraint name="NotBlank">
                 <option name="message">sylius_admin_order_creation.channel.postcode.not_blank</option>
-                <option name="groups">
-                    <value>sylius</value>
-                </option>
+                <option name="groups">sylius</option>
             </constraint>
         </property>
         <property name="countryCode">
             <constraint name="NotBlank">
                 <option name="message">sylius_admin_order_creation.channel.countryCode.not_blank</option>
-                <option name="groups">
-                    <value>sylius</value>
-                </option>
+                <option name="groups">sylius</option>
             </constraint>
         </property>
     </class>
