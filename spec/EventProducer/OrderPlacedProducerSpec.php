@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace spec\Sylius\InvoicingPlugin\EventProducer;
 
+use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\UnitOfWork;
@@ -15,6 +16,7 @@ use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\OrderCheckoutStates;
 use Sylius\InvoicingPlugin\DateTimeProvider;
 use Sylius\InvoicingPlugin\Event\OrderPlaced;
+use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\MessageBusInterface;
 
 final class OrderPlacedProducerSpec extends ObjectBehavior
@@ -24,46 +26,34 @@ final class OrderPlacedProducerSpec extends ObjectBehavior
         $this->beConstructedWith($eventBus, $dateTimeProvider);
     }
 
-    function it_dispatches_an_order_placed_event_for_persited_order(
+    function it_dispatches_an_order_placed_event_for_persisted_order(
         MessageBusInterface $eventBus,
         DateTimeProvider $dateTimeProvider,
-        LifecycleEventArgs $event,
         OrderInterface $order,
-        \DateTime $dateTime
+        ObjectManager $objectManager
     ): void {
+        $dateTime = new \DateTime('2018-12-14');
         $dateTimeProvider->__invoke()->willReturn($dateTime);
-
-        $event->getEntity()->willReturn($order);
 
         $order->getNumber()->willReturn('000666');
         $order->getCheckoutState()->willReturn(OrderCheckoutStates::STATE_COMPLETED);
 
-        $eventBus
-            ->dispatch(Argument::that(function (OrderPlaced $event) use ($dateTime): bool {
-                return
-                    $event->orderNumber() === '000666' &&
-                    $event->date()->format(\DateTimeInterface::RFC3339_EXTENDED) === $dateTime->getWrappedObject()->format(\DateTimeInterface::RFC3339_EXTENDED)
-                ;
-            }))
-            ->shouldBeCalled()
-        ;
+        $postPersistEvent = new LifecycleEventArgs($order->getWrappedObject(), $objectManager->getWrappedObject());
+        $orderPlacedEvent = new OrderPlaced('000666', $dateTime);
 
-        $this->postPersist($event);
+        $eventBus->dispatch($orderPlacedEvent)->shouldBeCalled()->willReturn(new Envelope($orderPlacedEvent));
+
+        $this->postPersist($postPersistEvent);
     }
 
     function it_dispatches_an_order_placed_event_for_updated_order(
         MessageBusInterface $eventBus,
         DateTimeProvider $dateTimeProvider,
-        LifecycleEventArgs $event,
         EntityManagerInterface $entityManager,
-        OrderInterface $order,
-        \DateTime $dateTime
+        OrderInterface $order
     ): void {
+        $dateTime = new \DateTime('2018-12-14');
         $dateTimeProvider->__invoke()->willReturn($dateTime);
-
-        $event->getEntity()->willReturn($order);
-
-        $event->getEntityManager()->willReturn($entityManager);
 
         /** @var UnitOfWork|MockInterface $unitOfWork */
         $unitOfWork = Mockery::mock(UnitOfWork::class);
@@ -75,17 +65,12 @@ final class OrderPlacedProducerSpec extends ObjectBehavior
 
         $order->getNumber()->willReturn('000666');
 
-        $eventBus
-            ->dispatch(Argument::that(function (OrderPlaced $event) use ($dateTime): bool {
-                return
-                    $event->orderNumber() === '000666' &&
-                    $event->date()->format(\DateTimeInterface::RFC3339_EXTENDED) === $dateTime->getWrappedObject()->format(\DateTimeInterface::RFC3339_EXTENDED)
-                ;
-            }))
-            ->shouldBeCalled()
-        ;
+        $postUpdateEvent = new LifecycleEventArgs($order->getWrappedObject(), $entityManager->getWrappedObject());
+        $orderPlacedEvent = new OrderPlaced('000666', $dateTime);
 
-        $this->postUpdate($event);
+        $eventBus->dispatch($orderPlacedEvent)->shouldBeCalled()->willReturn(new Envelope($orderPlacedEvent));
+
+        $this->postUpdate($postUpdateEvent);
     }
 
     function it_does_nothing_after_persisting_if_event_entity_is_not_order(

@@ -10,6 +10,7 @@ use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\PaymentInterface;
 use Sylius\InvoicingPlugin\DateTimeProvider;
 use Sylius\InvoicingPlugin\Event\OrderPaymentPaid;
+use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\MessageBusInterface;
 
 final class OrderPaymentPaidProducerSpec extends ObjectBehavior
@@ -26,12 +27,14 @@ final class OrderPaymentPaidProducerSpec extends ObjectBehavior
         OrderInterface $order
     ): void {
         $payment->getOrder()->willReturn($order);
+        $order->getNumber()->willReturn('0000001');
 
-        $order->getNumber()->shouldBeCalled();
+        $dateTime = new \DateTime();
+        $dateTimeProvider->__invoke()->willReturn($dateTime);
 
-        $dateTimeProvider->__invoke()->willReturn(new \DateTime('now'));
+        $event = new OrderPaymentPaid('0000001', $dateTime);
 
-        $eventBus->dispatch(Argument::type(OrderPaymentPaid::class))->shouldBeCalled();
+        $eventBus->dispatch($event)->shouldBeCalled()->willReturn(new Envelope($event));
 
         $this->__invoke($payment);
     }
