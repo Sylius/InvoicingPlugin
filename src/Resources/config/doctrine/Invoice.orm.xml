@@ -32,7 +32,7 @@
 
         <embedded name="channel" class="Sylius\InvoicingPlugin\Entity\InvoiceChannel" />
 
-        <embedded name="shopBillingData" class="Sylius\InvoicingPlugin\Entity\ShopBillingData" />
+        <embedded name="shopBillingData" class="Sylius\InvoicingPlugin\Entity\InvoiceShopBillingData" />
 
         <indexes>
             <index columns="order_number" />

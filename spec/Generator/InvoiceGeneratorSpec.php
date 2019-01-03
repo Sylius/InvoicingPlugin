@@ -66,6 +66,13 @@ final class InvoiceGeneratorSpec extends ObjectBehavior
 
         $channel->getBillingData()->willReturn($shopBillingData);
 
+        $shopBillingData->getPostcode()->willReturn('11-111');
+        $shopBillingData->getCompany()->willReturn('sample_company');
+        $shopBillingData->getCountryCode()->willReturn('US');
+        $shopBillingData->getStreet()->willReturn('sample_street');
+        $shopBillingData->getTaxId()->willReturn('110011001');
+        $shopBillingData->getCity()->willReturn('sample_city');
+
         $billingAddress->getFirstName()->willReturn('John');
         $billingAddress->getLastName()->willReturn('Doe');
         $billingAddress->getCountryCode()->willReturn('US');

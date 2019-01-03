@@ -10,8 +10,9 @@ use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\InvoicingPlugin\Entity\BillingDataInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceChannel;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
+use Sylius\InvoicingPlugin\Entity\InvoiceShopBillingData;
+use Sylius\InvoicingPlugin\Entity\InvoiceShopBillingDataInterface;
 use Sylius\InvoicingPlugin\Entity\LineItemInterface;
-use Sylius\InvoicingPlugin\Entity\ShopBillingData;
 use Sylius\InvoicingPlugin\Entity\TaxItemInterface;
 
 final class InvoiceSpec extends ObjectBehavior
@@ -19,17 +20,10 @@ final class InvoiceSpec extends ObjectBehavior
     function let(
         BillingDataInterface $billingData,
         LineItemInterface $lineItem,
-        TaxItemInterface $taxItem
+        TaxItemInterface $taxItem,
+        InvoiceShopBillingDataInterface $shopBillingData
     ): void {
         $issuedAt = new \DateTimeImmutable('now');
-
-        $shopBillingData = new ShopBillingData();
-        $shopBillingData->setTaxId('11111');
-        $shopBillingData->setCountryCode('US');
-        $shopBillingData->setStreet('sample_street');
-        $shopBillingData->setPostcode('11-111');
-        $shopBillingData->setCompany('sample_company');
-        $shopBillingData->setCity('sample_city');
 
         $this->beConstructedWith(
             '7903c83a-4c5e-4bcf-81d8-9dc304c6a353',
@@ -67,13 +61,14 @@ final class InvoiceSpec extends ObjectBehavior
         $taxItems = new ArrayCollection([$taxItem->getWrappedObject()]);
         $invoiceChannel = new InvoiceChannel('WEB-US', 'United States');
 
-        $shopBillingData = new ShopBillingData();
-        $shopBillingData->setTaxId('11111');
-        $shopBillingData->setCountryCode('US');
-        $shopBillingData->setStreet('sample_street');
-        $shopBillingData->setPostcode('11-111');
-        $shopBillingData->setCompany('sample_company');
-        $shopBillingData->setCity('sample_city');
+        $shopBillingData = new InvoiceShopBillingData(
+            'sample_company',
+            '11111',
+            'US',
+            'sample_street',
+            'sample_city',
+            '11-111'
+        );
 
         $this->beConstructedWith(
             '7903c83a-4c5e-4bcf-81d8-9dc304c6a353',
