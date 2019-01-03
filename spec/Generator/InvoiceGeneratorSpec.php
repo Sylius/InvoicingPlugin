@@ -8,14 +8,15 @@ use Doctrine\Common\Collections\ArrayCollection;
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Core\Model\AddressInterface;
 use Sylius\Component\Core\Model\AdjustmentInterface;
-use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\OrderItemInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
 use Sylius\InvoicingPlugin\Entity\Invoice;
+use Sylius\InvoicingPlugin\Entity\ShopBillingData;
 use Sylius\InvoicingPlugin\Generator\InvoiceGeneratorInterface;
 use Sylius\InvoicingPlugin\Generator\InvoiceIdentifierGenerator;
 use Sylius\InvoicingPlugin\Generator\InvoiceNumberGenerator;
+use Tests\Application\InvoicingPlugin\Entity\Channel;
 
 final class InvoiceGeneratorSpec extends ObjectBehavior
 {
@@ -40,7 +41,8 @@ final class InvoiceGeneratorSpec extends ObjectBehavior
         ProductVariantInterface $variant,
         OrderItemInterface $orderItem,
         AdjustmentInterface $taxAdjustment,
-        ChannelInterface $channel
+        Channel $channel,
+        ShopBillingData $shopBillingData
     ): void {
         $date = new \DateTimeImmutable('now');
 
@@ -61,6 +63,8 @@ final class InvoiceGeneratorSpec extends ObjectBehavior
 
         $channel->getCode()->willReturn('WEB-US');
         $channel->getName()->willReturn('United States');
+
+        $channel->getBillingData()->willReturn($shopBillingData);
 
         $billingAddress->getFirstName()->willReturn('John');
         $billingAddress->getLastName()->willReturn('Doe');

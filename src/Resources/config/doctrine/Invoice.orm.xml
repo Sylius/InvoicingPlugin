@@ -32,6 +32,8 @@
 
         <embedded name="channel" class="Sylius\InvoicingPlugin\Entity\InvoiceChannel" />
 
+        <embedded name="shopBillingData" class="Sylius\InvoicingPlugin\Entity\ShopBillingData" />
+
         <indexes>
             <index columns="order_number" />
         </indexes>

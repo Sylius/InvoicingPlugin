@@ -11,6 +11,7 @@ use Sylius\InvoicingPlugin\Entity\BillingDataInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceChannel;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Sylius\InvoicingPlugin\Entity\LineItemInterface;
+use Sylius\InvoicingPlugin\Entity\ShopBillingData;
 use Sylius\InvoicingPlugin\Entity\TaxItemInterface;
 
 final class InvoiceSpec extends ObjectBehavior
@@ -21,6 +22,14 @@ final class InvoiceSpec extends ObjectBehavior
         TaxItemInterface $taxItem
     ): void {
         $issuedAt = new \DateTimeImmutable('now');
+
+        $shopBillingData = new ShopBillingData();
+        $shopBillingData->setTaxId('11111');
+        $shopBillingData->setCountryCode('US');
+        $shopBillingData->setStreet('sample_street');
+        $shopBillingData->setPostcode('11-111');
+        $shopBillingData->setCompany('sample_company');
+        $shopBillingData->setCity('sample_city');
 
         $this->beConstructedWith(
             '7903c83a-4c5e-4bcf-81d8-9dc304c6a353',
@@ -33,7 +42,8 @@ final class InvoiceSpec extends ObjectBehavior
             10300,
             new ArrayCollection([$lineItem->getWrappedObject()]),
             new ArrayCollection([$taxItem->getWrappedObject()]),
-            new InvoiceChannel('WEB-US', 'United States')
+            new InvoiceChannel('WEB-US', 'United States'),
+            $shopBillingData
         );
     }
 
@@ -57,6 +67,14 @@ final class InvoiceSpec extends ObjectBehavior
         $taxItems = new ArrayCollection([$taxItem->getWrappedObject()]);
         $invoiceChannel = new InvoiceChannel('WEB-US', 'United States');
 
+        $shopBillingData = new ShopBillingData();
+        $shopBillingData->setTaxId('11111');
+        $shopBillingData->setCountryCode('US');
+        $shopBillingData->setStreet('sample_street');
+        $shopBillingData->setPostcode('11-111');
+        $shopBillingData->setCompany('sample_company');
+        $shopBillingData->setCity('sample_city');
+
         $this->beConstructedWith(
             '7903c83a-4c5e-4bcf-81d8-9dc304c6a353',
             $issuedAt->format('Y/m') . '/000000001',
@@ -68,7 +86,8 @@ final class InvoiceSpec extends ObjectBehavior
             10300,
             $lineItems,
             $taxItems,
-            $invoiceChannel
+            $invoiceChannel,
+            $shopBillingData
         );
 
         $this->id()->shouldReturn('7903c83a-4c5e-4bcf-81d8-9dc304c6a353');
@@ -81,5 +100,6 @@ final class InvoiceSpec extends ObjectBehavior
         $this->lineItems()->shouldReturn($lineItems);
         $this->taxItems()->shouldReturn($taxItems);
         $this->channel()->shouldReturn($invoiceChannel);
+        $this->shopBillingData()->shouldReturn($shopBillingData);
     }
 }
