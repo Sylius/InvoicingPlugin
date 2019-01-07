@@ -1,4 +1,4 @@
-@invoicing_managing_channels @ui
+@managing_invoices @ui
 Feature: Setting current shop billing data on an invoice
     In order to have proper shop billing data on invoices
     As an Administrator

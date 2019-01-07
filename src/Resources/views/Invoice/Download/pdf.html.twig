@@ -32,18 +32,22 @@
                     {{ invoice.billingData.countryCode|sylius_country_name|upper }} {{ invoice.billingData.postcode }}
                 </address>
             </td>
-            {% if shopBillingData %}
-                <td width="50%">
+            <td width="50%">
+                {% if shopBillingData %}
                     <address>
-                        <strong>{{ shopBillingData.company }}</strong>
-                        {{ shopBillingData.street }}<br/>
-                        {{ shopBillingData.city }}<br/>
-                        {{ shopBillingData.taxId }}<br/>
-                        <i class="{{ shopBillingData.countryCode|lower }} flag"></i>
-                        {{ shopBillingData.countryCode|sylius_country_name|upper }} {{ shopBillingData.postcode }}
+                        {% if shopBillingData.company %}<strong>{{ shopBillingData.company }}</strong>{% endif %}
+                        {% if shopBillingData.street %}{{ shopBillingData.street }}<br/>{% endif %}
+                        {% if shopBillingData.city %}{{ shopBillingData.city }}<br/>{% endif %}
+                        {% if shopBillingData.taxId %}{{ shopBillingData.taxId }}<br/>{% endif %}
+                        {% if shopBillingData.countryCode %}
+                            <i class="{{ shopBillingData.countryCode|lower }} flag"></i>
+                        {% endif %}
+                        {% if shopBillingData.countryCode and shopBillingData.postcode %}
+                            {{ shopBillingData.countryCode|sylius_country_name|upper }} {{ shopBillingData.postcode }}
+                        {% endif %}
                     </address>
-                </td>
-            {% endif %}
+                {% endif %}
+            </td>
         </tbody>
         </table>
 
