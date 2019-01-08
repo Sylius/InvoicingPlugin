@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Channel;
 
+use Behat\Mink\Element\NodeElement;
 use Sylius\Behat\Page\Admin\Channel\UpdatePage as BaseUpdatePage;
 
 final class UpdatePage extends BaseUpdatePage implements UpdatePageInterface
@@ -46,6 +47,24 @@ final class UpdatePage extends BaseUpdatePage implements UpdatePageInterface
         ;
     }
 
+    public function hasValidationError(string $message): bool
+    {
+        $validationMessages = $this->getSession()->getPage()->findAll('css', '.sylius-validation-error');
+
+        if (empty($validationMessages)) {
+            return false;
+        }
+
+        /** @var NodeElement $validationMessage */
+        foreach ($validationMessages as $validationMessage) {
+            if ($validationMessage->getText() === $message) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     protected function getDefinedElements(): array
     {
         return array_merge(parent::getDefinedElements(), [
@@ -55,6 +74,7 @@ final class UpdatePage extends BaseUpdatePage implements UpdatePageInterface
             'postcode' => '#sylius_channel_billingData_postcode',
             'street' => '#sylius_channel_billingData_street',
             'tax_id' => '#sylius_channel_billingData_taxId',
+            'validation_error' => '.sylius-validation-error',
         ]);
     }
 }

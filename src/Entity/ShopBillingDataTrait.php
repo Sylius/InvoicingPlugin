@@ -6,12 +6,14 @@ namespace Sylius\InvoicingPlugin\Entity;
 
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\OneToOne;
+use Symfony\Component\Validator\Constraints as Assert;
 
 trait ShopBillingDataTrait
 {
     /**
      * @OneToOne(targetEntity="Sylius\InvoicingPlugin\Entity\ShopBillingData", cascade={"persist"})
      * @JoinColumn(name="billing_data_id", referencedColumnName="id")
+     * @Assert\Valid()
      *
      * @var ShopBillingDataInterface
      */

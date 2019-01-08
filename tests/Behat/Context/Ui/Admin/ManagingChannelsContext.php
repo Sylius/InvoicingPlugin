@@ -43,8 +43,7 @@ final class ManagingChannelsContext implements Context
         string $postcode,
         string $city,
         CountryInterface $country
-    ): void
-    {
+    ): void {
         $this->updatePage->specifyBillingAddress($street, $postcode, $city, $country->getCode());
     }
 
@@ -72,8 +71,15 @@ final class ManagingChannelsContext implements Context
         string $postcode,
         string $city,
         CountryInterface $country
-    ): void
-    {
+    ): void {
         Assert::true($this->updatePage->hasBillingAddress($street, $postcode, $city, $country->getCode()));
+    }
+
+    /**
+     * @Then I should be notified that :input cannot be blank
+     */
+    public function shouldBeNotifiedThatCannotBeBlank(string $input): void
+    {
+        Assert::true($this->updatePage->hasValidationError($input . ' cannot be blank'));
     }
 }

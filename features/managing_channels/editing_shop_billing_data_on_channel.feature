@@ -19,3 +19,27 @@ Feature: Editing shop billing data on channel
         And this channel company should be "Ragnarok"
         And this channel tax ID should be "1100110011"
         And this channel shop billing address should be "Pacific Coast Hwy", "90806" "Los Angeles", "United States"
+
+    Scenario: Being unable to set empty company on channel
+        When I want to modify a channel "Web Channel"
+        And I specify tax ID as "1100110011"
+        And I specify shop billing address as "Pacific Coast Hwy", "90806" "Los Angeles", "United States"
+        And I save my changes
+        Then I should be notified that Company cannot be blank
+
+    Scenario: Being unable to set empty address on channel
+        When I want to modify a channel "Web Channel"
+        And I specify company as "Ragnarok"
+        And I specify tax ID as "1100110011"
+        And I save my changes
+        Then I should be notified that "Country" cannot be blank
+        And I should be notified that "City" cannot be blank
+        And I should be notified that "Street" cannot be blank
+        And I should be notified that "Postcode" cannot be blank
+
+    Scenario: Being unable to set empty Tax ID on channel
+        When I want to modify a channel "Web Channel"
+        And I specify company as "Ragnarok"
+        And I specify shop billing address as "Pacific Coast Hwy", "90806" "Los Angeles", "United States"
+        And I save my changes
+        Then I should be notified that "Tax ID" cannot be blank

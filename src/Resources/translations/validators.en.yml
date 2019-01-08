@@ -1,0 +1,14 @@
+sylius_admin_order_creation:
+    channel:
+        company:
+            not_blank: 'Company cannot be blank'
+        taxId:
+            not_blank: 'Tax ID cannot be blank'
+        street:
+            not_blank: 'Street cannot be blank'
+        city:
+            not_blank: 'City cannot be blank'
+        postcode:
+            not_blank: 'Postcode cannot be blank'
+        countryCode:
+            not_blank: 'Country cannot be blank'
