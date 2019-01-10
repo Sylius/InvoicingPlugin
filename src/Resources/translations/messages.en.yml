@@ -5,7 +5,7 @@ sylius_invoicing_plugin:
         download_invoice: 'Download'
         invoice: 'Invoice'
         invoice_id: 'Invoice ID'
-        invoice_number: 'Invoice Number'
+        invoice_number: 'Number'
         invoices: 'Invoices'
         issued_at: 'Issued at'
         issued_for_order: 'Issued for order'
