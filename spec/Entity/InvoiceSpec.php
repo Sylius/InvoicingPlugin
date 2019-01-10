@@ -8,8 +8,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\InvoicingPlugin\Entity\BillingDataInterface;
-use Sylius\InvoicingPlugin\Entity\InvoiceChannel;
+use Sylius\InvoicingPlugin\Entity\InvoiceChannelInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
+use Sylius\InvoicingPlugin\Entity\InvoiceShopBillingDataInterface;
 use Sylius\InvoicingPlugin\Entity\LineItemInterface;
 use Sylius\InvoicingPlugin\Entity\TaxItemInterface;
 
@@ -18,9 +19,11 @@ final class InvoiceSpec extends ObjectBehavior
     function let(
         BillingDataInterface $billingData,
         LineItemInterface $lineItem,
-        TaxItemInterface $taxItem
+        TaxItemInterface $taxItem,
+        InvoiceChannelInterface $invoiceChannel,
+        InvoiceShopBillingDataInterface $shopBillingData
     ): void {
-        $issuedAt = new \DateTimeImmutable('now');
+        $issuedAt = \DateTimeImmutable::createFromFormat('Y-m', '2019-01');
 
         $this->beConstructedWith(
             '7903c83a-4c5e-4bcf-81d8-9dc304c6a353',
@@ -33,7 +36,8 @@ final class InvoiceSpec extends ObjectBehavior
             10300,
             new ArrayCollection([$lineItem->getWrappedObject()]),
             new ArrayCollection([$taxItem->getWrappedObject()]),
-            new InvoiceChannel('WEB-US', 'United States')
+            $invoiceChannel,
+            $shopBillingData
         );
     }
 
@@ -50,36 +54,20 @@ final class InvoiceSpec extends ObjectBehavior
     function it_has_an_id(
         BillingDataInterface $billingData,
         LineItemInterface $lineItem,
-        TaxItemInterface $taxItem
+        TaxItemInterface $taxItem,
+        InvoiceChannelInterface $invoiceChannel,
+        InvoiceShopBillingDataInterface $shopBillingData
     ): void {
-        $issuedAt = new \DateTimeImmutable('now');
-        $lineItems = new ArrayCollection([$lineItem->getWrappedObject()]);
-        $taxItems = new ArrayCollection([$taxItem->getWrappedObject()]);
-        $invoiceChannel = new InvoiceChannel('WEB-US', 'United States');
-
-        $this->beConstructedWith(
-            '7903c83a-4c5e-4bcf-81d8-9dc304c6a353',
-            $issuedAt->format('Y/m') . '/000000001',
-            '007',
-            $issuedAt,
-            $billingData,
-            'USD',
-            'en_US',
-            10300,
-            $lineItems,
-            $taxItems,
-            $invoiceChannel
-        );
-
         $this->id()->shouldReturn('7903c83a-4c5e-4bcf-81d8-9dc304c6a353');
-        $this->number()->shouldReturn($issuedAt->format('Y/m') . '/000000001');
+        $this->number()->shouldReturn('2019/01/000000001');
         $this->orderNumber()->shouldReturn('007');
         $this->billingData()->shouldReturn($billingData);
         $this->currencyCode()->shouldReturn('USD');
         $this->localeCode()->shouldReturn('en_US');
         $this->total()->shouldReturn(10300);
-        $this->lineItems()->shouldReturn($lineItems);
-        $this->taxItems()->shouldReturn($taxItems);
+        $this->lineItems()->shouldBeLike(new ArrayCollection([$lineItem->getWrappedObject()]));
+        $this->taxItems()->shouldBeLike(new ArrayCollection([$taxItem->getWrappedObject()]));
         $this->channel()->shouldReturn($invoiceChannel);
+        $this->shopBillingData()->shouldReturn($shopBillingData);
     }
 }
