@@ -164,6 +164,7 @@ final class ManagingInvoicesContext implements Context
 
     /**
      * @Then it should have shop billing data as :company, :taxId, :street, :postCode :city, :countryName
+     * @Then it should still have shop billing data as :company, :taxId, :street, :postCode :city, :countryName
      */
     public function itShouldHaveShopBillingDataAs(
         string $company,

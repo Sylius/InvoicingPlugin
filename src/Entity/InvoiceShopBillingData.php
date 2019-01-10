@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Sylius\InvoicingPlugin\Entity;
 
-/** @final */
-class InvoiceShopBillingData implements InvoiceShopBillingDataInterface
+final class InvoiceShopBillingData implements InvoiceShopBillingDataInterface
 {
     /** @var string|null */
     private $company;
@@ -24,22 +23,6 @@ class InvoiceShopBillingData implements InvoiceShopBillingDataInterface
 
     /** @var string|null */
     private $postcode;
-
-    public function __construct(
-        string $company,
-        string $taxId,
-        string $countryCode,
-        string $street,
-        string $city,
-        string $postcode
-    ) {
-        $this->company = $company;
-        $this->taxId = $taxId;
-        $this->countryCode = $countryCode;
-        $this->street = $street;
-        $this->city = $city;
-        $this->postcode = $postcode;
-    }
 
     public function getCompany(): ?string
     {
@@ -69,5 +52,35 @@ class InvoiceShopBillingData implements InvoiceShopBillingDataInterface
     public function getPostcode(): ?string
     {
         return $this->postcode;
+    }
+
+    public function setCompany(?string $company): void
+    {
+        $this->company = $company;
+    }
+
+    public function setTaxId(?string $taxId): void
+    {
+        $this->taxId = $taxId;
+    }
+
+    public function setCountryCode(?string $countryCode): void
+    {
+        $this->countryCode = $countryCode;
+    }
+
+    public function setStreet(?string $street): void
+    {
+        $this->street = $street;
+    }
+
+    public function setCity(?string $city): void
+    {
+        $this->city = $city;
+    }
+
+    public function setPostcode(?string $postcode): void
+    {
+        $this->postcode = $postcode;
     }
 }

@@ -18,8 +18,8 @@ Feature: Setting current shop billing data on an invoice
         And the customer "Lucifer Morningstar" addressed it to "Seaside Fwy", "90802" "Los Angeles" in the "United States"
         And for the billing address of "Mazikeen Lilim" in the "Pacific Coast Hwy", "90806" "Los Angeles", "United States"
         And the customer chose "UPS" shipping method with "Cash on Delivery" payment
-        And I set shop billing data for channel "United States" as "Ankh Morpork", "2200220022", "Frost Alley", "90210" "Las Vegas", "United States"
 
     Scenario: Having immutable shop billing data on an invoice
-        When I view the summary of the invoice for order "#00000666"
-        Then it should have shop billing data as "Ragnarok", "1100110011", "Pacific Coast Hwy", "90806" "Los Angeles", "United States"
+        When I set shop billing data for channel "United States" as "Ankh Morpork", "2200220022", "Frost Alley", "90210" "Las Vegas", "United States"
+        And I view the summary of the invoice for order "#00000666"
+        Then it should still have shop billing data as "Ragnarok", "1100110011", "Pacific Coast Hwy", "90806" "Los Angeles", "United States"

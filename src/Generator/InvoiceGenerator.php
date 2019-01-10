@@ -136,19 +136,21 @@ final class InvoiceGenerator implements InvoiceGeneratorInterface
         return $taxItems;
     }
 
-    private function prepareShopBillingData(?ShopBillingDataInterface $shopBillingData): ?InvoiceShopBillingDataInterface
+    private function prepareShopBillingData(?ShopBillingDataInterface $shopBillingData): InvoiceShopBillingDataInterface
     {
+        $invoiceShopBillingData = new InvoiceShopBillingData();
+
         if (null === $shopBillingData) {
-            return null;
+            return $invoiceShopBillingData;
         }
 
-        return new InvoiceShopBillingData(
-            $shopBillingData->getCompany(),
-            $shopBillingData->getTaxId(),
-            $shopBillingData->getCountryCode(),
-            $shopBillingData->getStreet(),
-            $shopBillingData->getCity(),
-            $shopBillingData->getPostcode()
-        );
+        $invoiceShopBillingData->setCompany($shopBillingData->getCompany());
+        $invoiceShopBillingData->setTaxId($shopBillingData->getTaxId());
+        $invoiceShopBillingData->setCountryCode($shopBillingData->getCountryCode());
+        $invoiceShopBillingData->setStreet($shopBillingData->getStreet());
+        $invoiceShopBillingData->setCity($shopBillingData->getCity());
+        $invoiceShopBillingData->setPostcode($shopBillingData->getPostcode());
+
+        return $invoiceShopBillingData;
     }
 }
