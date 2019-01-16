@@ -11,40 +11,40 @@ use Sylius\Component\Resource\Model\ResourceInterface;
 class Invoice implements InvoiceInterface, ResourceInterface
 {
     /** @var string */
-    private $id;
+    protected $id;
 
     /** @var string */
-    private $number;
+    protected $number;
 
     /** @var string */
-    private $orderNumber;
+    protected $orderNumber;
 
     /** @var \DateTimeInterface */
-    private $issuedAt;
+    protected $issuedAt;
 
     /** @var BillingDataInterface */
-    private $billingData;
+    protected $billingData;
 
     /** @var string */
-    private $currencyCode;
+    protected $currencyCode;
 
     /** @var string */
-    private $localeCode;
+    protected $localeCode;
 
     /** @var int */
-    private $total;
+    protected $total;
 
     /** @var Collection|LineItemInterface[] */
-    private $lineItems;
+    protected $lineItems;
 
     /** @var Collection|TaxItemInterface[] */
-    private $taxItems;
+    protected $taxItems;
 
     /** @var InvoiceChannelInterface */
-    private $channel;
+    protected $channel;
 
     /** @var InvoiceShopBillingDataInterface */
-    private $shopBillingData;
+    protected $shopBillingData;
 
     public function __construct(
         string $id,

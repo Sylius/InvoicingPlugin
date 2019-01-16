@@ -8,25 +8,25 @@ namespace Sylius\InvoicingPlugin\Entity;
 class ShopBillingData implements ShopBillingDataInterface
 {
     /** @var string */
-    private $id;
+    protected $id;
 
     /** @var string|null */
-    private $company;
+    protected $company;
 
     /** @var string|null */
-    private $taxId;
+    protected $taxId;
 
     /** @var string|null */
-    private $countryCode;
+    protected $countryCode;
 
     /** @var string|null */
-    private $street;
+    protected $street;
 
     /** @var string|null */
-    private $city;
+    protected $city;
 
     /** @var string|null */
-    private $postcode;
+    protected $postcode;
 
     public function getId(): string
     {
