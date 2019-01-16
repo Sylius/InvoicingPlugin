@@ -4,25 +4,26 @@ declare(strict_types=1);
 
 namespace Sylius\InvoicingPlugin\Entity;
 
-final class InvoiceShopBillingData implements InvoiceShopBillingDataInterface
+/** @final */
+class InvoiceShopBillingData implements InvoiceShopBillingDataInterface
 {
     /** @var string|null */
-    private $company;
+    protected $company;
 
     /** @var string|null */
-    private $taxId;
+    protected $taxId;
 
     /** @var string|null */
-    private $countryCode;
+    protected $countryCode;
 
     /** @var string|null */
-    private $street;
+    protected $street;
 
     /** @var string|null */
-    private $city;
+    protected $city;
 
     /** @var string|null */
-    private $postcode;
+    protected $postcode;
 
     /** @var string|null */
     private $representative;
