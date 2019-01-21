@@ -10,34 +10,34 @@ use Sylius\Component\Resource\Model\ResourceInterface;
 class LineItem implements LineItemInterface, ResourceInterface
 {
     /** @var string */
-    private $id;
+    protected $id;
 
     /** @var InvoiceInterface */
-    private $invoice;
+    protected $invoice;
 
     /** @var string */
-    private $name;
+    protected $name;
 
     /** @var string|null */
-    private $variantName;
+    protected $variantName;
 
     /** @var string|null */
-    private $variantCode;
+    protected $variantCode;
 
     /** @var int */
-    private $quantity;
+    protected $quantity;
 
     /** @var int */
-    private $unitPrice;
+    protected $unitPrice;
 
     /** @var int */
-    private $subtotal;
+    protected $subtotal;
 
     /** @var int */
-    private $taxTotal;
+    protected $taxTotal;
 
     /** @var int */
-    private $total;
+    protected $total;
 
     public function __construct(
         string $name,

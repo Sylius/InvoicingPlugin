@@ -10,16 +10,16 @@ use Sylius\Component\Resource\Model\ResourceInterface;
 class TaxItem implements TaxItemInterface, ResourceInterface
 {
     /** @var string */
-    private $id;
+    protected $id;
 
     /** @var InvoiceInterface */
-    private $invoice;
+    protected $invoice;
 
     /** @var string */
-    private $label;
+    protected $label;
 
     /** @var int */
-    private $amount;
+    protected $amount;
 
     public function __construct(string $label, int $amount)
     {
