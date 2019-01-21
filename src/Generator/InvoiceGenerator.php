@@ -87,10 +87,12 @@ final class InvoiceGenerator implements InvoiceGeneratorInterface
             $variant = $orderItem->getVariant();
 
             $lineItems->add(new LineItem(
+                LineItem::TYPE_ITEM,
                 $orderItem->getProductName(),
                 $orderItem->getQuantity(),
                 $orderItem->getUnitPrice(),
                 $orderItem->getSubtotal(),
+                0,
                 $orderItem->getTaxTotal(),
                 $orderItem->getTotal(),
                 $orderItem->getVariantName(),
@@ -101,10 +103,12 @@ final class InvoiceGenerator implements InvoiceGeneratorInterface
         /** @var AdjustmentInterface $shippingAdjustment */
         foreach ($shippingAdjustments as $shippingAdjustment) {
             $lineItems->add(new LineItem(
+                LineItem::TYPE_SHIPPING,
                 $shippingAdjustment->getLabel(),
                 1,
                 $shippingAdjustment->getAmount(),
                 $shippingAdjustment->getAmount(),
+                0,
                 0,
                 $shippingAdjustment->getAmount()
             ));
