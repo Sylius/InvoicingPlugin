@@ -9,6 +9,9 @@ use Sylius\Component\Resource\Model\ResourceInterface;
 /** @final */
 class LineItem implements LineItemInterface, ResourceInterface
 {
+    public const TYPE_ITEM = 'item';
+    public const TYPE_SHIPPING = 'shipping';
+
     /** @var string */
     private $id;
 
@@ -16,47 +19,67 @@ class LineItem implements LineItemInterface, ResourceInterface
     private $invoice;
 
     /** @var string */
-    private $name;
+    protected $type;
+
+    /** @var string */
+    protected $name;
 
     /** @var string|null */
-    private $variantName;
+    protected $variantName;
 
     /** @var string|null */
-    private $variantCode;
+    protected $variantCode;
+
+    /** @var array|null */
+    protected $variantOptions;
+
+    /** @var string|null */
+    protected $itemNumber;
 
     /** @var int */
-    private $quantity;
+    protected $quantity;
 
     /** @var int */
-    private $unitPrice;
+    protected $unitPrice;
 
     /** @var int */
-    private $subtotal;
+    protected $subtotal;
 
     /** @var int */
-    private $taxTotal;
+    protected $promotionTotal;
 
     /** @var int */
-    private $total;
+    protected $taxTotal;
+
+    /** @var int */
+    protected $total;
 
     public function __construct(
+        string $type,
         string $name,
         int $quantity,
         int $unitPrice,
         int $subtotal,
+        int $promotionTotal,
         int $taxTotal,
         int $total,
         ?string $variantName = null,
-        ?string $variantCode = null
+        ?string $variantCode = null,
+        array $variantOptions = [],
+        ?string $itemNumber = null
     ) {
+        $this->type = $type;
         $this->name = $name;
         $this->quantity = $quantity;
         $this->unitPrice = $unitPrice;
         $this->subtotal = $subtotal;
+        $this->promotionTotal = $promotionTotal;
         $this->taxTotal = $taxTotal;
         $this->total = $total;
         $this->variantName = $variantName;
         $this->variantCode = $variantCode;
+        $this->variantOptions = $variantOptions;
+        $this->itemNumber = $itemNumber;
     }
 
     public function getId(): string
@@ -79,6 +102,11 @@ class LineItem implements LineItemInterface, ResourceInterface
         $this->invoice = $invoice;
     }
 
+    public function type(): string
+    {
+        return $this->type;
+    }
+
     public function name(): string
     {
         return $this->name;
@@ -94,6 +122,16 @@ class LineItem implements LineItemInterface, ResourceInterface
         return $this->variantCode;
     }
 
+    public function variantOptions(): array
+    {
+        return $this->variantOptions ?? [];
+    }
+
+    public function itemNumber(): ?string
+    {
+        return $this->itemNumber;
+    }
+
     public function quantity(): int
     {
         return $this->quantity;
@@ -107,6 +145,11 @@ class LineItem implements LineItemInterface, ResourceInterface
     public function subtotal(): int
     {
         return $this->subtotal;
+    }
+
+    public function promotionTotal(): int
+    {
+        return $this->promotionTotal;
     }
 
     public function taxTotal(): int
