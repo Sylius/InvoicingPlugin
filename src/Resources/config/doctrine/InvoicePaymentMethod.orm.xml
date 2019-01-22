@@ -5,7 +5,7 @@
         xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                             http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd"
 >
-    <embeddable name="Sylius\InvoicingPlugin\Entity\PaymentMethod">
+    <embeddable name="Sylius\InvoicingPlugin\Entity\InvoicePaymentMethod">
         <field name="name" nullable="true"/>
         <field name="instructions" type="text" nullable="true"/>
     </embeddable>
