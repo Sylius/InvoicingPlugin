@@ -46,6 +46,9 @@ class Invoice implements InvoiceInterface, ResourceInterface
     /** @var InvoiceShopBillingDataInterface */
     protected $shopBillingData;
 
+    /** @var InvoicePaymentMethodInterface */
+    protected $paymentMethod;
+
     public function __construct(
         string $id,
         string $number,
@@ -58,7 +61,8 @@ class Invoice implements InvoiceInterface, ResourceInterface
         Collection $lineItems,
         Collection $taxItems,
         InvoiceChannelInterface $channel,
-        InvoiceShopBillingDataInterface $shopBillingData
+        InvoiceShopBillingDataInterface $shopBillingData,
+        InvoicePaymentMethodInterface $paymentMethod
     ) {
         $this->id = $id;
         $this->number = $number;
@@ -72,6 +76,7 @@ class Invoice implements InvoiceInterface, ResourceInterface
         $this->taxItems = $taxItems;
         $this->channel = $channel;
         $this->shopBillingData = $shopBillingData;
+        $this->paymentMethod = $paymentMethod;
 
         /** @var LineItemInterface $lineItem */
         foreach ($lineItems as $lineItem) {
@@ -159,5 +164,10 @@ class Invoice implements InvoiceInterface, ResourceInterface
     public function shopBillingData(): InvoiceShopBillingDataInterface
     {
         return $this->shopBillingData;
+    }
+
+    public function paymentMethod(): InvoicePaymentMethodInterface
+    {
+        return $this->paymentMethod;
     }
 }

@@ -31,4 +31,6 @@ interface InvoiceInterface
     public function subtotal(): int;
 
     public function channel(): InvoiceChannelInterface;
+
+    public function paymentMethod(): InvoicePaymentMethodInterface;
 }

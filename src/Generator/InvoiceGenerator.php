@@ -16,9 +16,11 @@ use Sylius\InvoicingPlugin\Entity\BillingDataInterface;
 use Sylius\InvoicingPlugin\Entity\Invoice;
 use Sylius\InvoicingPlugin\Entity\InvoiceChannel;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
+use Sylius\InvoicingPlugin\Entity\InvoicePaymentMethodInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceShopBillingData;
 use Sylius\InvoicingPlugin\Entity\InvoiceShopBillingDataInterface;
 use Sylius\InvoicingPlugin\Entity\LineItem;
+use Sylius\InvoicingPlugin\Entity\InvoicePaymentMethod;
 use Sylius\InvoicingPlugin\Entity\ShopBillingDataInterface;
 use Sylius\InvoicingPlugin\Entity\TaxItem;
 
@@ -57,7 +59,8 @@ final class InvoiceGenerator implements InvoiceGeneratorInterface
             $this->prepareLineItems($order),
             $this->prepareTaxItems($order),
             new InvoiceChannel($channel->getCode(), $channel->getName()),
-            $this->prepareShopBillingData($channel->getBillingData())
+            $this->prepareShopBillingData($channel->getBillingData()),
+            $this->preparePaymentMethod($order)
         );
     }
 
@@ -140,7 +143,8 @@ final class InvoiceGenerator implements InvoiceGeneratorInterface
         return $taxItems;
     }
 
-    private function prepareShopBillingData(?ShopBillingDataInterface $shopBillingData): InvoiceShopBillingDataInterface
+    private function prepareShopBillingData(?ShopBillingDataInterface $shopBillingData):
+    InvoiceShopBillingDataInterface
     {
         $invoiceShopBillingData = new InvoiceShopBillingData();
 
@@ -156,5 +160,11 @@ final class InvoiceGenerator implements InvoiceGeneratorInterface
         $invoiceShopBillingData->setPostcode($shopBillingData->getPostcode());
 
         return $invoiceShopBillingData;
+    }
+
+    private function preparePaymentMethod(OrderInterface $order):
+    InvoicePaymentMethodInterface
+    {
+        return new InvoicePaymentMethod();
     }
 }
