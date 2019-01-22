@@ -6,7 +6,6 @@ namespace Sylius\InvoicingPlugin\Entity;
 
 use Sylius\Component\Resource\Model\ResourceInterface;
 
-/** @final */
 class BillingData implements BillingDataInterface, ResourceInterface
 {
     /** @var string */

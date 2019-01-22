@@ -6,7 +6,6 @@ namespace Sylius\InvoicingPlugin\Entity;
 
 use Sylius\Component\Resource\Model\ResourceInterface;
 
-/** @final */
 class LineItem implements LineItemInterface, ResourceInterface
 {
     public const TYPE_ITEM = 'item';

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Sylius\InvoicingPlugin\Entity;
 
-final class InvoiceShopBillingData implements InvoiceShopBillingDataInterface
+class InvoiceShopBillingData implements InvoiceShopBillingDataInterface
 {
     /** @var string|null */
     protected $company;

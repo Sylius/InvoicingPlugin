@@ -7,7 +7,6 @@ namespace Sylius\InvoicingPlugin\Entity;
 use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Resource\Model\ResourceInterface;
 
-/** @final */
 class Invoice implements InvoiceInterface, ResourceInterface
 {
     /** @var string */

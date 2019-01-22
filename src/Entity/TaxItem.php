@@ -6,7 +6,6 @@ namespace Sylius\InvoicingPlugin\Entity;
 
 use Sylius\Component\Resource\Model\ResourceInterface;
 
-/** @final */
 class TaxItem implements TaxItemInterface, ResourceInterface
 {
     /** @var string */

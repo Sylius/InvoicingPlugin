@@ -5,12 +5,12 @@
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                                       http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-    <mapped-superclass name="Sylius\InvoicingPlugin\Entity\InvoiceSequence" table="sylius_invoicing_plugin_sequence">
+    <entity name="Sylius\InvoicingPlugin\Entity\InvoiceSequence" table="sylius_invoicing_plugin_sequence">
         <id name="id" column="id" type="integer">
             <generator strategy="AUTO" />
         </id>
         <field name="index" column="idx" type="integer" />
         <field name="version" type="integer" version="true" />
-    </mapped-superclass>
+    </entity>
 
 </doctrine-mapping>
