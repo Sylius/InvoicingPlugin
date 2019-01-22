@@ -8,3 +8,5 @@
 /tests/Application/yarn.lock
 
 /.env.test
+
+/.idea/
