@@ -66,7 +66,7 @@ class BillingData implements BillingDataInterface, ResourceInterface
         return $this->id();
     }
 
-    public function id(): string
+    public function id(): int
     {
         return $this->id;
     }
