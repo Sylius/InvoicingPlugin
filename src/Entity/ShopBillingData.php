@@ -7,7 +7,7 @@ namespace Sylius\InvoicingPlugin\Entity;
 /** @final */
 class ShopBillingData implements ShopBillingDataInterface
 {
-    /** @var string */
+    /** @var int */
     private $id;
 
     /** @var string|null */
@@ -28,7 +28,7 @@ class ShopBillingData implements ShopBillingDataInterface
     /** @var string|null */
     private $postcode;
 
-    public function getId(): string
+    public function getId(): int
     {
         return $this->id;
     }
