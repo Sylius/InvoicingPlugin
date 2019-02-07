@@ -19,7 +19,7 @@ use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceShopBillingData;
 use Sylius\InvoicingPlugin\Entity\InvoiceShopBillingDataInterface;
 use Sylius\InvoicingPlugin\Entity\LineItem;
-use Sylius\InvoicingPlugin\Entity\ShopBillingDataInterface;
+use Sylius\Component\Core\Model\ShopBillingDataInterface;
 use Sylius\InvoicingPlugin\Entity\TaxItem;
 
 final class InvoiceGenerator implements InvoiceGeneratorInterface
@@ -57,7 +57,7 @@ final class InvoiceGenerator implements InvoiceGeneratorInterface
             $this->prepareLineItems($order),
             $this->prepareTaxItems($order),
             new InvoiceChannel($channel->getCode(), $channel->getName()),
-            $this->prepareShopBillingData($channel->getBillingData())
+            $this->prepareShopBillingData($channel->getShopBillingData())
         );
     }
 

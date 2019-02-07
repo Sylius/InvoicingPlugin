@@ -8,7 +8,7 @@ use Behat\Behat\Context\Context;
 use Doctrine\Common\Persistence\ObjectManager;
 use Sylius\Component\Addressing\Model\CountryInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
-use Sylius\InvoicingPlugin\Entity\ShopBillingData;
+use Sylius\Component\Core\Model\ShopBillingData;
 use Sylius\InvoicingPlugin\Entity\ShopBillingDataAwareInterface;
 
 final class ChannelContext implements Context
@@ -41,7 +41,7 @@ final class ChannelContext implements Context
         $shopBillingData->setCountryCode($country->getCode());
         $shopBillingData->setTaxId($taxId);
 
-        $channel->setBillingData($shopBillingData);
+        $channel->setShopBillingData($shopBillingData);
 
         $this->channelManager->flush();
     }

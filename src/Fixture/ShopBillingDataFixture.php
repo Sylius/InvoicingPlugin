@@ -14,7 +14,7 @@ final class ShopBillingDataFixture extends AbstractResourceFixture
      */
     public function getName(): string
     {
-        return 'invoicing_plugin_shop_billing_data';
+        return 'shop_billing_data';
     }
 
     /**

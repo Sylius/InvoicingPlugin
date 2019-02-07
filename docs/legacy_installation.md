@@ -48,50 +48,14 @@
             options: []
     ```   
 
-2. Copy plugin migrations to your migrations directory (e.g. `src/Migrations`) and apply them to your database:
+6. Copy plugin migrations to your migrations directory (e.g. `src/Migrations`) and apply them to your database:
 
     ```bash
     cp -R vendor/sylius/invoicing-plugin/migrations/* src/Migrations
     bin/console doctrine:migrations:migrate
     ```
 
-7. Override Channel entity:
-
-    a) Write new class which will use `ShopBillingDataTrait` and implement `ShopBillingDataAwareInterface`:
-
-    ```php
-    <?php
- 
-    namespace AppBundle\Entity;
- 
-    use Doctrine\ORM\Mapping\MappedSuperclass;
-    use Doctrine\ORM\Mapping\Table;
-    use Sylius\Component\Core\Model\Channel as BaseChannel;
-    use Sylius\InvoicingPlugin\Entity\ShopBillingDataAwareInterface;
-    use Sylius\InvoicingPlugin\Entity\ShopBillingDataTrait;
-    
-    /**
-     * @MappedSuperclass
-     * @Table(name="sylius_channel")
-     */
-    class Channel extends BaseChannel implements ShopBillingDataAwareInterface
-    {
-        use ShopBillingDataTrait;
-    }
-    
-    ```
-
-    b) And override the model's class in the `app/config/config.yml`:
-
-    ```yaml
-    sylius_channel:
-        resources:
-            channel:
-                classes:
-                    model: AppBundle\Entity\Channel
-    ```
-
-8. Clear cache:
+7. Clear cache:
 
     ```bash
     bin/console cache:clear

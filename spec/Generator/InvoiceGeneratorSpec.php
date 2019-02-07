@@ -11,8 +11,9 @@ use Sylius\Component\Core\Model\AdjustmentInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\OrderItemInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
+use Sylius\Component\Core\Model\ShopBillingData;
+use Sylius\Component\Core\Model\ShopBillingDataInterface;
 use Sylius\InvoicingPlugin\Entity\Invoice;
-use Sylius\InvoicingPlugin\Entity\ShopBillingData;
 use Sylius\InvoicingPlugin\Generator\InvoiceGeneratorInterface;
 use Sylius\InvoicingPlugin\Generator\InvoiceIdentifierGenerator;
 use Sylius\InvoicingPlugin\Generator\InvoiceNumberGenerator;
@@ -64,7 +65,7 @@ final class InvoiceGeneratorSpec extends ObjectBehavior
         $channel->getCode()->willReturn('WEB-US');
         $channel->getName()->willReturn('United States');
 
-        $channel->getBillingData()->willReturn($shopBillingData);
+        $channel->getShopBillingData()->willReturn($shopBillingData);
 
         $shopBillingData->getPostcode()->willReturn('11-111');
         $shopBillingData->getCompany()->willReturn('sample_company');

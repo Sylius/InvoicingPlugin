@@ -40,43 +40,7 @@ Additional feature of the plugin that fulfills Invoicing domain is the ability t
     bin/console doctrine:migrations:migrate
     ```
 
-3. Override Channel entity:
-
-    a) Write new class which will use `ShopBillingDataTrait` and implement `ShopBillingDataAwareInterface`:
-
-    ```php
-    <?php
-
-    namespace App\Entity;
-
-    use Doctrine\ORM\Mapping\MappedSuperclass;
-    use Doctrine\ORM\Mapping\Table;
-    use Sylius\Component\Core\Model\Channel as BaseChannel;
-    use Sylius\InvoicingPlugin\Entity\ShopBillingDataAwareInterface;
-    use Sylius\InvoicingPlugin\Entity\ShopBillingDataTrait;
-    
-    /**
-     * @MappedSuperclass
-     * @Table(name="sylius_channel")
-     */
-    class Channel extends BaseChannel implements ShopBillingDataAwareInterface
-    {
-        use ShopBillingDataTrait;
-    }
-    
-    ```
-
-    b) And override the model's class in chosen configuration file (e.g. `config/_sylius.yml`):
-
-    ```yaml
-    sylius_channel:
-        resources:
-            channel:
-                classes:
-                    model: App\Entity\Channel
-    ```
-    
-4. Check if you have wkhtmltopdf binary. If not, you can download it [here](https://wkhtmltopdf.org/downloads.html).
+3. Check if you have wkhtmltopdf binary. If not, you can download it [here](https://wkhtmltopdf.org/downloads.html).
    
 In case wkhtmltopdf is not located in /usr/local/bin/wkhtmltopdf, add a following snippet at the end of your application's config.yml:
 

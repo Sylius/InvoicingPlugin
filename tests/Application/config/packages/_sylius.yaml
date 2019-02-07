@@ -14,18 +14,3 @@ parameters:
 sylius_shop:
     product_grid:
         include_all_descendants: true
-
-sylius_channel:
-    resources:
-        channel:
-            classes:
-                model: Tests\Application\InvoicingPlugin\Entity\Channel
-
-doctrine:
-    orm:
-        mappings:
-            sylius_channel:
-                type: annotation
-                dir: '%kernel.project_dir%/src/Entity'
-                is_bundle: false
-                prefix: Tests\Application\InvoicingPlugin\Entity
