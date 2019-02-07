@@ -6,6 +6,7 @@ sudo: false
 
 php:
     - 7.2
+    - 7.3
 
 cache:
     yarn: true
@@ -15,6 +16,7 @@ cache:
 
 env:
     global:
+        - APP_ENV=test
         - SYLIUS_CACHE_DIR=$HOME/.sylius-cache
         - SYLIUS_BUILD_DIR=etc/build
 

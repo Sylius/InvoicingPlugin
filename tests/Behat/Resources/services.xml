@@ -10,57 +10,69 @@
             <argument type="service" id="Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Invoice\IndexPageInterface" />
             <argument type="service" id="Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Invoice\ShowPageInterface" />
             <argument type="service" id="Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Order\ShowPageInterface" />
-            <argument type="service" id="__symfony__.Sylius\InvoicingPlugin\Repository\InvoiceRepository" />
+            <argument type="service" id="Sylius\InvoicingPlugin\Repository\InvoiceRepository" />
             <argument type="service" id="sylius.behat.notification_checker"/>
-            <tag name="fob.context_service" />
         </service>
 
         <service id="Tests\Sylius\InvoicingPlugin\Behat\Context\Ui\Shop\CustomerBrowsingInvoicesContext" public="true">
             <argument type="service" id="Tests\Sylius\InvoicingPlugin\Behat\Page\Shop\Order\ShowPageInterface" />
             <argument type="service" id="Tests\Sylius\InvoicingPlugin\Behat\Page\Shop\Order\DownloadInvoicePageInterface" />
-            <argument type="service" id="__symfony__.Sylius\InvoicingPlugin\Repository\InvoiceRepository" />
-            <tag name="fob.context_service" />
+            <argument type="service" id="Sylius\InvoicingPlugin\Repository\InvoiceRepository" />
         </service>
 
         <service id="Tests\Sylius\InvoicingPlugin\Behat\Context\Domain\InvoiceEmailContext" public="true" >
-            <argument type="service" id="__symfony__.sylius.behat.email_checker"/>
-            <tag name="fob.context_service" />
+            <argument type="service" id="sylius.behat.email_checker"/>
         </service>
 
         <service id="Tests\Sylius\InvoicingPlugin\Behat\Context\Order\OrderContext" public="true">
-            <argument type="service" id="__symfony__.doctrine.orm.entity_manager" />
-            <argument type="service" id="__symfony__.sm.factory" />
-            <tag name="fob.context_service" />
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="sm.factory" />
         </service>
 
         <service id="Tests\Sylius\InvoicingPlugin\Behat\Context\Ui\Admin\ManagingChannelsContext" public="true">
             <argument type="service" id="sylius.behat.page.admin.channel.update" />
-            <tag name="fob.context_service" />
         </service>
 
         <service id="Tests\Sylius\InvoicingPlugin\Behat\Context\Setup\ChannelContext" public="true">
-            <argument type="service" id="__symfony__.sylius.manager.channel" />
-            <tag name="fob.context_service" />
+            <argument type="service" id="sylius.manager.channel" />
         </service>
 
-        <service id="Tests\Sylius\InvoicingPlugin\Behat\Context\Setup\OrderContext">
-            <argument type="service" id="__symfony__.sylius.manager.order" />
-            <tag name="fob.context_service" />
+        <service id="Tests\Sylius\InvoicingPlugin\Behat\Context\Setup\OrderContext" public="true">
+            <argument type="service" id="sylius.manager.order" />
         </service>
 
-        <service id="Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Invoice\IndexPageInterface" class="Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Invoice\IndexPage"
-                 parent="sylius.behat.page.admin.crud.index">
+        <service id="Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Invoice\IndexPageInterface"
+                 class="Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Invoice\IndexPage"
+                 parent="sylius.behat.page.admin.crud.index"
+                 public="true"
+        >
             <argument type="string">sylius_invoicing_plugin_admin_invoice_index</argument>
         </service>
 
-        <service id="Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Invoice\ShowPageInterface" class="Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Invoice\ShowPage" parent="sylius.behat.symfony_page">
+        <service id="Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Invoice\ShowPageInterface"
+                 class="Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Invoice\ShowPage"
+                 parent="sylius.behat.symfony_page"
+                 public="true"
+        >
             <argument type="service" id="sylius.behat.table_accessor" />
         </service>
 
-        <service id="Tests\Sylius\InvoicingPlugin\Behat\Page\Shop\Order\DownloadInvoicePageInterface" class="Tests\Sylius\InvoicingPlugin\Behat\Page\Shop\Order\DownloadInvoicePage" parent="sylius.behat.symfony_page" />
+        <service id="Tests\Sylius\InvoicingPlugin\Behat\Page\Shop\Order\DownloadInvoicePageInterface"
+                 class="Tests\Sylius\InvoicingPlugin\Behat\Page\Shop\Order\DownloadInvoicePage"
+                 parent="sylius.behat.symfony_page"
+                 public="true"
+        />
 
-        <service id="Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Order\ShowPageInterface" class="Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Order\ShowPage" parent="sylius.behat.symfony_page" />
+        <service id="Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Order\ShowPageInterface"
+                 class="Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Order\ShowPage"
+                 parent="sylius.behat.symfony_page"
+                 public="true"
+        />
 
-        <service id="Tests\Sylius\InvoicingPlugin\Behat\Page\Shop\Order\ShowPageInterface" class="Tests\Sylius\InvoicingPlugin\Behat\Page\Shop\Order\ShowPage" parent="sylius.behat.symfony_page" />
+        <service id="Tests\Sylius\InvoicingPlugin\Behat\Page\Shop\Order\ShowPageInterface"
+                 class="Tests\Sylius\InvoicingPlugin\Behat\Page\Shop\Order\ShowPage"
+                 parent="sylius.behat.symfony_page"
+                 public="true"
+        />
     </services>
 </container>
