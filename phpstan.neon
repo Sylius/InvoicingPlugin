@@ -9,5 +9,4 @@ parameters:
 
     ignoreErrors:
         - '/Parameter #1 $configuration of method Symfony\Component\DependencyInjection\Extension\Extension::processConfiguration() expects Symfony\Component\Config\Definition\ConfigurationInterface, Symfony\Component\Config\Definition\ConfigurationInterface|null given./'
-        - '/Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeParentInterface/'
-        - '/Calling method scalarNode\(\) on possibly null value of type Symfony\\Component\\Config\\Definition\\Builder\\NodeParentInterface\|null/'
+        - '/Cannot call method scalarNode() on Symfony\Component\Config\Definition\Builder\NodeParentInterface|null./'

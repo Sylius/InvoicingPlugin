@@ -32,11 +32,11 @@ final class ShopBillingDataExampleFactory extends AbstractExampleFactory impleme
     /**
      * {@inheritdoc}
      */
-    public function create(array $options = []): ShopBillingDataAwareInterface
+    public function create(array $options = []): ChannelInterface
     {
         $options = $this->optionsResolver->resolve($options);
 
-        /** @var ChannelInterface $channel */
+        /** @var ChannelInterface|null $channel */
         $channel = $this->channelRepository->findOneByCode($options['channel_code']);
         if ($channel === null) {
             throw new ChannelNotFoundException(sprintf('Channel %s has not been found, please create it before adding this fixture !', $options['code']));

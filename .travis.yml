@@ -30,10 +30,10 @@ install:
     - (cd tests/Application && yarn install)
 
 before_script:
-    - (cd tests/Application && bin/console doctrine:database:create --env=test -vvv)
-    - (cd tests/Application && bin/console doctrine:schema:create --env=test -vvv)
-    - (cd tests/Application && bin/console assets:install public --env=test -vvv)
-    - (cd tests/Application && bin/console cache:warmup --env=test -vvv)
+    - (cd tests/Application && bin/console doctrine:database:create -vvv)
+    - (cd tests/Application && bin/console doctrine:schema:create -vvv)
+    - (cd tests/Application && bin/console assets:install public -vvv)
+    - (cd tests/Application && bin/console cache:warmup -vvv)
     - (cd tests/Application && yarn build)
 
     # Running fixtures to be sure they're not failing
