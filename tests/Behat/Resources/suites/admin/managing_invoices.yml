@@ -1,7 +1,7 @@
 default:
     suites:
         managing_invoices:
-            contexts_services:
+            contexts:
                 - sylius.behat.context.hook.doctrine_orm
 
                 - sylius.behat.context.setup.channel

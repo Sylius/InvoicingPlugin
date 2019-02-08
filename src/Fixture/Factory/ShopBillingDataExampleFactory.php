@@ -8,8 +8,8 @@ use Sylius\Bundle\CoreBundle\Fixture\Factory\AbstractExampleFactory;
 use Sylius\Bundle\CoreBundle\Fixture\Factory\ExampleFactoryInterface;
 use Sylius\Component\Channel\Context\ChannelNotFoundException;
 use Sylius\Component\Channel\Repository\ChannelRepositoryInterface;
-use Sylius\InvoicingPlugin\Entity\ShopBillingData;
-use Sylius\InvoicingPlugin\Entity\ShopBillingDataAwareInterface;
+use Sylius\Component\Core\Model\ChannelInterface;
+use Sylius\Component\Core\Model\ShopBillingData;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class ShopBillingDataExampleFactory extends AbstractExampleFactory implements ExampleFactoryInterface
@@ -32,11 +32,11 @@ final class ShopBillingDataExampleFactory extends AbstractExampleFactory impleme
     /**
      * {@inheritdoc}
      */
-    public function create(array $options = []): ShopBillingDataAwareInterface
+    public function create(array $options = []): ChannelInterface
     {
         $options = $this->optionsResolver->resolve($options);
 
-        /** @var ShopBillingDataAwareInterface $channel */
+        /** @var ChannelInterface|null $channel */
         $channel = $this->channelRepository->findOneByCode($options['channel_code']);
         if ($channel === null) {
             throw new ChannelNotFoundException(sprintf('Channel %s has not been found, please create it before adding this fixture !', $options['code']));
@@ -50,7 +50,7 @@ final class ShopBillingDataExampleFactory extends AbstractExampleFactory impleme
         $billingData->setTaxId($options['tax_id']);
         $billingData->setStreet($options['street_address']);
 
-        $channel->setBillingData($billingData);
+        $channel->setShopBillingData($billingData);
 
         return $channel;
     }

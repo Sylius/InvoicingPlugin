@@ -1,7 +1,7 @@
 default:
     suites:
         customer_browsing_invoices_ui:
-            contexts_services:
+            contexts:
                 - sylius.behat.context.hook.doctrine_orm
 
                 - sylius.behat.context.setup.channel
@@ -53,7 +53,7 @@ default:
             filters:
                 tags: "@customer_browsing_invoices && @ui"
         customer_browsing_invoices_application:
-            contexts_services:
+            contexts:
                 - sylius.behat.context.hook.doctrine_orm
 
                 - sylius.behat.context.setup.channel
