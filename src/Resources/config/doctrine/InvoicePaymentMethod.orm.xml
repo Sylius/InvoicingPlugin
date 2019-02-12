@@ -6,6 +6,7 @@
                             http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd"
 >
     <embeddable name="Sylius\InvoicingPlugin\Entity\InvoicePaymentMethod">
+        <field name="code" nullable="true"/>
         <field name="name" nullable="true"/>
         <field name="instructions" type="text" nullable="true"/>
     </embeddable>
