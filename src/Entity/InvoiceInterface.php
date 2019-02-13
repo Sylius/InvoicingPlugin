@@ -33,4 +33,6 @@ interface InvoiceInterface
     public function channel(): InvoiceChannelInterface;
 
     public function paymentMethod(): InvoicePaymentMethodInterface;
+
+    public function paymentDueDate(): ?\DateTimeInterface;
 }
