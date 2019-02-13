@@ -9,5 +9,7 @@
         <field name="code" nullable="true"/>
         <field name="name" nullable="true"/>
         <field name="instructions" type="text" nullable="true"/>
+        <field name="accountingCode" column="accounting_code" nullable="true"/>
+        <field name="accountingNumber" column="accounting_number" nullable="true"/>
     </embeddable>
 </doctrine-mapping>

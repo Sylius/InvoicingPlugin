@@ -17,4 +17,12 @@ interface InvoicePaymentMethodInterface
     public function getInstructions(): ?string;
 
     public function setInstructions(?string $instructions): void;
+
+    public function getAccountingCode(): ?string;
+
+    public function setAccountingCode(?string $accountingCode): void;
+
+    public function getAccountingNumber(): ?string;
+
+    public function setAccountingNumber(?string $accountingNumber): void;
 }
