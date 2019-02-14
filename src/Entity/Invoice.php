@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace Sylius\InvoicingPlugin\Entity;
 
 use Doctrine\Common\Collections\Collection;
-use Sylius\Component\Resource\Model\ResourceInterface;
 
 /** @final */
-class Invoice implements InvoiceInterface, ResourceInterface
+class Invoice implements InvoiceInterface
 {
     /** @var string */
     private $id;

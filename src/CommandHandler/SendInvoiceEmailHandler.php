@@ -6,14 +6,14 @@ namespace Sylius\InvoicingPlugin\CommandHandler;
 
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Repository\OrderRepositoryInterface;
+use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Sylius\InvoicingPlugin\Command\SendInvoiceEmail;
 use Sylius\InvoicingPlugin\Email\InvoiceEmailSenderInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
-use Sylius\InvoicingPlugin\Repository\InvoiceRepository;
 
 final class SendInvoiceEmailHandler
 {
-    /** @var InvoiceRepository */
+    /** @var RepositoryInterface */
     private $invoiceRepository;
 
     /** @var OrderRepositoryInterface */
@@ -23,7 +23,7 @@ final class SendInvoiceEmailHandler
     private $emailSender;
 
     public function __construct(
-        InvoiceRepository $invoiceRepository,
+        RepositoryInterface $invoiceRepository,
         OrderRepositoryInterface $orderRepository,
         InvoiceEmailSenderInterface $emailSender
     ) {
@@ -34,8 +34,7 @@ final class SendInvoiceEmailHandler
 
     public function __invoke(SendInvoiceEmail $command): void
     {
-        /** @var InvoiceInterface $invoice */
-        $invoice = $this->invoiceRepository->getOneByOrderNumber($command->orderNumber());
+        $invoice = $this->invoiceRepository->findOneBy(['orderNumber' => $command->orderNumber()]);
 
         /** @var OrderInterface $order */
         $order = $this->orderRepository->findOneBy(['number' => $command->orderNumber()]);

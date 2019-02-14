@@ -7,16 +7,16 @@ namespace Sylius\InvoicingPlugin\Ui\Action\Admin;
 use Sylius\Component\Core\Model\CustomerInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Repository\OrderRepositoryInterface;
+use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Sylius\InvoicingPlugin\Email\InvoiceEmailSenderInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
-use Sylius\InvoicingPlugin\Repository\InvoiceRepository;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 final class ResendInvoiceAction
 {
-    /** @var InvoiceRepository */
+    /** @var RepositoryInterface */
     private $invoiceRepository;
 
     /** @var OrderRepositoryInterface */
@@ -29,7 +29,7 @@ final class ResendInvoiceAction
     private $urlGenerator;
 
     public function __construct(
-        InvoiceRepository $invoiceRepository,
+        RepositoryInterface $invoiceRepository,
         InvoiceEmailSenderInterface $invoiceEmailSender,
         OrderRepositoryInterface $orderRepository,
         UrlGeneratorInterface $urlGenerator
@@ -42,8 +42,7 @@ final class ResendInvoiceAction
 
     public function __invoke(string $id): Response
     {
-        /** @var InvoiceInterface $invoice */
-        $invoice = $this->invoiceRepository->get($id);
+        $invoice = $this->invoiceRepository->find($id);
 
         /** @var OrderInterface $order */
         $order = $this->orderRepository->findOneBy(['number' => $invoice->orderNumber()]);

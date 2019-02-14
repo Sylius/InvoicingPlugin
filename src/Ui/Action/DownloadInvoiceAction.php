@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Sylius\InvoicingPlugin\Ui\Action;
 
+use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Sylius\InvoicingPlugin\Generator\InvoicePdfFileGeneratorInterface;
-use Sylius\InvoicingPlugin\Repository\InvoiceRepository;
 use Sylius\InvoicingPlugin\Security\Voter\InvoiceVoter;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -13,7 +13,7 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 final class DownloadInvoiceAction
 {
-    /** @var InvoiceRepository */
+    /** @var RepositoryInterface */
     private $invoiceRepository;
 
     /** @var AuthorizationCheckerInterface */
@@ -23,7 +23,7 @@ final class DownloadInvoiceAction
     private $invoicePdfFileGenerator;
 
     public function __construct(
-        InvoiceRepository $invoiceRepository,
+        RepositoryInterface $invoiceRepository,
         AuthorizationCheckerInterface $authorizationChecker,
         InvoicePdfFileGeneratorInterface $invoicePdfFileGenerator
     ) {
@@ -34,7 +34,7 @@ final class DownloadInvoiceAction
 
     public function __invoke(string $id): Response
     {
-        $invoice = $this->invoiceRepository->get($id);
+        $invoice = $this->invoiceRepository->find($id);
 
         if (!$this->authorizationChecker->isGranted(InvoiceVoter::ACCESS, $invoice)) {
             throw new AccessDeniedHttpException();

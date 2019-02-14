@@ -6,16 +6,16 @@ namespace Sylius\InvoicingPlugin\Generator;
 
 use Knp\Snappy\GeneratorInterface;
 use Sylius\Component\Channel\Repository\ChannelRepositoryInterface;
+use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Sylius\InvoicingPlugin\Model\InvoicePdf;
-use Sylius\InvoicingPlugin\Repository\InvoiceRepository;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 
 final class InvoicePdfFileGenerator implements InvoicePdfFileGeneratorInterface
 {
     private const FILE_EXTENSION = '.pdf';
 
-    /** @var InvoiceRepository */
+    /** @var RepositoryInterface */
     private $invoiceRepository;
 
     /** @var ChannelRepositoryInterface */
@@ -31,7 +31,7 @@ final class InvoicePdfFileGenerator implements InvoicePdfFileGeneratorInterface
     private $template;
 
     public function __construct(
-        InvoiceRepository $invoiceRepository,
+        RepositoryInterface $invoiceRepository,
         ChannelRepositoryInterface $channelRepository,
         EngineInterface $templatingEngine,
         GeneratorInterface $pdfGenerator,
@@ -46,8 +46,7 @@ final class InvoicePdfFileGenerator implements InvoicePdfFileGeneratorInterface
 
     public function generate(string $invoiceId): InvoicePdf
     {
-        /** @var InvoiceInterface $invoice */
-        $invoice = $this->invoiceRepository->get($invoiceId);
+        $invoice = $this->invoiceRepository->find($invoiceId);
 
         $channel = $this->channelRepository->findOneByCode($invoice->channel()->getCode());
 

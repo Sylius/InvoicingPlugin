@@ -7,15 +7,15 @@ namespace spec\Sylius\InvoicingPlugin\EventListener;
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Repository\OrderRepositoryInterface;
+use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Sylius\InvoicingPlugin\Event\OrderPlaced;
 use Sylius\InvoicingPlugin\Generator\InvoiceGeneratorInterface;
-use Sylius\InvoicingPlugin\Repository\InvoiceRepository;
 
 final class CreateInvoiceOnOrderPlacedListenerSpec extends ObjectBehavior
 {
     function let(
-        InvoiceRepository $invoiceRepository,
+        RepositoryInterface $invoiceRepository,
         OrderRepositoryInterface $orderRepository,
         InvoiceGeneratorInterface $invoiceGenerator
     ): void {
@@ -23,7 +23,7 @@ final class CreateInvoiceOnOrderPlacedListenerSpec extends ObjectBehavior
     }
 
     function it_creates_an_invoice(
-        InvoiceRepository $invoiceRepository,
+        RepositoryInterface $invoiceRepository,
         OrderRepositoryInterface $orderRepository,
         InvoiceGeneratorInterface $invoiceGenerator,
         OrderInterface $order,

@@ -8,17 +8,17 @@ use Knp\Snappy\GeneratorInterface;
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Channel\Repository\ChannelRepositoryInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
+use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceChannelInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Sylius\InvoicingPlugin\Generator\InvoicePdfFileGeneratorInterface;
 use Sylius\InvoicingPlugin\Model\InvoicePdf;
-use Sylius\InvoicingPlugin\Repository\InvoiceRepository;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 
 final class InvoicePdfFileGeneratorSpec extends ObjectBehavior
 {
     function let(
-        InvoiceRepository $invoiceRepository,
+        RepositoryInterface $invoiceRepository,
         ChannelRepositoryInterface $channelRepository,
         EngineInterface $twig,
         GeneratorInterface $pdfGenerator
@@ -38,7 +38,7 @@ final class InvoicePdfFileGeneratorSpec extends ObjectBehavior
     }
 
     function it_creates_invoice_pdf_with_generated_content_and_filename_basing_on_invoice_number(
-        InvoiceRepository $invoiceRepository,
+        RepositoryInterface $invoiceRepository,
         ChannelRepositoryInterface $channelRepository,
         EngineInterface $twig,
         GeneratorInterface $pdfGenerator,
@@ -46,7 +46,7 @@ final class InvoicePdfFileGeneratorSpec extends ObjectBehavior
         ChannelInterface $channel,
         InvoiceChannelInterface $invoiceChannel
     ): void {
-        $invoiceRepository->get(1)->willReturn($invoice);
+        $invoiceRepository->find(1)->willReturn($invoice);
         $invoice->number()->willReturn('2015/05/00004444');
         $invoice->channel()->willReturn($invoiceChannel);
 

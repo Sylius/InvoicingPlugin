@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Sylius\InvoicingPlugin\EventListener;
 
 use Sylius\Component\Core\Repository\OrderRepositoryInterface;
+use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Sylius\InvoicingPlugin\Event\OrderPlaced;
 use Sylius\InvoicingPlugin\Generator\InvoiceGeneratorInterface;
-use Sylius\InvoicingPlugin\Repository\InvoiceRepository;
 
 final class CreateInvoiceOnOrderPlacedListener
 {
-    /** @var InvoiceRepository */
+    /** @var RepositoryInterface */
     private $invoiceRepository;
 
     /** @var OrderRepositoryInterface */
@@ -21,7 +21,7 @@ final class CreateInvoiceOnOrderPlacedListener
     private $invoiceGenerator;
 
     public function __construct(
-        InvoiceRepository $invoiceRepository,
+        RepositoryInterface $invoiceRepository,
         OrderRepositoryInterface $orderRepository,
         InvoiceGeneratorInterface $invoiceGenerator
     ) {
