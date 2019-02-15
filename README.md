@@ -6,6 +6,8 @@
 
 <h1 align="center">Invoicing Plugin</h1>
 
+<p align="center"><a href="https://sylius.com/plugins/" target="_blank"><img src="https://sylius.com/assets/badge-official-sylius-plugin.png" width="200"></a></p>
+
 <p align="center">This plugin creates an invoice related to the order.</p>
 
 SyliusInvoicingPlugin creates new immutable invoice when the order is in given state (default: created) and allows
