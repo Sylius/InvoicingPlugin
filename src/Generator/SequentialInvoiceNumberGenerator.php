@@ -66,7 +66,7 @@ final class SequentialInvoiceNumberGenerator implements InvoiceNumberGenerator
     {
         $number = $this->startNumber + $index;
 
-        return str_pad((string) $number, $this->numberLength, '0', STR_PAD_LEFT);
+        return str_pad((string) $number, $this->numberLength, '0', \STR_PAD_LEFT);
     }
 
     private function getSequence(): InvoiceSequenceInterface
