@@ -11,6 +11,7 @@ use Sylius\Component\Core\Model\AdjustmentInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\OrderItemInterface;
+use Sylius\Component\Core\Model\ShopBillingDataInterface;
 use Sylius\InvoicingPlugin\Entity\BillingData;
 use Sylius\InvoicingPlugin\Entity\BillingDataInterface;
 use Sylius\InvoicingPlugin\Entity\Invoice;
@@ -19,7 +20,6 @@ use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceShopBillingData;
 use Sylius\InvoicingPlugin\Entity\InvoiceShopBillingDataInterface;
 use Sylius\InvoicingPlugin\Entity\LineItem;
-use Sylius\Component\Core\Model\ShopBillingDataInterface;
 use Sylius\InvoicingPlugin\Entity\TaxItem;
 
 final class InvoiceGenerator implements InvoiceGeneratorInterface
