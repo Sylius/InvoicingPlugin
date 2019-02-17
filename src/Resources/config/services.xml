@@ -62,16 +62,6 @@
             <tag name="kernel.event_listener" event="sonata.block.event.sylius.admin.order.show.after_summary" method="onBlockEvent" />
         </service>
 
-        <service id="sylius_invoicing_plugin.block_event_listener.channel_form" class="Sylius\Bundle\UiBundle\Block\BlockEventListener">
-            <argument>@SyliusInvoicingPlugin/Channel/shopBillingDataForm.html.twig</argument>
-            <tag name="kernel.event_listener" event="sonata.block.event.sylius.admin.channel.update.form" method="onBlockEvent" />
-        </service>
-
-        <service id="Sylius\InvoicingPlugin\Form\Extension\ChannelTypeExtension">
-            <argument type="service" id="sylius.repository.channel" />
-            <tag name="form.type_extension" extended-type="Sylius\Bundle\ChannelBundle\Form\Type\ChannelType" />
-        </service>
-
         <service id="Sylius\InvoicingPlugin\EventListener\OrderPaymentPaidListener">
             <argument type="service" id="sylius_invoicing_plugin.command_bus" />
             <tag name="messenger.message_handler" />
@@ -119,11 +109,11 @@
             <argument type="service" id="sylius.repository.order" />
             <tag name="security.voter" />
         </service>
-        
+
         <service id="sylius_invoicing_plugin.fixture.example_factory.invoicing_plugin_shop_billing_data" class="Sylius\InvoicingPlugin\Fixture\Factory\ShopBillingDataExampleFactory" public="true">
             <argument id="sylius.repository.channel" type="service"/>
         </service>
-        
+
         <service id="sylius_invoicing_plugin.fixture.shop_billing_data_fixture" class="Sylius\InvoicingPlugin\Fixture\ShopBillingDataFixture" public="true">
             <argument id="sylius.manager.channel" type="service"/>
             <argument id="sylius_invoicing_plugin.fixture.example_factory.invoicing_plugin_shop_billing_data" type="service"/>
