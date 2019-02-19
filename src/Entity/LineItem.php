@@ -10,6 +10,7 @@ class LineItem implements LineItemInterface, ResourceInterface
 {
     public const TYPE_ITEM = 'item';
     public const TYPE_SHIPPING = 'shipping';
+    public const TYPE_PAYMENT = 'payment';
 
     /** @var string */
     protected $id;
