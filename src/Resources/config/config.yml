@@ -8,6 +8,10 @@ knp_snappy:
     pdf:
         enabled: true
 
+twig:
+    globals:
+        invoiceLogoPath: "%kernel.project_dir%/vendor/sylius/invoicing-plugin/assets/sylius-logo.png"
+
 framework:
     messenger:
         buses:
