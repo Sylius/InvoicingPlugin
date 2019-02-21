@@ -103,6 +103,7 @@
             <argument type="service" id="templating.engine.twig" />
             <argument type="service" id="knp_snappy.pdf" />
             <argument>@SyliusInvoicingPlugin/Resources/views/Invoice/Download/pdf.html.twig</argument>
+            <argument type="service" id="file_locator" />
         </service>
 
         <service id="Sylius\InvoicingPlugin\Security\Voter\InvoiceVoter">
