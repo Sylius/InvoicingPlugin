@@ -28,26 +28,31 @@ final class InvoicePdfFileGenerator implements InvoicePdfFileGeneratorInterface
     /** @var GeneratorInterface */
     private $pdfGenerator;
 
+    /** @var FileLocatorInterface */
+    private $fileLocator;
+
     /** @var string */
     private $template;
 
-    /** @var FileLocatorInterface */
-    private $fileLocator;
+    /** @var string */
+    private $invoiceLogoPath;
 
     public function __construct(
         InvoiceRepository $invoiceRepository,
         ChannelRepositoryInterface $channelRepository,
         EngineInterface $templatingEngine,
         GeneratorInterface $pdfGenerator,
+        FileLocatorInterface $fileLocator,
         string $template,
-        FileLocatorInterface $fileLocator
+        string $invoiceLogoPath
     ) {
         $this->invoiceRepository = $invoiceRepository;
         $this->channelRepository = $channelRepository;
         $this->templatingEngine = $templatingEngine;
         $this->pdfGenerator = $pdfGenerator;
-        $this->template = $template;
         $this->fileLocator = $fileLocator;
+        $this->template = $template;
+        $this->invoiceLogoPath = $invoiceLogoPath;
     }
 
     public function generate(string $invoiceId): InvoicePdf
@@ -63,7 +68,7 @@ final class InvoicePdfFileGenerator implements InvoicePdfFileGeneratorInterface
             $this->templatingEngine->render($this->template, [
                 'invoice' => $invoice,
                 'channel' => $channel,
-                'invoiceLogoPath' => $this->fileLocator->locate('@SyliusInvoicingPlugin/Resources/assets/sylius-logo.png'),
+                'invoiceLogoPath' => $this->fileLocator->locate($this->invoiceLogoPath),
             ])
         );
 

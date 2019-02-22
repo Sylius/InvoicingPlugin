@@ -102,8 +102,9 @@
             <argument type="service" id="sylius.repository.channel"/>
             <argument type="service" id="templating.engine.twig" />
             <argument type="service" id="knp_snappy.pdf" />
-            <argument>@SyliusInvoicingPlugin/Resources/views/Invoice/Download/pdf.html.twig</argument>
             <argument type="service" id="file_locator" />
+            <argument>@SyliusInvoicingPlugin/Resources/views/Invoice/Download/pdf.html.twig</argument>
+            <argument>@SyliusInvoicingPlugin/Resources/assets/sylius-logo.png</argument>
         </service>
 
         <service id="Sylius\InvoicingPlugin\Security\Voter\InvoiceVoter">
