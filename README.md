@@ -54,6 +54,12 @@ knp_snappy:
         options: []
 ```
 
+4. If you want to generate invoices for orders placed before plugin's installation run the following command using your terminal:
+
+```bash
+sylius-invoicing:create-invoices-for-previously-placed-orders
+```
+
 #### Beware!
 
 This installation instruction assumes that you're using Symfony Flex. If you don't, take a look at the
