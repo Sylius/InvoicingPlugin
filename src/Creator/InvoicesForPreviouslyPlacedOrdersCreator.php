@@ -41,7 +41,6 @@ final class InvoicesForPreviouslyPlacedOrdersCreator implements InvoicesForPrevi
     {
         /** @var OrderInterface $order */
         foreach ($orders as $order) {
-
             /** @var InvoiceInterface|null $invoice */
             $invoice = $this->invoiceRepository->findOneByOrderNumber($order->getNumber());
 

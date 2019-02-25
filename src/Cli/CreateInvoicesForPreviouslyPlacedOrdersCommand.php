@@ -4,18 +4,11 @@ declare(strict_types=1);
 
 namespace Sylius\InvoicingPlugin\Cli;
 
-use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Repository\OrderRepositoryInterface;
 use Sylius\InvoicingPlugin\Creator\InvoicesForPreviouslyPlacedOrdersCreatorInterface;
-use Sylius\InvoicingPlugin\DateTimeProvider;
-use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
-use Sylius\InvoicingPlugin\Generator\InvoiceGenerator;
-use Sylius\InvoicingPlugin\Generator\InvoiceGeneratorInterface;
-use Sylius\InvoicingPlugin\Repository\InvoiceRepository;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Question\Question;
 
 final class CreateInvoicesForPreviouslyPlacedOrdersCommand extends Command
 {
