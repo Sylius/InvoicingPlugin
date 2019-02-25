@@ -33,13 +33,29 @@ final class SendInvoiceEmailHandlerSpec extends ObjectBehavior
     ): void {
         $invoiceRepository->findOneByOrderNumber('0000001')->willReturn($invoice);
 
-        $orderRepository->findOneBy(['number' => '0000001'])->willReturn($order);
+        $orderRepository->findOneByNumber('0000001')->willReturn($order);
 
         $order->getCustomer()->willReturn($customer);
 
         $customer->getEmail()->willReturn('shop@example.com');
 
         $emailSender->sendInvoiceEmail($invoice, 'shop@example.com')->shouldBeCalled();
+
+        $this->__invoke(new SendInvoiceEmail('0000001', new \DateTime('now')));
+    }
+
+    function it_does_not_request_an_email_to_be_sent_if_invoice_was_not_found(
+        InvoiceRepository $invoiceRepository,
+        OrderRepositoryInterface $orderRepository,
+        InvoiceEmailSenderInterface $emailSender,
+        OrderInterface $order,
+        CustomerInterface $customer
+    ): void {
+        $invoiceRepository->findOneByOrderNumber('0000001')->willReturn(null);
+        $orderRepository->findOneByNumber('0000001')->willReturn($order);
+
+        $order->getCustomer()->shouldNotBeCalled();
+        $customer->getEmail()->shouldNotBeCalled();
 
         $this->__invoke(new SendInvoiceEmail('0000001', new \DateTime('now')));
     }

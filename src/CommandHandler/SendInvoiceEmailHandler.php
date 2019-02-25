@@ -34,11 +34,15 @@ final class SendInvoiceEmailHandler
 
     public function __invoke(SendInvoiceEmail $command): void
     {
-        /** @var InvoiceInterface $invoice */
+        /** @var InvoiceInterface|null $invoice */
         $invoice = $this->invoiceRepository->findOneByOrderNumber($command->orderNumber());
 
+        if (null === $invoice) {
+            return;
+        }
+
         /** @var OrderInterface $order */
-        $order = $this->orderRepository->findOneBy(['number' => $command->orderNumber()]);
+        $order = $this->orderRepository->findOneByNumber($command->orderNumber());
 
         if (null === $order->getCustomer()) {
             return;
