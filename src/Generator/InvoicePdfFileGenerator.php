@@ -10,6 +10,7 @@ use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Sylius\InvoicingPlugin\Model\InvoicePdf;
 use Sylius\InvoicingPlugin\Repository\InvoiceRepository;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
+use Symfony\Component\Config\FileLocatorInterface;
 
 final class InvoicePdfFileGenerator implements InvoicePdfFileGeneratorInterface
 {
@@ -27,21 +28,31 @@ final class InvoicePdfFileGenerator implements InvoicePdfFileGeneratorInterface
     /** @var GeneratorInterface */
     private $pdfGenerator;
 
+    /** @var FileLocatorInterface */
+    private $fileLocator;
+
     /** @var string */
     private $template;
+
+    /** @var string */
+    private $invoiceLogoPath;
 
     public function __construct(
         InvoiceRepository $invoiceRepository,
         ChannelRepositoryInterface $channelRepository,
         EngineInterface $templatingEngine,
         GeneratorInterface $pdfGenerator,
-        string $template
+        FileLocatorInterface $fileLocator,
+        string $template,
+        string $invoiceLogoPath
     ) {
         $this->invoiceRepository = $invoiceRepository;
         $this->channelRepository = $channelRepository;
         $this->templatingEngine = $templatingEngine;
         $this->pdfGenerator = $pdfGenerator;
+        $this->fileLocator = $fileLocator;
         $this->template = $template;
+        $this->invoiceLogoPath = $invoiceLogoPath;
     }
 
     public function generate(string $invoiceId): InvoicePdf
@@ -54,7 +65,11 @@ final class InvoicePdfFileGenerator implements InvoicePdfFileGeneratorInterface
         $filename = str_replace('/', '_', $invoice->number()) . self::FILE_EXTENSION;
 
         $pdf = $this->pdfGenerator->getOutputFromHtml(
-            $this->templatingEngine->render($this->template, ['invoice' => $invoice, 'channel' => $channel])
+            $this->templatingEngine->render($this->template, [
+                'invoice' => $invoice,
+                'channel' => $channel,
+                'invoiceLogoPath' => $this->fileLocator->locate($this->invoiceLogoPath),
+            ])
         );
 
         return new InvoicePdf($filename, $pdf);
