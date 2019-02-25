@@ -1,6 +1,6 @@
 default:
     suites:
-        managing_invoices:
+        managing_invoices_ui:
             contexts:
                 - sylius.behat.context.hook.doctrine_orm
 
@@ -51,12 +51,67 @@ default:
                 - sylius.behat.context.ui.shop.checkout.complete
                 - sylius.behat.context.ui.shop.currency
 
-                - Tests\Sylius\InvoicingPlugin\Behat\Context\Domain\InvoiceEmailContext
-                - Tests\Sylius\InvoicingPlugin\Behat\Context\Order\OrderContext
                 - Tests\Sylius\InvoicingPlugin\Behat\Context\Ui\Admin\ManagingChannelsContext
                 - Tests\Sylius\InvoicingPlugin\Behat\Context\Ui\Admin\ManagingInvoicesContext
+
+                - Tests\Sylius\InvoicingPlugin\Behat\Context\Domain\InvoiceEmailContext
+                - Tests\Sylius\InvoicingPlugin\Behat\Context\Order\OrderContext
                 - Tests\Sylius\InvoicingPlugin\Behat\Context\Setup\ChannelContext
                 - Tests\Sylius\InvoicingPlugin\Behat\Context\Setup\OrderContext
 
             filters:
                 tags: "@managing_invoices && @ui"
+
+        managing_invoices_cli:
+            contexts:
+                - sylius.behat.context.hook.doctrine_orm
+
+                - sylius.behat.context.setup.channel
+                - sylius.behat.context.setup.currency
+                - sylius.behat.context.setup.customer
+                - sylius.behat.context.setup.geographical
+                - sylius.behat.context.setup.order
+                - sylius.behat.context.setup.payment
+                - sylius.behat.context.setup.product
+                - sylius.behat.context.setup.product_taxon
+                - sylius.behat.context.setup.promotion
+                - sylius.behat.context.setup.admin_security
+                - sylius.behat.context.setup.shop_security
+                - sylius.behat.context.setup.shipping
+                - sylius.behat.context.setup.taxation
+                - sylius.behat.context.setup.taxonomy
+                - sylius.behat.context.setup.zone
+                - sylius.behat.context.setup.admin_user
+                - sylius.behat.context.setup.user
+
+                - sylius.behat.context.transform.address
+                - sylius.behat.context.transform.channel
+                - sylius.behat.context.transform.country
+                - sylius.behat.context.transform.currency
+                - sylius.behat.context.transform.customer
+                - sylius.behat.context.transform.lexical
+                - sylius.behat.context.transform.order
+                - sylius.behat.context.transform.payment
+                - sylius.behat.context.transform.product
+                - sylius.behat.context.transform.product_variant
+                - sylius.behat.context.transform.promotion
+                - sylius.behat.context.transform.shipping_method
+                - sylius.behat.context.transform.tax_category
+                - sylius.behat.context.transform.taxon
+                - sylius.behat.context.transform.user
+                - sylius.behat.context.transform.zone
+
+                - sylius.behat.context.transform.shared_storage
+
+                - Tests\Sylius\InvoicingPlugin\Behat\Context\Domain\InvoiceEmailContext
+                - Tests\Sylius\InvoicingPlugin\Behat\Context\Order\OrderContext
+                - Tests\Sylius\InvoicingPlugin\Behat\Context\Setup\ChannelContext
+                - Tests\Sylius\InvoicingPlugin\Behat\Context\Setup\OrderContext
+
+                - Tests\Sylius\InvoicingPlugin\Behat\Context\Ui\Admin\ManagingInvoicesContext
+
+                - Tests\Sylius\InvoicingPlugin\Behat\Context\Domain\GeneratingInvoiceContext
+                - Tests\Sylius\InvoicingPlugin\Behat\Context\Cli\GeneratingInvoicesForPreviouslyPlacedOrdersContext
+
+            filters:
+                tags: "@managing_invoices && @cli"
