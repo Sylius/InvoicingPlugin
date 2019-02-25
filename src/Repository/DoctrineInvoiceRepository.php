@@ -38,12 +38,10 @@ final class DoctrineInvoiceRepository implements InvoiceRepository
         $this->entityManager->flush();
     }
 
-    public function getOneByOrderNumber(string $orderNumber): InvoiceInterface
+    public function findOneByOrderNumber(string $orderNumber): ?InvoiceInterface
     {
-        /** @var InvoiceInterface $invoice */
+        /** @var InvoiceInterface|null $invoice */
         $invoice = $this->entityRepository->findOneBy(['orderNumber' => $orderNumber]);
-
-        Assert::notNull($invoice, InvoiceInterface::class);
 
         return $invoice;
     }

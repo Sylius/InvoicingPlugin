@@ -119,5 +119,18 @@
             <argument id="sylius_invoicing_plugin.fixture.example_factory.invoicing_plugin_shop_billing_data" type="service"/>
             <tag name="sylius_fixtures.fixture"/>
         </service>
+
+        <service id="Sylius\InvoicingPlugin\Creator\InvoicesForPreviouslyPlacedOrdersCreator" public="true">
+            <argument type="service" id="Sylius\InvoicingPlugin\Repository\InvoiceRepository" />
+            <argument type="service" id="sylius.repository.order" />
+            <argument type="service" id="Sylius\InvoicingPlugin\Generator\InvoiceGenerator" />
+            <argument type="service" id="Sylius\InvoicingPlugin\DateTimeProvider" />
+        </service>
+
+        <service id="Sylius\InvoicingPlugin\Cli\CreateInvoicesForPreviouslyPlacedOrdersCommand">
+            <argument type="service" id="Sylius\InvoicingPlugin\Creator\InvoicesForPreviouslyPlacedOrdersCreator" />
+            <argument type="service" id="sylius.repository.order" />
+            <tag name="console.command" command="sylius-invoicing:create-invoices-for-previously-placed-orders" />
+        </service>
     </services>
 </container>

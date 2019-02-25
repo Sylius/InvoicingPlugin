@@ -24,6 +24,17 @@
             <argument type="service" id="sylius.behat.email_checker"/>
         </service>
 
+        <service id="Tests\Sylius\InvoicingPlugin\Behat\Context\Domain\GeneratingInvoiceContext" public="true">
+            <argument type="service" id="Tests\Application\InvoicingPlugin\EventProducer\TestOrderPlacedProducer" />
+        </service>
+
+        <service id="Tests\Sylius\InvoicingPlugin\Behat\Context\Cli\GeneratingInvoicesForPreviouslyPlacedOrdersContext" public="true">
+            <argument type="service" id="kernel" />
+            <argument type="service" id="Sylius\InvoicingPlugin\Creator\InvoicesForPreviouslyPlacedOrdersCreator" />
+            <argument type="service" id="Sylius\InvoicingPlugin\Repository\InvoiceRepository" />
+            <argument type="service" id="sylius.repository.order" />
+        </service>
+
         <service id="Tests\Sylius\InvoicingPlugin\Behat\Context\Order\OrderContext" public="true">
             <argument type="service" id="doctrine.orm.entity_manager" />
             <argument type="service" id="sm.factory" />

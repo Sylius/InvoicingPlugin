@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace Sylius\InvoicingPlugin\Creator;
 
+use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Repository\OrderRepositoryInterface;
 use Sylius\InvoicingPlugin\DateTimeProvider;
+use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Sylius\InvoicingPlugin\Generator\InvoiceGeneratorInterface;
 use Sylius\InvoicingPlugin\Repository\InvoiceRepository;
 
-final class InvoiceForPreviouslyPlacedOrdersCreator implements InvoiceForPreviouslyPlacedOrdersCreatorInterface
+final class InvoicesForPreviouslyPlacedOrdersCreator implements InvoicesForPreviouslyPlacedOrdersCreatorInterface
 {
     /** @var InvoiceRepository */
     private $invoiceRepository;
