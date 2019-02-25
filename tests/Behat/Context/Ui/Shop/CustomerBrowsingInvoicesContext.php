@@ -54,7 +54,7 @@ final class CustomerBrowsingInvoicesContext implements Context
     public function tryToDownloadInvoiceForOrder(string $orderNumber): void
     {
         /** @var InvoiceInterface $invoice */
-        $invoice = $this->invoiceRepository->getOneByOrderNumber($orderNumber);
+        $invoice = $this->invoiceRepository->findOneByOrderNumber($orderNumber);
 
         $this->downloadInvoicePage->tryToOpen(['id' => $invoice->id()]);
     }
@@ -65,7 +65,7 @@ final class CustomerBrowsingInvoicesContext implements Context
     public function invoiceForOrderShouldNotBeDownloaded(string $orderNumber): void
     {
         /** @var InvoiceInterface $invoice */
-        $invoice = $this->invoiceRepository->getOneByOrderNumber($orderNumber);
+        $invoice = $this->invoiceRepository->findOneByOrderNumber($orderNumber);
 
         Assert::false($this->downloadInvoicePage->isOpen(['id' => $invoice->id()]));
     }

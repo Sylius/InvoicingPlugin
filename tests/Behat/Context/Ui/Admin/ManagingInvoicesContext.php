@@ -85,7 +85,7 @@ final class ManagingInvoicesContext implements Context
     {
         $this->indexPage->open();
 
-        $invoiceId = $this->invoiceRepository->getOneByOrderNumber($order->getNumber())->id();
+        $invoiceId = $this->invoiceRepository->findOneByOrderNumber($order->getNumber())->id();
 
         $this->showPage->open(['id' => $invoiceId]);
     }

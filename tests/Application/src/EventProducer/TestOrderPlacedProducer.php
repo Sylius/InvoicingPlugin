@@ -4,15 +4,18 @@ declare(strict_types=1);
 
 namespace Tests\Application\InvoicingPlugin\EventProducer;
 
-final class OrderPlacedProducer
+use Doctrine\ORM\Event\LifecycleEventArgs;
+use Sylius\InvoicingPlugin\EventProducer\OrderPlacedProducer;
+
+final class TestOrderPlacedProducer
 {
-    /** @var \Sylius\InvoicingPlugin\EventProducer\OrderPlacedProducer */
+    /** @var OrderPlacedProducer */
     private $decoratedOrderPlacedProducer;
 
     /** @var bool */
     private $shouldInvoiceBeGenerated;
 
-    public function __construct(\Sylius\InvoicingPlugin\EventProducer\OrderPlacedProducer $decoratedOrderPlacedProducer)
+    public function __construct(OrderPlacedProducer $decoratedOrderPlacedProducer)
     {
         $this->decoratedOrderPlacedProducer = $decoratedOrderPlacedProducer;
         $this->shouldInvoiceBeGenerated = true;
@@ -29,7 +32,7 @@ final class OrderPlacedProducer
 
     public function postUpdate(LifecycleEventArgs $event): void
     {
-        if ($this->shouldInvoiceBeGenerated) {
+        if (!$this->shouldInvoiceBeGenerated) {
             return;
         }
 
