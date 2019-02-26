@@ -28,9 +28,9 @@
             <argument type="service" id="Tests\Application\InvoicingPlugin\EventProducer\TestOrderPlacedProducer" />
         </service>
 
-        <service id="Tests\Sylius\InvoicingPlugin\Behat\Context\Cli\GeneratingInvoicesForPreviouslyPlacedOrdersContext" public="true">
+        <service id="Tests\Sylius\InvoicingPlugin\Behat\Context\Cli\InvoicesGenerationContext" public="true">
             <argument type="service" id="kernel" />
-            <argument type="service" id="Sylius\InvoicingPlugin\Creator\InvoicesForPreviouslyPlacedOrdersCreator" />
+            <argument type="service" id="Sylius\InvoicingPlugin\Creator\MassInvoicesCreator" />
             <argument type="service" id="Sylius\InvoicingPlugin\Repository\InvoiceRepository" />
             <argument type="service" id="sylius.repository.order" />
         </service>

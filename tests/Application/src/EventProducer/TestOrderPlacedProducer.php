@@ -39,8 +39,8 @@ final class TestOrderPlacedProducer
         $this->decoratedOrderPlacedProducer->postUpdate($event);
     }
 
-    public function setShouldInvoiceBeGenerated(bool $shouldInvoiceBeGenerated): void
+    public function disableInvoiceGeneration(): void
     {
-        $this->shouldInvoiceBeGenerated = $shouldInvoiceBeGenerated;
+        $this->shouldInvoiceBeGenerated = false;
     }
 }

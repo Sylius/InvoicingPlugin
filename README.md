@@ -57,7 +57,7 @@ knp_snappy:
 4. If you want to generate invoices for orders placed before plugin's installation run the following command using your terminal:
 
 ```bash
-sylius-invoicing:create-invoices-for-previously-placed-orders
+sylius-invoicing:generate-invoices
 ```
 
 #### Beware!

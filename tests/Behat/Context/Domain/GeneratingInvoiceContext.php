@@ -22,14 +22,6 @@ final class GeneratingInvoiceContext implements Context
      */
     public function invoicesAreNotGenerated(): void
     {
-        $this->orderPlacedEventProducer->setShouldInvoiceBeGenerated(false);
-    }
-
-    /**
-     * @Given the invoices are generated (again)
-     */
-    public function invoicesAreGenerated(): void
-    {
-        $this->orderPlacedEventProducer->setShouldInvoiceBeGenerated(true);
+        $this->orderPlacedEventProducer->disableInvoiceGeneration();
     }
 }

@@ -28,9 +28,7 @@
         </service>
 
         <service id="Sylius\InvoicingPlugin\EventListener\CreateInvoiceOnOrderPlacedListener">
-            <argument type="service" id="Sylius\InvoicingPlugin\Repository\InvoiceRepository" />
-            <argument type="service" id="sylius.repository.order" />
-            <argument type="service" id="Sylius\InvoicingPlugin\Generator\InvoiceGenerator" />
+            <argument type="service" id="Sylius\InvoicingPlugin\Creator\InvoiceCreator" />
             <tag name="messenger.message_handler" />
         </service>
 
@@ -120,17 +118,21 @@
             <tag name="sylius_fixtures.fixture"/>
         </service>
 
-        <service id="Sylius\InvoicingPlugin\Creator\InvoicesForPreviouslyPlacedOrdersCreator" public="true">
+        <service id="Sylius\InvoicingPlugin\Creator\InvoiceCreator">
             <argument type="service" id="Sylius\InvoicingPlugin\Repository\InvoiceRepository" />
             <argument type="service" id="sylius.repository.order" />
             <argument type="service" id="Sylius\InvoicingPlugin\Generator\InvoiceGenerator" />
+        </service>
+
+        <service id="Sylius\InvoicingPlugin\Creator\MassInvoicesCreator">
+            <argument type="service" id="Sylius\InvoicingPlugin\Creator\InvoiceCreator" />
             <argument type="service" id="Sylius\InvoicingPlugin\DateTimeProvider" />
         </service>
 
-        <service id="Sylius\InvoicingPlugin\Cli\CreateInvoicesForPreviouslyPlacedOrdersCommand">
-            <argument type="service" id="Sylius\InvoicingPlugin\Creator\InvoicesForPreviouslyPlacedOrdersCreator" />
+        <service id="Sylius\InvoicingPlugin\Cli\GenerateInvoicesCommand">
+            <argument type="service" id="Sylius\InvoicingPlugin\Creator\MassInvoicesCreator" />
             <argument type="service" id="sylius.repository.order" />
-            <tag name="console.command" command="sylius-invoicing:create-invoices-for-previously-placed-orders" />
+            <tag name="console.command" command="sylius-invoicing:generate-invoices" />
         </service>
     </services>
 </container>

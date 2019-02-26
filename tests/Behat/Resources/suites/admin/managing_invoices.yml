@@ -111,7 +111,7 @@ default:
                 - Tests\Sylius\InvoicingPlugin\Behat\Context\Ui\Admin\ManagingInvoicesContext
 
                 - Tests\Sylius\InvoicingPlugin\Behat\Context\Domain\GeneratingInvoiceContext
-                - Tests\Sylius\InvoicingPlugin\Behat\Context\Cli\GeneratingInvoicesForPreviouslyPlacedOrdersContext
+                - Tests\Sylius\InvoicingPlugin\Behat\Context\Cli\InvoicesGenerationContext
 
             filters:
                 tags: "@managing_invoices && @cli"

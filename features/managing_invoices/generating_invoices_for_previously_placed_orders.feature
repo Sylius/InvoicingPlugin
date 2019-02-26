@@ -1,8 +1,8 @@
 @managing_invoices @cli
-    Feature: Generating invoices for previously placed orders
-        In order to make my shop consistent with a newly installed plugin
-        As a Shop Owner
-        I want to easily generate invoices for orders placed before installation of the plugin
+Feature: Generating invoices for previously placed orders
+    In order to make my shop consistent with a newly installed plugin
+    As a Shop Owner
+    I want to easily generate invoices for orders placed before installation of the plugin
 
     Background:
         Given the store operates on a single channel in "United States"
@@ -17,10 +17,9 @@
         And the customer "Lucifer Morningstar" addressed it to "Seaside Fwy", "90802" "Los Angeles" in the "United States"
         And for the billing address of "Mazikeen Lilim" in the "Pacific Coast Hwy", "90806" "Los Angeles", "United States"
         And the customer chose "UPS" shipping method with "Cash on Delivery" payment
-        And the invoices are generated again
         And I am logged in as an administrator
 
-    Scenario: Being able to generate invoices for previously placed orders
-        Given I generate invoices for previously placed orders
-        When I browse invoices
+    Scenario: Generating invoices for previously placed orders
+        When I generate invoices for previously placed orders
+        And I browse invoices
         Then I should see a single invoice for order "#00000777"
