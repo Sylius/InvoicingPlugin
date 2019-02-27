@@ -55,7 +55,13 @@
     bin/console doctrine:migrations:migrate
     ```
 
-7. Clear cache:
+7. If you want to generate invoices for orders placed before plugin's installation run the following command using your terminal:
+
+```bash
+sylius-invoicing:generate-invoices
+```
+
+8. Clear cache:
 
     ```bash
     bin/console cache:clear

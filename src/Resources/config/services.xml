@@ -28,9 +28,7 @@
         </service>
 
         <service id="Sylius\InvoicingPlugin\EventListener\CreateInvoiceOnOrderPlacedListener">
-            <argument type="service" id="Sylius\InvoicingPlugin\Repository\InvoiceRepository" />
-            <argument type="service" id="sylius.repository.order" />
-            <argument type="service" id="Sylius\InvoicingPlugin\Generator\InvoiceGenerator" />
+            <argument type="service" id="Sylius\InvoicingPlugin\Creator\InvoiceCreator" />
             <tag name="messenger.message_handler" />
         </service>
 
@@ -120,6 +118,23 @@
             <argument id="sylius.manager.channel" type="service"/>
             <argument id="sylius_invoicing_plugin.fixture.example_factory.invoicing_plugin_shop_billing_data" type="service"/>
             <tag name="sylius_fixtures.fixture"/>
+        </service>
+
+        <service id="Sylius\InvoicingPlugin\Creator\InvoiceCreator">
+            <argument type="service" id="Sylius\InvoicingPlugin\Repository\InvoiceRepository" />
+            <argument type="service" id="sylius.repository.order" />
+            <argument type="service" id="Sylius\InvoicingPlugin\Generator\InvoiceGenerator" />
+        </service>
+
+        <service id="Sylius\InvoicingPlugin\Creator\MassInvoicesCreator">
+            <argument type="service" id="Sylius\InvoicingPlugin\Creator\InvoiceCreator" />
+            <argument type="service" id="Sylius\InvoicingPlugin\DateTimeProvider" />
+        </service>
+
+        <service id="Sylius\InvoicingPlugin\Cli\GenerateInvoicesCommand">
+            <argument type="service" id="Sylius\InvoicingPlugin\Creator\MassInvoicesCreator" />
+            <argument type="service" id="sylius.repository.order" />
+            <tag name="console.command" command="sylius-invoicing:generate-invoices" />
         </service>
     </services>
 </container>
