@@ -58,7 +58,7 @@
 7. If you want to generate invoices for orders placed before plugin's installation run the following command using your terminal:
 
 ```bash
-sylius-invoicing:generate-invoices
+bin/console sylius-invoicing:generate-invoices
 ```
 
 8. Clear cache:
