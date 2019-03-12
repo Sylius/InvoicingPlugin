@@ -17,4 +17,16 @@ interface InvoiceShopBillingDataInterface
     public function getCity(): ?string;
 
     public function getPostcode(): ?string;
+
+    public function setCompany(?string $company): void;
+
+    public function setTaxId(?string $taxId): void;
+
+    public function setCountryCode(?string $countryCode): void;
+
+    public function setStreet(?string $street): void;
+
+    public function setCity(?string $city): void;
+
+    public function setPostcode(?string $postcode): void;
 }
