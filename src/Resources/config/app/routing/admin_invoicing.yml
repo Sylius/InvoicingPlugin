@@ -21,7 +21,7 @@ sylius_invoicing_plugin_admin_invoice_show:
         _sylius:
             section: admin
             permission: true
-            template: SyliusInvoicingPlugin:Invoice:show.html.twig
+            template: "@SyliusInvoicingPlugin/Invoice/show.html.twig"
 
 sylius_invoicing_plugin_admin_invoice_download:
     path: /invoices/{id}/download
