@@ -13,7 +13,10 @@ class InvoiceChannel implements InvoiceChannelInterface
     /** @var string */
     private $name;
 
-    public function __construct(string $code, string $name)
+    /** @var string */
+    private $color;
+
+    public function __construct(string $code, string $name, string $color)
     {
         $this->code = $code;
         $this->name = $name;
@@ -27,5 +30,10 @@ class InvoiceChannel implements InvoiceChannelInterface
     public function getName(): string
     {
         return $this->name;
+    }
+
+    public function getColor(): string
+    {
+        return $this->color;
     }
 }
