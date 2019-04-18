@@ -8,6 +8,5 @@
     <embeddable name="Sylius\InvoicingPlugin\Entity\InvoiceChannel">
         <field name="code" />
         <field name="name" />
-        <field name="color" />
     </embeddable>
 </doctrine-mapping>

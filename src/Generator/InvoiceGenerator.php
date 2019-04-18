@@ -6,6 +6,7 @@ namespace Sylius\InvoicingPlugin\Generator;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Sylius\Component\Channel\Repository\ChannelRepositoryInterface;
 use Sylius\Component\Core\Model\AddressInterface;
 use Sylius\Component\Core\Model\AdjustmentInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
@@ -56,7 +57,7 @@ final class InvoiceGenerator implements InvoiceGeneratorInterface
             $order->getTotal(),
             $this->prepareLineItems($order),
             $this->prepareTaxItems($order),
-            new InvoiceChannel($channel->getCode(), $channel->getName(), $channel->getColor()),
+            new InvoiceChannel($channel->getCode(), $channel->getName()),
             $this->prepareShopBillingData($channel->getShopBillingData())
         );
     }

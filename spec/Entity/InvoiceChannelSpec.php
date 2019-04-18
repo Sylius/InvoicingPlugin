@@ -28,9 +28,4 @@ final class InvoiceChannelSpec extends ObjectBehavior
     {
         $this->getName()->shouldReturn('United States');
     }
-
-    public function it_has_color(): void
-    {
-        $this->getColor()->shouldReturn('green');
-    }
 }
