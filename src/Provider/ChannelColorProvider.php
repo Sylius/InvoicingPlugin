@@ -6,7 +6,6 @@ namespace Sylius\InvoicingPlugin\Provider;
 
 use Sylius\Component\Channel\Repository\ChannelRepositoryInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
-use Sylius\InvoicingPlugin\Provider\ChannelColorProviderInterface;
 
 final class ChannelColorProvider implements ChannelColorProviderInterface
 {

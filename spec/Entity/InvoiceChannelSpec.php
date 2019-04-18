@@ -11,7 +11,7 @@ final class InvoiceChannelSpec extends ObjectBehavior
 {
     public function let(): void
     {
-        $this->beConstructedWith('WEB-US', 'United States', 'green');
+        $this->beConstructedWith('WEB-US', 'United States');
     }
 
     public function it_implements_invoice_channel_interface(): void
