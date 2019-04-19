@@ -136,5 +136,15 @@
             <argument type="service" id="sylius.repository.order" />
             <tag name="console.command" command="sylius-invoicing:generate-invoices" />
         </service>
+
+        <service id="Sylius\InvoicingPlugin\Provider\ChannelColorProvider">
+            <argument type="service" id="sylius.repository.channel" />
+            <argument>%default_channel_color%</argument>
+        </service>
+
+        <service id="Sylius\InvoicingPlugin\Twig\ChannelColorExtension">
+            <argument type="service" id="Sylius\InvoicingPlugin\Provider\ChannelColorProvider" />
+            <tag name="twig.extension" />
+        </service>
     </services>
 </container>

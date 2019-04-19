@@ -118,6 +118,11 @@ Sonata events. You can read about customizing templates via events here:
 
 <http://docs.sylius.com/en/latest/customization/template.html>
 
+Invoicing Plugin renders invoices grid using a certain pattern, including displaying a dot next to channel in which an invoice as issued.
+The dot's color is dependant on a property defined on Channel entity or, if not provided, a global parameter named `default_channel_color`.
+
+Like any other parameter, `default_channel_color` can also be overwritten in your `config.yml` file.
+
 ## Fixtures
 
 You can add `ShopBillingData` fixtures into a yaml to add Channel ShopBillingData info to your installation.

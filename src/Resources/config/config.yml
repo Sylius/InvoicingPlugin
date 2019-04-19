@@ -1,3 +1,6 @@
+parameters:
+    default_channel_color: "lightGrey"
+
 sylius_mailer:
     emails:
         invoice_generated:
@@ -47,14 +50,24 @@ sylius_grid:
                     options:
                         template: '@SyliusInvoicingPlugin/Invoice/Grid/Field/orderNumber.html.twig'
                     sortable: true
+                channel:
+                    type: twig
+                    label: sylius.ui.channel
+                    options:
+                        template: "@SyliusInvoicingPlugin/Invoice/Grid/Field/channel.html.twig"
+                total:
+                    type: twig
+                    label: sylius.ui.total
+                    path: .
+                    sortable: total
+                    options:
+                        template: "@SyliusAdmin/Order/Grid/Field/total.html.twig"
                 issuedAt:
                     type: datetime
                     label: sylius_invoicing_plugin.ui.issued_at
+                    options:
+                        format: 'Y-m-d H:i:s'
                     sortable: true
-                channel:
-                    type: string
-                    label: sylius.ui.channel
-                    path: channel.name
             filters:
                 orderNumber:
                     type: string
@@ -79,5 +92,14 @@ sylius_grid:
                         options:
                             link:
                                 route: sylius_invoicing_plugin_admin_invoice_download
+                                parameters:
+                                    id: resource.id
+                    resend:
+                        type: default
+                        label: sylius_invoicing_plugin.ui.resend_invoice
+                        icon: send
+                        options:
+                            link:
+                                route: sylius_invoicing_plugin_admin_invoice_resend
                                 parameters:
                                     id: resource.id
