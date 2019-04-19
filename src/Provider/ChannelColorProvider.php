@@ -12,16 +12,20 @@ final class ChannelColorProvider implements ChannelColorProviderInterface
     /** @var ChannelRepositoryInterface */
     private $channelRepository;
 
-    public function __construct(ChannelRepositoryInterface $channelRepository)
+    /** @var string */
+    private $defaultChannelColor;
+
+    public function __construct(ChannelRepositoryInterface $channelRepository, string $defaultChannelColor)
     {
         $this->channelRepository = $channelRepository;
+        $this->defaultChannelColor = $defaultChannelColor;
     }
 
-    public function __invoke(string $channelCode): string
+    public function provide(string $channelCode): string
     {
         /** @var ChannelInterface $channel */
         $channel = $this->channelRepository->findOneByCode($channelCode);
 
-        return $channel->getColor();
+        return $channel->getColor() ?? $this->defaultChannelColor;
     }
 }

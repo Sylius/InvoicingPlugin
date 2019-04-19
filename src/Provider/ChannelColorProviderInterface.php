@@ -6,5 +6,5 @@ namespace Sylius\InvoicingPlugin\Provider;
 
 interface ChannelColorProviderInterface
 {
-    public function __invoke(string $channelCode): string;
+    public function provide(string $channelCode): string;
 }

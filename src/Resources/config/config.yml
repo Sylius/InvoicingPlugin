@@ -1,3 +1,6 @@
+parameters:
+    default_channel_color: "lightGrey"
+
 sylius_mailer:
     emails:
         invoice_generated:

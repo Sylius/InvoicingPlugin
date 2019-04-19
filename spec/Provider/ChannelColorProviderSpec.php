@@ -13,7 +13,7 @@ final class ChannelColorProviderSpec extends ObjectBehavior
 {
     public function let(ChannelRepositoryInterface $channelRepository): void
     {
-        $this->beConstructedWith($channelRepository);
+        $this->beConstructedWith($channelRepository, 'whiteGrey');
     }
 
     public function it_implements_channel_color_provider_interface(): void
@@ -28,6 +28,16 @@ final class ChannelColorProviderSpec extends ObjectBehavior
         $channel->getColor()->willReturn('black');
         $channelRepository->findOneByCode('en_US')->willReturn($channel);
 
-        $this->__invoke('en_US')->shouldReturn('black');
+        $this->provide('en_US')->shouldReturn('black');
+    }
+
+    public function it_returns_default_channel_color_if_channel_does_not_provide_one(
+        ChannelRepositoryInterface $channelRepository,
+        ChannelInterface $channel
+    ): void {
+        $channel->getColor()->willReturn(null);
+        $channelRepository->findOneByCode('en_US')->willReturn($channel);
+
+        $this->provide('en_US')->shouldReturn('whiteGrey');
     }
 }

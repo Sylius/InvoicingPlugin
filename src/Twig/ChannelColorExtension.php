@@ -21,7 +21,7 @@ final class ChannelColorExtension extends AbstractExtension
     public function getFilters(): array
     {
         return [
-            new TwigFilter('sylius_channel_color', [$this->channelColorProvider, '__invoke']),
+            new TwigFilter('sylius_channel_color', [$this->channelColorProvider, 'provide']),
         ];
     }
 }
