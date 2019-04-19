@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Sylius\InvoicingPlugin\Ui\Action\Admin;
 
+use Sylius\Component\Channel\Repository\ChannelRepositoryInterface;
+use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\CustomerInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Repository\OrderRepositoryInterface;
@@ -23,6 +25,9 @@ final class ResendInvoiceAction
     /** @var OrderRepositoryInterface */
     private $orderRepository;
 
+    /** @var ChannelRepositoryInterface */
+    private $channelRepository;
+
     /** @var InvoiceEmailSenderInterface */
     private $invoiceEmailSender;
 
@@ -36,12 +41,14 @@ final class ResendInvoiceAction
         InvoiceRepository $invoiceRepository,
         InvoiceEmailSenderInterface $invoiceEmailSender,
         OrderRepositoryInterface $orderRepository,
+        ChannelRepositoryInterface $channelRepository,
         UrlGeneratorInterface $urlGenerator,
         Session $session
     ) {
         $this->invoiceRepository = $invoiceRepository;
         $this->invoiceEmailSender = $invoiceEmailSender;
         $this->orderRepository = $orderRepository;
+        $this->channelRepository = $channelRepository;
         $this->urlGenerator = $urlGenerator;
         $this->session = $session;
     }
@@ -51,6 +58,9 @@ final class ResendInvoiceAction
         /** @var InvoiceInterface $invoice */
         $invoice = $this->invoiceRepository->get($id);
 
+        /** @var ChannelInterface $channel */
+        $channel = $this->channelRepository->findOneByCode($invoice->channel()->getCode());
+
         /** @var OrderInterface $order */
         $order = $this->orderRepository->findOneBy(['number' => $invoice->orderNumber()]);
 
@@ -58,7 +68,7 @@ final class ResendInvoiceAction
         $customer = $order->getCustomer();
 
         try {
-            $this->invoiceEmailSender->sendInvoiceEmail($invoice, $customer->getEmail());
+            $this->invoiceEmailSender->sendInvoiceEmail($invoice, $channel, $customer->getEmail());
         } catch (\Exception $exception) {
             $this->session->getFlashBag()->add(
                 'failure',

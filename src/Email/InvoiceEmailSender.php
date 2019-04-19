@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Sylius\InvoicingPlugin\Email;
 
+use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Mailer\Sender\SenderInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Sylius\InvoicingPlugin\Filesystem\TemporaryFilesystem;
@@ -31,9 +32,10 @@ final class InvoiceEmailSender implements InvoiceEmailSenderInterface
 
     public function sendInvoiceEmail(
         InvoiceInterface $invoice,
+        ChannelInterface $channel,
         string $customerEmail
     ): void {
-        $pdfInvoice = $this->invoicePdfFileGenerator->generate($invoice->id());
+        $pdfInvoice = $this->invoicePdfFileGenerator->generate($invoice, $channel);
 
         // Since Sylius' Mailer does not support sending attachments which aren't real files
         // we have to simulate the file being on the local filesystem, so that we save the PDF,
