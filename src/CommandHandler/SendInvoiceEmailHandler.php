@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Sylius\InvoicingPlugin\CommandHandler;
 
-use Sylius\Component\Channel\Repository\ChannelRepositoryInterface;
-use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Repository\OrderRepositoryInterface;
 use Sylius\InvoicingPlugin\Command\SendInvoiceEmail;
@@ -21,21 +19,16 @@ final class SendInvoiceEmailHandler
     /** @var OrderRepositoryInterface */
     private $orderRepository;
 
-    /** @var ChannelRepositoryInterface */
-    private $channelRepository;
-
     /** @var InvoiceEmailSenderInterface */
     private $emailSender;
 
     public function __construct(
         InvoiceRepository $invoiceRepository,
         OrderRepositoryInterface $orderRepository,
-        ChannelRepositoryInterface $channelRepository,
         InvoiceEmailSenderInterface $emailSender
     ) {
         $this->invoiceRepository = $invoiceRepository;
         $this->orderRepository = $orderRepository;
-        $this->channelRepository = $channelRepository;
         $this->emailSender = $emailSender;
     }
 
@@ -48,9 +41,6 @@ final class SendInvoiceEmailHandler
             return;
         }
 
-        /** @var ChannelInterface $channel */
-        $channel = $this->channelRepository->findOneByCode($invoice->channel()->getCode());
-
         /** @var OrderInterface $order */
         $order = $this->orderRepository->findOneByNumber($command->orderNumber());
 
@@ -58,6 +48,6 @@ final class SendInvoiceEmailHandler
             return;
         }
 
-        $this->emailSender->sendInvoiceEmail($invoice, $channel, $order->getCustomer()->getEmail());
+        $this->emailSender->sendInvoiceEmail($invoice, $order->getCustomer()->getEmail());
     }
 }

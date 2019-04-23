@@ -6,6 +6,7 @@ namespace spec\Sylius\InvoicingPlugin\Generator;
 
 use Knp\Snappy\GeneratorInterface;
 use PhpSpec\ObjectBehavior;
+use Sylius\Component\Channel\Repository\ChannelRepositoryInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceChannelInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
@@ -17,11 +18,13 @@ use Symfony\Component\Config\FileLocatorInterface;
 final class InvoicePdfFileGeneratorSpec extends ObjectBehavior
 {
     function let(
+        ChannelRepositoryInterface $channelRepository,
         EngineInterface $twig,
         GeneratorInterface $pdfGenerator,
         FileLocatorInterface $fileLocator
     ): void {
         $this->beConstructedWith(
+            $channelRepository,
             $twig,
             $pdfGenerator,
             $fileLocator,
@@ -36,6 +39,7 @@ final class InvoicePdfFileGeneratorSpec extends ObjectBehavior
     }
 
     function it_creates_invoice_pdf_with_generated_content_and_filename_basing_on_invoice_number(
+        ChannelRepositoryInterface $channelRepository,
         FileLocatorInterface $fileLocator,
         EngineInterface $twig,
         GeneratorInterface $pdfGenerator,
@@ -44,6 +48,9 @@ final class InvoicePdfFileGeneratorSpec extends ObjectBehavior
         InvoiceChannelInterface $invoiceChannel
     ): void {
         $invoice->number()->willReturn('2015/05/00004444');
+        $invoice->channel()->willReturn($invoiceChannel);
+        $invoiceChannel->getCode()->willReturn('en_US');
+        $channelRepository->findOneByCode('en_US')->willReturn($channel);
 
         $fileLocator->locate('@SyliusInvoicingPlugin/Resources/assets/sylius-logo.png')->willReturn('located-path/sylius-logo.png');
 
@@ -54,6 +61,6 @@ final class InvoicePdfFileGeneratorSpec extends ObjectBehavior
 
         $pdfGenerator->getOutputFromHtml('<html>I am an invoice pdf file content</html>')->willReturn('PDF FILE');
 
-        $this->generate($invoice, $channel)->shouldBeLike(new InvoicePdf('2015_05_00004444.pdf', 'PDF FILE'));
+        $this->generate($invoice)->shouldBeLike(new InvoicePdf('2015_05_00004444.pdf', 'PDF FILE'));
     }
 }

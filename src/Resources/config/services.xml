@@ -38,7 +38,6 @@
 
         <service id="Sylius\InvoicingPlugin\Ui\Action\DownloadInvoiceAction" public="true">
             <argument type="service" id="Sylius\InvoicingPlugin\Repository\InvoiceRepository" />
-            <argument type="service" id="sylius.repository.channel" />
             <argument type="service" id="security.authorization_checker" />
             <argument type="service" id="Sylius\InvoicingPlugin\Generator\InvoicePdfFileGenerator" />
         </service>
@@ -47,7 +46,6 @@
             <argument type="service" id="Sylius\InvoicingPlugin\Repository\InvoiceRepository" />
             <argument type="service" id="Sylius\InvoicingPlugin\Email\InvoiceEmailSender" />
             <argument type="service" id="sylius.repository.order" />
-            <argument type="service" id="sylius.repository.channel" />
             <argument type="service" id="router" />
             <argument type="service" id="session" />
         </service>
@@ -84,7 +82,6 @@
         <service id="Sylius\InvoicingPlugin\CommandHandler\SendInvoiceEmailHandler" >
             <argument type="service" id="Sylius\InvoicingPlugin\Repository\InvoiceRepository" />
             <argument type="service" id="sylius.repository.order" />
-            <argument type="service" id="sylius.repository.channel" />
             <argument type="service" id="Sylius\InvoicingPlugin\Email\InvoiceEmailSender" />
             <tag name="messenger.message_handler" />
         </service>
@@ -99,6 +96,7 @@
         </service>
 
         <service id="Sylius\InvoicingPlugin\Generator\InvoicePdfFileGenerator">
+            <argument type="service" id="sylius.repository.channel" />
             <argument type="service" id="templating.engine.twig" />
             <argument type="service" id="knp_snappy.pdf" />
             <argument type="service" id="file_locator" />

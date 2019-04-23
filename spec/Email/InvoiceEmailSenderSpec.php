@@ -6,7 +6,6 @@ namespace spec\Sylius\InvoicingPlugin\Email;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Mailer\Sender\SenderInterface;
 use Sylius\InvoicingPlugin\Email\Emails;
 use Sylius\InvoicingPlugin\Email\InvoiceEmailSenderInterface;
@@ -30,13 +29,12 @@ final class InvoiceEmailSenderSpec extends ObjectBehavior
 
     public function it_sends_an_invoice_to_a_given_email_address(
         InvoiceInterface $invoice,
-        ChannelInterface $channel,
         SenderInterface $sender,
         InvoicePdfFileGeneratorInterface $invoicePdfFileGenerator
     ): void {
         $invoicePdf = new InvoicePdf('invoice.pdf', 'invoice_pdf_content');
 
-        $invoicePdfFileGenerator->generate($invoice, $channel)->willReturn($invoicePdf);
+        $invoicePdfFileGenerator->generate($invoice)->willReturn($invoicePdf);
 
         $sender->send(
             Emails::INVOICE_GENERATED,
@@ -47,6 +45,6 @@ final class InvoiceEmailSenderSpec extends ObjectBehavior
             })
         )->shouldBeCalled();
 
-        $this->sendInvoiceEmail($invoice, $channel, 'sylius@example.com');
+        $this->sendInvoiceEmail($invoice, 'sylius@example.com');
     }
 }
