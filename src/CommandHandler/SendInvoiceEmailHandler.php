@@ -28,8 +28,8 @@ final class SendInvoiceEmailHandler
         InvoiceEmailSenderInterface $emailSender
     ) {
         $this->invoiceRepository = $invoiceRepository;
-        $this->emailSender = $emailSender;
         $this->orderRepository = $orderRepository;
+        $this->emailSender = $emailSender;
     }
 
     public function __invoke(SendInvoiceEmail $command): void

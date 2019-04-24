@@ -34,9 +34,7 @@ final class InvoiceEmailSenderSpec extends ObjectBehavior
     ): void {
         $invoicePdf = new InvoicePdf('invoice.pdf', 'invoice_pdf_content');
 
-        $invoice->id()->willReturn('0000001');
-
-        $invoicePdfFileGenerator->generate('0000001')->willReturn($invoicePdf);
+        $invoicePdfFileGenerator->generate($invoice)->willReturn($invoicePdf);
 
         $sender->send(
             Emails::INVOICE_GENERATED,

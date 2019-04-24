@@ -8,16 +8,12 @@ use Knp\Snappy\GeneratorInterface;
 use Sylius\Component\Channel\Repository\ChannelRepositoryInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Sylius\InvoicingPlugin\Model\InvoicePdf;
-use Sylius\InvoicingPlugin\Repository\InvoiceRepository;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\Config\FileLocatorInterface;
 
 final class InvoicePdfFileGenerator implements InvoicePdfFileGeneratorInterface
 {
     private const FILE_EXTENSION = '.pdf';
-
-    /** @var InvoiceRepository */
-    private $invoiceRepository;
 
     /** @var ChannelRepositoryInterface */
     private $channelRepository;
@@ -38,7 +34,6 @@ final class InvoicePdfFileGenerator implements InvoicePdfFileGeneratorInterface
     private $invoiceLogoPath;
 
     public function __construct(
-        InvoiceRepository $invoiceRepository,
         ChannelRepositoryInterface $channelRepository,
         EngineInterface $templatingEngine,
         GeneratorInterface $pdfGenerator,
@@ -46,7 +41,6 @@ final class InvoicePdfFileGenerator implements InvoicePdfFileGeneratorInterface
         string $template,
         string $invoiceLogoPath
     ) {
-        $this->invoiceRepository = $invoiceRepository;
         $this->channelRepository = $channelRepository;
         $this->templatingEngine = $templatingEngine;
         $this->pdfGenerator = $pdfGenerator;
@@ -55,14 +49,12 @@ final class InvoicePdfFileGenerator implements InvoicePdfFileGeneratorInterface
         $this->invoiceLogoPath = $invoiceLogoPath;
     }
 
-    public function generate(string $invoiceId): InvoicePdf
+    public function generate(InvoiceInterface $invoice): InvoicePdf
     {
-        /** @var InvoiceInterface $invoice */
-        $invoice = $this->invoiceRepository->get($invoiceId);
+        /** @var string $filename */
+        $filename = str_replace('/', '_', $invoice->number()) . self::FILE_EXTENSION;
 
         $channel = $this->channelRepository->findOneByCode($invoice->channel()->getCode());
-
-        $filename = str_replace('/', '_', $invoice->number()) . self::FILE_EXTENSION;
 
         $pdf = $this->pdfGenerator->getOutputFromHtml(
             $this->templatingEngine->render($this->template, [

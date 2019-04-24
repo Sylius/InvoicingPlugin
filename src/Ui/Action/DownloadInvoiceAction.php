@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Sylius\InvoicingPlugin\Ui\Action;
 
+use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Sylius\InvoicingPlugin\Generator\InvoicePdfFileGeneratorInterface;
 use Sylius\InvoicingPlugin\Repository\InvoiceRepository;
 use Sylius\InvoicingPlugin\Security\Voter\InvoiceVoter;
@@ -34,13 +35,14 @@ final class DownloadInvoiceAction
 
     public function __invoke(string $id): Response
     {
+        /** @var InvoiceInterface $invoice */
         $invoice = $this->invoiceRepository->get($id);
 
         if (!$this->authorizationChecker->isGranted(InvoiceVoter::ACCESS, $invoice)) {
             throw new AccessDeniedHttpException();
         }
 
-        $invoicePdf = $this->invoicePdfFileGenerator->generate($id);
+        $invoicePdf = $this->invoicePdfFileGenerator->generate($invoice);
 
         $response = new Response($invoicePdf->content(), Response::HTTP_OK, ['Content-Type' => 'application/pdf']);
         $response->headers->add([
