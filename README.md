@@ -13,7 +13,8 @@
 SyliusInvoicingPlugin creates new immutable invoice when the order is in given state (default: created) and allows
 both customer and admin to download invoices related to the order.
 
-![Screenshot showing invoice browsing page in administration panel](docs/screenshot.png)
+![Screenshot showing invoice](docs/screenshot_invoice.png)
+![Screenshot showing invoice browsing page in administration panel](docs/screenshot_admin.png)
 
 ## Business value
 
