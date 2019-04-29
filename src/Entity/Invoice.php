@@ -51,6 +51,9 @@ class Invoice implements InvoiceInterface, ResourceInterface
     /** @var \DateTimeInterface|null */
     protected $paymentDueDate;
 
+    /** @var string|null */
+    protected $orderCustomerReference;
+
     public function __construct(
         string $id,
         string $number,
@@ -65,7 +68,8 @@ class Invoice implements InvoiceInterface, ResourceInterface
         InvoiceChannelInterface $channel,
         InvoiceShopBillingDataInterface $shopBillingData,
         InvoicePaymentMethodInterface $paymentMethod,
-        ?\DateTimeInterface $paymentDueDate = null
+        ?\DateTimeInterface $paymentDueDate = null,
+        ?string $orderCustomerReference = null
     ) {
         $this->id = $id;
         $this->number = $number;
@@ -81,6 +85,7 @@ class Invoice implements InvoiceInterface, ResourceInterface
         $this->shopBillingData = $shopBillingData;
         $this->paymentMethod = $paymentMethod;
         $this->paymentDueDate = $paymentDueDate;
+        $this->orderCustomerReference = $orderCustomerReference;
 
         /** @var LineItemInterface $lineItem */
         foreach ($lineItems as $lineItem) {
@@ -178,5 +183,13 @@ class Invoice implements InvoiceInterface, ResourceInterface
     public function paymentDueDate(): ?\DateTimeInterface
     {
         return $this->paymentDueDate;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function orderCustomerReference(): ?string
+    {
+        return $this->orderCustomerReference;
     }
 }
