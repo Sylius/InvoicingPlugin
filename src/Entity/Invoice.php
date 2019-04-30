@@ -190,9 +190,19 @@ class Invoice implements InvoiceInterface, ResourceInterface
         return $this->paymentDueDate;
     }
 
+    public function setPaymentDueDate(?\DateTimeInterface $paymentDueDate): void
+    {
+        $this->paymentDueDate = $paymentDueDate;
+    }
+
     public function paymentReference(): ?string
     {
         return $this->paymentReference;
+    }
+
+    public function setPaymentReference(?string $paymentReference): void
+    {
+        $this->paymentReference = $paymentReference;
     }
 
     public function orderCustomerReference(): ?string
