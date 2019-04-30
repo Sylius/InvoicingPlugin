@@ -11,7 +11,8 @@
         <field name="localeCode" column="locale_code" />
         <field name="total" column="total" type="integer" />
         <field name="paymentDueDate" column="payment_due_date" type="datetime" nullable="true"/>
-        <field name="orderCustomerReference" column="order_customer_reference" type="string" nullable="true"/>
+        <field name="paymentReference" column="payment_reference" nullable="true"/>
+        <field name="orderCustomerReference" column="order_customer_reference" nullable="true"/>
 
         <one-to-one field="billingData" target-entity="Sylius\InvoicingPlugin\Entity\BillingDataInterface">
             <cascade>
