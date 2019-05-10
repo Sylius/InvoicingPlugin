@@ -161,4 +161,100 @@ class LineItem implements LineItemInterface, ResourceInterface
     {
         return $this->total;
     }
+
+    /**
+     * @param string $type
+     */
+    public function setType(string $type): void
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @param null|string $variantName
+     */
+    public function setVariantName(?string $variantName): void
+    {
+        $this->variantName = $variantName;
+    }
+
+    /**
+     * @param null|string $variantCode
+     */
+    public function setVariantCode(?string $variantCode): void
+    {
+        $this->variantCode = $variantCode;
+    }
+
+    /**
+     * @param array|null $variantOptions
+     */
+    public function setVariantOptions(?array $variantOptions): void
+    {
+        $this->variantOptions = $variantOptions;
+    }
+
+    /**
+     * @param null|string $itemNumber
+     */
+    public function setItemNumber(?string $itemNumber): void
+    {
+        $this->itemNumber = $itemNumber;
+    }
+
+    /**
+     * @param int $quantity
+     */
+    public function setQuantity(int $quantity): void
+    {
+        $this->quantity = $quantity;
+    }
+
+    /**
+     * @param int $unitPrice
+     */
+    public function setUnitPrice(int $unitPrice): void
+    {
+        $this->unitPrice = $unitPrice;
+    }
+
+    /**
+     * @param int $subtotal
+     */
+    public function setSubtotal(int $subtotal): void
+    {
+        $this->subtotal = $subtotal;
+    }
+
+    /**
+     * @param int $promotionTotal
+     */
+    public function setPromotionTotal(int $promotionTotal): void
+    {
+        $this->promotionTotal = $promotionTotal;
+    }
+
+    /**
+     * @param int $taxTotal
+     */
+    public function setTaxTotal(int $taxTotal): void
+    {
+        $this->taxTotal = $taxTotal;
+    }
+
+    /**
+     * @param int $total
+     */
+    public function setTotal(int $total): void
+    {
+        $this->total = $total;
+    }
 }
