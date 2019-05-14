@@ -55,4 +55,20 @@ class TaxItem implements TaxItemInterface, ResourceInterface
     {
         return $this->amount;
     }
+
+    /**
+     * @param string $label
+     */
+    public function setLabel(string $label): void
+    {
+        $this->label = $label;
+    }
+
+    /**
+     * @param int $amount
+     */
+    public function setAmount(int $amount): void
+    {
+        $this->amount = $amount;
+    }
 }
