@@ -25,4 +25,20 @@ interface BillingDataInterface
     public function provinceName(): ?string;
 
     public function company(): ?string;
+
+    public function setFirstName(?string $firstName): BillingDataInterface;
+
+    public function setLastName(?string $lastName): BillingDataInterface;
+
+    public function setCountryCode(?string $countryCode): BillingDataInterface;
+
+    public function setStreet(?string $street): BillingDataInterface;
+
+    public function setCity(?string $city): BillingDataInterface;
+
+    public function setPostcode(?string $postcode): BillingDataInterface;
+
+    public function setProvinceName(?string $provinceName): BillingDataInterface;
+
+    public function setCompany(?string $company): BillingDataInterface;
 }

@@ -114,4 +114,52 @@ class BillingData implements BillingDataInterface, ResourceInterface
     {
         return $this->company;
     }
+
+    public function setFirstName(?string $firstName): BillingDataInterface
+    {
+        $this->firstName = $firstName;
+        return $this;
+    }
+
+    public function setLastName(?string $lastName): BillingDataInterface
+    {
+        $this->lastName = $lastName;
+        return $this;
+    }
+
+    public function setCountryCode(?string $countryCode): BillingDataInterface
+    {
+        $this->countryCode = $countryCode;
+        return $this;
+    }
+
+    public function setStreet(?string $street): BillingDataInterface
+    {
+        $this->street = $street;
+        return $this;
+    }
+
+    public function setCity(?string $city): BillingDataInterface
+    {
+        $this->city = $city;
+        return $this;
+    }
+
+    public function setPostcode(?string $postcode): BillingDataInterface
+    {
+        $this->postcode = $postcode;
+        return $this;
+    }
+
+    public function setProvinceName(?string $provinceName): BillingDataInterface
+    {
+        $this->provinceName = $provinceName;
+        return $this;
+    }
+
+    public function setCompany(?string $company): BillingDataInterface
+    {
+        $this->company = $company;
+        return $this;
+    }
 }
