@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <defaults autoconfigure="true" autowire="true" public="true" />
+
+        <service id="sylius_invoicing_plugin.cli.generate_invoices" class="Sylius\InvoicingPlugin\Cli\GenerateInvoicesCommand">
+            <argument type="service" id="Sylius\InvoicingPlugin\Creator\MassInvoicesCreator" />
+            <argument type="service" id="sylius.repository.order" />
+            <tag name="console.command" command="sylius-invoicing:generate-invoices" />
+        </service>
+    </services>
+</container>

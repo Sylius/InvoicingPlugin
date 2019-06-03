@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <defaults autoconfigure="true" autowire="true" public="true" />
+
+        <service id="sylius_invoicing_plugin.ui.action.download_invoice" class="Sylius\InvoicingPlugin\Ui\Action\DownloadInvoiceAction" public="true">
+            <argument type="service" id="Sylius\InvoicingPlugin\Repository\InvoiceRepository" />
+            <argument type="service" id="security.authorization_checker" />
+            <argument type="service" id="Sylius\InvoicingPlugin\Generator\InvoicePdfFileGenerator" />
+        </service>
+
+        <service id="sylius_invoicing_plugin.ui.action.resend_invoice" class="Sylius\InvoicingPlugin\Ui\Action\Admin\ResendInvoiceAction" public="true">
+            <argument type="service" id="Sylius\InvoicingPlugin\Repository\InvoiceRepository" />
+            <argument type="service" id="Sylius\InvoicingPlugin\Email\InvoiceEmailSender" />
+            <argument type="service" id="sylius.repository.order" />
+            <argument type="service" id="router" />
+            <argument type="service" id="session" />
+        </service>
+    </services>
+</container>
