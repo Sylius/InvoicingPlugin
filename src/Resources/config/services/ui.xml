@@ -28,7 +28,7 @@
         </service>
 
         <service id="sylius_invoicing_plugin.twig.channel_color_extension" class="Sylius\InvoicingPlugin\Twig\ChannelColorExtension">
-            <argument type="service" id="Sylius\InvoicingPlugin\Provider\ChannelColorProvider" />
+            <argument type="service" id="sylius_invoicing_plugin.provider.channel_color" />
             <tag name="twig.extension" />
         </service>
     </services>

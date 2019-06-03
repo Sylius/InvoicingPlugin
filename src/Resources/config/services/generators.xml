@@ -8,7 +8,7 @@
             <argument type="service" id="sylius_invoicing_plugin.repository.invoice_sequence" />
             <argument type="service" id="sylius_invoicing_plugin.factory.invoice_sequence" />
             <argument type="service" id="sylius_invoicing_plugin.manager.invoice_sequence" />
-            <argument type="service" id="Sylius\InvoicingPlugin\DateTimeProvider" />
+            <argument type="service" id="sylius_invoicing_plugin.date_time_provider" />
         </service>
 
         <service id="sylius_invoicing_plugin.generator.invoice_identifier" class="Sylius\InvoicingPlugin\Generator\UuidInvoiceIdentifierGenerator" />
@@ -16,7 +16,7 @@
         <service id="sylius_invoicing_plugin.generator.invoice" class="Sylius\InvoicingPlugin\Generator\InvoiceGenerator">
             <argument type="service" id="sylius_invoicing_plugin.generator.invoice_identifier" />
             <argument type="service" id="sylius_invoicing_plugin.generator.invoice_number_generator" />
-            <argument type="service" id="sylius_invoicing_plugin.factory.invoice" />
+            <argument type="service" id="sylius_invoicing_plugin.custom_factory.invoice" />
             <argument type="service" id="sylius_invoicing_plugin.converter.billing_data" />
             <argument type="service" id="sylius_invoicing_plugin.converter.invoice_channel" />
             <argument type="service" id="sylius_invoicing_plugin.converter.invoice_shop_billing_data" />
@@ -34,14 +34,14 @@
         </service>
 
         <service id="sylius_invoicing_plugin.creator.invoice" class="Sylius\InvoicingPlugin\Creator\InvoiceCreator">
-            <argument type="service" id="Sylius\InvoicingPlugin\Repository\InvoiceRepository" />
+            <argument type="service" id="sylius_invoicing_plugin.custom_repository.invoice" />
             <argument type="service" id="sylius.repository.order" />
-            <argument type="service" id="Sylius\InvoicingPlugin\Generator\InvoiceGenerator" />
+            <argument type="service" id="sylius_invoicing_plugin.generator.invoice" />
         </service>
 
         <service id="sylius_invoicing_plugin.creator.mass_invoices" class="Sylius\InvoicingPlugin\Creator\MassInvoicesCreator">
-            <argument type="service" id="Sylius\InvoicingPlugin\Creator\InvoiceCreator" />
-            <argument type="service" id="Sylius\InvoicingPlugin\DateTimeProvider" />
+            <argument type="service" id="sylius_invoicing_plugin.creator.invoice" />
+            <argument type="service" id="sylius_invoicing_plugin.date_time_provider" />
         </service>
     </services>
 </container>
