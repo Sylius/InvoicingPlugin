@@ -11,13 +11,17 @@
             <argument type="service" id="Sylius\InvoicingPlugin\DateTimeProvider" />
         </service>
 
-        <service id="sylius_invoicing_plugin.generator.invoice_identifier_generator" class="Sylius\InvoicingPlugin\Generator\UuidInvoiceIdentifierGenerator" />
-
         <service id="sylius_invoicing_plugin.generator.invoice_identifier" class="Sylius\InvoicingPlugin\Generator\UuidInvoiceIdentifierGenerator" />
 
         <service id="sylius_invoicing_plugin.generator.invoice" class="Sylius\InvoicingPlugin\Generator\InvoiceGenerator">
-            <argument type="service" id="Sylius\InvoicingPlugin\Generator\UuidInvoiceIdentifierGenerator" />
-            <argument type="service" id="Sylius\InvoicingPlugin\Generator\SequentialInvoiceNumberGenerator" />
+            <argument type="service" id="sylius_invoicing_plugin.generator.invoice_identifier" />
+            <argument type="service" id="sylius_invoicing_plugin.generator.invoice_number_generator" />
+            <argument type="service" id="sylius_invoicing_plugin.factory.invoice" />
+            <argument type="service" id="sylius_invoicing_plugin.converter.billing_data" />
+            <argument type="service" id="sylius_invoicing_plugin.converter.invoice_channel" />
+            <argument type="service" id="sylius_invoicing_plugin.converter.invoice_shop_billing_data" />
+            <argument type="service" id="sylius_invoicing_plugin.converter.line_items" />
+            <argument type="service" id="sylius_invoicing_plugin.converter.tax_items" />
         </service>
 
         <service id="sylius_invoicing_plugin.generator.invoice_pdf_file" class="Sylius\InvoicingPlugin\Generator\InvoicePdfFileGenerator">
