@@ -81,7 +81,7 @@ winzou_state_machine:
             after:
                 sylius_invoicing_plugin_payment_complete_producer:
                     on: ['complete']
-                    do: ['@Sylius\InvoicingPlugin\EventProducer\OrderPaymentPaidProducer', '__invoke']
+                    do: ['@sylius_invoicing_plugin.event_producer.order_payment_paid', '__invoke']
                     args: ['object']
 ```
 

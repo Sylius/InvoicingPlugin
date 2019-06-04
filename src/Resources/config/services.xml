@@ -1,149 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <imports>
+        <import resource="services/*.xml" />
+    </imports>
+
     <services>
         <defaults autoconfigure="true" autowire="true" public="true" />
 
-        <service id="Sylius\InvoicingPlugin\DateTimeProvider" class="Sylius\InvoicingPlugin\SystemDateTimeProvider" />
+        <service id="sylius_invoicing_plugin.date_time_provider" class="Sylius\InvoicingPlugin\SystemDateTimeProvider" />
 
-        <service id="Sylius\InvoicingPlugin\Repository\InvoiceRepository" class="Sylius\InvoicingPlugin\Repository\DoctrineInvoiceRepository" public="true" />
+        <service id="sylius_invoicing_plugin.custom_repository.invoice" class="Sylius\InvoicingPlugin\Repository\DoctrineInvoiceRepository" />
 
-        <service id="Sylius\InvoicingPlugin\Generator\InvoiceIdentifierGenerator" class="Sylius\InvoicingPlugin\Generator\UuidInvoiceIdentifierGenerator" />
-
-        <service id="Sylius\InvoicingPlugin\Generator\InvoiceGenerator">
-            <argument type="service" id="Sylius\InvoicingPlugin\Generator\UuidInvoiceIdentifierGenerator" />
-            <argument type="service" id="Sylius\InvoicingPlugin\Generator\SequentialInvoiceNumberGenerator" />
-        </service>
-
-        <service id="Sylius\InvoicingPlugin\EventProducer\OrderPlacedProducer" public="true">
-            <argument type="service" id="sylius_invoicing_plugin.event_bus" />
-            <argument type="service" id="Sylius\InvoicingPlugin\DateTimeProvider" />
-            <tag name="doctrine.event_listener" event="postPersist" />
-            <tag name="doctrine.event_listener" event="postUpdate" />
-        </service>
-
-        <service id="Sylius\InvoicingPlugin\EventProducer\OrderPaymentPaidProducer" public="true">
-            <argument type="service" id="sylius_invoicing_plugin.event_bus" />
-            <argument type="service" id="Sylius\InvoicingPlugin\DateTimeProvider" />
-        </service>
-
-        <service id="Sylius\InvoicingPlugin\EventListener\CreateInvoiceOnOrderPlacedListener">
-            <argument type="service" id="Sylius\InvoicingPlugin\Creator\InvoiceCreator" />
-            <tag name="messenger.message_handler" />
-        </service>
-
-        <service id="Sylius\InvoicingPlugin\Ui\Menu\AdminMenuListener">
-            <tag name="kernel.event_listener" event="sylius.menu.admin.main" method="__invoke" />
-        </service>
-
-        <service id="Sylius\InvoicingPlugin\Ui\Action\DownloadInvoiceAction" public="true">
-            <argument type="service" id="Sylius\InvoicingPlugin\Repository\InvoiceRepository" />
-            <argument type="service" id="security.authorization_checker" />
-            <argument type="service" id="Sylius\InvoicingPlugin\Generator\InvoicePdfFileGenerator" />
-        </service>
-
-        <service id="Sylius\InvoicingPlugin\Ui\Action\Admin\ResendInvoiceAction" public="true">
-            <argument type="service" id="Sylius\InvoicingPlugin\Repository\InvoiceRepository" />
-            <argument type="service" id="Sylius\InvoicingPlugin\Email\InvoiceEmailSender" />
-            <argument type="service" id="sylius.repository.order" />
-            <argument type="service" id="router" />
-            <argument type="service" id="session" />
-        </service>
-
-        <service id="sylius_invoicing_plugin.block_event_listener.account.order_show" class="Sylius\Bundle\UiBundle\Block\BlockEventListener">
-            <argument>@SyliusInvoicingPlugin/Order/Shop/fetchInvoices.html.twig</argument>
-            <tag name="kernel.event_listener" event="sonata.block.event.sylius.shop.account.order.show.after_summary" method="onBlockEvent" />
-        </service>
-
-        <service id="sylius_invoicing_plugin.block_event_listener.order_show" class="Sylius\Bundle\UiBundle\Block\BlockEventListener">
-            <argument>@SyliusInvoicingPlugin/Order/Admin/fetchInvoices.html.twig</argument>
-            <tag name="kernel.event_listener" event="sonata.block.event.sylius.admin.order.show.after_summary" method="onBlockEvent" />
-        </service>
-
-        <service id="Sylius\InvoicingPlugin\EventListener\OrderPaymentPaidListener">
-            <argument type="service" id="sylius_invoicing_plugin.command_bus" />
-            <tag name="messenger.message_handler" />
-        </service>
-
-        <service id="Sylius\InvoicingPlugin\Email\InvoiceEmailSender">
+        <service id="sylius_invoicing_plugin.email.invoice_email_sender" class="Sylius\InvoicingPlugin\Email\InvoiceEmailSender">
             <argument type="service" id="sylius.email_sender" />
-            <argument type="service" id="Sylius\InvoicingPlugin\Generator\InvoicePdfFileGenerator" />
+            <argument type="service" id="sylius_invoicing_plugin.generator.invoice_pdf_file" />
         </service>
 
-        <service id="Sylius\InvoicingPlugin\Generator\SequentialInvoiceNumberGenerator">
-            <argument type="service" id="sylius_invoicing_plugin.repository.invoice_sequence" />
-            <argument type="service" id="sylius_invoicing_plugin.factory.invoice_sequence" />
-            <argument type="service" id="sylius_invoicing_plugin.manager.invoice_sequence" />
-            <argument type="service" id="Sylius\InvoicingPlugin\DateTimeProvider" />
-        </service>
-
-        <service id="Sylius\InvoicingPlugin\Generator\UuidInvoiceIdentifierGenerator" />
-
-        <service id="Sylius\InvoicingPlugin\CommandHandler\SendInvoiceEmailHandler" >
-            <argument type="service" id="Sylius\InvoicingPlugin\Repository\InvoiceRepository" />
+        <service id="sylius_invoicing_plugin.command_handler.send_invoice_email" class="Sylius\InvoicingPlugin\CommandHandler\SendInvoiceEmailHandler">
+            <argument type="service" id="sylius_invoicing_plugin.custom_repository.invoice" />
             <argument type="service" id="sylius.repository.order" />
-            <argument type="service" id="Sylius\InvoicingPlugin\Email\InvoiceEmailSender" />
+            <argument type="service" id="sylius_invoicing_plugin.email.invoice_email_sender" />
             <tag name="messenger.message_handler" />
         </service>
 
-        <service id="Sylius\InvoicingPlugin\Form\Type\ChannelFilterType">
-            <argument type="service" id="sylius.repository.channel" />
-            <tag name="form.type" />
-        </service>
-
-        <service id="Sylius\InvoicingPlugin\Grid\Filter\ChannelFilter">
-            <tag name="sylius.grid_filter" type="invoice_channel" form_type="Sylius\InvoicingPlugin\Form\Type\ChannelFilterType" />
-        </service>
-
-        <service id="Sylius\InvoicingPlugin\Generator\InvoicePdfFileGenerator">
-            <argument type="service" id="sylius.repository.channel" />
-            <argument type="service" id="templating.engine.twig" />
-            <argument type="service" id="knp_snappy.pdf" />
-            <argument type="service" id="file_locator" />
-            <argument>@SyliusInvoicingPlugin/Invoice/Download/pdf.html.twig</argument>
-            <argument>@SyliusInvoicingPlugin/Resources/assets/sylius-logo.png</argument>
-        </service>
-
-        <service id="Sylius\InvoicingPlugin\Security\Voter\InvoiceVoter">
+        <service id="sylius_invoicing_plugin_security.voter.invoice" class="Sylius\InvoicingPlugin\Security\Voter\InvoiceVoter">
             <argument type="service" id="sylius.repository.order" />
             <tag name="security.voter" />
         </service>
 
-        <service id="sylius_invoicing_plugin.fixture.example_factory.invoicing_plugin_shop_billing_data" class="Sylius\InvoicingPlugin\Fixture\Factory\ShopBillingDataExampleFactory" public="true">
-            <argument id="sylius.repository.channel" type="service"/>
-        </service>
-
-        <service id="sylius_invoicing_plugin.fixture.shop_billing_data_fixture" class="Sylius\InvoicingPlugin\Fixture\ShopBillingDataFixture" public="true">
-            <argument id="sylius.manager.channel" type="service"/>
-            <argument id="sylius_invoicing_plugin.fixture.example_factory.invoicing_plugin_shop_billing_data" type="service"/>
-            <tag name="sylius_fixtures.fixture"/>
-        </service>
-
-        <service id="Sylius\InvoicingPlugin\Creator\InvoiceCreator">
-            <argument type="service" id="Sylius\InvoicingPlugin\Repository\InvoiceRepository" />
-            <argument type="service" id="sylius.repository.order" />
-            <argument type="service" id="Sylius\InvoicingPlugin\Generator\InvoiceGenerator" />
-        </service>
-
-        <service id="Sylius\InvoicingPlugin\Creator\MassInvoicesCreator">
-            <argument type="service" id="Sylius\InvoicingPlugin\Creator\InvoiceCreator" />
-            <argument type="service" id="Sylius\InvoicingPlugin\DateTimeProvider" />
-        </service>
-
-        <service id="Sylius\InvoicingPlugin\Cli\GenerateInvoicesCommand">
-            <argument type="service" id="Sylius\InvoicingPlugin\Creator\MassInvoicesCreator" />
-            <argument type="service" id="sylius.repository.order" />
-            <tag name="console.command" command="sylius-invoicing:generate-invoices" />
-        </service>
-
-        <service id="Sylius\InvoicingPlugin\Provider\ChannelColorProvider">
+        <service id="sylius_invoicing_plugin.provider.channel_color" class="Sylius\InvoicingPlugin\Provider\ChannelColorProvider">
             <argument type="service" id="sylius.repository.channel" />
             <argument>%default_channel_color%</argument>
         </service>
 
-        <service id="Sylius\InvoicingPlugin\Twig\ChannelColorExtension">
-            <argument type="service" id="Sylius\InvoicingPlugin\Provider\ChannelColorProvider" />
-            <tag name="twig.extension" />
-        </service>
+        <service id="sylius_invoicing_plugin.custom_factory.invoice" class="Sylius\InvoicingPlugin\Factory\InvoiceFactory" />
     </services>
 </container>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <defaults autoconfigure="true" autowire="true" public="true" />
+
+        <service id="sylius_invoicing_plugin.generator.invoice_number_generator" class="Sylius\InvoicingPlugin\Generator\SequentialInvoiceNumberGenerator">
+            <argument type="service" id="sylius_invoicing_plugin.repository.invoice_sequence" />
+            <argument type="service" id="sylius_invoicing_plugin.factory.invoice_sequence" />
+            <argument type="service" id="sylius_invoicing_plugin.manager.invoice_sequence" />
+            <argument type="service" id="sylius_invoicing_plugin.date_time_provider" />
+        </service>
+
+        <service id="sylius_invoicing_plugin.generator.invoice_identifier" class="Sylius\InvoicingPlugin\Generator\UuidInvoiceIdentifierGenerator" />
+
+        <service id="sylius_invoicing_plugin.generator.invoice" class="Sylius\InvoicingPlugin\Generator\InvoiceGenerator">
+            <argument type="service" id="sylius_invoicing_plugin.generator.invoice_identifier" />
+            <argument type="service" id="sylius_invoicing_plugin.generator.invoice_number_generator" />
+            <argument type="service" id="sylius_invoicing_plugin.custom_factory.invoice" />
+            <argument type="service" id="sylius_invoicing_plugin.converter.billing_data" />
+            <argument type="service" id="sylius_invoicing_plugin.converter.invoice_channel" />
+            <argument type="service" id="sylius_invoicing_plugin.converter.invoice_shop_billing_data" />
+            <argument type="service" id="sylius_invoicing_plugin.converter.line_items" />
+            <argument type="service" id="sylius_invoicing_plugin.converter.tax_items" />
+        </service>
+
+        <service id="sylius_invoicing_plugin.generator.invoice_pdf_file" class="Sylius\InvoicingPlugin\Generator\InvoicePdfFileGenerator">
+            <argument type="service" id="sylius.repository.channel" />
+            <argument type="service" id="templating.engine.twig" />
+            <argument type="service" id="knp_snappy.pdf" />
+            <argument type="service" id="file_locator" />
+            <argument>@SyliusInvoicingPlugin/Invoice/Download/pdf.html.twig</argument>
+            <argument>@SyliusInvoicingPlugin/Resources/assets/sylius-logo.png</argument>
+        </service>
+
+        <service id="sylius_invoicing_plugin.creator.invoice" class="Sylius\InvoicingPlugin\Creator\InvoiceCreator">
+            <argument type="service" id="sylius_invoicing_plugin.custom_repository.invoice" />
+            <argument type="service" id="sylius.repository.order" />
+            <argument type="service" id="sylius_invoicing_plugin.generator.invoice" />
+        </service>
+
+        <service id="sylius_invoicing_plugin.creator.mass_invoices" class="Sylius\InvoicingPlugin\Creator\MassInvoicesCreator">
+            <argument type="service" id="sylius_invoicing_plugin.creator.invoice" />
+            <argument type="service" id="sylius_invoicing_plugin.date_time_provider" />
+        </service>
+    </services>
+</container>

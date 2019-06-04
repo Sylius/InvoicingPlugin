@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <defaults autoconfigure="true" autowire="true" public="true" />
+
+        <service id="sylius_invoicing_plugin.ui.menu.admin_menu_listener" class="Sylius\InvoicingPlugin\Ui\Menu\AdminMenuListener">
+            <tag name="kernel.event_listener" event="sylius.menu.admin.main" method="__invoke" />
+        </service>
+
+        <service id="sylius_invoicing_plugin.block_event_listener.account.order_show" class="Sylius\Bundle\UiBundle\Block\BlockEventListener">
+            <argument>@SyliusInvoicingPlugin/Order/Shop/fetchInvoices.html.twig</argument>
+            <tag name="kernel.event_listener" event="sonata.block.event.sylius.shop.account.order.show.after_summary" method="onBlockEvent" />
+        </service>
+
+        <service id="sylius_invoicing_plugin.block_event_listener.order_show" class="Sylius\Bundle\UiBundle\Block\BlockEventListener">
+            <argument>@SyliusInvoicingPlugin/Order/Admin/fetchInvoices.html.twig</argument>
+            <tag name="kernel.event_listener" event="sonata.block.event.sylius.admin.order.show.after_summary" method="onBlockEvent" />
+        </service>
+
+        <service id="sylius_invoicing_plugin.form.type.channel_filter" class="Sylius\InvoicingPlugin\Form\Type\ChannelFilterType">
+            <argument type="service" id="sylius.repository.channel" />
+            <tag name="form.type" />
+        </service>
+
+        <service id="sylius_invoicing_plugin.grid.filter.channel" class="Sylius\InvoicingPlugin\Grid\Filter\ChannelFilter">
+            <tag name="sylius.grid_filter" type="invoice_channel" form_type="Sylius\InvoicingPlugin\Form\Type\ChannelFilterType" />
+        </service>
+
+        <service id="sylius_invoicing_plugin.twig.channel_color_extension" class="Sylius\InvoicingPlugin\Twig\ChannelColorExtension">
+            <argument type="service" id="sylius_invoicing_plugin.provider.channel_color" />
+            <tag name="twig.extension" />
+        </service>
+    </services>
+</container>

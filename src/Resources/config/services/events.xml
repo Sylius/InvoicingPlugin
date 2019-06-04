@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <defaults autoconfigure="true" autowire="true" public="true" />
+
+        <service id="sylius_invoicing_plugin.event_producer.order_payment_paid" class="Sylius\InvoicingPlugin\EventProducer\OrderPaymentPaidProducer">
+            <argument type="service" id="sylius_invoicing_plugin.event_bus" />
+            <argument type="service" id="sylius_invoicing_plugin.date_time_provider" />
+            <argument type="service" id="sylius_invoicing_plugin.custom_repository.invoice" />
+        </service>
+
+        <service id="sylius_invoicing_plugin.event_listener.order_placed" class="Sylius\InvoicingPlugin\EventListener\CreateInvoiceOnOrderPlacedListener">
+            <argument type="service" id="sylius_invoicing_plugin.creator.invoice" />
+            <tag name="messenger.message_handler" />
+        </service>
+
+        <service id="sylius_ivnoicing_plugin.event_producer.order_placed" class="Sylius\InvoicingPlugin\EventProducer\OrderPlacedProducer">
+            <argument type="service" id="sylius_invoicing_plugin.event_bus" />
+            <argument type="service" id="sylius_invoicing_plugin.date_time_provider" />
+            <tag name="doctrine.event_listener" event="postPersist" />
+            <tag name="doctrine.event_listener" event="postUpdate" />
+        </service>
+
+        <service id="sylius_invoicing_plugin.listener.order_payment_paid" class="Sylius\InvoicingPlugin\EventListener\OrderPaymentPaidListener">
+            <argument type="service" id="sylius_invoicing_plugin.command_bus" />
+            <tag name="messenger.message_handler" />
+        </service>
+    </services>
+</container>
