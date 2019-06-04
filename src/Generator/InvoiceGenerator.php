@@ -4,29 +4,15 @@ declare(strict_types=1);
 
 namespace Sylius\InvoicingPlugin\Generator;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Core\Model\AddressInterface;
-use Sylius\Component\Core\Model\AdjustmentInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\OrderInterface;
-use Sylius\Component\Core\Model\OrderItemInterface;
-use Sylius\Component\Core\Model\ShopBillingDataInterface;
 use Sylius\InvoicingPlugin\Converter\BillingDataConverterInterface;
 use Sylius\InvoicingPlugin\Converter\InvoiceChannelConverterInterface;
 use Sylius\InvoicingPlugin\Converter\InvoiceShopBillingDataConverterInterface;
 use Sylius\InvoicingPlugin\Converter\LineItemsConverterInterface;
 use Sylius\InvoicingPlugin\Converter\TaxItemsConverterInterface;
-use Sylius\InvoicingPlugin\Entity\BillingData;
-use Sylius\InvoicingPlugin\Entity\BillingDataInterface;
-use Sylius\InvoicingPlugin\Entity\Invoice;
-use Sylius\InvoicingPlugin\Entity\InvoiceChannel;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
-use Sylius\InvoicingPlugin\Entity\InvoiceShopBillingData;
-use Sylius\InvoicingPlugin\Entity\InvoiceShopBillingDataInterface;
-use Sylius\InvoicingPlugin\Entity\LineItem;
-use Sylius\InvoicingPlugin\Entity\TaxItem;
-use Sylius\InvoicingPlugin\Factory\InvoiceChannelFactoryInterface;
 use Sylius\InvoicingPlugin\Factory\InvoiceFactoryInterface;
 
 final class InvoiceGenerator implements InvoiceGeneratorInterface

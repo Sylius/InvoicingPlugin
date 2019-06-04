@@ -4,13 +4,13 @@
     <services>
         <defaults autoconfigure="true" autowire="true" public="true" />
 
-        <service id="sylius_invoicing_plugin.ui.action.download_invoice" class="Sylius\InvoicingPlugin\Ui\Action\DownloadInvoiceAction" public="true">
+        <service id="sylius_invoicing_plugin.ui.action.download_invoice" class="Sylius\InvoicingPlugin\Ui\Action\DownloadInvoiceAction">
             <argument type="service" id="sylius_invoicing_plugin.custom_repository.invoice" />
             <argument type="service" id="security.authorization_checker" />
             <argument type="service" id="sylius_invoicing_plugin.generator.invoice_pdf_file" />
         </service>
 
-        <service id="sylius_invoicing_plugin.ui.action.resend_invoice" class="Sylius\InvoicingPlugin\Ui\Action\Admin\ResendInvoiceAction" public="true">
+        <service id="sylius_invoicing_plugin.ui.action.resend_invoice" class="Sylius\InvoicingPlugin\Ui\Action\Admin\ResendInvoiceAction">
             <argument type="service" id="sylius_invoicing_plugin.custom_repository.invoice" />
             <argument type="service" id="sylius_invoicing_plugin.email.invoice_email_sender" />
             <argument type="service" id="sylius.repository.order" />

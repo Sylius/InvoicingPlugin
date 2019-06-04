@@ -27,13 +27,13 @@ sylius_invoicing_plugin_admin_invoice_download:
     path: /invoices/{id}/download
     methods: [GET]
     defaults:
-        _controller: Sylius\InvoicingPlugin\Ui\Action\DownloadInvoiceAction
+        _controller: sylius_invoicing_plugin.ui.action.download_invoice
 
 sylius_invoicing_plugin_admin_invoice_resend:
     path: /invoices/{id}/resend
     methods: [GET]
     defaults:
-        _controller: Sylius\InvoicingPlugin\Ui\Action\Admin\ResendInvoiceAction
+        _controller: sylius_invoicing_plugin.ui.action.resend_invoice
 
 sylius_invoicing_plugin_admin_order_invoices_partial:
     path: /_partial/invoices/{orderNumber}/

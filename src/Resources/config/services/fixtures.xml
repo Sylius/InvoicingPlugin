@@ -4,11 +4,11 @@
     <services>
         <defaults autoconfigure="true" autowire="true" public="true" />
 
-        <service id="sylius_invoicing_plugin.fixture.example_factory.invoicing_plugin_shop_billing_data" class="Sylius\InvoicingPlugin\Fixture\Factory\ShopBillingDataExampleFactory" public="true">
+        <service id="sylius_invoicing_plugin.fixture.example_factory.invoicing_plugin_shop_billing_data" class="Sylius\InvoicingPlugin\Fixture\Factory\ShopBillingDataExampleFactory">
             <argument id="sylius.repository.channel" type="service"/>
         </service>
 
-        <service id="sylius_invoicing_plugin.fixture.shop_billing_data_fixture" class="Sylius\InvoicingPlugin\Fixture\ShopBillingDataFixture" public="true">
+        <service id="sylius_invoicing_plugin.fixture.shop_billing_data_fixture" class="Sylius\InvoicingPlugin\Fixture\ShopBillingDataFixture">
             <argument id="sylius.manager.channel" type="service"/>
             <argument id="sylius_invoicing_plugin.fixture.example_factory.invoicing_plugin_shop_billing_data" type="service"/>
             <tag name="sylius_fixtures.fixture"/>
