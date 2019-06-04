@@ -12,5 +12,6 @@
         <field name="city" nullable="true" />
         <field name="postcode" nullable="true" />
         <field name="countryCode" column="country_code" nullable="true" />
+        <field name="representative" column="representative" nullable="true" />
     </embeddable>
 </doctrine-mapping>

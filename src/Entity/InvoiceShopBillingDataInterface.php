@@ -18,6 +18,8 @@ interface InvoiceShopBillingDataInterface
 
     public function getPostcode(): ?string;
 
+    public function getRepresentative(): ?string;
+
     public function setCompany(?string $company): void;
 
     public function setTaxId(?string $taxId): void;
@@ -29,4 +31,6 @@ interface InvoiceShopBillingDataInterface
     public function setCity(?string $city): void;
 
     public function setPostcode(?string $postcode): void;
+
+    public function setRepresentative(?string $representative): void;
 }
