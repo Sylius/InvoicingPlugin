@@ -24,6 +24,9 @@ final class InvoiceShopBillingData implements InvoiceShopBillingDataInterface
     /** @var string|null */
     private $postcode;
 
+    /** @var string|null */
+    private $representative;
+
     public function getCompany(): ?string
     {
         return $this->company;
@@ -54,6 +57,11 @@ final class InvoiceShopBillingData implements InvoiceShopBillingDataInterface
         return $this->postcode;
     }
 
+    public function getRepresentative(): ?string
+    {
+        return $this->representative;
+    }
+
     public function setCompany(?string $company): void
     {
         $this->company = $company;
@@ -82,5 +90,10 @@ final class InvoiceShopBillingData implements InvoiceShopBillingDataInterface
     public function setPostcode(?string $postcode): void
     {
         $this->postcode = $postcode;
+    }
+
+    public function setRepresentative(?string $representative): void
+    {
+        $this->representative = $representative;
     }
 }

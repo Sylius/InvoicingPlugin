@@ -7,6 +7,7 @@
     <div class="ui attached segment" id="shop-billing-data">
         <address>
             {% if shopBillingData.company %}<strong>{{ shopBillingData.company }}</strong>{% endif %}
+            {% if shopBillingData.representative %}<strong>{{ shopBillingData.representative }}</strong>{% endif %}
             {% if shopBillingData.street %}{{ shopBillingData.street }}<br/>{% endif %}
             {% if shopBillingData.city %}{{ shopBillingData.city }}<br/>{% endif %}
             {% if shopBillingData.taxId %}{{ shopBillingData.taxId }}<br/>{% endif %}
