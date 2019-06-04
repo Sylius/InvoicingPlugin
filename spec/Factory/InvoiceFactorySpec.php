@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace spec\Sylius\InvoicingPlugin\Factory;
 
 use Doctrine\Common\Collections\ArrayCollection;

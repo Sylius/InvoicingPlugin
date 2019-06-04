@@ -7,7 +7,6 @@ namespace spec\Sylius\InvoicingPlugin\Converter;
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\ShopBillingDataInterface;
-use Sylius\InvoicingPlugin\Converter\InvoiceChannelConverterInterface;
 use Sylius\InvoicingPlugin\Converter\InvoiceShopBillingDataConverterInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceShopBillingDataInterface;
 

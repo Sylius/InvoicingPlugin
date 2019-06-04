@@ -12,7 +12,6 @@ use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\OrderItemInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
 use Sylius\InvoicingPlugin\Converter\LineItemsConverterInterface;
-use Sylius\InvoicingPlugin\Entity\LineItemInterface;
 
 final class LineItemsConverterSpec extends ObjectBehavior
 {
