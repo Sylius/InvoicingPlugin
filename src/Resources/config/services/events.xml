@@ -15,7 +15,7 @@
             <tag name="messenger.message_handler" />
         </service>
 
-        <service id="sylius_ivnoicing_plugin.event_producer.order_placed" class="Sylius\InvoicingPlugin\EventProducer\OrderPlacedProducer">
+        <service id="sylius_invoicing_plugin.event_producer.order_placed" class="Sylius\InvoicingPlugin\EventProducer\OrderPlacedProducer">
             <argument type="service" id="sylius_invoicing_plugin.event_bus" />
             <argument type="service" id="sylius_invoicing_plugin.date_time_provider" />
             <tag name="doctrine.event_listener" event="postPersist" />
