@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Sylius\InvoicingPlugin\Behat\Context\Domain;
 
 use Behat\Behat\Context\Context;
-use Tests\Application\InvoicingPlugin\EventProducer\TestOrderPlacedProducer;
+use Tests\Sylius\InvoicingPlugin\Application\EventProducer\TestOrderPlacedProducer;
 
 final class GeneratingInvoiceContext implements Context
 {

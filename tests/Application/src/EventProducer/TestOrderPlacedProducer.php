@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Application\InvoicingPlugin\EventProducer;
+namespace Tests\Sylius\InvoicingPlugin\Application\EventProducer;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Sylius\InvoicingPlugin\EventProducer\OrderPlacedProducer;

@@ -3,8 +3,8 @@ imports:
     - { resource: "../../Behat/Resources/services.xml" }
 
 services:
-    Tests\Application\InvoicingPlugin\EventProducer\TestOrderPlacedProducer:
+    Tests\Sylius\InvoicingPlugin\Application\EventProducer\TestOrderPlacedProducer:
         arguments:
-            - '@Tests\Application\InvoicingPlugin\EventProducer\TestOrderPlacedProducer.inner'
+            - '@Tests\Sylius\InvoicingPlugin\Application\EventProducer\TestOrderPlacedProducer.inner'
         decorates: sylius_ivnoicing_plugin.event_producer.order_placed
         public: true

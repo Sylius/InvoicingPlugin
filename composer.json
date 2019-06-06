@@ -10,15 +10,15 @@
 
         "knplabs/knp-snappy-bundle": "^1.5",
         "ramsey/uuid": "^3.7",
-        "symfony/config": "^4.1",
-        "symfony/dependency-injection": "^4.1",
-        "symfony/form": "^4.1",
-        "symfony/framework-bundle": "^4.1",
-        "symfony/http-foundation": "^4.1",
-        "symfony/http-kernel": "^4.1",
+        "symfony/config": "^4.2",
+        "symfony/dependency-injection": "^4.2",
+        "symfony/form": "^4.2",
+        "symfony/framework-bundle": "^4.2",
+        "symfony/http-foundation": "^4.2",
+        "symfony/http-kernel": "^4.2",
         "symfony/messenger": "~4.3.0",
-        "symfony/options-resolver": "^4.1",
-        "symfony/routing": "^4.1"
+        "symfony/options-resolver": "^4.2",
+        "symfony/routing": "^4.2"
     },
     "require-dev": {
         "behat/behat": "^3.4",
@@ -39,12 +39,12 @@
         "phpstan/phpstan-webmozart-assert": "^0.11",
         "phpunit/phpunit": "^6.5",
         "sylius-labs/coding-standard": "^3.0",
-        "symfony/browser-kit": "^4.1",
-        "symfony/debug-bundle": "^4.1",
+        "symfony/browser-kit": "^4.2",
+        "symfony/debug-bundle": "^4.2",
         "symfony/dotenv": "^4.2",
-        "symfony/intl": "^4.1",
-        "symfony/web-profiler-bundle": "^4.1",
-        "symfony/web-server-bundle": "^4.1"
+        "symfony/intl": "^4.2",
+        "symfony/web-profiler-bundle": "^4.2",
+        "symfony/web-server-bundle": "^4.2"
     },
     "conflict": {
         "symfony/browser-kit": "4.1.8",
@@ -60,11 +60,19 @@
     "autoload": {
         "psr-4": {
             "Sylius\\InvoicingPlugin\\": "src/",
-            "Tests\\Sylius\\InvoicingPlugin\\": "tests/",
-            "Tests\\Application\\InvoicingPlugin\\": "tests/Application/src/"
+            "Tests\\Sylius\\InvoicingPlugin\\Behat\\": "tests/Behat/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\Sylius\\InvoicingPlugin\\Application\\": "tests/Application/src/",
+            "Tests\\Sylius\\InvoicingPlugin\\Unit\\": "tests/Unit/"
         }
     },
     "scripts": {
+        "fix": [
+            "vendor/bin/ecs check --fix src/ spec/"
+        ],
         "analyse": [
             "vendor/bin/phpstan analyse -c phpstan.neon -l max src/",
             "vendor/bin/ecs check src/ spec/"

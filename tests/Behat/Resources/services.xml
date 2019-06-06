@@ -25,7 +25,7 @@
         </service>
 
         <service id="Tests\Sylius\InvoicingPlugin\Behat\Context\Domain\GeneratingInvoiceContext" public="true">
-            <argument type="service" id="Tests\Application\InvoicingPlugin\EventProducer\TestOrderPlacedProducer" />
+            <argument type="service" id="Tests\Sylius\InvoicingPlugin\Application\EventProducer\TestOrderPlacedProducer" />
         </service>
 
         <service id="Tests\Sylius\InvoicingPlugin\Behat\Context\Cli\InvoicesGenerationContext" public="true">
