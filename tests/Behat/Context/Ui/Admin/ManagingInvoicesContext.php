@@ -62,6 +62,14 @@ final class ManagingInvoicesContext implements Context
     }
 
     /**
+     * @Then I should not see any invoice for order :order
+     */
+    public function shouldNotSeeAnyInvoiceForOrder(OrderInterface $order): void
+    {
+        Assert::false($this->indexPage->hasInvoiceForOrder($order->getNumber()));
+    }
+
+    /**
      * @Then /^(\d+)(?:st|nd|rd) invoice should be issued in "([^"]+)" channel$/
      */
     public function shouldBeIssuedInChannel(int $index, string $channel): void
