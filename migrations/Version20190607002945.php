@@ -7,17 +7,9 @@ namespace DoctrineMigrations;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
 
-/**
- * Auto-generated Migration: Please modify to your needs!
- */
 final class Version20190607002945 extends AbstractMigration
 {
-    public function getDescription() : string
-    {
-        return '';
-    }
-
-    public function up(Schema $schema) : void
+    public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
@@ -26,7 +18,7 @@ final class Version20190607002945 extends AbstractMigration
         $this->addSql('ALTER TABLE sylius_invoicing_plugin_invoice CHANGE shopBillingData_company shop_billing_data_company VARCHAR(255) DEFAULT NULL, CHANGE shopBillingData_tax_id shop_billing_data_tax_id VARCHAR(255) DEFAULT NULL, CHANGE shopBillingData_street shop_billing_data_street VARCHAR(255) DEFAULT NULL, CHANGE shopBillingData_city shop_billing_data_city VARCHAR(255) DEFAULT NULL, CHANGE shopBillingData_postcode shop_billing_data_postcode VARCHAR(255) DEFAULT NULL, CHANGE shopBillingData_country_code shop_billing_data_country_code VARCHAR(255) DEFAULT NULL, CHANGE shopBillingData_representative shop_billing_data_representative VARCHAR(255) DEFAULT NULL, CHANGE channel_code channel_code VARCHAR(255) NOT NULL, CHANGE channel_name channel_name VARCHAR(255) NOT NULL');
     }
 
-    public function down(Schema $schema) : void
+    public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
