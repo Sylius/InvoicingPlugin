@@ -26,7 +26,7 @@ class InvoiceShopBillingData implements InvoiceShopBillingDataInterface
     protected $postcode;
 
     /** @var string|null */
-    private $representative;
+    protected $representative;
 
     public function getCompany(): ?string
     {
