@@ -6,5 +6,5 @@ services:
     Tests\Sylius\InvoicingPlugin\Application\EventProducer\TestOrderPlacedProducer:
         arguments:
             - '@Tests\Sylius\InvoicingPlugin\Application\EventProducer\TestOrderPlacedProducer.inner'
-        decorates: sylius_ivnoicing_plugin.event_producer.order_placed
+        decorates: sylius_invoicing_plugin.event_producer.order_placed
         public: true
