@@ -62,7 +62,10 @@
         "psr-4": {
             "Sylius\\InvoicingPlugin\\": "src/",
             "Tests\\Sylius\\InvoicingPlugin\\Behat\\": "tests/Behat/"
-        }
+        },
+        "files": [
+            "tests/Application/src/EventProducer/TestOrderPlacedProducer.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
