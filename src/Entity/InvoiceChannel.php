@@ -8,10 +8,10 @@ namespace Sylius\InvoicingPlugin\Entity;
 class InvoiceChannel implements InvoiceChannelInterface
 {
     /** @var string */
-    private $code;
+    protected $code;
 
     /** @var string */
-    private $name;
+    protected $name;
 
     public function __construct(string $code, string $name)
     {

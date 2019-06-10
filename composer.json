@@ -10,6 +10,7 @@
 
         "knplabs/knp-snappy-bundle": "^1.5",
         "ramsey/uuid": "^3.7",
+        "sylius/resource-bundle": "^1.6.0-RC.2",
         "symfony/config": "^4.2",
         "symfony/dependency-injection": "^4.2",
         "symfony/form": "^4.2",
