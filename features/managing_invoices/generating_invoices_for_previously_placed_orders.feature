@@ -11,13 +11,17 @@ Feature: Generating invoices for previously placed orders
         And it belongs to "Clothes" tax category
         And the store has "UPS" shipping method with "$10.00" fee
         And the store allows paying with "Cash on Delivery"
-        And the invoices are not generated
         And there is a customer "lucy@teamlucifer.com" that placed an order "#00000777"
         And the customer bought 2 "Angel T-Shirt" products
         And the customer "Lucifer Morningstar" addressed it to "Seaside Fwy", "90802" "Los Angeles" in the "United States"
         And for the billing address of "Mazikeen Lilim" in the "Pacific Coast Hwy", "90806" "Los Angeles", "United States"
         And the customer chose "UPS" shipping method with "Cash on Delivery" payment
+        And the order "#00000777" has lost all of its invoices
         And I am logged in as an administrator
+
+    Scenario: Having no previous invoices
+        When I browse invoices
+        Then I should not see any invoice for order "#00000777"
 
     Scenario: Generating invoices for previously placed orders
         When I generate invoices for previously placed orders

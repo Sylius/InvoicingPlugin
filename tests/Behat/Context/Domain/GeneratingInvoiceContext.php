@@ -5,23 +5,30 @@ declare(strict_types=1);
 namespace Tests\Sylius\InvoicingPlugin\Behat\Context\Domain;
 
 use Behat\Behat\Context\Context;
-use Tests\Sylius\InvoicingPlugin\Application\EventProducer\TestOrderPlacedProducer;
+use Doctrine\Common\Persistence\ObjectManager;
+use Sylius\InvoicingPlugin\Repository\InvoiceRepository;
 
 final class GeneratingInvoiceContext implements Context
 {
-    /** @var TestOrderPlacedProducer */
-    private $orderPlacedEventProducer;
+    /** @var ObjectManager */
+    private $invoiceManager;
 
-    public function __construct(TestOrderPlacedProducer $orderPlacedEventProducer)
+    /** @var InvoiceRepository */
+    private $invoiceRepository;
+
+    public function __construct(ObjectManager $invoiceManager, InvoiceRepository $invoiceRepository)
     {
-        $this->orderPlacedEventProducer = $orderPlacedEventProducer;
+        $this->invoiceManager = $invoiceManager;
+        $this->invoiceRepository = $invoiceRepository;
     }
 
     /**
-     * @Given the invoices are not generated
+     * @Given the order :orderNumber has lost all of its invoices
      */
-    public function invoicesAreNotGenerated(): void
+    public function orderHasLostAllOfItsInvoices(string $orderNumber): void
     {
-        $this->orderPlacedEventProducer->disableInvoiceGeneration();
+        $invoice = $this->invoiceRepository->findOneByOrderNumber($orderNumber);
+
+        $this->invoiceManager->remove($invoice);
     }
 }

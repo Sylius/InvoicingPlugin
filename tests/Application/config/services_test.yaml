@@ -1,10 +1,3 @@
 imports:
     - { resource: "../../../vendor/sylius/sylius/src/Sylius/Behat/Resources/config/services.xml" }
     - { resource: "../../Behat/Resources/services.xml" }
-
-services:
-    Tests\Sylius\InvoicingPlugin\Application\EventProducer\TestOrderPlacedProducer:
-        arguments:
-            - '@Tests\Sylius\InvoicingPlugin\Application\EventProducer\TestOrderPlacedProducer.inner'
-        decorates: sylius_invoicing_plugin.event_producer.order_placed
-        public: true
