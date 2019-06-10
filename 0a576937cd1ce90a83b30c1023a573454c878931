@@ -1,0 +1,195 @@
+---------------------------------------------------------------------------
+
+by wadjeroudi at 2019-01-21T15:47:46Z
+
+@lchrusciel @Zales0123 @tautelis
+We've a problem extending LineItem entity (and all entities from this plugin). We tried from our app and a new sylius standard install, not working.
+
+The error:
+```
+In SchemaException.php line 108:
+ The table with name 'sylius.sylius_invoicing_plugin_line_item' already exists.
+```
+
+The plugin is overriding our configuration :
+```yaml
+sylius_resource:
+   resources:
+       sylius_invoicing_plugin.line_item:
+           classes:
+               model: App\Entity\LineItem
+```
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace App\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Sylius\InvoicingPlugin\Entity\LineItem as BaseLineItem;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="sylius_invoicing_plugin_line_item")
+ */
+class LineItem extends BaseLineItem
+{
+}
+```
+
+We don't have this problem with BitBag plugins.
+It seems that the array_merge from AbstractResourceExtension::registerResources overwrride the custom yaml.
+
+FYI @prigal
+
+---------------------------------------------------------------------------
+
+by wadjeroudi at 2019-01-27T15:51:26Z
+
+- I found my issue, to extends entities from this plugin, you don't need to add '_plugin' in the yaml.
+The correct confguration was :
+```yaml
+sylius_invoicing:
+    resources:
+        line_item:
+            classes:
+                model: App\Entity\InvoicingLineItem
+```
+
+- About this kind of errors, this PR fixes them:
+```
+  Class "App\Entity\InvoicingLineItem" sub class of "Sylius\InvoicingPlugin\Entity\LineItem" is not a valid entity or mapped super class.
+```
+
+---------------------------------------------------------------------------
+
+by pierre-H at 2019-01-31T15:57:48Z
+
+Hello,
+@lchrusciel are you planning to release to new version of this plugin with this pull request soon ?
+
+This feature is really important for me and according to you answer I know if I have to wait or no.
+Thank you in advance
+
+---------------------------------------------------------------------------
+
+by pierre-H at 2019-02-04T14:46:40Z
+
+@sylius/core-team up ? :)
+
+---------------------------------------------------------------------------
+
+by Zales0123 at 2019-02-05T07:51:56Z
+
+@pierre-H yes, for sure this is something we should merge to the plugin. For the next plugin release, we need also integration with shop billing data moved to a Sylius Core (see https://github.com/Sylius/InvoicingPlugin/issues/94).
+
+Regarding this PR - we need right now to disable `PhpCsFixer\Fixer\ClassNotation\ProtectedToPrivateFixer` for `InvoiceShopBillingData` and fix the failing build - @tautelis can you take a look at it?
+
+---------------------------------------------------------------------------
+
+by bartoszpietrzak1994 at 2019-02-07T12:21:23Z
+
+@Zales0123 @tautelis  What we also need is integration with other changes that occurred in Sylius 1.4 ( i.e. the .env files convention).
+
+The update of Sylius version in InvoicingPlugin will happen in a while, merging the update-related PR and then rebasing this one with master will make the whole process much easier.
+
+To sum up, stay tuned :D
+
+---------------------------------------------------------------------------
+
+by tautelis at 2019-02-07T12:26:04Z
+
+@bartoszpietrzak1994 it depends how long the "in a while" is but ok, i will wait :)
+
+---------------------------------------------------------------------------
+
+by Zales0123 at 2019-02-07T13:54:52Z
+
+We can also JUST FOR NOW stay on Sylius 1.3 **only** (as it has been done for [RefundPlugin](https://github.com/Sylius/RefundPlugin/pull/112/files#diff-b5d0ee8c97c7abd7e3fa29b9a27d1780R24)) to make this PR pass and update to Sylius 1.4 afterward. In the end, supporting `^1.3` (which allows Sylius 1.4) is quite misleading, as we're not sure it works in 100% together ⚖️
+
+---------------------------------------------------------------------------
+
+by bartoszpietrzak1994 at 2019-02-08T14:31:32Z
+
+@Zales0123 @tautelis The integration with Sylius 1.4 has just been merged. I'll rebase this PR, resolve potential conflicts and see how it'll work.
+
+---------------------------------------------------------------------------
+
+by bartoszpietrzak1994 at 2019-02-11T12:41:49Z
+
+Hello @tautelis
+
+After some investigation, it occurred that unfortunately there is a bug in Sylius which make the combination of MappedSuperclass and embeddable not working.
+
+The only possible solution that would make your changes work right now is to provide a hotfix in the InvoicingPlugin code and remove it once new minor Sylius version is released. It is hard to tell how time-consuming it would be.
+
+The other solution that comes to my mind is to get rid of the embeddables and provide associations between both Invoice and InvoiceChannel and Invoice and ShopBillingData. However, that would cause unpleasant BC-breaks (as well as data migrations) and would not solve the root of the problem.
+
+---------------------------------------------------------------------------
+
+by tautelis at 2019-02-14T11:47:30Z
+
+@bartoszpietrzak1994 it's not a stable version yet so people are expecting BC breaks. Even Sylius itself had a BC breaks even on bugfix versions.
+
+---------------------------------------------------------------------------
+
+by wadjeroudi at 2019-02-14T11:55:42Z
+
+@bartoszpietrzak1994 @tautelis for now maybe juste don't make extendable the embeddable entities I think the only one embedded is InvoiceShopBillingData.
+@tautelis plz add the PhpCsFixer config and remove the mapped-superclass for InvoiceShopBillingData.
+The rest of the PR should be merged as it is. There should be no BC break.
+
+---------------------------------------------------------------------------
+
+by tautelis at 2019-02-15T11:56:02Z
+
+@wadjeroudi what do you mean by "remove the mapped-superclass for InvoiceShopBillingData". InvoiceShopBillingData is not mapped-superclass. Invoice is mapped superclass so probably you mean to remove mapped-superclass from invoice (the main plugin entity)?
+
+---------------------------------------------------------------------------
+
+by tautelis at 2019-02-15T12:19:28Z
+
+Anyhow, for certain reasons our project is locked to symfony `3.4` and sylius `1.3.8` so the latest InvoicingPlugin version available for us is `0.6.0`. Therefore we decided to continue developing this plugin on my fork from 0.6.0 version.
+
+If interested here we made it extendable:
+https://github.com/Sylius/InvoicingPlugin/compare/v0.6.0...tautelis:v0.6.0_entities_made_extendable
+
+Here useless invoice repository definition removed to follow sylius standard:
+https://github.com/Sylius/InvoicingPlugin/compare/v0.6.0...tautelis:v0.6.0_standard_invoice_repository
+
+The latter should work for latest master as well.
+
+---------------------------------------------------------------------------
+
+by kortwotze at 2019-04-17T14:22:12Z
+
+This is also a problem in the RefundPlugin. I tried this blindly without checking in #122 and ran into the embedded-Problem.
+
+We really need to fix this.
+
+Our temporary solution for this is to override the place where doctrine looks for mappings for a bundle and move all the doctrine mappings to app/Resources/<bundlename>/config/doctrine and change the mapping type to mapped-superclass where needed (currently only on the invoice entity, but on 1.3. the embedded works for some reason)
+
+Relevant PR on RefundPlugin: https://github.com/Sylius/RefundPlugin/pull/130
+
+---------------------------------------------------------------------------
+
+by kortwotze at 2019-04-18T08:09:51Z
+
+Addendum to my last comment: We told doctrine to look for mappings in a different folder for a bundle, but only changed _one_ entity from entity to mapped superclass. That entity does _not_ use embeddables which is why our setup works.
+We had to put every mapping into the new folder though, because otherwise doctrine will miss the other mappings.
+
+I can offer more information if needed :)
+
+---------------------------------------------------------------------------
+
+by pamil at 2019-06-07T04:37:00Z
+
+This PR should pass after https://github.com/Sylius/SyliusResourceBundle/pull/89 is merged and used by this plugin.
+
+---------------------------------------------------------------------------
+
+by Zales0123 at 2019-06-10T07:13:50Z
+
+Thank you, Vytautas! :1st_place_medal:
