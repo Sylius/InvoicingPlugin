@@ -45,3 +45,13 @@ sylius_invoicing_plugin_admin_order_invoices_partial:
             repository:
                 method: findByOrderNumber
                 arguments: $orderNumber
+
+sylius_invoicing_admin_order_show_by_number:
+    path: /orders/by-number/{number}
+    methods: [GET]
+    defaults:
+        _controller: Sylius\InvoicingPlugin\Ui\RedirectToOrderShowAction
+        _sylius:
+            section: admin
+            permission: true
+            alias: invoicing_plugin
