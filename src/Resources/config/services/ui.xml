@@ -31,5 +31,10 @@
             <argument type="service" id="sylius_invoicing_plugin.provider.channel_color" />
             <tag name="twig.extension" />
         </service>
+
+        <service id="Sylius\InvoicingPlugin\Ui\RedirectToOrderShowAction">
+            <argument type="service" id="router" />
+            <argument type="service" id="sylius.repository.order" />
+        </service>
     </services>
 </container>
