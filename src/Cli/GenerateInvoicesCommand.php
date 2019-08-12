@@ -31,7 +31,11 @@ final class GenerateInvoicesCommand extends Command
     public function execute(InputInterface $input, OutputInterface $output): void
     {
         /** @var array $orders */
-        $orders = $this->orderRepository->findAll();
+        $orders = $this->orderRepository
+            ->createListQueryBuilder()
+            ->andWhere('o.number IS NOT NULL')
+            ->getQuery()
+            ->getResult();
 
         $this->massInvoicesCreator->__invoke($orders);
 
