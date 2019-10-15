@@ -1,0 +1,31 @@
+---------------------------------------------------------------------------
+
+by tom10271 at 2019-08-12T03:59:48Z
+
+There is still one more thing to fix, I called `createQueryBuilder` which lived in EntityRepository, but the type set for `$orderRepository` is `OrderRepositoryInterface`making CI cannot pass.
+
+Which interface or class should we set?
+
+---------------------------------------------------------------------------
+
+by Zales0123 at 2019-08-12T06:03:47Z
+
+The best solution would be creating a custom `OrderRepository`, but it requires a custom interface, class, and configuration, which is probably not something we would like to introduce in such a simple fix :/ Maybe you can use one of the existing methods from order repository, like `createListQueryBuilder`, and then apply the not-null-number criteria on the result? It should do the trick with not much work. Thanks for the contribution!
+
+---------------------------------------------------------------------------
+
+by tom10271 at 2019-08-12T06:33:01Z
+
+I have updated the commit. Please check again. Thank you everyone
+
+---------------------------------------------------------------------------
+
+by Zales0123 at 2019-08-12T08:23:18Z
+
+👍 The last thing that should be done is adding a not-placed order in the background of [this feature file](https://github.com/Sylius/InvoicingPlugin/blob/master/features/managing_invoices/generating_invoices_for_previously_placed_orders.feature) to check does this query for sure works as it should work :) Do you think you would be able to do it, @tom10271?
+
+---------------------------------------------------------------------------
+
+by pamil at 2019-10-15T14:39:45Z
+
+Thank you, @tom10271! :1st_place_medal:
