@@ -8,7 +8,6 @@ use Sylius\Component\Core\Model\AddressInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\InvoicingPlugin\Converter\BillingDataConverterInterface;
-use Sylius\InvoicingPlugin\Converter\InvoiceChannelConverterInterface;
 use Sylius\InvoicingPlugin\Converter\InvoiceShopBillingDataConverterInterface;
 use Sylius\InvoicingPlugin\Converter\LineItemsConverterInterface;
 use Sylius\InvoicingPlugin\Converter\TaxItemsConverterInterface;
@@ -29,9 +28,6 @@ final class InvoiceGenerator implements InvoiceGeneratorInterface
     /** @var BillingDataConverterInterface */
     private $billingDataConverter;
 
-    /** @var InvoiceChannelConverterInterface */
-    private $invoiceChannelConverter;
-
     /** @var InvoiceShopBillingDataConverterInterface */
     private $invoiceShopBillingDataConverter;
 
@@ -46,7 +42,6 @@ final class InvoiceGenerator implements InvoiceGeneratorInterface
         InvoiceNumberGenerator $sequentialInvoiceNumberGenerator,
         InvoiceFactoryInterface $invoiceFactory,
         BillingDataConverterInterface $billingDataConverter,
-        InvoiceChannelConverterInterface $invoiceChannelConverter,
         InvoiceShopBillingDataConverterInterface $invoiceShopBillingDataConverter,
         LineItemsConverterInterface $lineItemConverter,
         TaxItemsConverterInterface $taxItemsConverter
@@ -55,7 +50,6 @@ final class InvoiceGenerator implements InvoiceGeneratorInterface
         $this->sequentialInvoiceNumberGenerator = $sequentialInvoiceNumberGenerator;
         $this->invoiceFactory = $invoiceFactory;
         $this->billingDataConverter = $billingDataConverter;
-        $this->invoiceChannelConverter = $invoiceChannelConverter;
         $this->invoiceShopBillingDataConverter = $invoiceShopBillingDataConverter;
         $this->lineItemsConverter = $lineItemConverter;
         $this->taxItemsConverter = $taxItemsConverter;
@@ -80,7 +74,7 @@ final class InvoiceGenerator implements InvoiceGeneratorInterface
             $order->getTotal(),
             $this->lineItemsConverter->convert($order),
             $this->taxItemsConverter->convert($order),
-            $this->invoiceChannelConverter->convert($channel),
+            $channel,
             $this->invoiceShopBillingDataConverter->convert($channel)
         );
     }
