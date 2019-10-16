@@ -31,14 +31,14 @@
         </one-to-many>
 
         <many-to-one field="channel" target-entity="Sylius\Component\Core\Model\ChannelInterface">
-            <join-column name="channel_id" referenced-column-name="id" nullable="true" />
+            <join-column name="channel_id" />
         </many-to-one>
 
         <one-to-one field="shopBillingData" target-entity="Sylius\InvoicingPlugin\Entity\InvoiceShopBillingData">
             <cascade>
                 <cascade-all />
             </cascade>
-            <join-column name="shop_billing_data" referenced-column-name="id" />
+            <join-column name="shop_billing_data_id" referenced-column-name="id" />
         </one-to-one>
 
         <indexes>

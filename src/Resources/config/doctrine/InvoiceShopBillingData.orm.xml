@@ -5,7 +5,12 @@
         xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                             http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd"
 >
-    <embeddable name="Sylius\InvoicingPlugin\Entity\InvoiceShopBillingData">
+
+    <entity name="Sylius\InvoicingPlugin\Entity\InvoiceShopBillingData" table="sylius_invoicing_plugin_shop_billing_data">
+        <id name="id" column="id" type="integer">
+            <generator strategy="AUTO" />
+        </id>
+
         <field name="company" nullable="true" />
         <field name="taxId" column="tax_id" nullable="true" />
         <field name="street" nullable="true" />
@@ -13,5 +18,5 @@
         <field name="postcode" nullable="true" />
         <field name="countryCode" column="country_code" nullable="true" />
         <field name="representative" column="representative" nullable="true" />
-    </embeddable>
+    </entity>
 </doctrine-mapping>
