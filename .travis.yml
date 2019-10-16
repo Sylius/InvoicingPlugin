@@ -24,6 +24,7 @@ before_install:
     - phpenv config-rm xdebug.ini
     - echo "memory_limit=4096M" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
     - mkdir -p "${SYLIUS_CACHE_DIR}"
+    - cp migrations/* tests/Application/src/Migrations/
 
 install:
     - composer install --no-interaction --prefer-dist
@@ -31,7 +32,7 @@ install:
 
 before_script:
     - (cd tests/Application && bin/console doctrine:database:create -vvv)
-    - (cd tests/Application && bin/console doctrine:schema:create -vvv)
+    - (cd tests/Application && bin/console doctrine:migrations:migrate -n -vvv -q)
     - (cd tests/Application && bin/console assets:install public -vvv)
     - (cd tests/Application && bin/console cache:warmup -vvv)
     - (cd tests/Application && yarn build)
