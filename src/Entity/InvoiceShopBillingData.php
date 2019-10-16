@@ -7,6 +7,9 @@ namespace Sylius\InvoicingPlugin\Entity;
 /** @final */
 class InvoiceShopBillingData implements InvoiceShopBillingDataInterface
 {
+    /** @var string */
+    protected $id;
+
     /** @var string|null */
     protected $company;
 
@@ -27,6 +30,11 @@ class InvoiceShopBillingData implements InvoiceShopBillingDataInterface
 
     /** @var string|null */
     protected $representative;
+
+    public function getId(): string
+    {
+        return $this->id;
+    }
 
     public function getCompany(): ?string
     {

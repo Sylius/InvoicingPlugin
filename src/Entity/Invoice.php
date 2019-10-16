@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Sylius\InvoicingPlugin\Entity;
 
 use Doctrine\Common\Collections\Collection;
+use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 
 /** @final */
@@ -40,7 +41,7 @@ class Invoice implements InvoiceInterface, ResourceInterface
     /** @var Collection|TaxItemInterface[] */
     protected $taxItems;
 
-    /** @var InvoiceChannelInterface */
+    /** @var ChannelInterface */
     protected $channel;
 
     /** @var InvoiceShopBillingDataInterface */
@@ -57,7 +58,7 @@ class Invoice implements InvoiceInterface, ResourceInterface
         int $total,
         Collection $lineItems,
         Collection $taxItems,
-        InvoiceChannelInterface $channel,
+        ChannelInterface $channel,
         InvoiceShopBillingDataInterface $shopBillingData
     ) {
         $this->id = $id;
@@ -151,7 +152,7 @@ class Invoice implements InvoiceInterface, ResourceInterface
         return $subtotal;
     }
 
-    public function channel(): InvoiceChannelInterface
+    public function channel(): ChannelInterface
     {
         return $this->channel;
     }
