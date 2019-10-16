@@ -5,18 +5,15 @@ declare(strict_types=1);
 namespace spec\Sylius\InvoicingPlugin\Generator;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Core\Model\AddressInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\InvoicingPlugin\Converter\BillingDataConverterInterface;
-use Sylius\InvoicingPlugin\Converter\InvoiceChannelConverterInterface;
 use Sylius\InvoicingPlugin\Converter\InvoiceShopBillingDataConverterInterface;
 use Sylius\InvoicingPlugin\Converter\LineItemsConverterInterface;
 use Sylius\InvoicingPlugin\Converter\TaxItemsConverterInterface;
 use Sylius\InvoicingPlugin\Entity\BillingData;
-use Sylius\InvoicingPlugin\Entity\InvoiceChannelInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceShopBillingDataInterface;
 use Sylius\InvoicingPlugin\Factory\InvoiceFactoryInterface;
@@ -31,7 +28,6 @@ final class InvoiceGeneratorSpec extends ObjectBehavior
         InvoiceNumberGenerator $sequentialInvoiceNumberGenerator,
         InvoiceFactoryInterface $invoiceFactory,
         BillingDataConverterInterface $billingDataConverter,
-        InvoiceChannelConverterInterface $invoiceChannelConverter,
         InvoiceShopBillingDataConverterInterface $invoiceShopBillingDataConverter,
         LineItemsConverterInterface $lineItemConverter,
         TaxItemsConverterInterface $taxItemsConverter
@@ -41,7 +37,6 @@ final class InvoiceGeneratorSpec extends ObjectBehavior
             $sequentialInvoiceNumberGenerator,
             $invoiceFactory,
             $billingDataConverter,
-            $invoiceChannelConverter,
             $invoiceShopBillingDataConverter,
             $lineItemConverter,
             $taxItemsConverter
@@ -58,18 +53,14 @@ final class InvoiceGeneratorSpec extends ObjectBehavior
         InvoiceNumberGenerator $sequentialInvoiceNumberGenerator,
         InvoiceFactoryInterface $invoiceFactory,
         BillingDataConverterInterface $billingDataConverter,
-        InvoiceChannelConverterInterface $invoiceChannelConverter,
         InvoiceShopBillingDataConverterInterface $invoiceShopBillingDataConverter,
         LineItemsConverterInterface $lineItemConverter,
         TaxItemsConverterInterface $taxItemsConverter,
         OrderInterface $order,
         AddressInterface $billingAddress,
         ChannelInterface $channel,
-        InvoiceChannelInterface $invoiceChannel,
         InvoiceShopBillingDataInterface $invoiceShopBillingData,
         BillingData $billingData,
-        Collection $lineItems,
-        Collection $taxItems,
         InvoiceInterface $invoice
     ): void {
         $date = new \DateTimeImmutable('2019-03-06');
@@ -88,7 +79,6 @@ final class InvoiceGeneratorSpec extends ObjectBehavior
         $mockedTaxItems = new ArrayCollection();
 
         $billingDataConverter->convert($billingAddress)->willReturn($billingData);
-        $invoiceChannelConverter->convert($channel)->willReturn($invoiceChannel);
         $invoiceShopBillingDataConverter->convert($channel)->willReturn($invoiceShopBillingData);
         $lineItemConverter->convert($order)->willReturn($mockedLineItems);
         $taxItemsConverter->convert($order)->willReturn($mockedTaxItems);
@@ -104,7 +94,7 @@ final class InvoiceGeneratorSpec extends ObjectBehavior
             10300,
             $mockedLineItems,
             $mockedTaxItems,
-            $invoiceChannel,
+            $channel,
             $invoiceShopBillingData
         )->willReturn($invoice);
 

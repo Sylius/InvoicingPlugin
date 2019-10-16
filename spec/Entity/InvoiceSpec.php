@@ -6,9 +6,9 @@ namespace spec\Sylius\InvoicingPlugin\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use PhpSpec\ObjectBehavior;
+use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\InvoicingPlugin\Entity\BillingDataInterface;
-use Sylius\InvoicingPlugin\Entity\InvoiceChannelInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceShopBillingDataInterface;
 use Sylius\InvoicingPlugin\Entity\LineItemInterface;
@@ -20,7 +20,7 @@ final class InvoiceSpec extends ObjectBehavior
         BillingDataInterface $billingData,
         LineItemInterface $lineItem,
         TaxItemInterface $taxItem,
-        InvoiceChannelInterface $invoiceChannel,
+        ChannelInterface $channel,
         InvoiceShopBillingDataInterface $shopBillingData
     ): void {
         $issuedAt = \DateTimeImmutable::createFromFormat('Y-m', '2019-01');
@@ -36,7 +36,7 @@ final class InvoiceSpec extends ObjectBehavior
             10300,
             new ArrayCollection([$lineItem->getWrappedObject()]),
             new ArrayCollection([$taxItem->getWrappedObject()]),
-            $invoiceChannel,
+            $channel,
             $shopBillingData
         );
     }
@@ -55,7 +55,7 @@ final class InvoiceSpec extends ObjectBehavior
         BillingDataInterface $billingData,
         LineItemInterface $lineItem,
         TaxItemInterface $taxItem,
-        InvoiceChannelInterface $invoiceChannel,
+        ChannelInterface $channel,
         InvoiceShopBillingDataInterface $shopBillingData
     ): void {
         $this->id()->shouldReturn('7903c83a-4c5e-4bcf-81d8-9dc304c6a353');
@@ -67,7 +67,7 @@ final class InvoiceSpec extends ObjectBehavior
         $this->total()->shouldReturn(10300);
         $this->lineItems()->shouldBeLike(new ArrayCollection([$lineItem->getWrappedObject()]));
         $this->taxItems()->shouldBeLike(new ArrayCollection([$taxItem->getWrappedObject()]));
-        $this->channel()->shouldReturn($invoiceChannel);
+        $this->channel()->shouldReturn($channel);
         $this->shopBillingData()->shouldReturn($shopBillingData);
     }
 }
