@@ -9,7 +9,6 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Sylius\Component\Addressing\Model\CountryInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\ShopBillingData;
-use Sylius\InvoicingPlugin\Entity\ShopBillingDataAwareInterface;
 
 final class ChannelContext implements Context
 {

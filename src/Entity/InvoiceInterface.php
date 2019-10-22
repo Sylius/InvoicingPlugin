@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Sylius\InvoicingPlugin\Entity;
 
 use Doctrine\Common\Collections\Collection;
+use Sylius\Component\Core\Model\ChannelInterface;
 
 interface InvoiceInterface
 {
@@ -30,7 +31,7 @@ interface InvoiceInterface
 
     public function subtotal(): int;
 
-    public function channel(): InvoiceChannelInterface;
+    public function channel(): ChannelInterface;
 
     public function shopBillingData(): InvoiceShopBillingDataInterface;
 }

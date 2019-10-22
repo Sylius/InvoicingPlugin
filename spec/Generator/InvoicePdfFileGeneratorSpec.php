@@ -6,9 +6,7 @@ namespace spec\Sylius\InvoicingPlugin\Generator;
 
 use Knp\Snappy\GeneratorInterface;
 use PhpSpec\ObjectBehavior;
-use Sylius\Component\Channel\Repository\ChannelRepositoryInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
-use Sylius\InvoicingPlugin\Entity\InvoiceChannelInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Sylius\InvoicingPlugin\Generator\InvoicePdfFileGeneratorInterface;
 use Sylius\InvoicingPlugin\Model\InvoicePdf;
@@ -18,13 +16,11 @@ use Symfony\Component\Config\FileLocatorInterface;
 final class InvoicePdfFileGeneratorSpec extends ObjectBehavior
 {
     function let(
-        ChannelRepositoryInterface $channelRepository,
         EngineInterface $twig,
         GeneratorInterface $pdfGenerator,
         FileLocatorInterface $fileLocator
     ): void {
         $this->beConstructedWith(
-            $channelRepository,
             $twig,
             $pdfGenerator,
             $fileLocator,
@@ -39,18 +35,14 @@ final class InvoicePdfFileGeneratorSpec extends ObjectBehavior
     }
 
     function it_creates_invoice_pdf_with_generated_content_and_filename_basing_on_invoice_number(
-        ChannelRepositoryInterface $channelRepository,
         FileLocatorInterface $fileLocator,
         EngineInterface $twig,
         GeneratorInterface $pdfGenerator,
         InvoiceInterface $invoice,
-        ChannelInterface $channel,
-        InvoiceChannelInterface $invoiceChannel
+        ChannelInterface $channel
     ): void {
         $invoice->number()->willReturn('2015/05/00004444');
-        $invoice->channel()->willReturn($invoiceChannel);
-        $invoiceChannel->getCode()->willReturn('en_US');
-        $channelRepository->findOneByCode('en_US')->willReturn($channel);
+        $invoice->channel()->willReturn($channel);
 
         $fileLocator->locate('@SyliusInvoicingPlugin/Resources/assets/sylius-logo.png')->willReturn('located-path/sylius-logo.png');
 

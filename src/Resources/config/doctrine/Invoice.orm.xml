@@ -30,9 +30,16 @@
             </cascade>
         </one-to-many>
 
-        <embedded name="channel" class="Sylius\InvoicingPlugin\Entity\InvoiceChannel" />
+        <many-to-one field="channel" target-entity="Sylius\Component\Core\Model\ChannelInterface">
+            <join-column name="channel_id" />
+        </many-to-one>
 
-        <embedded name="shopBillingData" column-prefix="shop_billing_data_" class="Sylius\InvoicingPlugin\Entity\InvoiceShopBillingData" />
+        <one-to-one field="shopBillingData" target-entity="Sylius\InvoicingPlugin\Entity\InvoiceShopBillingData">
+            <cascade>
+                <cascade-all />
+            </cascade>
+            <join-column name="shop_billing_data_id" referenced-column-name="id" />
+        </one-to-one>
 
         <indexes>
             <index columns="order_number" />
