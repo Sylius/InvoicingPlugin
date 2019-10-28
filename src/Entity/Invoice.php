@@ -31,6 +31,9 @@ class Invoice implements InvoiceInterface, ResourceInterface
     protected $localeCode;
 
     /** @var int */
+    private $taxTotal;
+
+    /** @var int */
     protected $total;
 
     /** @var Collection|LineItemInterface[] */
@@ -68,6 +71,7 @@ class Invoice implements InvoiceInterface, ResourceInterface
         BillingDataInterface $billingData,
         string $currencyCode,
         string $localeCode,
+        int $taxTotal,
         int $total,
         Collection $lineItems,
         Collection $taxItems,
@@ -86,6 +90,7 @@ class Invoice implements InvoiceInterface, ResourceInterface
         $this->billingData = $billingData;
         $this->currencyCode = $currencyCode;
         $this->localeCode = $localeCode;
+        $this->taxTotal = $taxTotal;
         $this->total = $total;
         $this->lineItems = $lineItems;
         $this->taxItems = $taxItems;
@@ -148,9 +153,24 @@ class Invoice implements InvoiceInterface, ResourceInterface
         return $this->localeCode;
     }
 
+    public function taxTotal(): int
+    {
+        return $this->taxTotal;
+    }
+
+    public function setTaxTotal(int $taxTotal): void
+    {
+        $this->taxTotal = $taxTotal;
+    }
+
     public function total(): int
     {
         return $this->total;
+    }
+
+    public function setTotal(int $total): void
+    {
+        $this->total = $total;
     }
 
     public function lineItems(): Collection

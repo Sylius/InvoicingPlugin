@@ -9,6 +9,7 @@
         <field name="issuedAt" column="issued_at" type="datetime" />
         <field name="currencyCode" column="currency_code" length="3" />
         <field name="localeCode" column="locale_code" />
+        <field name="taxTotal" column="tax_total" type="integer" />
         <field name="total" column="total" type="integer" />
         <field name="paymentDueDate" column="payment_due_date" type="datetime" nullable="true"/>
         <field name="paymentReference" column="payment_reference" nullable="true"/>
