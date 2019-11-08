@@ -97,6 +97,7 @@ final class InvoiceGenerator implements InvoiceGeneratorInterface
                 $orderItem->getUnitPrice(),
                 $orderItem->getSubtotal(),
                 0,
+                0,
                 $orderItem->getTaxTotal(),
                 $orderItem->getTotal(),
                 $orderItem->getVariantName(),
@@ -112,6 +113,7 @@ final class InvoiceGenerator implements InvoiceGeneratorInterface
                 1,
                 $shippingAdjustment->getAmount(),
                 $shippingAdjustment->getAmount(),
+                0,
                 0,
                 0,
                 $shippingAdjustment->getAmount()
@@ -138,7 +140,7 @@ final class InvoiceGenerator implements InvoiceGeneratorInterface
         }
 
         foreach ($temporaryTaxItems as $label => $amount) {
-            $taxItems->add(new TaxItem($label, $amount));
+            $taxItems->add(new TaxItem($label, $amount, 0));
         }
 
         return $taxItems;

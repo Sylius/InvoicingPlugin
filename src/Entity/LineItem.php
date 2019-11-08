@@ -49,6 +49,9 @@ class LineItem implements LineItemInterface, ResourceInterface
     /** @var int */
     protected $promotionTotal;
 
+    /** @var float */
+    protected $taxRate;
+
     /** @var int */
     protected $taxTotal;
 
@@ -62,6 +65,7 @@ class LineItem implements LineItemInterface, ResourceInterface
         int $unitPrice,
         int $subtotal,
         int $promotionTotal,
+        float $taxRate,
         int $taxTotal,
         int $total,
         ?string $variantName = null,
@@ -75,6 +79,7 @@ class LineItem implements LineItemInterface, ResourceInterface
         $this->unitPrice = $unitPrice;
         $this->subtotal = $subtotal;
         $this->promotionTotal = $promotionTotal;
+        $this->taxRate = $taxRate;
         $this->taxTotal = $taxTotal;
         $this->total = $total;
         $this->variantName = $variantName;
@@ -151,6 +156,11 @@ class LineItem implements LineItemInterface, ResourceInterface
     public function promotionTotal(): int
     {
         return $this->promotionTotal;
+    }
+
+    public function taxRate(): float
+    {
+        return $this->taxRate;
     }
 
     public function taxTotal(): int
@@ -241,6 +251,14 @@ class LineItem implements LineItemInterface, ResourceInterface
     public function setPromotionTotal(int $promotionTotal): void
     {
         $this->promotionTotal = $promotionTotal;
+    }
+
+    /**
+     * @param float $taxRate
+     */
+    public function setTaxRate(float $taxRate): void
+    {
+        $this->taxRate = $taxRate;
     }
 
     /**

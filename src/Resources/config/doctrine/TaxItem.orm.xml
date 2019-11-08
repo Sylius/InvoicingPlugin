@@ -8,6 +8,7 @@
 
         <field name="label" />
         <field name="amount" type="integer" />
+        <field name="taxRate" column="tax_rate" type="float" />
 
         <many-to-one field="invoice" target-entity="Sylius\InvoicingPlugin\Entity\InvoiceInterface" inversed-by="taxItems">
             <join-column name="invoice_id" nullable="false" on-delete="CASCADE" />
