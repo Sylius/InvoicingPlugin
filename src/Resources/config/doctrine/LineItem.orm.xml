@@ -12,7 +12,7 @@
         <field name="unitPrice" column="unit_price" type="integer" />
         <field name="subtotal" type="integer" />
         <field name="promotionTotal" column="promotion_total" type="integer" />
-        <field name="taxRate" column="tax_rate" type="float" />
+        <field name="taxRate" column="tax_rate" type="float" nullable="true" />
         <field name="taxTotal" column="tax_total" type="integer" />
         <field name="total" type="integer" />
         <field name="variantCode" column="variant_code" nullable="true" />
