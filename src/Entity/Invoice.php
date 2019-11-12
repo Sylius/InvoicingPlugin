@@ -185,7 +185,7 @@ class Invoice implements InvoiceInterface, ResourceInterface
 
     public function sortedTaxItems(): array
     {
-        $taxItems = $this->taxItems();
+        $taxItems = $this->taxItems()->toArray();
 
         usort($taxItems, function (?TaxItem $a, ?TaxItem $b) {
             if ($a === null && $b === null) return 0;
