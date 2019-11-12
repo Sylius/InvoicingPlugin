@@ -183,6 +183,20 @@ class Invoice implements InvoiceInterface, ResourceInterface
         return $this->taxItems;
     }
 
+    public function sortedTaxItems(): array
+    {
+        $taxItems = $this->taxItems();
+
+        usort($taxItems, function (?TaxItem $a, ?TaxItem $b) {
+            if ($a === null && $b === null) return 0;
+            if ($a === null) return 1;
+            if ($b === null) return -1;
+            return strnatcasecmp(strval($a->taxRate() ?? 0.0), strval($b->taxRate() ?? 0.0));
+        });
+
+        return $taxItems;
+    }
+
     public function subtotal(): int
     {
         $subtotal = 0;
