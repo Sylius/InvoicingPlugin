@@ -140,7 +140,7 @@ final class InvoiceGenerator implements InvoiceGeneratorInterface
         }
 
         foreach ($temporaryTaxItems as $label => $amount) {
-            $taxItems->add(new TaxItem($label, $amount, null));
+            $taxItems->add(new TaxItem($label, $amount, null, null));
         }
 
         return $taxItems;

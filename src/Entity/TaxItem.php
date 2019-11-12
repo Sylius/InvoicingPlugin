@@ -23,11 +23,15 @@ class TaxItem implements TaxItemInterface, ResourceInterface
     /** @var float|null */
     protected $taxRate;
 
-    public function __construct(string $label, int $amount, ?float $taxRate)
+    /** @var string|null */
+    protected $accountingNumber;
+
+    public function __construct(string $label, int $amount, ?float $taxRate, ?string $accountingNumber)
     {
         $this->label = $label;
         $this->amount = $amount;
         $this->taxRate = $taxRate;
+        $this->accountingNumber = $accountingNumber;
     }
 
     public function getId(): string
@@ -65,6 +69,11 @@ class TaxItem implements TaxItemInterface, ResourceInterface
         return $this->taxRate;
     }
 
+    public function accountingNumber(): ?string
+    {
+        return $this->accountingNumber;
+    }
+
     /**
      * @param string $label
      */
@@ -87,5 +96,13 @@ class TaxItem implements TaxItemInterface, ResourceInterface
     public function setTaxRate(?float $taxRate): void
     {
         $this->taxRate = $taxRate;
+    }
+
+    /**
+     * @param null|string $accountingNumber
+     */
+    public function setAccountingNumber(?string $accountingNumber): void
+    {
+        $this->accountingNumber = $accountingNumber;
     }
 }
