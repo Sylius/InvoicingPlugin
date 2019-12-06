@@ -28,7 +28,7 @@ final class GenerateInvoicesCommand extends Command
         $this->orderRepository = $orderRepository;
     }
 
-    public function execute(InputInterface $input, OutputInterface $output): void
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         /** @var array $orders */
         $orders = $this->orderRepository
@@ -40,6 +40,8 @@ final class GenerateInvoicesCommand extends Command
         $this->massInvoicesCreator->__invoke($orders);
 
         $output->writeln('Invoices generated successfully');
+
+        return 0;
     }
 
     protected function configure(): void
