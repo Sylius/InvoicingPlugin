@@ -1,5 +1,11 @@
 # CHANGELOG
 
+### v0.10.0 (2019-12-06)
+
+- [#156](https://github.com/Sylius/InvoicingPlugin/issues/156) Change test server to Symfony server ([@AdamKasp](https://github.com/AdamKasp))
+- [#161](https://github.com/Sylius/InvoicingPlugin/issues/161) Remove embeddable and replace InvoicingChannel to Channel form Core ([@Tomanhez](https://github.com/Tomanhez))
+- [#165](https://github.com/Sylius/InvoicingPlugin/issues/165) fix(deps): loosen constraint for symfony/messenger ([@Gounlaf](https://github.com/Gounlaf), [@pamil](https://github.com/pamil))
+
 ### v0.9.0 (2019-10-17)
 
 - [#97](https://github.com/Sylius/InvoicingPlugin/issues/97) Make entities extendable ([@tautelis](https://github.com/tautelis), [@pamil](https://github.com/pamil))
