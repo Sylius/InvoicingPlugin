@@ -1,0 +1,25 @@
+---------------------------------------------------------------------------
+
+by Gounlaf at 2019-11-25T12:19:25Z
+
+> Hello Florian,
+>
+> thanks for the contribution! Could you take a look into failing build?
+
+Well, I can fix it if you want, but it's not related to this PR...
+
+It's related to release 4.4.
+IMO implemented method (execute) shouldn't have a return type (even if required php version is >= 7.2) to respect contract/parent method.
+Another PR should be done to fix it;
+
+---------------------------------------------------------------------------
+
+by pamil at 2019-11-27T10:10:33Z
+
+There are BC breaks between Messenger 4.3 and 4.4, it might be worth to review them: https://github.com/symfony/symfony/blob/master/UPGRADE-4.4.md#messenger
+
+---------------------------------------------------------------------------
+
+by pamil at 2019-12-06T13:39:13Z
+
+Thanks, Florian! :1st_place_medal:
