@@ -58,6 +58,9 @@ class LineItem implements LineItemInterface, ResourceInterface
     /** @var int */
     protected $total;
 
+    /** @var string|null */
+    protected $accountingNumber;
+
     public function __construct(
         string $type,
         string $name,
@@ -71,7 +74,8 @@ class LineItem implements LineItemInterface, ResourceInterface
         ?string $variantName = null,
         ?string $variantCode = null,
         array $variantOptions = [],
-        ?string $itemNumber = null
+        ?string $itemNumber = null,
+        ?string $accountingNumber = null
     ) {
         $this->type = $type;
         $this->name = $name;
@@ -86,6 +90,7 @@ class LineItem implements LineItemInterface, ResourceInterface
         $this->variantCode = $variantCode;
         $this->variantOptions = $variantOptions;
         $this->itemNumber = $itemNumber;
+        $this->accountingNumber = $accountingNumber;
     }
 
     public function getId(): string
@@ -171,6 +176,11 @@ class LineItem implements LineItemInterface, ResourceInterface
     public function total(): int
     {
         return $this->total;
+    }
+
+    public function accountingNumber(): ?string
+    {
+        return $this->accountingNumber;
     }
 
     /**
@@ -275,5 +285,13 @@ class LineItem implements LineItemInterface, ResourceInterface
     public function setTotal(int $total): void
     {
         $this->total = $total;
+    }
+
+    /**
+     * @param null|string $accountingNumber
+     */
+    public function setAccountingNumber(?string $accountingNumber): void
+    {
+        $this->accountingNumber = $accountingNumber;
     }
 }
