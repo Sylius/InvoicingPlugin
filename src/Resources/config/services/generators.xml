@@ -28,7 +28,7 @@
             <argument type="service" id="knp_snappy.pdf" />
             <argument type="service" id="file_locator" />
             <argument>@SyliusInvoicingPlugin/Invoice/Download/pdf.html.twig</argument>
-            <argument>%sylius.invoicing.logo_file%</argument>
+            <argument>%sylius.invoicing.template.logo_file%</argument>
         </service>
 
         <service id="sylius_invoicing_plugin.creator.invoice" class="Sylius\InvoicingPlugin\Creator\InvoiceCreator">
