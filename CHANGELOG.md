@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### v0.10.1 (2020-01-10)
+
+- [#167](https://github.com/Sylius/InvoicingPlugin/issues/167) Add missing migration ([@AdamKasp](https://github.com/AdamKasp))
+
 ### v0.10.0 (2019-12-06)
 
 - [#156](https://github.com/Sylius/InvoicingPlugin/issues/156) Change test server to Symfony server ([@AdamKasp](https://github.com/AdamKasp))
