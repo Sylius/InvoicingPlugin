@@ -48,6 +48,7 @@
         "symfony/web-server-bundle": "^4.3"
     },
     "conflict": {
+        "sylius/grid-bundle": "1.7.4",
         "symfony/doctrine-bridge": "4.3.0",
         "symfony/framework-bundle": "4.3.0"
     },
