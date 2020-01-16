@@ -9,9 +9,15 @@ use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\InvoicingPlugin\Entity\BillingDataInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceShopBillingDataInterface;
+use Sylius\InvoicingPlugin\Entity\LineItemInterface;
+use Sylius\InvoicingPlugin\Entity\TaxItemInterface;
 
 interface InvoiceFactoryInterface
 {
+    /**
+     * @param Collection<array-key, LineItemInterface> $lineItems
+     * @param Collection<array-key, TaxItemInterface> $taxItems
+     */
     public function createForData(
         string $id,
         string $number,

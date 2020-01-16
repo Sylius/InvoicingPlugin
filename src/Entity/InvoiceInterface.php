@@ -25,8 +25,10 @@ interface InvoiceInterface
 
     public function total(): int;
 
+    /** @return Collection<array-key, LineItemInterface> */
     public function lineItems(): Collection;
 
+    /** @return Collection<array-key, TaxItemInterface> */
     public function taxItems(): Collection;
 
     public function subtotal(): int;

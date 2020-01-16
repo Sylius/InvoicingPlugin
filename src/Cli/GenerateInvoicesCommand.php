@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Sylius\InvoicingPlugin\Cli;
 
+use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Repository\OrderRepositoryInterface;
 use Sylius\InvoicingPlugin\Creator\MassInvoicesCreatorInterface;
 use Symfony\Component\Console\Command\Command;
@@ -30,7 +31,7 @@ final class GenerateInvoicesCommand extends Command
 
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        /** @var array $orders */
+        /** @var array<OrderInterface> $orders */
         $orders = $this->orderRepository
             ->createListQueryBuilder()
             ->andWhere('o.number IS NOT NULL')

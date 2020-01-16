@@ -42,7 +42,6 @@ final class InvoiceVoter extends Voter
 
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token): bool
     {
-        /** @var InvoiceInterface $subject */
         Assert::isInstanceOf($subject, InvoiceInterface::class);
 
         $user = $token->getUser();

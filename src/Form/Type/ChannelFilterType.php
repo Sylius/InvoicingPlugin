@@ -20,7 +20,11 @@ final class ChannelFilterType extends AbstractType
         $this->channelRepository = $channelRepository;
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    /**
+     * @param FormBuilderInterface|FormBuilderInterface[] $builder
+     * @param mixed[] $options
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('channel', ChoiceType::class, [
             'choices' => $this->getChannelsList(),
@@ -29,6 +33,7 @@ final class ChannelFilterType extends AbstractType
         ]);
     }
 
+    /** @return array<string, string> */
     private function getChannelsList(): array
     {
         $channels = [];

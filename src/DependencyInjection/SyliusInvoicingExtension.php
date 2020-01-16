@@ -11,6 +11,7 @@ use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 
 final class SyliusInvoicingExtension extends AbstractResourceExtension
 {
+    /** @param mixed[] $config */
     public function load(array $config, ContainerBuilder $container): void
     {
         $config = $this->processConfiguration($this->getConfiguration([], $container), $config);

@@ -35,10 +35,10 @@ class Invoice implements InvoiceInterface, ResourceInterface
     /** @var int */
     protected $total;
 
-    /** @var Collection|LineItemInterface[] */
+    /** @var Collection<array-key, LineItemInterface> */
     protected $lineItems;
 
-    /** @var Collection|TaxItemInterface[] */
+    /** @var Collection<array-key, TaxItemInterface> */
     protected $taxItems;
 
     /** @var ChannelInterface */
@@ -47,6 +47,10 @@ class Invoice implements InvoiceInterface, ResourceInterface
     /** @var InvoiceShopBillingDataInterface */
     protected $shopBillingData;
 
+    /**
+     * @param Collection<array-key, LineItemInterface> $lineItems
+     * @param Collection<array-key, TaxItemInterface> $taxItems
+     */
     public function __construct(
         string $id,
         string $number,
