@@ -13,6 +13,7 @@
         <field name="total" column="total" type="integer" />
         <field name="paymentDueDate" column="payment_due_date" type="datetime" nullable="true"/>
         <field name="paymentReference" column="payment_reference" nullable="true"/>
+        <field name="paymentCommitmentNumber" column="payment_commitment_number" nullable="true"/>
         <field name="orderCustomerReference" column="order_customer_reference" nullable="true"/>
         <field name="promotionCouponUsed" column="promotion_coupon_used" nullable="true"/>
 

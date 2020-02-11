@@ -58,6 +58,9 @@ class Invoice implements InvoiceInterface, ResourceInterface
     protected $paymentReference;
 
     /** @var string|null */
+    protected $paymentCommitmentNumber;
+
+    /** @var string|null */
     protected $orderCustomerReference;
 
     /** @var string|null */
@@ -80,6 +83,7 @@ class Invoice implements InvoiceInterface, ResourceInterface
         InvoicePaymentMethodInterface $paymentMethod,
         ?\DateTimeInterface $paymentDueDate = null,
         ?string $paymentReference = null,
+        ?string $paymentCommitmentNumber = null,
         ?string $orderCustomerReference = null,
         ?string $promotionCouponUsed = null
     ) {
@@ -99,6 +103,7 @@ class Invoice implements InvoiceInterface, ResourceInterface
         $this->paymentMethod = $paymentMethod;
         $this->paymentDueDate = $paymentDueDate;
         $this->paymentReference = $paymentReference;
+        $this->paymentCommitmentNumber = $paymentCommitmentNumber;
         $this->orderCustomerReference = $orderCustomerReference;
         $this->promotionCouponUsed = $promotionCouponUsed;
 
@@ -242,6 +247,16 @@ class Invoice implements InvoiceInterface, ResourceInterface
     public function setPaymentReference(?string $paymentReference): void
     {
         $this->paymentReference = $paymentReference;
+    }
+
+    public function paymentCommitmentNumber(): ?string
+    {
+        return $this->paymentCommitmentNumber;
+    }
+
+    public function setPaymentCommitmentNumber(?string $paymentCommitmentNumber): void
+    {
+        $this->paymentCommitmentNumber = $paymentCommitmentNumber;
     }
 
     public function orderCustomerReference(): ?string
