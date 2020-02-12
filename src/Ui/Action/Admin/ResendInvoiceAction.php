@@ -29,10 +29,9 @@ final class ResendInvoiceAction
     /** @var UrlGeneratorInterface */
     private $urlGenerator;
 
-    /** @var Session|Session[] */
+    /** @var Session */
     private $session;
 
-    /** @param Session|Session[] $session */
     public function __construct(
         InvoiceRepository $invoiceRepository,
         InvoiceEmailSenderInterface $invoiceEmailSender,

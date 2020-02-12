@@ -13,7 +13,7 @@ final class AdminMenuListener
     {
         $menu = $event->getMenu();
 
-        /** @var ItemInterface|ItemInterface[] $salesMenu */
+        /** @var ItemInterface $salesMenu */
         $salesMenu = $menu->getChild('sales');
 
         $salesMenu
