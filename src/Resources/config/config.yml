@@ -13,6 +13,7 @@ knp_snappy:
 
 framework:
     messenger:
+        default_bus: sylius_invoicing_plugin.command_bus
         buses:
             sylius_invoicing_plugin.command_bus: ~
             sylius_invoicing_plugin.event_bus:
