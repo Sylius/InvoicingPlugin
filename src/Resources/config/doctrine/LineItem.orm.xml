@@ -24,5 +24,9 @@
         <many-to-one field="invoice" target-entity="Sylius\InvoicingPlugin\Entity\InvoiceInterface" inversed-by="lineItems">
             <join-column name="invoice_id" nullable="false" on-delete="CASCADE" />
         </many-to-one>
+
+        <indexes>
+            <index columns="item_number" />
+        </indexes>
     </entity>
 </doctrine-mapping>
