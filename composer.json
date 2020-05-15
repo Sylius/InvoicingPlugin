@@ -10,7 +10,7 @@
         "ramsey/uuid": "^3.7",
         "sylius/grid-bundle": "^1.7",
         "sylius/resource-bundle": "^1.6",
-        "sylius/sylius": "^1.4",
+        "sylius/sylius": "^1.7",
         "symfony/config": "^4.3",
         "symfony/dependency-injection": "^4.3",
         "symfony/form": "^4.3",
