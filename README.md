@@ -124,6 +124,27 @@ The dot's color is dependant on a property defined on Channel entity or, if not 
 
 Like any other parameter, `default_channel_color` can also be overwritten in your `config.yml` file.
 
+## Using different filesystem adapters
+
+You can change the adapter used by the invoice filesystem to generate your PDF files directly in AwsS3, AzureBlobStorage, SFTP, etc.
+
+First you need to install the corresponding adapter for your filesystem via `composer require`. Go to [this list](https://github.com/1up-lab/OneupFlysystemBundle/blob/master/Resources/doc/index.md#step-1-download-the-bundle) on the OneUpFlysystemBundle repository to see the available adapters and follow the links to the adapter configurations in [this section](https://github.com/1up-lab/OneupFlysystemBundle/blob/master/Resources/doc/index.md#step3-configure-your-filesystems).
+
+If you want your PDF files to be stored in a local directory you can leverage the `LocalAdapter` with the following adapter configuration in your `oneup_flysystem.yaml` without having to install an additional adapter:
+
+```
+oneup_flysystem:
+    adapters:
+        invoice:
+            local:
+                directory: '%kernel.project_dir%/var/storage/invoice'
+
+    filesystems:
+        invoice:
+            adapter: invoice
+            alias: League\Flysystem\Filesystem
+```
+
 ## Fixtures
 
 You can add `ShopBillingData` fixtures into a yaml to add Channel ShopBillingData info to your installation.

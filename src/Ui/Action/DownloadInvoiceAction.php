@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Sylius\InvoicingPlugin\Ui\Action;
 
+use League\Flysystem\FilesystemInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Sylius\InvoicingPlugin\Generator\InvoicePdfFileGeneratorInterface;
 use Sylius\InvoicingPlugin\Repository\InvoiceRepository;
@@ -23,14 +24,19 @@ final class DownloadInvoiceAction
     /** @var InvoicePdfFileGeneratorInterface */
     private $invoicePdfFileGenerator;
 
+    /** @var FilesystemInterface */
+    private $invoiceFilesystem;
+
     public function __construct(
         InvoiceRepository $invoiceRepository,
         AuthorizationCheckerInterface $authorizationChecker,
-        InvoicePdfFileGeneratorInterface $invoicePdfFileGenerator
+        InvoicePdfFileGeneratorInterface $invoicePdfFileGenerator,
+        FilesystemInterface $invoiceFilesystem
     ) {
         $this->invoiceRepository = $invoiceRepository;
         $this->authorizationChecker = $authorizationChecker;
         $this->invoicePdfFileGenerator = $invoicePdfFileGenerator;
+        $this->invoiceFilesystem = $invoiceFilesystem;
     }
 
     public function __invoke(string $id): Response
@@ -42,11 +48,22 @@ final class DownloadInvoiceAction
             throw new AccessDeniedHttpException();
         }
 
-        $invoicePdf = $this->invoicePdfFileGenerator->generate($invoice);
+        $pdfInvoiceFilename = $this->invoicePdfFileGenerator->buildFilenameForInvoice($invoice);
 
-        $response = new Response($invoicePdf->content(), Response::HTTP_OK, ['Content-Type' => 'application/pdf']);
+        if (!$this->invoiceFilesystem->has($pdfInvoiceFilename)) {
+            $pdfInvoice = $this->invoicePdfFileGenerator->generate($invoice);
+
+            $this->invoiceFilesystem->put(
+                $pdfInvoice->filename(),
+                $pdfInvoice->content()
+            );
+        }
+
+        $pdfInvoiceFile = $this->invoiceFilesystem->read($pdfInvoiceFilename);
+
+        $response = new Response($pdfInvoiceFile, Response::HTTP_OK, ['Content-Type' => 'application/pdf']);
         $response->headers->add([
-            'Content-Disposition' => $response->headers->makeDisposition('attachment', $invoicePdf->filename()),
+            'Content-Disposition' => $response->headers->makeDisposition('attachment', $pdfInvoiceFilename),
         ]);
 
         return $response;

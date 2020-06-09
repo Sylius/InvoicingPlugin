@@ -7,9 +7,10 @@ namespace Sylius\InvoicingPlugin\DependencyInjection;
 use Sylius\Bundle\ResourceBundle\DependencyInjection\Extension\AbstractResourceExtension;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 
-final class SyliusInvoicingExtension extends AbstractResourceExtension
+final class SyliusInvoicingExtension extends AbstractResourceExtension implements PrependExtensionInterface
 {
     public function load(array $config, ContainerBuilder $container): void
     {
@@ -19,5 +20,24 @@ final class SyliusInvoicingExtension extends AbstractResourceExtension
         $this->registerResources('sylius_invoicing_plugin', 'doctrine/orm', $config['resources'], $container);
 
         $loader->load('services.xml');
+    }
+
+    public function prepend(ContainerBuilder $container): void
+    {
+        $config = [
+            'adapters' => [
+                'invoice' => [
+                        'memory' => null,
+                ],
+            ],
+            'filesystems' => [
+                'invoice' => [
+                    'adapter' => 'invoice',
+                    'alias' => 'League\Flysystem\Filesystem',
+                ],
+            ],
+        ];
+
+        $container->prependExtensionConfig('oneup_flysystem', $config);
     }
 }

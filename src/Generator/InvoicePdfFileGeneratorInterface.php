@@ -10,4 +10,6 @@ use Sylius\InvoicingPlugin\Model\InvoicePdf;
 interface InvoicePdfFileGeneratorInterface
 {
     public function generate(InvoiceInterface $invoice): InvoicePdf;
+
+    public function buildFilenameForInvoice(InvoiceInterface $invoice): string;
 }

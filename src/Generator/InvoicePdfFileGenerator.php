@@ -45,8 +45,7 @@ final class InvoicePdfFileGenerator implements InvoicePdfFileGeneratorInterface
 
     public function generate(InvoiceInterface $invoice): InvoicePdf
     {
-        /** @var string $filename */
-        $filename = str_replace('/', '_', $invoice->number()) . self::FILE_EXTENSION;
+        $filename = $this->buildFilenameForInvoice($invoice);
 
         $pdf = $this->pdfGenerator->getOutputFromHtml(
             $this->templatingEngine->render($this->template, [
@@ -57,5 +56,10 @@ final class InvoicePdfFileGenerator implements InvoicePdfFileGeneratorInterface
         );
 
         return new InvoicePdf($filename, $pdf);
+    }
+
+    public function buildFilenameForInvoice(InvoiceInterface $invoice): string
+    {
+        return str_replace('/', '_', $invoice->number()) . self::FILE_EXTENSION;
     }
 }
