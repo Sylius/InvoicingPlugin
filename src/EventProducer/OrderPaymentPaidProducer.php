@@ -10,6 +10,7 @@ use Sylius\InvoicingPlugin\DateTimeProvider;
 use Sylius\InvoicingPlugin\Event\OrderPaymentPaid;
 use Sylius\InvoicingPlugin\Repository\InvoiceRepository;
 use Symfony\Component\Messenger\MessageBusInterface;
+use Webmozart\Assert\Assert;
 
 final class OrderPaymentPaidProducer
 {
@@ -38,8 +39,12 @@ final class OrderPaymentPaidProducer
             return;
         }
 
+        $order = $payment->getOrder();
+
+        Assert::notNull($order);
+
         $this->eventBus->dispatch(new OrderPaymentPaid(
-            $payment->getOrder()->getNumber(),
+            $order->getNumber(),
             $this->dateTimeProvider->__invoke()
         ));
     }

@@ -20,7 +20,7 @@ final class ChannelFilterType extends AbstractType
         $this->channelRepository = $channelRepository;
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('channel', ChoiceType::class, [
             'choices' => $this->getChannelsList(),

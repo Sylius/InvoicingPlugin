@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Core\Model\AdjustmentInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\InvoicingPlugin\Entity\TaxItem;
+use Webmozart\Assert\Assert;
 
 final class TaxItemsConverter implements TaxItemsConverterInterface
 {
@@ -19,13 +20,17 @@ final class TaxItemsConverter implements TaxItemsConverterInterface
 
         $taxAdjustments = $order->getAdjustmentsRecursively(AdjustmentInterface::TAX_ADJUSTMENT);
         foreach ($taxAdjustments as $taxAdjustment) {
-            if (array_key_exists($taxAdjustment->getLabel(), $temporaryTaxItems)) {
-                $temporaryTaxItems[$taxAdjustment->getLabel()] += $taxAdjustment->getAmount();
+            $taxAdjustmentLabel = $taxAdjustment->getLabel();
+
+            Assert::notNull($taxAdjustmentLabel);
+
+            if (array_key_exists($taxAdjustmentLabel, $temporaryTaxItems)) {
+                $temporaryTaxItems[$taxAdjustmentLabel] += $taxAdjustment->getAmount();
 
                 continue;
             }
 
-            $temporaryTaxItems[$taxAdjustment->getLabel()] = $taxAdjustment->getAmount();
+            $temporaryTaxItems[$taxAdjustmentLabel] = $taxAdjustment->getAmount();
         }
 
         foreach ($temporaryTaxItems as $label => $amount) {
