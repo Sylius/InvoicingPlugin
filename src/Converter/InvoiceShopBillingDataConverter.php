@@ -13,7 +13,7 @@ final class InvoiceShopBillingDataConverter implements InvoiceShopBillingDataCon
 {
     public function convert(ChannelInterface $channel): InvoiceShopBillingDataInterface
     {
-        /** @var ShopBillingDataInterface $shopBillingData */
+        /** @var ShopBillingDataInterface|null $shopBillingData */
         $shopBillingData = $channel->getShopBillingData();
 
         $invoiceShopBillingData = new InvoiceShopBillingData();
