@@ -34,5 +34,7 @@ interface LineItemInterface
 
     public function taxTotal(): int;
 
+    public function taxRate(): ?float;
+
     public function total(): int;
 }
