@@ -239,7 +239,7 @@ class Invoice implements InvoiceInterface, ResourceInterface
         /** @var LineItemInterface $lineItem */
         foreach ($this->lineItems as $lineItem) {
             if ($lineItem->type() === LineItem::TYPE_PROMOTION) {
-                $promotionTotal += $lineItem->promotionTotal();
+                $promotionTotal += $lineItem->total();
             } else {
                 $itemPromotionTotal += $lineItem->promotionTotal();
             }
