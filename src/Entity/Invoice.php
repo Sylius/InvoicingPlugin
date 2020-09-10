@@ -229,7 +229,7 @@ class Invoice implements InvoiceInterface, ResourceInterface
             }
         }
 
-        return $remainingPromotionTotal / (1.0 + $taxRate);
+        return (int) round($remainingPromotionTotal / (1.0 + $taxRate));
     }
 
     public function remainingPromotionTotal(): int {
