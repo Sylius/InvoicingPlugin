@@ -214,40 +214,6 @@ class Invoice implements InvoiceInterface, ResourceInterface
         return $subtotal;
     }
 
-    public function remainingPromotionSubtotal(): int {
-        if (0 === $remainingPromotionTotal = $this->remainingPromotionTotal()) {
-            return 0;
-        }
-
-        $taxRate = 0.2;
-
-        /** @var LineItemInterface $lineItem */
-        foreach ($this->lineItems as $lineItem) {
-            if ($lineItem->type() === LineItem::TYPE_PROMOTION && $lineItem->taxRate() !== null) {
-                $taxRate = $lineItem->taxRate();
-                break;
-            }
-        }
-
-        return (int) round($remainingPromotionTotal / (1.0 + $taxRate));
-    }
-
-    public function remainingPromotionTotal(): int {
-        $itemPromotionTotal = 0;
-        $promotionTotal = 0;
-
-        /** @var LineItemInterface $lineItem */
-        foreach ($this->lineItems as $lineItem) {
-            if ($lineItem->type() === LineItem::TYPE_PROMOTION) {
-                $promotionTotal += $lineItem->total();
-            } else {
-                $itemPromotionTotal += $lineItem->promotionTotal();
-            }
-        }
-
-        return ($promotionTotal - $itemPromotionTotal < 0) ? $promotionTotal - $itemPromotionTotal : 0;
-    }
-
     public function channel(): InvoiceChannelInterface
     {
         return $this->channel;
