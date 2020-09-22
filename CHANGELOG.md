@@ -1,5 +1,13 @@
 # CHANGELOG
 
+### v0.11.0 (2020-09-22)
+
+- [#178](https://github.com/Sylius/InvoicingPlugin/issues/178) Fix failing InvoicingPlugin build ([@GSadee](https://github.com/GSadee), )
+- [#183](https://github.com/Sylius/InvoicingPlugin/issues/183) Allow for PHP 7.4 & upgrade static analysis ([@pamil](https://github.com/pamil))
+- [#175](https://github.com/Sylius/InvoicingPlugin/issues/175) Switch to Doctrine/Migrations 3.0-alpha ([@pamil](https://github.com/pamil))
+- [#184](https://github.com/Sylius/InvoicingPlugin/issues/184) Remove old migrations + upgrade Sylius to 1.8 ([@GSadee](https://github.com/GSadee))
+- [#185](https://github.com/Sylius/InvoicingPlugin/issues/185) [Docs] Update of UPGRADE file and installation instruction ([@lchrusciel](https://github.com/lchrusciel))
+
 ### v0.10.1 (2020-01-10)
 
 - [#167](https://github.com/Sylius/InvoicingPlugin/issues/167) Add missing migration ([@AdamKasp](https://github.com/AdamKasp))
