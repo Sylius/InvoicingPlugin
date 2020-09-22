@@ -36,10 +36,9 @@ Additional feature of the plugin that fulfills Invoicing domain is the ability t
     
     > Remember to allow community recipes with `composer config extra.symfony.allow-contrib true` or during plugin installation process
 
-2. Copy plugin migrations to your migrations directory (e.g. `src/Migrations`) and apply them to your database:
+2. Apply migration to your database:
 
     ```bash
-    cp -R vendor/sylius/invoicing-plugin/migrations/* src/Migrations
     bin/console doctrine:migrations:migrate
     ```
 
