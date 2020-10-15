@@ -7,7 +7,7 @@ namespace Sylius\InvoicingPlugin\Doctrine\ORM;
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 
-final class InvoiceRepository extends EntityRepository implements InvoiceRepositoryInterface
+class InvoiceRepository extends EntityRepository implements InvoiceRepositoryInterface
 {
     public function findOneByOrderNumber(string $orderNumber): ?InvoiceInterface
     {
