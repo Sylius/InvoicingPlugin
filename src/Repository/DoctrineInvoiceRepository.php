@@ -4,43 +4,27 @@ declare(strict_types=1);
 
 namespace Sylius\InvoicingPlugin\Repository;
 
-use Doctrine\Common\Persistence\ObjectRepository;
-use Doctrine\ORM\EntityManagerInterface;
-use Sylius\InvoicingPlugin\Entity\Invoice;
+@trigger_error('The "DoctrineInvoiceRepository" class is deprecated since version 0.11.1 Use standardized class located at "src/Doctrine/ORM/" instead.');
+
+use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
+use Webmozart\Assert\Assert;
 
-final class DoctrineInvoiceRepository implements InvoiceRepository
+final class DoctrineInvoiceRepository extends EntityRepository implements InvoiceRepository
 {
-    /** @var EntityManagerInterface */
-    private $entityManager;
-
-    /** @var ObjectRepository */
-    private $entityRepository;
-
-    public function __construct(EntityManagerInterface $entityManager)
-    {
-        $this->entityManager = $entityManager;
-        $this->entityRepository = $entityManager->getRepository(Invoice::class);
-    }
-
     public function get(string $invoiceId): InvoiceInterface
     {
-        /** @var InvoiceInterface $invoice */
-        $invoice = $this->entityRepository->find($invoiceId);
+        /** @var InvoiceInterface|null $invoice */
+        $invoice = $this->find($invoiceId);
+        Assert::notNull($invoice);
 
         return $invoice;
-    }
-
-    public function add(InvoiceInterface $invoice): void
-    {
-        $this->entityManager->persist($invoice);
-        $this->entityManager->flush();
     }
 
     public function findOneByOrderNumber(string $orderNumber): ?InvoiceInterface
     {
         /** @var InvoiceInterface|null $invoice */
-        $invoice = $this->entityRepository->findOneBy(['orderNumber' => $orderNumber]);
+        $invoice = $this->findOneBy(['orderNumber' => $orderNumber]);
 
         return $invoice;
     }

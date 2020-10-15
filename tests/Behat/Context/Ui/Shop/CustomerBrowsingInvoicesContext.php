@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Tests\Sylius\InvoicingPlugin\Behat\Context\Ui\Shop;
 
 use Behat\Behat\Context\Context;
+use Sylius\InvoicingPlugin\Doctrine\ORM\InvoiceRepositoryInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
-use Sylius\InvoicingPlugin\Repository\InvoiceRepository;
 use Tests\Sylius\InvoicingPlugin\Behat\Page\Shop\Order\DownloadInvoicePageInterface;
 use Tests\Sylius\InvoicingPlugin\Behat\Page\Shop\Order\ShowPageInterface;
 use Webmozart\Assert\Assert;
@@ -19,13 +19,13 @@ final class CustomerBrowsingInvoicesContext implements Context
     /** @var DownloadInvoicePageInterface */
     private $downloadInvoicePage;
 
-    /** @var InvoiceRepository */
+    /** @var InvoiceRepositoryInterface */
     private $invoiceRepository;
 
     public function __construct(
         ShowPageInterface $orderShowPage,
         DownloadInvoicePageInterface $downloadInvoicePage,
-        InvoiceRepository $invoiceRepository
+        InvoiceRepositoryInterface $invoiceRepository
     ) {
         $this->orderShowPage = $orderShowPage;
         $this->downloadInvoicePage = $downloadInvoicePage;

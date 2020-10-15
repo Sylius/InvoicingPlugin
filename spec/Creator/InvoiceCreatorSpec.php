@@ -9,15 +9,15 @@ use Prophecy\Argument;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Repository\OrderRepositoryInterface;
 use Sylius\InvoicingPlugin\Creator\InvoiceCreatorInterface;
+use Sylius\InvoicingPlugin\Doctrine\ORM\InvoiceRepositoryInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Sylius\InvoicingPlugin\Exception\InvoiceAlreadyGenerated;
 use Sylius\InvoicingPlugin\Generator\InvoiceGeneratorInterface;
-use Sylius\InvoicingPlugin\Repository\InvoiceRepository;
 
 final class InvoiceCreatorSpec extends ObjectBehavior
 {
     public function let(
-        InvoiceRepository $invoiceRepository,
+        InvoiceRepositoryInterface $invoiceRepository,
         OrderRepositoryInterface $orderRepository,
         InvoiceGeneratorInterface $invoiceGenerator
     ): void {
@@ -30,7 +30,7 @@ final class InvoiceCreatorSpec extends ObjectBehavior
     }
 
     public function it_creates_invoice_for_order(
-        InvoiceRepository $invoiceRepository,
+        InvoiceRepositoryInterface $invoiceRepository,
         OrderRepositoryInterface $orderRepository,
         InvoiceGeneratorInterface $invoiceGenerator,
         OrderInterface $order,
@@ -50,7 +50,7 @@ final class InvoiceCreatorSpec extends ObjectBehavior
     }
 
     public function it_throws_an_exception_when_invoice_was_already_created_for_given_order(
-        InvoiceRepository $invoiceRepository,
+        InvoiceRepositoryInterface $invoiceRepository,
         OrderRepositoryInterface $orderRepository,
         InvoiceGeneratorInterface $invoiceGenerator,
         InvoiceInterface $invoice
