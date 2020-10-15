@@ -8,16 +8,6 @@
             <tag name="kernel.event_listener" event="sylius.menu.admin.main" method="__invoke" />
         </service>
 
-        <service id="sylius_invoicing_plugin.block_event_listener.account.order_show" class="Sylius\Bundle\UiBundle\Block\BlockEventListener">
-            <argument>@SyliusInvoicingPlugin/Order/Shop/fetchInvoices.html.twig</argument>
-            <tag name="kernel.event_listener" event="sonata.block.event.sylius.shop.account.order.show.after_summary" method="onBlockEvent" />
-        </service>
-
-        <service id="sylius_invoicing_plugin.block_event_listener.order_show" class="Sylius\Bundle\UiBundle\Block\BlockEventListener">
-            <argument>@SyliusInvoicingPlugin/Order/Admin/fetchInvoices.html.twig</argument>
-            <tag name="kernel.event_listener" event="sonata.block.event.sylius.admin.order.show.after_summary" method="onBlockEvent" />
-        </service>
-
         <service id="sylius_invoicing_plugin.form.type.channel_filter" class="Sylius\InvoicingPlugin\Form\Type\ChannelFilterType">
             <argument type="service" id="sylius.repository.channel" />
             <tag name="form.type" />
