@@ -48,6 +48,9 @@
         "symfony/web-profiler-bundle": "^4.4",
         "symfony/web-server-bundle": "^4.4"
     },
+    "conflict": {
+        "symplify/package-builder": "^8.3.25"
+    },
     "autoload": {
         "psr-4": {
             "Sylius\\InvoicingPlugin\\": "src/",
