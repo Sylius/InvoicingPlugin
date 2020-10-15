@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Sylius\InvoicingPlugin\Repository;
 
-@trigger_error('The "DoctrineInvoiceRepository" class is deprecated since version 0.11.1 Use standardized class located at "src/Doctrine/ORM/" instead.');
+@trigger_error('The "DoctrineInvoiceRepository" class is deprecated since version 1.0.0 Use standardized class located at "src/Doctrine/ORM/" instead.');
 
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
