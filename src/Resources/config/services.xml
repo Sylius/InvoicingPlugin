@@ -10,7 +10,9 @@
 
         <service id="sylius_invoicing_plugin.date_time_provider" class="Sylius\InvoicingPlugin\SystemDateTimeProvider" />
 
-        <service id="sylius_invoicing_plugin.custom_repository.invoice" class="Sylius\InvoicingPlugin\Repository\DoctrineInvoiceRepository" />
+        <service id="sylius_invoicing_plugin.custom_repository.invoice" class="Sylius\InvoicingPlugin\Repository\DoctrineInvoiceRepository">
+            <argument>%sylius_invoicing_plugin.model.invoice.class%</argument>
+        </service>
 
         <service id="sylius_invoicing_plugin.email.invoice_email_sender" class="Sylius\InvoicingPlugin\Email\InvoiceEmailSender">
             <argument type="service" id="sylius.email_sender" />

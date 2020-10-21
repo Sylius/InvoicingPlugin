@@ -17,10 +17,10 @@ final class DoctrineInvoiceRepository implements InvoiceRepository
     /** @var ObjectRepository */
     private $entityRepository;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, string $className)
     {
         $this->entityManager = $entityManager;
-        $this->entityRepository = $entityManager->getRepository(Invoice::class);
+        $this->entityRepository = $entityManager->getRepository($className);
     }
 
     public function get(string $invoiceId): InvoiceInterface
