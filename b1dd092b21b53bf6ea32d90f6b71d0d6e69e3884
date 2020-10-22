@@ -1,0 +1,12 @@
+---------------------------------------------------------------------------
+
+by Prometee at 2020-10-22T09:20:11Z
+
+I don't dig enough about the changes occurring into ECS but it seems that `sylius/sylius` is not using it anymore (not sure of this).
+What's the plan for the futur of ECS into Sylius and Sylius's plugins ?
+
+---------------------------------------------------------------------------
+
+by GSadee at 2020-10-22T10:14:45Z
+
+Hi @Prometee! To be honest, I have no opinion about using ECS in `Sylius/Sylius` repository, but this package is still valuable and we want to use them in plugins for sure
