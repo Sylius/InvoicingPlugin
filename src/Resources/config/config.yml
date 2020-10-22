@@ -103,3 +103,16 @@ sylius_grid:
                                 route: sylius_invoicing_plugin_admin_invoice_resend
                                 parameters:
                                     id: resource.id
+
+sylius_ui:
+    events:
+        sylius.admin.order.show.summary:
+            blocks:
+                sylius_invoicing_plugin:
+                    template: '@SyliusInvoicingPlugin/Order/Admin/fetchInvoices.html.twig'
+                    priority: 15
+        sylius.shop.account.order.show.subcontent:
+            blocks:
+                sylius_invoicing_plugin:
+                    template: '@SyliusInvoicingPlugin/Order/Shop/fetchInvoices.html.twig'
+                    priority: 15

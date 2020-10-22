@@ -19,7 +19,7 @@
                 </td>
                 <td>{{ invoice.channel.name }}</td>
                 <td>
-                    {{ invoice.issuedAt|date('d-m-Y') }}
+                    {{ invoice.issuedAt|format_date }}
                 </td>
                 <td>
                     {% set path = path('sylius_invoicing_plugin_admin_invoice_download', { 'id': invoice.id }) %}

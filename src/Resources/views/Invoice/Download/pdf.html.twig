@@ -32,7 +32,7 @@
 
                         <td>
                             Invoice #{{ invoice.number }}<br>
-                            Issued at: {{ invoice.issuedAt|date('Y-m-d H:i:s') }}<br>
+                            Issued at: {{ invoice.issuedAt|format_datetime }}<br>
                         </td>
                     </tr>
                 </table>
