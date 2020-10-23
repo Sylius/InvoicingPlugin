@@ -1,0 +1,16 @@
+---------------------------------------------------------------------------
+
+by Prometee at 2020-10-15T14:33:12Z
+
+@pamil @GSadee I fix the ECS error, but this fix should maybe part of another PR I guess :
+
+```
+[ERROR] Class "Symplify\PackageBuilder\Console\HelpfulApplicationTrait" not found while loading
+         "Symplify\EasyCodingStandard\Console\EasyCodingStandardConsoleApplication".
+```
+
+---------------------------------------------------------------------------
+
+by GSadee at 2020-10-23T10:26:09Z
+
+Thanks, Francis! :tada:
