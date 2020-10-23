@@ -10,15 +10,13 @@
 
         <service id="sylius_invoicing_plugin.date_time_provider" class="Sylius\InvoicingPlugin\SystemDateTimeProvider" />
 
-        <service id="sylius_invoicing_plugin.custom_repository.invoice" class="Sylius\InvoicingPlugin\Repository\DoctrineInvoiceRepository" />
-
         <service id="sylius_invoicing_plugin.email.invoice_email_sender" class="Sylius\InvoicingPlugin\Email\InvoiceEmailSender">
             <argument type="service" id="sylius.email_sender" />
             <argument type="service" id="sylius_invoicing_plugin.generator.invoice_pdf_file" />
         </service>
 
         <service id="sylius_invoicing_plugin.command_handler.send_invoice_email" class="Sylius\InvoicingPlugin\CommandHandler\SendInvoiceEmailHandler">
-            <argument type="service" id="sylius_invoicing_plugin.custom_repository.invoice" />
+            <argument type="service" id="sylius_invoicing_plugin.repository.invoice" />
             <argument type="service" id="sylius.repository.order" />
             <argument type="service" id="sylius_invoicing_plugin.email.invoice_email_sender" />
             <tag name="messenger.message_handler" />

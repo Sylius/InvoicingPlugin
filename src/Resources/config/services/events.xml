@@ -7,7 +7,7 @@
         <service id="sylius_invoicing_plugin.event_producer.order_payment_paid" class="Sylius\InvoicingPlugin\EventProducer\OrderPaymentPaidProducer">
             <argument type="service" id="sylius_invoicing_plugin.event_bus" />
             <argument type="service" id="sylius_invoicing_plugin.date_time_provider" />
-            <argument type="service" id="sylius_invoicing_plugin.custom_repository.invoice" />
+            <argument type="service" id="sylius_invoicing_plugin.repository.invoice" />
         </service>
 
         <service id="sylius_invoicing_plugin.event_listener.order_placed" class="Sylius\InvoicingPlugin\EventListener\CreateInvoiceOnOrderPlacedListener">

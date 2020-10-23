@@ -9,14 +9,14 @@ use Sylius\Component\Core\Model\CustomerInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Repository\OrderRepositoryInterface;
 use Sylius\InvoicingPlugin\Command\SendInvoiceEmail;
+use Sylius\InvoicingPlugin\Doctrine\ORM\InvoiceRepositoryInterface;
 use Sylius\InvoicingPlugin\Email\InvoiceEmailSenderInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
-use Sylius\InvoicingPlugin\Repository\InvoiceRepository;
 
 final class SendInvoiceEmailHandlerSpec extends ObjectBehavior
 {
     function let(
-        InvoiceRepository $invoiceRepository,
+        InvoiceRepositoryInterface $invoiceRepository,
         OrderRepositoryInterface $orderRepository,
         InvoiceEmailSenderInterface $emailSender
     ): void {
@@ -24,7 +24,7 @@ final class SendInvoiceEmailHandlerSpec extends ObjectBehavior
     }
 
     function it_requests_an_email_with_an_invoice_to_be_sent(
-        InvoiceRepository $invoiceRepository,
+        InvoiceRepositoryInterface $invoiceRepository,
         OrderRepositoryInterface $orderRepository,
         InvoiceEmailSenderInterface $emailSender,
         InvoiceInterface $invoice,
@@ -45,7 +45,7 @@ final class SendInvoiceEmailHandlerSpec extends ObjectBehavior
     }
 
     function it_does_not_request_an_email_to_be_sent_if_invoice_was_not_found(
-        InvoiceRepository $invoiceRepository,
+        InvoiceRepositoryInterface $invoiceRepository,
         OrderRepositoryInterface $orderRepository,
         InvoiceEmailSenderInterface $emailSender,
         OrderInterface $order,

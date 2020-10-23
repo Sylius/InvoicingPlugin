@@ -8,7 +8,7 @@ use Behat\Behat\Context\Context;
 use Sylius\Behat\NotificationType;
 use Sylius\Behat\Service\NotificationCheckerInterface;
 use Sylius\Component\Core\Model\OrderInterface;
-use Sylius\InvoicingPlugin\Repository\InvoiceRepository;
+use Sylius\InvoicingPlugin\Doctrine\ORM\InvoiceRepositoryInterface;
 use Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Invoice\IndexPageInterface;
 use Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Invoice\ShowPageInterface;
 use Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Order\ShowPageInterface as OrderShowPageInterface;
@@ -25,7 +25,7 @@ final class ManagingInvoicesContext implements Context
     /** @var OrderShowPageInterface */
     private $orderShowPage;
 
-    /** @var InvoiceRepository */
+    /** @var InvoiceRepositoryInterface */
     private $invoiceRepository;
 
     /** @var NotificationCheckerInterface */
@@ -35,7 +35,7 @@ final class ManagingInvoicesContext implements Context
         IndexPageInterface $indexPage,
         ShowPageInterface $showPage,
         OrderShowPageInterface $orderShowPage,
-        InvoiceRepository $invoiceRepository,
+        InvoiceRepositoryInterface $invoiceRepository,
         NotificationCheckerInterface $notificationChecker
     ) {
         $this->indexPage = $indexPage;

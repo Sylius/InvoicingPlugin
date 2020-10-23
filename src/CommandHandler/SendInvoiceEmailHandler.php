@@ -7,13 +7,13 @@ namespace Sylius\InvoicingPlugin\CommandHandler;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Repository\OrderRepositoryInterface;
 use Sylius\InvoicingPlugin\Command\SendInvoiceEmail;
+use Sylius\InvoicingPlugin\Doctrine\ORM\InvoiceRepositoryInterface;
 use Sylius\InvoicingPlugin\Email\InvoiceEmailSenderInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
-use Sylius\InvoicingPlugin\Repository\InvoiceRepository;
 
 final class SendInvoiceEmailHandler
 {
-    /** @var InvoiceRepository */
+    /** @var InvoiceRepositoryInterface */
     private $invoiceRepository;
 
     /** @var OrderRepositoryInterface */
@@ -23,7 +23,7 @@ final class SendInvoiceEmailHandler
     private $emailSender;
 
     public function __construct(
-        InvoiceRepository $invoiceRepository,
+        InvoiceRepositoryInterface $invoiceRepository,
         OrderRepositoryInterface $orderRepository,
         InvoiceEmailSenderInterface $emailSender
     ) {

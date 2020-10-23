@@ -6,10 +6,9 @@ namespace Sylius\InvoicingPlugin\Entity;
 
 use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Core\Model\ChannelInterface;
-use Sylius\Component\Resource\Model\ResourceInterface;
 
 /** @final */
-class Invoice implements InvoiceInterface, ResourceInterface
+class Invoice implements InvoiceInterface
 {
     /** @var string */
     protected $id;

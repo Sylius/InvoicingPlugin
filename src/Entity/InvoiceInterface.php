@@ -6,8 +6,9 @@ namespace Sylius\InvoicingPlugin\Entity;
 
 use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Core\Model\ChannelInterface;
+use Sylius\Component\Resource\Model\ResourceInterface;
 
-interface InvoiceInterface
+interface InvoiceInterface extends ResourceInterface
 {
     public function id(): string;
 

@@ -7,17 +7,18 @@ namespace Sylius\InvoicingPlugin\Ui\Action\Admin;
 use Sylius\Component\Core\Model\CustomerInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Repository\OrderRepositoryInterface;
+use Sylius\InvoicingPlugin\Doctrine\ORM\InvoiceRepositoryInterface;
 use Sylius\InvoicingPlugin\Email\InvoiceEmailSenderInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
-use Sylius\InvoicingPlugin\Repository\InvoiceRepository;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Webmozart\Assert\Assert;
 
 final class ResendInvoiceAction
 {
-    /** @var InvoiceRepository */
+    /** @var InvoiceRepositoryInterface */
     private $invoiceRepository;
 
     /** @var OrderRepositoryInterface */
@@ -33,7 +34,7 @@ final class ResendInvoiceAction
     private $session;
 
     public function __construct(
-        InvoiceRepository $invoiceRepository,
+        InvoiceRepositoryInterface $invoiceRepository,
         InvoiceEmailSenderInterface $invoiceEmailSender,
         OrderRepositoryInterface $orderRepository,
         UrlGeneratorInterface $urlGenerator,
@@ -48,14 +49,17 @@ final class ResendInvoiceAction
 
     public function __invoke(string $id): Response
     {
-        /** @var InvoiceInterface $invoice */
-        $invoice = $this->invoiceRepository->get($id);
+        /** @var InvoiceInterface|null $invoice */
+        $invoice = $this->invoiceRepository->find($id);
+        Assert::notNull($invoice);
 
-        /** @var OrderInterface $order */
+        /** @var OrderInterface|null $order */
         $order = $this->orderRepository->findOneBy(['number' => $invoice->orderNumber()]);
+        Assert::notNull($order);
 
-        /** @var CustomerInterface $customer */
+        /** @var CustomerInterface|null $customer */
         $customer = $order->getCustomer();
+        Assert::notNull($customer);
 
         try {
             $this->invoiceEmailSender->sendInvoiceEmail($invoice, $customer->getEmail());

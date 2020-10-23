@@ -1,3 +1,11 @@
+### UPGRADE FROM 0.11.0 TO 0.11.1
+
+1. The custom repository has been removed :
+
+  - removed the repository class `DoctrineInvoiceRepository` and replaced by `Sylius\InvoicingPlugin\Doctrine\ORM\InvoiceRepository`
+  - removed the related service `sylius_invoicing_plugin.custom_repository.invoice` use `sylius_invoicing_plugin.repository.invoice` instead
+  - removed the related interface `InvoiceRepository` use `Sylius\InvoicingPlugin\Doctrine\ORM\InvoiceRepositoryInterface` instead
+
 ### UPGRADE FROM 0.10.X TO 0.11.0
 
 1. Upgrade your application to [Sylius 1.8](https://github.com/Sylius/Sylius/blob/master/UPGRADE-1.8.md).
