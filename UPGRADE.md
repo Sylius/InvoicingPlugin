@@ -1,3 +1,11 @@
+### UPGRADE FROM 0.12.0 TO 0.13.0
+
+1. Due to compatibility with Symfony 5:
+
+  - Add `Twig` to Composer dependencies
+  - increase Symfony dependencies in Composer to `^5.1`
+  - replace template engine service `Symfony\Bundle\FrameworkBundle\Templating\EngineInterface` to `Twig\Environment` in `Sylius\InvoicingPlugin\Generator\InvoicePdfFileGenerator`
+  
 ### UPGRADE FROM 0.11.0 TO 0.12.0
 
 1. The custom repository has been removed:

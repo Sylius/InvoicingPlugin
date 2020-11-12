@@ -13,7 +13,7 @@ jobs:
     tests:
         runs-on: ubuntu-latest
 
-        name: "PHP ${{ matrix.php }}, MySQL ${{ matrix.mysql }}, Node ${{ matrix.node }}"
+        name: "PHP ${{ matrix.php }}, MySQL ${{ matrix.mysql }}, Node ${{ matrix.node }}${{ matrix.symfony-version != '' && format(', Symfony {0}', matrix.symfony-version) || '' }}${{ matrix.twig-version != '' && format(', Twig {0}', matrix.twig-version) || '' }}${{ matrix.composer-flags != '' && format(', Composer with {0}', matrix.composer-flags) || '' }}${{ matrix.sylius-resource-bundle-version != '' && format(', Sylius ResourceBundle {0}', matrix.sylius-resource-bundle-version) || '' }}"
 
         strategy:
             fail-fast: false
@@ -22,6 +22,31 @@ jobs:
                 node: [10.x]
                 mysql: [5.7, 8.0]
 
+                include:
+                    -
+                        php: 7.3
+                        symfony-version: 4.4.*
+                    -
+                        php: 7.3
+                        symfony-version: 5.1.*
+                        sylius-resource-bundle-version: dev-master
+                    -
+                        php: 7.4
+                        symfony-version: 4.4.*
+                        twig-version: ^2.12
+                    -
+                        php: 7.4
+                        symfony-version: 4.4.*
+                        twig-version: ^3.0
+                    -
+                        php: 7.4
+                        symfony-version: 4.4.*
+                        twig-version: ^3.0
+                    -
+                        php: 7.4
+                        symfony-version: 5.1.*
+                        twig-version: ^3.0
+                        sylius-resource-bundle-version: dev-master
                 exclude:
                     -
                         php: 7.3
@@ -60,6 +85,24 @@ jobs:
                 with:
                     mysql version: "${{ matrix.mysql }}"
                     mysql root password: "root"
+
+            -
+                name: Restrict Symfony version
+                if: matrix.symfony-version != ''
+                run: |
+                    composer global require --no-progress --no-scripts --no-plugins "symfony/flex:^1.10"
+                    composer config extra.symfony.require "${{ matrix.symfony-version }}"
+                    (cd tests/Application && composer config extra.symfony.require "${{ matrix.symfony-version }}")
+
+            -
+                name: Restrict sylius/resource-bundle version
+                if: matrix.sylius-resource-bundle-version != ''
+                run: composer require --dev "sylius/resource-bundle:${{ matrix.sylius-resource-bundle-version }}" --no-update --no-scripts
+
+            -
+                name: Restrict twig/twig version
+                if: matrix.twig-version != ''
+                run: composer require --dev "twig/twig:${{ matrix.twig-version }}" --no-update --no-scripts
 
             -
                 name: Get Composer cache directory
