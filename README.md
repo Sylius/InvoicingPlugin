@@ -100,7 +100,7 @@ sylius_invoicing_plugin_invoice:
     resource: |
         alias: sylius_invoicing_plugin.invoice
         section: admin
-        templates: SyliusAdminBundle:Crud
+        templates: "@SyliusAdmin\\Crud"
         only: ['index']
         grid: sylius_invoicing_plugin_invoice
         permission: true
