@@ -2,7 +2,7 @@ sylius_invoicing_plugin_invoice:
     resource: |
         alias: sylius_invoicing_plugin.invoice
         section: admin
-        templates: SyliusAdminBundle:Crud
+        templates: "@SyliusAdmin\\Crud"
         only: ['index']
         grid: sylius_invoicing_plugin_invoice
         permission: true
@@ -17,7 +17,7 @@ sylius_invoicing_plugin_admin_invoice_show:
     path: /invoices/{id}
     methods: [GET]
     defaults:
-        _controller: sylius_invoicing_plugin.controller.invoice:showAction
+        _controller: sylius_invoicing_plugin.controller.invoice::showAction
         _sylius:
             section: admin
             permission: true
@@ -39,7 +39,7 @@ sylius_invoicing_plugin_admin_order_invoices_partial:
     path: /_partial/invoices/{orderNumber}/
     methods: [GET]
     defaults:
-        _controller: sylius_invoicing_plugin.controller.invoice:indexAction
+        _controller: sylius_invoicing_plugin.controller.invoice::indexAction
         _sylius:
             template: $template
             repository:
