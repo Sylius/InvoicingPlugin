@@ -16,21 +16,6 @@
         <field name="paymentCommitmentNumber" column="payment_commitment_number" nullable="true"/>
         <field name="orderCustomerReference" column="order_customer_reference" nullable="true"/>
         <field name="promotionCouponUsed" column="promotion_coupon_used" nullable="true"/>
-        <field name="retainedFeeShipping" column="retained_fee_shipping" nullable="false" type="integer">
-            <options>
-                <option name="default">0</option>
-            </options>
-        </field>
-        <field name="retainedFeePayment" column="retained_fee_payment" nullable="false" type="integer">
-            <options>
-                <option name="default">0</option>
-            </options>
-        </field>
-        <field name="retainedFeePacking" column="retained_fee_packing" nullable="false" type="integer">
-            <options>
-                <option name="default">0</option>
-            </options>
-        </field>
 
         <one-to-one field="billingData" target-entity="Sylius\InvoicingPlugin\Entity\BillingDataInterface">
             <cascade>

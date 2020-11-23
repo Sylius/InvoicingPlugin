@@ -66,15 +66,6 @@ class Invoice implements InvoiceInterface, ResourceInterface
     /** @var string|null */
     protected $promotionCouponUsed;
 
-    /** @var int */
-    protected $retainedFeeShipping = 0;
-
-    /** @var int */
-    protected $retainedFeePayment = 0;
-
-    /** @var int */
-    protected $retainedFeePacking = 0;
-
     public function __construct(
         string $id,
         string $number,
@@ -94,10 +85,7 @@ class Invoice implements InvoiceInterface, ResourceInterface
         ?string $paymentReference = null,
         ?string $paymentCommitmentNumber = null,
         ?string $orderCustomerReference = null,
-        ?string $promotionCouponUsed = null,
-        int $retainedFeeShipping = 0,
-        int $retainedFeePayment = 0,
-        int $retainedFeePacking = 0
+        ?string $promotionCouponUsed = null
     ) {
         $this->id = $id;
         $this->number = $number;
@@ -118,9 +106,6 @@ class Invoice implements InvoiceInterface, ResourceInterface
         $this->paymentCommitmentNumber = $paymentCommitmentNumber;
         $this->orderCustomerReference = $orderCustomerReference;
         $this->promotionCouponUsed = $promotionCouponUsed;
-        $this->retainedFeeShipping = $retainedFeeShipping;
-        $this->retainedFeePayment = $retainedFeePayment;
-        $this->retainedFeePacking = $retainedFeePacking;
 
         /** @var LineItemInterface $lineItem */
         foreach ($lineItems as $lineItem) {
@@ -282,41 +267,5 @@ class Invoice implements InvoiceInterface, ResourceInterface
     public function promotionCouponUsed(): ?string
     {
         return $this->promotionCouponUsed;
-    }
-
-    public function getRetainedFeeShipping(): int
-    {
-        return $this->retainedFeeShipping;
-    }
-
-    public function getRetainedFeePayment(): int
-    {
-        return $this->retainedFeePayment;
-    }
-
-    public function getRetainedFeePacking(): int
-    {
-        return $this->retainedFeePacking;
-    }
-
-    public function setRetainedFeeShipping(int $retainedFeeShipping): self
-    {
-        $this->retainedFeeShipping = $retainedFeeShipping;
-
-        return $this;
-    }
-
-    public function setRetainedFeePayment(int $retainedFeePayment): self
-    {
-        $this->retainedFeePayment = $retainedFeePayment;
-
-        return $this;
-    }
-
-    public function setRetainedFeePacking(int $retainedFeePacking): self
-    {
-        $this->retainedFeePacking = $retainedFeePacking;
-
-        return $this;
     }
 }
