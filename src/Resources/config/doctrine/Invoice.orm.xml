@@ -15,7 +15,7 @@
             <cascade>
                 <cascade-all/>
             </cascade>
-            <join-column name="billing_data_id" />
+            <join-column name="billing_data_id" nullable="false" />
         </one-to-one>
 
         <one-to-many field="lineItems" target-entity="Sylius\InvoicingPlugin\Entity\LineItemInterface" mapped-by="invoice" orphan-removal="true">
@@ -31,14 +31,14 @@
         </one-to-many>
 
         <many-to-one field="channel" target-entity="Sylius\Component\Core\Model\ChannelInterface">
-            <join-column name="channel_id" />
+            <join-column name="channel_id" nullable="false" />
         </many-to-one>
 
         <one-to-one field="shopBillingData" target-entity="Sylius\InvoicingPlugin\Entity\InvoiceShopBillingDataInterface">
             <cascade>
                 <cascade-all />
             </cascade>
-            <join-column name="shop_billing_data_id" referenced-column-name="id" />
+            <join-column name="shop_billing_data_id" referenced-column-name="id" nullable="false" />
         </one-to-one>
 
         <indexes>
