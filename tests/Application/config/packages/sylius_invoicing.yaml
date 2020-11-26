@@ -1,0 +1,8 @@
+imports:
+    - { resource: "@SyliusInvoicingPlugin/Resources/config/config.yml" }
+            
+sylius_invoicing:
+    resources:
+        invoice:
+            classes:
+                model: Tests\Sylius\InvoicingPlugin\Application\Entity\SyliusInvoicingPlugin\Invoice
