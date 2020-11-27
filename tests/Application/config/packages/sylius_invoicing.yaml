@@ -3,6 +3,21 @@ imports:
             
 sylius_invoicing:
     resources:
+        billing_data:
+            classes:
+                model: Tests\Sylius\InvoicingPlugin\Application\Entity\SyliusInvoicingPlugin\BillingData
         invoice:
             classes:
                 model: Tests\Sylius\InvoicingPlugin\Application\Entity\SyliusInvoicingPlugin\Invoice
+        invoice_sequence:
+            classes:
+                model: Tests\Sylius\InvoicingPlugin\Application\Entity\SyliusInvoicingPlugin\InvoiceSequence
+        shop_billing_data:
+            classes:
+                model: Tests\Sylius\InvoicingPlugin\Application\Entity\SyliusInvoicingPlugin\InvoiceShopBillingData
+        line_item:
+            classes:
+                model: Tests\Sylius\InvoicingPlugin\Application\Entity\SyliusInvoicingPlugin\LineItem
+        tax_item:
+            classes:
+                model: Tests\Sylius\InvoicingPlugin\Application\Entity\SyliusInvoicingPlugin\TaxItem
