@@ -3,6 +3,7 @@
 /composer.lock
 
 /.phpunit.result.cache
+/behat.yml
 
 /etc/build/*
 !/etc/build/.gitkeep
