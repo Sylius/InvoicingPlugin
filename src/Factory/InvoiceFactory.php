@@ -17,13 +17,26 @@ use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\InvoicingPlugin\Entity\BillingDataInterface;
-use Sylius\InvoicingPlugin\Entity\Invoice;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceShopBillingData;
 use Sylius\InvoicingPlugin\Entity\InvoiceShopBillingDataInterface;
 
 final class InvoiceFactory implements InvoiceFactoryInterface
 {
+    /**
+     * @var string
+     * @psalm-var class-string
+     */
+    private $className;
+
+    /**
+     * @psalm-param class-string $className
+     */
+    public function __construct(string $className)
+    {
+        $this->className = $className;
+    }
+
     public function createForData(
         string $id,
         string $number,
@@ -39,7 +52,7 @@ final class InvoiceFactory implements InvoiceFactoryInterface
         string $paymentState,
         InvoiceShopBillingDataInterface $shopBillingData = null
     ): InvoiceInterface {
-        return new Invoice(
+        return new $this->className(
             $id,
             $number,
             $order,
