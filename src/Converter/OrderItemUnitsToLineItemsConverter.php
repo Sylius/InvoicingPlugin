@@ -16,18 +16,24 @@ namespace Sylius\InvoicingPlugin\Converter;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\OrderItemInterface;
 use Sylius\Component\Core\Model\OrderItemUnitInterface;
-use Sylius\InvoicingPlugin\Entity\LineItem;
 use Sylius\InvoicingPlugin\Entity\LineItemInterface;
 use Sylius\InvoicingPlugin\Provider\TaxRatePercentageProviderInterface;
 use Webmozart\Assert\Assert;
 
 final class OrderItemUnitsToLineItemsConverter implements LineItemsConverterInterface
 {
+    /**
+     * @var string
+     * @psalm-var class-string
+     */
+    private $className;
+
     /** @var TaxRatePercentageProviderInterface */
     private $taxRatePercentageProvider;
 
-    public function __construct(TaxRatePercentageProviderInterface $taxRatePercentageProvider)
+    public function __construct(string $className, TaxRatePercentageProviderInterface $taxRatePercentageProvider)
     {
+        $this->className = $className;
         $this->taxRatePercentageProvider = $taxRatePercentageProvider;
     }
 
@@ -58,7 +64,7 @@ final class OrderItemUnitsToLineItemsConverter implements LineItemsConverterInte
 
         $variant = $item->getVariant();
 
-        return new LineItem(
+        return new $this->className(
             $productName,
             1,
             $netValue,

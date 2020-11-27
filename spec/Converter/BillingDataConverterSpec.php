@@ -16,10 +16,18 @@ namespace spec\Sylius\InvoicingPlugin\Converter;
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Core\Model\AddressInterface;
 use Sylius\InvoicingPlugin\Converter\BillingDataConverterInterface;
+use Sylius\InvoicingPlugin\Entity\BillingData;
 use Sylius\InvoicingPlugin\Entity\BillingDataInterface;
 
 final class BillingDataConverterSpec extends ObjectBehavior
 {
+    function let(): void
+    {
+        $this->beConstructedWith(
+            BillingData::class
+        );
+    }
+
     function it_implements_billing_data_converter_interface(): void
     {
         $this->shouldImplement(BillingDataConverterInterface::class);

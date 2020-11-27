@@ -27,7 +27,7 @@ final class OrderItemUnitsToLineItemsConverterSpec extends ObjectBehavior
 {
     function let(TaxRatePercentageProviderInterface $taxRatePercentageProvider): void
     {
-        $this->beConstructedWith($taxRatePercentageProvider);
+        $this->beConstructedWith(LineItem::class, $taxRatePercentageProvider);
     }
 
     function it_implements_line_items_converter_interface(): void

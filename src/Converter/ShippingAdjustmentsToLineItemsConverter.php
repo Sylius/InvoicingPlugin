@@ -25,11 +25,18 @@ use Webmozart\Assert\Assert;
 
 final class ShippingAdjustmentsToLineItemsConverter implements LineItemsConverterInterface
 {
+    /**
+     * @var string
+     * @psalm-var class-string
+     */
+    private $className;
+
     /** @var TaxRatePercentageProviderInterface */
     private $taxRatePercentageProvider;
 
-    public function __construct(TaxRatePercentageProviderInterface $taxRatePercentageProvider)
+    public function __construct(string $className, TaxRatePercentageProviderInterface $taxRatePercentageProvider)
     {
+        $this->className = $className;
         $this->taxRatePercentageProvider = $taxRatePercentageProvider;
     }
 
@@ -57,7 +64,7 @@ final class ShippingAdjustmentsToLineItemsConverter implements LineItemsConverte
         $taxAmount = $taxAdjustment !== null ? $taxAdjustment->getAmount() : 0;
         $netValue = $grossValue - $taxAmount;
 
-        return new LineItem(
+        return new $this->className(
             $shippingAdjustment->getLabel(),
             1,
             $netValue,

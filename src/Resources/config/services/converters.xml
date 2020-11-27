@@ -4,19 +4,26 @@
     <services>
         <defaults autoconfigure="true" autowire="true" public="true" />
 
-        <service id="sylius_invoicing_plugin.converter.billing_data" class="Sylius\InvoicingPlugin\Converter\BillingDataConverter" />
+        <service id="sylius_invoicing_plugin.converter.billing_data" class="Sylius\InvoicingPlugin\Converter\BillingDataConverter">
+            <argument>%sylius_invoicing_plugin.model.billing_data.class%</argument>
+        </service>
 
-        <service id="sylius_invoicing_plugin.converter.invoice_shop_billing_data" class="Sylius\InvoicingPlugin\Converter\InvoiceShopBillingDataConverter" />
+        <service id="sylius_invoicing_plugin.converter.invoice_shop_billing_data" class="Sylius\InvoicingPlugin\Converter\InvoiceShopBillingDataConverter">
+            <argument type="service" id="sylius_invoicing_plugin.factory.shop_billing_data" />
+        </service>
 
         <service id="sylius_invoicing_plugin.converter.order_item_units_to_line_items" class="Sylius\InvoicingPlugin\Converter\OrderItemUnitsToLineItemsConverter">
+            <argument>%sylius_invoicing_plugin.model.line_item.class%</argument>
             <argument type="service" id="sylius_invoicing_plugin.provider.tax_rate_percentage" />
         </service>
 
         <service id="sylius_invoicing_plugin.converter.shipping_adjustments_to_line_items" class="Sylius\InvoicingPlugin\Converter\ShippingAdjustmentsToLineItemsConverter">
+            <argument>%sylius_invoicing_plugin.model.line_item.class%</argument>
             <argument type="service" id="sylius_invoicing_plugin.provider.tax_rate_percentage" />
         </service>
 
         <service id="sylius_invoicing_plugin.converter.tax_items" class="Sylius\InvoicingPlugin\Converter\TaxItemsConverter">
+            <argument>%sylius_invoicing_plugin.model.tax_item.class%</argument>
             <argument type="service" id="sylius_invoicing_plugin.provider.tax_rate_percentage" />
         </service>
     </services>

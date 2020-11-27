@@ -16,11 +16,20 @@ namespace spec\Sylius\InvoicingPlugin\Converter;
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\ShopBillingDataInterface;
+use Sylius\Component\Resource\Factory\FactoryInterface;
 use Sylius\InvoicingPlugin\Converter\InvoiceShopBillingDataConverterInterface;
+use Sylius\InvoicingPlugin\Entity\InvoiceShopBillingData;
 use Sylius\InvoicingPlugin\Entity\InvoiceShopBillingDataInterface;
 
 final class InvoiceShopBillingDataConverterSpec extends ObjectBehavior
 {
+    function let(FactoryInterface $invoiceShopBillingDataFactory): void
+    {
+        $this->beConstructedWith(
+            $invoiceShopBillingDataFactory
+        );
+    }
+
     function it_implements_invoice_shop_billing_data_converter_interface(): void
     {
         $this->shouldImplement(InvoiceShopBillingDataConverterInterface::class);
@@ -28,8 +37,11 @@ final class InvoiceShopBillingDataConverterSpec extends ObjectBehavior
 
     function it_extracts_shop_billing_data_from_channel(
         ChannelInterface $channel,
-        ShopBillingDataInterface $shopBillingData
+        ShopBillingDataInterface $shopBillingData,
+        FactoryInterface $invoiceShopBillingDataFactory
     ): void {
+        $invoiceShopBillingDataFactory->createNew()->willReturn(new InvoiceShopBillingData());
+
         $channel->getShopBillingData()->willReturn($shopBillingData);
 
         $this->convert($channel)->shouldReturnAnInstanceOf(InvoiceShopBillingDataInterface::class);

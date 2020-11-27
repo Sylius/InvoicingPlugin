@@ -41,6 +41,7 @@
 
         <service id="sylius_invoicing_plugin.custom_factory.invoice" class="Sylius\InvoicingPlugin\Factory\InvoiceFactory">
             <argument>%sylius_invoicing_plugin.model.invoice.class%</argument>
+            <argument type="service" id="sylius_invoicing_plugin.factory.shop_billing_data" />
         </service>
 
         <service id="Sylius\InvoicingPlugin\Manager\InvoiceFileManagerInterface" class="Sylius\InvoicingPlugin\Manager\InvoiceFileManager">

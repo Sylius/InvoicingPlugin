@@ -25,7 +25,7 @@ final class TaxItemsConverterSpec extends ObjectBehavior
 {
     function let(TaxRatePercentageProviderInterface $taxRatePercentageProvider): void
     {
-        $this->beConstructedWith($taxRatePercentageProvider);
+        $this->beConstructedWith(TaxItem::class, $taxRatePercentageProvider);
     }
 
     function it_implements_tax_items_converter_interface(): void
