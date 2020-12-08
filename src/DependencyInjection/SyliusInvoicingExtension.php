@@ -28,10 +28,15 @@ final class SyliusInvoicingExtension extends AbstractResourceExtension implement
             return;
         }
 
+        $doctrineConfig = $container->getExtensionConfig('doctrine_migrations');
+        $migrationsPath = (array) \array_pop($doctrineConfig)['migrations_paths'];
         $container->prependExtensionConfig('doctrine_migrations', [
-            'migrations_paths' => [
-                'Sylius\InvoicingPlugin\Migrations' => '@SyliusInvoicingPlugin/Migrations',
-            ],
+            'migrations_paths' => \array_merge(
+                $migrationsPath ?? [],
+                [
+                    'Sylius\InvoicingPlugin\Migrations' => '@SyliusInvoicingPlugin/Migrations',
+                ]
+            ),
         ]);
 
         $container->prependExtensionConfig('sylius_labs_doctrine_migrations_extra', [

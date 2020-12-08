@@ -34,7 +34,7 @@
             <join-column name="channel_id" />
         </many-to-one>
 
-        <one-to-one field="shopBillingData" target-entity="Sylius\InvoicingPlugin\Entity\InvoiceShopBillingData">
+        <one-to-one field="shopBillingData" target-entity="Sylius\InvoicingPlugin\Entity\InvoiceShopBillingDataInterface">
             <cascade>
                 <cascade-all />
             </cascade>
