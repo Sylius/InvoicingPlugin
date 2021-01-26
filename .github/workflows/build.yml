@@ -13,7 +13,7 @@ jobs:
     tests:
         runs-on: ubuntu-latest
 
-        name: "PHP ${{ matrix.php }}, MySQL ${{ matrix.mysql }}, Node ${{ matrix.node }}"
+        name: "PHP ${{ matrix.php }}, MySQL ${{ matrix.mysql }}, Node ${{ matrix.node }}, Sylius ${{ matrix.sylius }}"
 
         strategy:
             fail-fast: false
@@ -21,6 +21,7 @@ jobs:
                 php: [7.4, 7.3]
                 node: [10.x]
                 mysql: [5.7, 8.0]
+                sylius: [1.8.*, v1.9.0-ALPHA.2]
 
                 exclude:
                     -
@@ -76,8 +77,13 @@ jobs:
                         ${{ runner.os }}-php-${{ matrix.php }}-composer-
 
             -
+                name: Install Sylius version
+                run: |
+                    composer require "sylius/sylius:${{ matrix.sylius }}" --no-update
+
+            -
                 name: Install PHP dependencies
-                run: composer install --no-interaction
+                run: composer update --no-interaction
 
             -
                 name: Get Yarn cache directory
