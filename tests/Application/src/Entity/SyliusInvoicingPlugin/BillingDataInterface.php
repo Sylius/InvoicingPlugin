@@ -8,5 +8,4 @@ use Sylius\InvoicingPlugin\Entity\BillingDataInterface as BaseBillingDataInterfa
 
 interface BillingDataInterface extends BaseBillingDataInterface
 {
-
 }

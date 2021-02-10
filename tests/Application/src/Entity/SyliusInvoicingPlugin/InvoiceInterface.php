@@ -8,5 +8,4 @@ use Sylius\InvoicingPlugin\Entity\InvoiceInterface as BaseInvoiceInterface;
 
 interface InvoiceInterface extends BaseInvoiceInterface
 {
-
 }

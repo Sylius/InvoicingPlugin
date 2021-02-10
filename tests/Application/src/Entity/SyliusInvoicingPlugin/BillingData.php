@@ -13,5 +13,4 @@ use Sylius\InvoicingPlugin\Entity\BillingData as BaseBillingData;
  */
 class BillingData extends BaseBillingData implements BillingDataInterface
 {
-
 }

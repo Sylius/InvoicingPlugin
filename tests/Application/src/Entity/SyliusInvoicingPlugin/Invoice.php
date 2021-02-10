@@ -13,5 +13,4 @@ use Sylius\InvoicingPlugin\Entity\Invoice as BaseInvoice;
  */
 class Invoice extends BaseInvoice implements InvoiceInterface
 {
-
 }
