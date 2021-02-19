@@ -18,7 +18,7 @@ use Sylius\Component\Resource\Model\ResourceInterface;
 /** @final */
 class BillingData implements BillingDataInterface, ResourceInterface
 {
-    protected int $id;
+    protected ?int $id;
 
     protected string $firstName;
 
@@ -60,12 +60,12 @@ class BillingData implements BillingDataInterface, ResourceInterface
         $this->company = $company;
     }
 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id();
     }
 
-    public function id(): int
+    public function id(): ?int
     {
         return $this->id;
     }

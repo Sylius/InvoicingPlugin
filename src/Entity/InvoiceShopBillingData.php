@@ -18,8 +18,7 @@ use Sylius\Component\Resource\Model\ResourceInterface;
 /** @final */
 class InvoiceShopBillingData implements InvoiceShopBillingDataInterface, ResourceInterface
 {
-    /** @var mixed */
-    protected $id;
+    protected ?int $id;
 
     protected ?string $company = null;
 
@@ -35,7 +34,7 @@ class InvoiceShopBillingData implements InvoiceShopBillingDataInterface, Resourc
 
     protected ?string $representative = null;
 
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }

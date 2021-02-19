@@ -34,6 +34,12 @@ final class BillingDataSpec extends ObjectBehavior
         );
     }
 
+    function it_has_no_id_by_default(): void
+    {
+        $this->getId()->shouldReturn(null);
+        $this->id()->shouldReturn(null);
+    }
+
     function it_implements_billing_data_interface(): void
     {
         $this->shouldImplement(BillingDataInterface::class);

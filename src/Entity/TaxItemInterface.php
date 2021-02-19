@@ -15,7 +15,7 @@ namespace Sylius\InvoicingPlugin\Entity;
 
 interface TaxItemInterface
 {
-    public function id();
+    public function id(): ?int;
 
     public function invoice(): ?InvoiceInterface;
 

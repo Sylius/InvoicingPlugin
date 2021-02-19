@@ -20,6 +20,11 @@ final class InvoiceShopBillingDataSpec extends ObjectBehavior
         $this->shouldImplement(ResourceInterface::class);
     }
 
+    function it_has_no_id_by_default(): void
+    {
+        $this->getId()->shouldReturn(null);
+    }
+
     function its_company_is_mutable(): void
     {
         $this->setCompany('Ragnarok');
