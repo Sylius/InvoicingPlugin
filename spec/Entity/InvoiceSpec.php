@@ -34,11 +34,13 @@ final class InvoiceSpec extends ObjectBehavior
         InvoiceShopBillingDataInterface $shopBillingData,
         OrderInterface $order
     ): void {
-        $issuedAt = \DateTimeImmutable::createFromFormat('Y-m', '2019-01');
+        $order->getNumber()->willReturn('000000001');
+
+        $issuedAt = new \DateTimeImmutable('2019-01-23 15:45:30');
 
         $this->beConstructedWith(
             '7903c83a-4c5e-4bcf-81d8-9dc304c6a353',
-            $issuedAt->format('Y/m') . '/000000001',
+            '2019/01/000000001',
             $order,
             $issuedAt,
             $billingData,
@@ -72,8 +74,11 @@ final class InvoiceSpec extends ObjectBehavior
         OrderInterface $order
     ): void {
         $this->id()->shouldReturn('7903c83a-4c5e-4bcf-81d8-9dc304c6a353');
+        $this->getId()->shouldReturn('7903c83a-4c5e-4bcf-81d8-9dc304c6a353');
         $this->number()->shouldReturn('2019/01/000000001');
         $this->order()->shouldReturn($order);
+        $this->orderNumber()->shouldReturn('000000001');
+        $this->issuedAt()->shouldBeLike(new \DateTimeImmutable('2019-01-23 15:45:30'));
         $this->billingData()->shouldReturn($billingData);
         $this->currencyCode()->shouldReturn('USD');
         $this->localeCode()->shouldReturn('en_US');
@@ -82,5 +87,6 @@ final class InvoiceSpec extends ObjectBehavior
         $this->taxItems()->shouldBeLike(new ArrayCollection([$taxItem->getWrappedObject()]));
         $this->channel()->shouldReturn($channel);
         $this->shopBillingData()->shouldReturn($shopBillingData);
+        $this->paymentState()->shouldReturn(InvoiceInterface::PAYMENT_STATE_COMPLETED);
     }
 }
