@@ -21,6 +21,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 final class GenerateInvoicesCommand extends Command
 {
+    protected static string $defaultName = 'sylius-invoicing:generate-invoices';
+
     private MassInvoicesCreatorInterface $massInvoicesCreator;
 
     private OrderRepositoryInterface $orderRepository;
@@ -29,10 +31,15 @@ final class GenerateInvoicesCommand extends Command
         MassInvoicesCreatorInterface $massInvoicesCreator,
         OrderRepositoryInterface $orderRepository
     ) {
-        parent::__construct('sylius-invoicing:generate-invoices');
-
         $this->massInvoicesCreator = $massInvoicesCreator;
         $this->orderRepository = $orderRepository;
+
+        parent::__construct();
+    }
+
+    protected function configure(): void
+    {
+        $this->setDescription('Generates invoices for orders placed before InvoicingPlugin installation');
     }
 
     public function execute(InputInterface $input, OutputInterface $output): int
@@ -49,10 +56,5 @@ final class GenerateInvoicesCommand extends Command
         $output->writeln('Invoices generated successfully');
 
         return 0;
-    }
-
-    protected function configure(): void
-    {
-        $this->setDescription('Generates invoices for orders placed before InvoicingPlugin installation');
     }
 }
