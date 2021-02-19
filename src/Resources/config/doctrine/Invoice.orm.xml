@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                                      http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
     <mapped-superclass name="Sylius\InvoicingPlugin\Entity\Invoice" table="sylius_invoicing_plugin_invoice">
         <id name="id" column="id" type="string" />
 
-        <field name="number" column="number" />
+        <field name="number" column="number" type="string" />
         <field name="issuedAt" column="issued_at" type="datetime" />
-        <field name="currencyCode" column="currency_code" length="3" />
-        <field name="localeCode" column="locale_code" />
+        <field name="currencyCode" column="currency_code" type="string" length="3" />
+        <field name="localeCode" column="locale_code" type="string" />
         <field name="total" column="total" type="integer" />
-        <field name="paymentState" column="payment_state" />
+        <field name="paymentState" column="payment_state" type="string" />
 
         <one-to-one field="billingData" target-entity="Sylius\InvoicingPlugin\Entity\BillingDataInterface">
             <cascade>
