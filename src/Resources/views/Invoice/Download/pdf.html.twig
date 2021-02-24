@@ -1,6 +1,6 @@
 {% set shopBillingData = invoice.shopBillingData %}
 
-<html lang="en">
+<html lang="{{ invoice.localeCode }}">
 <head>
     <meta charset="utf-8">
     <style>
@@ -31,8 +31,8 @@
                         </td>
 
                         <td>
-                            {{ 'sylius_invoicing_plugin.ui.invoice'|trans }} #{{ invoice.number }}<br>
-                            {{ 'sylius_invoicing_plugin.ui.issued_at'|trans }}: {{ invoice.issuedAt|format_datetime }}<br>
+                            {{ 'sylius_invoicing_plugin.ui.invoice'|trans([], 'messages', invoice.localeCode) }} #{{ invoice.number }}<br>
+                            {{ 'sylius_invoicing_plugin.ui.issued_at'|trans([], 'messages', invoice.localeCode) }}: {{ invoice.issuedAt|format_datetime }}<br>
                         </td>
                     </tr>
                 </table>
@@ -70,10 +70,10 @@
         </tr>
 
         <tr class="heading">
-            <td>{{ 'sylius.ui.item'|trans }}</td>
-            <td>{{ 'sylius.ui.unit_price'|trans }}</td>
-            <td>{{ 'sylius.ui.quantity'|trans }}</td>
-            <td>{{ 'sylius.ui.price'|trans }}</td>
+            <td>{{ 'sylius.ui.item'|trans([], 'messages', invoice.localeCode) }}</td>
+            <td>{{ 'sylius.ui.unit_price'|trans([], 'messages', invoice.localeCode) }}</td>
+            <td>{{ 'sylius.ui.quantity'|trans([], 'messages', invoice.localeCode) }}</td>
+            <td>{{ 'sylius.ui.price'|trans([], 'messages', invoice.localeCode) }}</td>
         </tr>
 
         {% for item in invoice.lineItems %}
@@ -87,8 +87,8 @@
 
         {% if invoice.taxItems.count() > 0 %}
         <tr class="heading">
-            <td colspan="3">{{ 'sylius.ui.tax'|trans }}</td>
-            <td>{{ 'sylius.ui.amount'|trans }}</td>
+            <td colspan="3">{{ 'sylius.ui.tax'|trans([], 'messages', invoice.localeCode) }}</td>
+            <td>{{ 'sylius.ui.amount'|trans([], 'messages', invoice.localeCode) }}</td>
         </tr>
 
         {% for taxItem in invoice.taxItems %}
@@ -101,7 +101,7 @@
 
         <tr class="total">
             <td colspan="3"></td>
-            <td>{{ 'sylius.ui.total'|trans }}: {{ invoice.total|sylius_format_money(invoice.currencyCode, invoice.localeCode) }}</td>
+            <td>{{ 'sylius.ui.total'|trans([], 'messages', invoice.localeCode) }}: {{ invoice.total|sylius_format_money(invoice.currencyCode, invoice.localeCode) }}</td>
         </tr>
     </table>
 </div>
