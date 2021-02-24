@@ -12,7 +12,7 @@
                 </div>
                 <div class="item">
                     {{ 'sylius_invoicing_plugin.ui.issued_from'|trans }}
-                    <span class="ui large empty horizontal circular label"></span> <strong id="invoice-channel-name">{{ invoice.channel.name }}</strong>
+                    {% include '@SyliusAdmin/Common/_channel.html.twig' with {'channel': invoice.channel} %}
                 </div>
             </div>
         </div>

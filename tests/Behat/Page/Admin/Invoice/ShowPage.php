@@ -138,7 +138,9 @@ final class ShowPage extends SymfonyPage implements ShowPageInterface
 
     public function getChannel(): string
     {
-        return $this->getElement('invoice_channel_name')->getText();
+        $items = $this->getDocument()->findAll('css', '.channel > .channel__item');
+
+        return $items[1]->getText();
     }
 
     public function download(): void

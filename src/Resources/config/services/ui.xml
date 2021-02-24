@@ -17,11 +17,6 @@
             <tag name="sylius.grid_filter" type="invoice_channel" form_type="Sylius\InvoicingPlugin\Form\Type\ChannelFilterType" />
         </service>
 
-        <service id="sylius_invoicing_plugin.twig.channel_color_extension" class="Sylius\InvoicingPlugin\Twig\ChannelColorExtension">
-            <argument type="service" id="sylius_invoicing_plugin.provider.channel_color" />
-            <tag name="twig.extension" />
-        </service>
-
         <service id="Sylius\InvoicingPlugin\Ui\RedirectToOrderShowAction">
             <argument type="service" id="router" />
             <argument type="service" id="sylius.repository.order" />
