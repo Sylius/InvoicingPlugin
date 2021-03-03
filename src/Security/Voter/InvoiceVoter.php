@@ -41,6 +41,10 @@ final class InvoiceVoter extends Voter
         return true;
     }
 
+    /**
+     * @param mixed $attribute
+     * @param mixed $subject
+     */
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token): bool
     {
         Assert::isInstanceOf($subject, InvoiceInterface::class);
