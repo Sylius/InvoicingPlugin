@@ -1,5 +1,12 @@
 # CHANGELOG
 
+### v0.13.0 (2021-03-04)
+
+- [#199](https://github.com/Sylius/InvoicingPlugin/issues/199) Bugfix | Update README file to use new route format ([@stloyd](https://github.com/stloyd))
+- [#202](https://github.com/Sylius/InvoicingPlugin/issues/202) Add translation in invoice PDF file ([@webdudi](https://github.com/webdudi), )
+- [#212](https://github.com/Sylius/InvoicingPlugin/issues/212) Upgrade to Sylius 1.9  ([@Tomanhez](https://github.com/Tomanhez))
+- [#213](https://github.com/Sylius/InvoicingPlugin/issues/213) Minor fix sylius version in composer 1.9RC to 1.9 ([@Tomanhez](https://github.com/Tomanhez))
+
 ### v0.12.0 (2020-11-16)
 
 - [#190](https://github.com/Sylius/InvoicingPlugin/issues/190) Add conflict to ^8.3.25 of symplify/package-builder to fix the build ([@Prometee](https://github.com/Prometee))
