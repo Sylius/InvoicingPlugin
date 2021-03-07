@@ -8,7 +8,7 @@ use Behat\Behat\Context\Context;
 use Sylius\Component\Core\Repository\OrderRepositoryInterface;
 use Sylius\InvoicingPlugin\Cli\GenerateInvoicesCommand;
 use Sylius\InvoicingPlugin\Creator\MassInvoicesCreatorInterface;
-use Sylius\InvoicingPlugin\Repository\InvoiceRepository;
+use Sylius\InvoicingPlugin\Doctrine\ORM\InvoiceRepositoryInterface;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Tester\CommandTester;
@@ -22,7 +22,7 @@ final class InvoicesGenerationContext implements Context
     /** @var MassInvoicesCreatorInterface */
     private $massInvoicesCreator;
 
-    /** @var InvoiceRepository */
+    /** @var InvoiceRepositoryInterface */
     private $invoiceRepository;
 
     /** @var OrderRepositoryInterface */
@@ -31,7 +31,7 @@ final class InvoicesGenerationContext implements Context
     public function __construct(
         KernelInterface $kernel,
         MassInvoicesCreatorInterface $massInvoicesCreator,
-        InvoiceRepository $invoiceRepository,
+        InvoiceRepositoryInterface $invoiceRepository,
         OrderRepositoryInterface $orderRepository
     ) {
         $this->kernel = $kernel;

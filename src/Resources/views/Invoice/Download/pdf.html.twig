@@ -31,8 +31,8 @@
                         </td>
 
                         <td>
-                            Invoice #{{ invoice.number }}<br>
-                            Issued at: {{ invoice.issuedAt|date('Y-m-d H:i:s') }}<br>
+                            {{ 'sylius_invoicing_plugin.ui.invoice'|trans }} #{{ invoice.number }}<br>
+                            {{ 'sylius_invoicing_plugin.ui.issued_at'|trans }}: {{ invoice.issuedAt|format_datetime }}<br>
                         </td>
                     </tr>
                 </table>

@@ -1,5 +1,37 @@
 # CHANGELOG
 
+### v0.13.0 (2021-03-04)
+
+- [#199](https://github.com/Sylius/InvoicingPlugin/issues/199) Bugfix | Update README file to use new route format ([@stloyd](https://github.com/stloyd))
+- [#202](https://github.com/Sylius/InvoicingPlugin/issues/202) Add translation in invoice PDF file ([@webdudi](https://github.com/webdudi), )
+- [#212](https://github.com/Sylius/InvoicingPlugin/issues/212) Upgrade to Sylius 1.9  ([@Tomanhez](https://github.com/Tomanhez))
+- [#213](https://github.com/Sylius/InvoicingPlugin/issues/213) Minor fix sylius version in composer 1.9RC to 1.9 ([@Tomanhez](https://github.com/Tomanhez))
+
+### v0.12.0 (2020-11-16)
+
+- [#190](https://github.com/Sylius/InvoicingPlugin/issues/190) Add conflict to ^8.3.25 of symplify/package-builder to fix the build ([@Prometee](https://github.com/Prometee))
+- [#187](https://github.com/Sylius/InvoicingPlugin/issues/187) Use Sylius UI instead of Sonata event ([@Prometee](https://github.com/Prometee))
+- [#186](https://github.com/Sylius/InvoicingPlugin/issues/186) [Enhancement] Refactor and deprecate Invoice repository class ([@Prometee](https://github.com/Prometee))
+- [#191](https://github.com/Sylius/InvoicingPlugin/issues/191) Update upgrade to v0.12.0 ([@GSadee](https://github.com/GSadee))
+- [#193](https://github.com/Sylius/InvoicingPlugin/issues/193) Initialize GitHub Actions ([@pamil](https://github.com/pamil))
+- [#194](https://github.com/Sylius/InvoicingPlugin/issues/194) Test InvoicingPlugin via GitHub Actions ([@pamil](https://github.com/pamil))
+- [#195](https://github.com/Sylius/InvoicingPlugin/issues/195) Fix Doctrine/Migrations configuration ([@Zales0123](https://github.com/Zales0123))
+- [#188](https://github.com/Sylius/InvoicingPlugin/issues/188) allow override invoice shop billing data ([@jbcr](https://github.com/jbcr))
+- [#196](https://github.com/Sylius/InvoicingPlugin/issues/196) Bugfix | Update channel filter template to new Symfony format ([@stloyd](https://github.com/stloyd))
+- [#197](https://github.com/Sylius/InvoicingPlugin/issues/197) Bugfix | Update `admin_invoicing` routes to support new Symfony format ([@stloyd](https://github.com/stloyd))
+
+### v0.11.0 (2020-09-22)
+
+- [#178](https://github.com/Sylius/InvoicingPlugin/issues/178) Fix failing InvoicingPlugin build ([@GSadee](https://github.com/GSadee), )
+- [#183](https://github.com/Sylius/InvoicingPlugin/issues/183) Allow for PHP 7.4 & upgrade static analysis ([@pamil](https://github.com/pamil))
+- [#175](https://github.com/Sylius/InvoicingPlugin/issues/175) Switch to Doctrine/Migrations 3.0-alpha ([@pamil](https://github.com/pamil))
+- [#184](https://github.com/Sylius/InvoicingPlugin/issues/184) Remove old migrations + upgrade Sylius to 1.8 ([@GSadee](https://github.com/GSadee))
+- [#185](https://github.com/Sylius/InvoicingPlugin/issues/185) [Docs] Update of UPGRADE file and installation instruction ([@lchrusciel](https://github.com/lchrusciel))
+
+### v0.10.1 (2020-01-10)
+
+- [#167](https://github.com/Sylius/InvoicingPlugin/issues/167) Add missing migration ([@AdamKasp](https://github.com/AdamKasp))
+
 ### v0.10.0 (2019-12-06)
 
 - [#156](https://github.com/Sylius/InvoicingPlugin/issues/156) Change test server to Symfony server ([@AdamKasp](https://github.com/AdamKasp))

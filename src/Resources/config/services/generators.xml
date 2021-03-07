@@ -24,7 +24,7 @@
         </service>
 
         <service id="sylius_invoicing_plugin.generator.invoice_pdf_file" class="Sylius\InvoicingPlugin\Generator\InvoicePdfFileGenerator">
-            <argument type="service" id="templating.engine.twig" />
+            <argument type="service" id="twig" />
             <argument type="service" id="knp_snappy.pdf" />
             <argument type="service" id="file_locator" />
             <argument>@SyliusInvoicingPlugin/Invoice/Download/pdf.html.twig</argument>
@@ -32,7 +32,7 @@
         </service>
 
         <service id="sylius_invoicing_plugin.creator.invoice" class="Sylius\InvoicingPlugin\Creator\InvoiceCreator">
-            <argument type="service" id="sylius_invoicing_plugin.custom_repository.invoice" />
+            <argument type="service" id="sylius_invoicing_plugin.repository.invoice" />
             <argument type="service" id="sylius.repository.order" />
             <argument type="service" id="sylius_invoicing_plugin.generator.invoice" />
         </service>

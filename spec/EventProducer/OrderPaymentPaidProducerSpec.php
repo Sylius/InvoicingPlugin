@@ -9,9 +9,9 @@ use Prophecy\Argument;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\PaymentInterface;
 use Sylius\InvoicingPlugin\DateTimeProvider;
+use Sylius\InvoicingPlugin\Doctrine\ORM\InvoiceRepositoryInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Sylius\InvoicingPlugin\Event\OrderPaymentPaid;
-use Sylius\InvoicingPlugin\Repository\InvoiceRepository;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\MessageBusInterface;
 
@@ -20,7 +20,7 @@ final class OrderPaymentPaidProducerSpec extends ObjectBehavior
     function let(
         MessageBusInterface $eventBus,
         DateTimeProvider $dateTimeProvider,
-        InvoiceRepository $invoiceRepository
+        InvoiceRepositoryInterface $invoiceRepository
     ): void {
         $this->beConstructedWith($eventBus, $dateTimeProvider, $invoiceRepository);
     }
@@ -30,7 +30,7 @@ final class OrderPaymentPaidProducerSpec extends ObjectBehavior
         DateTimeProvider $dateTimeProvider,
         PaymentInterface $payment,
         OrderInterface $order,
-        InvoiceRepository $invoiceRepository,
+        InvoiceRepositoryInterface $invoiceRepository,
         InvoiceInterface $invoice
     ): void {
         $payment->getOrder()->willReturn($order);
@@ -67,7 +67,7 @@ final class OrderPaymentPaidProducerSpec extends ObjectBehavior
         DateTimeProvider $dateTimeProvider,
         PaymentInterface $payment,
         OrderInterface $order,
-        InvoiceRepository $invoiceRepository
+        InvoiceRepositoryInterface $invoiceRepository
     ): void {
         $payment->getOrder()->willReturn($order);
         $order->getNumber()->willReturn('0000001');

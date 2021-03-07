@@ -16,6 +16,7 @@ class InvoiceSequence implements InvoiceSequenceInterface
     /** @var int|null */
     protected $version = 1;
 
+    /** @return mixed */
     public function getId()
     {
         return $this->id;

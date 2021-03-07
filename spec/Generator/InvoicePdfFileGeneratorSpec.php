@@ -10,13 +10,13 @@ use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Sylius\InvoicingPlugin\Generator\InvoicePdfFileGeneratorInterface;
 use Sylius\InvoicingPlugin\Model\InvoicePdf;
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\Config\FileLocatorInterface;
+use Twig\Environment;
 
 final class InvoicePdfFileGeneratorSpec extends ObjectBehavior
 {
     function let(
-        EngineInterface $twig,
+        Environment $twig,
         GeneratorInterface $pdfGenerator,
         FileLocatorInterface $fileLocator
     ): void {
@@ -36,7 +36,7 @@ final class InvoicePdfFileGeneratorSpec extends ObjectBehavior
 
     function it_creates_invoice_pdf_with_generated_content_and_filename_basing_on_invoice_number(
         FileLocatorInterface $fileLocator,
-        EngineInterface $twig,
+        Environment $twig,
         GeneratorInterface $pdfGenerator,
         InvoiceInterface $invoice,
         ChannelInterface $channel
