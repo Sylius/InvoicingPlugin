@@ -115,10 +115,6 @@ jobs:
                 run: (cd tests/Application && yarn install)
 
             -
-                name: Create src/Migrations directory
-                run: mkdir -p tests/Application/src/Migrations
-
-            -
                 name: Prepare test application database
                 run: |
                     (cd tests/Application && bin/console doctrine:database:create -vvv)
