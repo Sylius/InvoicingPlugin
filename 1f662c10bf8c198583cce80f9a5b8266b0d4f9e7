@@ -1,0 +1,38 @@
+---------------------------------------------------------------------------
+
+by BigBadBassMan at 2020-04-20T19:43:10Z
+
+I have no idea why the travis tests failed, local tests succeeded. Anyway, I'd love to see this merged, if there are no more blockers from your side.
+
+---------------------------------------------------------------------------
+
+by lchrusciel at 2020-04-22T09:33:50Z
+
+Hey @BigBadBassMan, we cannot merge anything until the build is green. Someone has to take a look into the master build and fix it before we will be able to merge this PR.
+
+---------------------------------------------------------------------------
+
+by BigBadBassMan at 2020-04-22T09:53:14Z
+
+> Hey @BigBadBassMan, we cannot merge anything until the build is green. Someone has to take a look into the master build and fix it before we will be able to merge this PR.
+
+I understand, perhaps you could trigger a re-test on travis?
+It seems to me that this may be a transient failure, since I didn't change a single line in the tests, and my local tests (specifically the ecs and phpspec tests) run fine. The failure seems not to be related to my changes.
+
+---------------------------------------------------------------------------
+
+by lchrusciel at 2020-04-22T10:17:56Z
+
+I've restarted the build. However, the master is failing one way or another: https://travis-ci.org/github/Sylius/InvoicingPlugin/builds/676556586
+
+---------------------------------------------------------------------------
+
+by BigBadBassMan at 2021-03-07T09:42:50Z
+
+Hi @lchrusciel , I'm finally back on this, would you care to have another look (and possibly accept ;-) ) my PR?
+
+---------------------------------------------------------------------------
+
+by GSadee at 2021-03-18T07:11:03Z
+
+Thanks, @BigBadBassMan! :1st_place_medal:
