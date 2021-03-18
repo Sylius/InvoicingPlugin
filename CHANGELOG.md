@@ -1,5 +1,12 @@
 # CHANGELOG
 
+### v0.14.0 (2021-03-18)
+
+- [#216](https://github.com/Sylius/InvoicingPlugin/issues/216) toggle doctrine migration ([@arti0090](https://github.com/arti0090))
+- [#217](https://github.com/Sylius/InvoicingPlugin/issues/217) Add gitkeep file to src/Migrations directory stays in code ([@arti0090](https://github.com/arti0090))
+- [#168](https://github.com/Sylius/InvoicingPlugin/issues/168) Define logo-file as parameter ([@BigBadBassMan](https://github.com/BigBadBassMan))
+- [#218](https://github.com/Sylius/InvoicingPlugin/issues/218) Remove twig errors configuration from test application ([@GSadee](https://github.com/GSadee))
+
 ### v0.13.0 (2021-03-04)
 
 - [#199](https://github.com/Sylius/InvoicingPlugin/issues/199) Bugfix | Update README file to use new route format ([@stloyd](https://github.com/stloyd))
