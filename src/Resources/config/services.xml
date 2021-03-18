@@ -5,6 +5,11 @@
         <import resource="services/*.xml" />
     </imports>
 
+    <parameters>
+        <parameter key="default_logo_file">@SyliusInvoicingPlugin/Resources/assets/sylius-logo.png</parameter>
+        <parameter key="sylius.invoicing.template.logo_file">%env(default:default_logo_file:SYLIUS_INVOICING_LOGO_FILE)%</parameter>
+    </parameters>
+
     <services>
         <defaults autoconfigure="true" autowire="true" public="true" />
 
