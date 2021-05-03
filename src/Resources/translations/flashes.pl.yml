@@ -1,0 +1,2 @@
+sylius_invoicing_plugin:
+    invoice_resent_successfully: 'Faktura została ponownie wysłana do klienta'
