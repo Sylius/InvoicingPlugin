@@ -1,3 +1,0 @@
-framework:
-    messenger:
-        default_bus: sylius_invoicing_plugin.command_bus
