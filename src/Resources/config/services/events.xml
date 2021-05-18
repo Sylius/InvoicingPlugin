@@ -12,7 +12,7 @@
 
         <service id="sylius_invoicing_plugin.event_listener.order_placed" class="Sylius\InvoicingPlugin\EventListener\CreateInvoiceOnOrderPlacedListener">
             <argument type="service" id="sylius_invoicing_plugin.creator.invoice" />
-            <tag name="messenger.message_handler" bus="sylius.command_bus" />
+            <tag name="messenger.message_handler" bus="sylius.event_bus" />
         </service>
 
         <service id="sylius_invoicing_plugin.event_producer.order_placed" class="Sylius\InvoicingPlugin\EventProducer\OrderPlacedProducer">
@@ -24,7 +24,7 @@
 
         <service id="sylius_invoicing_plugin.listener.order_payment_paid" class="Sylius\InvoicingPlugin\EventListener\OrderPaymentPaidListener">
             <argument type="service" id="sylius.event_bus" />
-            <tag name="messenger.message_handler" bus="sylius.command_bus" />
+            <tag name="messenger.message_handler" bus="sylius.event_bus" />
         </service>
     </services>
 </container>
