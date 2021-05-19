@@ -23,7 +23,7 @@
         </service>
 
         <service id="sylius_invoicing_plugin.listener.order_payment_paid" class="Sylius\InvoicingPlugin\EventListener\OrderPaymentPaidListener">
-            <argument type="service" id="sylius.event_bus" />
+            <argument type="service" id="sylius.command_bus" />
             <tag name="messenger.message_handler" bus="sylius.event_bus" />
         </service>
     </services>

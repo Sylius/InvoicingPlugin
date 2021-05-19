@@ -1,5 +1,0 @@
-framework:
-    messenger:
-        buses:
-            sylius.event_bus:
-                default_middleware: allow_no_handlers
