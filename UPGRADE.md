@@ -1,3 +1,8 @@
+### UPGRADE FROM 0.14.0 TO 0.15.0
+
+Command bus `sylius_invoicing_plugin.command_bus` has been replaced with `sylius.command_bus`.
+Event bus `sylius_invoicing_plugin.event_bus` has been replaced with `sylius.event_bus`.
+
 ### UPGRADE FROM 0.11.0 TO 0.12.0
 
 1. The custom repository has been removed:
