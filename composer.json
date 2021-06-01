@@ -5,7 +5,7 @@
     "description": "Invoicing plugin for Sylius.",
     "license": "MIT",
     "require": {
-        "php": "^7.4",
+        "php": "^7.4 || ^8.0",
         "knplabs/knp-snappy-bundle": "^1.8",
         "ramsey/uuid": "^3.9",
         "sylius/grid-bundle": "^1.7",
