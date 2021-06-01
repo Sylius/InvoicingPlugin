@@ -132,6 +132,10 @@ jobs:
                 run: (cd tests/Application && bin/console sylius:fixtures:load -n)
 
             -
+                name: Run security check
+                run: symfony security:check
+
+            -
                 name: Run analysis
                 run: composer analyse
 
