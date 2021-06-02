@@ -42,16 +42,13 @@
         "phpstan/phpstan-symfony": "0.12.32",
         "phpstan/phpstan-webmozart-assert": "0.12.12",
         "phpunit/phpunit": "^8.5",
-        "sylius-labs/coding-standard": "^3.2",
+        "sylius-labs/coding-standard": "^4.0",
         "symfony/browser-kit": "^4.4 || ^5.2",
         "symfony/debug-bundle": "^4.4 || ^5.2",
         "symfony/dotenv": "^4.4 || ^5.2",
         "symfony/intl": "^4.4 || ^5.2",
         "symfony/web-profiler-bundle": "^4.4 || ^5.2",
         "symfony/web-server-bundle": "^4.4 || ^5.2"
-    },
-    "conflict": {
-        "symplify/package-builder": "^8.3.25"
     },
     "autoload": {
         "psr-4": {
@@ -68,7 +65,8 @@
     "scripts": {
         "analyse": [
             "@composer validate --strict",
-            "vendor/bin/phpstan analyse -c phpstan.neon -l max src/"
+            "vendor/bin/phpstan analyse -c phpstan.neon -l max src/",
+            "vendor/bin/ecs check src/ spec/"
         ],
         "fix": [
             "vendor/bin/ecs check --fix src/ spec/"
