@@ -46,8 +46,6 @@ return [
     Symfony\Bundle\WebServerBundle\WebServerBundle::class => ['all' => true],
     Sylius\Bundle\AdminBundle\SyliusAdminBundle::class => ['all' => true],
     Sylius\Bundle\ShopBundle\SyliusShopBundle::class => ['all' => true],
-    FOS\OAuthServerBundle\FOSOAuthServerBundle::class => ['all' => true],
-    Sylius\Bundle\AdminApiBundle\SyliusAdminApiBundle::class => ['all' => true],
     ApiPlatform\Core\Bridge\Symfony\Bundle\ApiPlatformBundle::class => ['all' => true],
     Sylius\Bundle\ApiBundle\SyliusApiBundle::class => ['all' => true],
     Symfony\Bundle\DebugBundle\DebugBundle::class => ['dev' => true, 'test' => true, 'test_cached' => true],
