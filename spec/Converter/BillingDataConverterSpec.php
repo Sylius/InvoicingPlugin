@@ -11,12 +11,12 @@ use Sylius\InvoicingPlugin\Entity\BillingDataInterface;
 
 final class BillingDataConverterSpec extends ObjectBehavior
 {
-    function it_implements_billing_data_converter_interface(): void
+    public function it_implements_billing_data_converter_interface(): void
     {
         $this->shouldImplement(BillingDataConverterInterface::class);
     }
 
-    function it_converts_address_to_billing_data(AddressInterface $address): void
+    public function it_converts_address_to_billing_data(AddressInterface $address): void
     {
         $address->getCountryCode()->willReturn('US');
         $address->getCity()->willReturn('Las Vegas');

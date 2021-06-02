@@ -10,7 +10,7 @@ use Sylius\InvoicingPlugin\Entity\BillingDataInterface;
 
 final class BillingDataSpec extends ObjectBehavior
 {
-    function let(): void
+    public function let(): void
     {
         $this->beConstructedWith(
             'John',
@@ -25,17 +25,17 @@ final class BillingDataSpec extends ObjectBehavior
         );
     }
 
-    function it_implements_billing_data_interface(): void
+    public function it_implements_billing_data_interface(): void
     {
         $this->shouldImplement(BillingDataInterface::class);
     }
 
-    function it_implements_resource_interface(): void
+    public function it_implements_resource_interface(): void
     {
         $this->shouldImplement(ResourceInterface::class);
     }
 
-    function it_has_proper_billing_data(): void
+    public function it_has_proper_billing_data(): void
     {
         $this->firstName()->shouldReturn('John');
         $this->lastName()->shouldReturn('Doe');

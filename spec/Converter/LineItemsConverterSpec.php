@@ -15,12 +15,12 @@ use Sylius\InvoicingPlugin\Converter\LineItemsConverterInterface;
 
 final class LineItemsConverterSpec extends ObjectBehavior
 {
-    function it_implements_line_items_converter_interface(): void
+    public function it_implements_line_items_converter_interface(): void
     {
         $this->shouldImplement(LineItemsConverterInterface::class);
     }
 
-    function it_extracts_line_items_from_order(
+    public function it_extracts_line_items_from_order(
         OrderInterface $order,
         OrderItemInterface $orderItem,
         AdjustmentInterface $shippingAdjustment,
