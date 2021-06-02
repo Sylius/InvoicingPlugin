@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Sylius package.
+ *
+ * (c) Paweł Jędrzejewski
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 declare(strict_types=1);
 
 namespace spec\Sylius\InvoicingPlugin\Converter;
@@ -11,12 +20,12 @@ use Sylius\InvoicingPlugin\Entity\BillingDataInterface;
 
 final class BillingDataConverterSpec extends ObjectBehavior
 {
-    function it_implements_billing_data_converter_interface(): void
+    public function it_implements_billing_data_converter_interface(): void
     {
         $this->shouldImplement(BillingDataConverterInterface::class);
     }
 
-    function it_converts_address_to_billing_data(AddressInterface $address): void
+    public function it_converts_address_to_billing_data(AddressInterface $address): void
     {
         $address->getCountryCode()->willReturn('US');
         $address->getCity()->willReturn('Las Vegas');

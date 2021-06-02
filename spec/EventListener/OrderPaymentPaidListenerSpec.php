@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Sylius package.
+ *
+ * (c) Paweł Jędrzejewski
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 declare(strict_types=1);
 
 namespace spec\Sylius\InvoicingPlugin\EventListener;
@@ -12,12 +21,12 @@ use Symfony\Component\Messenger\MessageBusInterface;
 
 final class OrderPaymentPaidListenerSpec extends ObjectBehavior
 {
-    function let(MessageBusInterface $commandBus): void
+    public function let(MessageBusInterface $commandBus): void
     {
         $this->beConstructedWith($commandBus);
     }
 
-    function it_dispatches_send_invoice_email_command(MessageBusInterface $commandBus): void
+    public function it_dispatches_send_invoice_email_command(MessageBusInterface $commandBus): void
     {
         $command = new SendInvoiceEmail('00000001');
         $commandBus->dispatch($command)->shouldBeCalled()->willReturn(new Envelope($command));

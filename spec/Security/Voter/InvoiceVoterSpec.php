@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Sylius package.
+ *
+ * (c) Paweł Jędrzejewski
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 declare(strict_types=1);
 
 namespace spec\Sylius\InvoicingPlugin\Security\Voter;
@@ -17,32 +26,32 @@ use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 
 class InvoiceVoterSpec extends ObjectBehavior
 {
-    function let(OrderRepositoryInterface $orderRepository): void
+    public function let(OrderRepositoryInterface $orderRepository): void
     {
         $this->beConstructedWith($orderRepository);
     }
 
-    function it_is_a_symfony_security_voter(): void
+    public function it_is_a_symfony_security_voter(): void
     {
         $this->shouldHaveType(VoterInterface::class);
     }
 
-    function it_abstains_from_making_a_decision_if_attribute_is_not_supported(TokenInterface $token, InvoiceInterface $invoice): void
+    public function it_abstains_from_making_a_decision_if_attribute_is_not_supported(TokenInterface $token, InvoiceInterface $invoice): void
     {
         $this->vote($token, $invoice, ['random'])->shouldReturn(VoterInterface::ACCESS_ABSTAIN);
     }
 
-    function it_abstains_from_making_a_decision_if_subject_is_not_supported(TokenInterface $token): void
+    public function it_abstains_from_making_a_decision_if_subject_is_not_supported(TokenInterface $token): void
     {
         $this->vote($token, new \stdClass(), [InvoiceVoter::ACCESS])->shouldReturn(VoterInterface::ACCESS_ABSTAIN);
     }
 
-    function it_does_not_allow_accessing_an_invoice_if_user_is_not_logged_in(TokenInterface $token, InvoiceInterface $invoice): void
+    public function it_does_not_allow_accessing_an_invoice_if_user_is_not_logged_in(TokenInterface $token, InvoiceInterface $invoice): void
     {
         $this->vote($token, $invoice, [InvoiceVoter::ACCESS])->shouldReturn(VoterInterface::ACCESS_DENIED);
     }
 
-    function it_allows_accesings_an_invoice_if_user_is_logged_as_admin(
+    public function it_allows_accesings_an_invoice_if_user_is_logged_as_admin(
         TokenInterface $token,
         InvoiceInterface $invoice,
         AdminUserInterface $adminUser
@@ -52,7 +61,7 @@ class InvoiceVoterSpec extends ObjectBehavior
         $this->vote($token, $invoice, [InvoiceVoter::ACCESS])->shouldReturn(VoterInterface::ACCESS_GRANTED);
     }
 
-    function it_does_not_allow_accessing_an_invoice_if_user_has_not_placed_the_order_related_to_the_invoice(
+    public function it_does_not_allow_accessing_an_invoice_if_user_has_not_placed_the_order_related_to_the_invoice(
         OrderRepositoryInterface $orderRepository,
         TokenInterface $token,
         InvoiceInterface $invoice,
@@ -70,7 +79,7 @@ class InvoiceVoterSpec extends ObjectBehavior
         $this->vote($token, $invoice, [InvoiceVoter::ACCESS])->shouldReturn(VoterInterface::ACCESS_DENIED);
     }
 
-    function it_allows_accessing_an_invoice_if_user_has_placed_the_order_related_to_the_invoice(
+    public function it_allows_accessing_an_invoice_if_user_has_placed_the_order_related_to_the_invoice(
         OrderRepositoryInterface $orderRepository,
         TokenInterface $token,
         InvoiceInterface $invoice,

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Sylius package.
+ *
+ * (c) Paweł Jędrzejewski
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 declare(strict_types=1);
 
 namespace spec\Sylius\InvoicingPlugin\EventProducer;
@@ -17,7 +26,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 
 final class OrderPaymentPaidProducerSpec extends ObjectBehavior
 {
-    function let(
+    public function let(
         MessageBusInterface $eventBus,
         DateTimeProvider $dateTimeProvider,
         InvoiceRepositoryInterface $invoiceRepository
@@ -25,7 +34,7 @@ final class OrderPaymentPaidProducerSpec extends ObjectBehavior
         $this->beConstructedWith($eventBus, $dateTimeProvider, $invoiceRepository);
     }
 
-    function it_dispatches_order_payment_paid_event_for_payment(
+    public function it_dispatches_order_payment_paid_event_for_payment(
         MessageBusInterface $eventBus,
         DateTimeProvider $dateTimeProvider,
         PaymentInterface $payment,
@@ -48,7 +57,7 @@ final class OrderPaymentPaidProducerSpec extends ObjectBehavior
         $this->__invoke($payment);
     }
 
-    function it_does_not_dispatch_event_when_payment_is_not_related_to_order(
+    public function it_does_not_dispatch_event_when_payment_is_not_related_to_order(
         MessageBusInterface $eventBus,
         DateTimeProvider $dateTimeProvider,
         PaymentInterface $payment
@@ -62,7 +71,7 @@ final class OrderPaymentPaidProducerSpec extends ObjectBehavior
         $this->__invoke($payment);
     }
 
-    function it_does_not_dispatch_event_when_there_is_no_invoice_related_to_order(
+    public function it_does_not_dispatch_event_when_there_is_no_invoice_related_to_order(
         MessageBusInterface $eventBus,
         DateTimeProvider $dateTimeProvider,
         PaymentInterface $payment,

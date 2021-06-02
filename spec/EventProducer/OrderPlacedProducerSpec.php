@@ -1,13 +1,22 @@
 <?php
 
+/*
+ * This file is part of the Sylius package.
+ *
+ * (c) Paweł Jędrzejewski
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 declare(strict_types=1);
 
 namespace spec\Sylius\InvoicingPlugin\EventProducer;
 
-use Doctrine\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\UnitOfWork;
+use Doctrine\Persistence\ObjectManager;
 use Mockery;
 use Mockery\MockInterface;
 use PhpSpec\ObjectBehavior;
@@ -21,12 +30,12 @@ use Symfony\Component\Messenger\MessageBusInterface;
 
 final class OrderPlacedProducerSpec extends ObjectBehavior
 {
-    function let(MessageBusInterface $eventBus, DateTimeProvider $dateTimeProvider): void
+    public function let(MessageBusInterface $eventBus, DateTimeProvider $dateTimeProvider): void
     {
         $this->beConstructedWith($eventBus, $dateTimeProvider);
     }
 
-    function it_dispatches_an_order_placed_event_for_persisted_order(
+    public function it_dispatches_an_order_placed_event_for_persisted_order(
         MessageBusInterface $eventBus,
         DateTimeProvider $dateTimeProvider,
         OrderInterface $order,
@@ -46,7 +55,7 @@ final class OrderPlacedProducerSpec extends ObjectBehavior
         $this->postPersist($postPersistEvent);
     }
 
-    function it_dispatches_an_order_placed_event_for_updated_order(
+    public function it_dispatches_an_order_placed_event_for_updated_order(
         MessageBusInterface $eventBus,
         DateTimeProvider $dateTimeProvider,
         EntityManagerInterface $entityManager,
@@ -73,7 +82,7 @@ final class OrderPlacedProducerSpec extends ObjectBehavior
         $this->postUpdate($postUpdateEvent);
     }
 
-    function it_does_nothing_after_persisting_if_event_entity_is_not_order(
+    public function it_does_nothing_after_persisting_if_event_entity_is_not_order(
         MessageBusInterface $eventBus,
         LifecycleEventArgs $event
     ): void {
@@ -84,7 +93,7 @@ final class OrderPlacedProducerSpec extends ObjectBehavior
         $this->postPersist($event);
     }
 
-    function it_does_nothing_after_update_if_event_entity_is_not_order(
+    public function it_does_nothing_after_update_if_event_entity_is_not_order(
         MessageBusInterface $eventBus,
         LifecycleEventArgs $event
     ): void {
@@ -95,7 +104,7 @@ final class OrderPlacedProducerSpec extends ObjectBehavior
         $this->postUpdate($event);
     }
 
-    function it_does_nothing_after_persisting_if_order_is_not_completed(
+    public function it_does_nothing_after_persisting_if_order_is_not_completed(
         MessageBusInterface $eventBus,
         LifecycleEventArgs $event,
         OrderInterface $order
@@ -109,7 +118,7 @@ final class OrderPlacedProducerSpec extends ObjectBehavior
         $this->postPersist($event);
     }
 
-    function it_does_nothing_after_update_if_order_checkout_state_has_not_changed(
+    public function it_does_nothing_after_update_if_order_checkout_state_has_not_changed(
         MessageBusInterface $eventBus,
         LifecycleEventArgs $event,
         EntityManagerInterface $entityManager,
@@ -130,7 +139,7 @@ final class OrderPlacedProducerSpec extends ObjectBehavior
         $this->postUpdate($event);
     }
 
-    function it_does_nothing_after_update_if_order_checkout_state_has_not_changed_to_completed(
+    public function it_does_nothing_after_update_if_order_checkout_state_has_not_changed_to_completed(
         MessageBusInterface $eventBus,
         LifecycleEventArgs $event,
         EntityManagerInterface $entityManager,

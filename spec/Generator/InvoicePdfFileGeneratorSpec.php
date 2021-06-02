@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Sylius package.
+ *
+ * (c) Paweł Jędrzejewski
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 declare(strict_types=1);
 
 namespace spec\Sylius\InvoicingPlugin\Generator;
@@ -15,7 +24,7 @@ use Twig\Environment;
 
 final class InvoicePdfFileGeneratorSpec extends ObjectBehavior
 {
-    function let(
+    public function let(
         Environment $twig,
         GeneratorInterface $pdfGenerator,
         FileLocatorInterface $fileLocator
@@ -29,12 +38,12 @@ final class InvoicePdfFileGeneratorSpec extends ObjectBehavior
         );
     }
 
-    function it_implements_invoice_pdf_file_generator_interface(): void
+    public function it_implements_invoice_pdf_file_generator_interface(): void
     {
         $this->shouldImplement(InvoicePdfFileGeneratorInterface::class);
     }
 
-    function it_creates_invoice_pdf_with_generated_content_and_filename_basing_on_invoice_number(
+    public function it_creates_invoice_pdf_with_generated_content_and_filename_basing_on_invoice_number(
         FileLocatorInterface $fileLocator,
         Environment $twig,
         GeneratorInterface $pdfGenerator,

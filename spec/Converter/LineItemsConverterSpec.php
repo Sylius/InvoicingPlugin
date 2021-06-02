@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Sylius package.
+ *
+ * (c) Paweł Jędrzejewski
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 declare(strict_types=1);
 
 namespace spec\Sylius\InvoicingPlugin\Converter;
@@ -15,12 +24,12 @@ use Sylius\InvoicingPlugin\Converter\LineItemsConverterInterface;
 
 final class LineItemsConverterSpec extends ObjectBehavior
 {
-    function it_implements_line_items_converter_interface(): void
+    public function it_implements_line_items_converter_interface(): void
     {
         $this->shouldImplement(LineItemsConverterInterface::class);
     }
 
-    function it_extracts_line_items_from_order(
+    public function it_extracts_line_items_from_order(
         OrderInterface $order,
         OrderItemInterface $orderItem,
         AdjustmentInterface $shippingAdjustment,

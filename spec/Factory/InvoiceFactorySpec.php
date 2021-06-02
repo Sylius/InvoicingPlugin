@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Sylius package.
+ *
+ * (c) Paweł Jędrzejewski
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 declare(strict_types=1);
 
 namespace spec\Sylius\InvoicingPlugin\Factory;
@@ -14,12 +23,12 @@ use Sylius\InvoicingPlugin\Factory\InvoiceFactoryInterface;
 
 class InvoiceFactorySpec extends ObjectBehavior
 {
-    function it_implements_invoice_factory_interface(): void
+    public function it_implements_invoice_factory_interface(): void
     {
         $this->shouldImplement(InvoiceFactoryInterface::class);
     }
 
-    function it_creates_an_invoice_for_given_data(
+    public function it_creates_an_invoice_for_given_data(
         BillingDataInterface $billingData,
         ChannelInterface $channel,
         InvoiceShopBillingDataInterface $invoiceShopBillingData
@@ -42,7 +51,7 @@ class InvoiceFactorySpec extends ObjectBehavior
         )->shouldReturnAnInstanceOf(InvoiceInterface::class);
     }
 
-    function it_allows_for_nullable_shop_billing_data(
+    public function it_allows_for_nullable_shop_billing_data(
         BillingDataInterface $billingData,
         ChannelInterface $channel
     ): void {

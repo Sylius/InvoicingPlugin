@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Sylius package.
+ *
+ * (c) Paweł Jędrzejewski
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 declare(strict_types=1);
 
 namespace spec\Sylius\InvoicingPlugin\Entity;
@@ -11,7 +20,7 @@ use Sylius\InvoicingPlugin\Entity\LineItemInterface;
 
 final class LineItemSpec extends ObjectBehavior
 {
-    function let(): void
+    public function let(): void
     {
         $this->beConstructedWith(
             'Mjolnir',
@@ -25,17 +34,17 @@ final class LineItemSpec extends ObjectBehavior
         );
     }
 
-    function it_implements_line_item_interface(): void
+    public function it_implements_line_item_interface(): void
     {
         $this->shouldImplement(LineItemInterface::class);
     }
 
-    function it_implements_resource_interface(): void
+    public function it_implements_resource_interface(): void
     {
         $this->shouldImplement(ResourceInterface::class);
     }
 
-    function it_has_proper_line_item_data(): void
+    public function it_has_proper_line_item_data(): void
     {
         $this->name()->shouldReturn('Mjolnir');
         $this->quantity()->shouldReturn(2);
@@ -47,7 +56,7 @@ final class LineItemSpec extends ObjectBehavior
         $this->variantCode()->shouldReturn('7903c83a-4c5e-4bcf-81d8-9dc304c6a353');
     }
 
-    function it_has_an_invoice(InvoiceInterface $invoice): void
+    public function it_has_an_invoice(InvoiceInterface $invoice): void
     {
         $this->setInvoice($invoice);
         $this->invoice()->shouldReturn($invoice);

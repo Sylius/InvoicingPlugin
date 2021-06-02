@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Sylius package.
+ *
+ * (c) Paweł Jędrzejewski
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 declare(strict_types=1);
 
 namespace spec\Sylius\InvoicingPlugin\Generator;
@@ -23,7 +32,7 @@ use Sylius\InvoicingPlugin\Generator\InvoiceNumberGenerator;
 
 final class InvoiceGeneratorSpec extends ObjectBehavior
 {
-    function let(
+    public function let(
         InvoiceIdentifierGenerator $uuidInvoiceIdentifierGenerator,
         InvoiceNumberGenerator $sequentialInvoiceNumberGenerator,
         InvoiceFactoryInterface $invoiceFactory,
@@ -43,12 +52,12 @@ final class InvoiceGeneratorSpec extends ObjectBehavior
         );
     }
 
-    function it_is_an_invoice_generator(): void
+    public function it_is_an_invoice_generator(): void
     {
         $this->shouldImplement(InvoiceGeneratorInterface::class);
     }
 
-    function it_generates_an_invoice_for_a_given_order(
+    public function it_generates_an_invoice_for_a_given_order(
         InvoiceIdentifierGenerator $uuidInvoiceIdentifierGenerator,
         InvoiceNumberGenerator $sequentialInvoiceNumberGenerator,
         InvoiceFactoryInterface $invoiceFactory,

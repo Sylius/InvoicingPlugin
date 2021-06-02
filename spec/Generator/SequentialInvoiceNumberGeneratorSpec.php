@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Sylius package.
+ *
+ * (c) Paweł Jędrzejewski
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 declare(strict_types=1);
 
 namespace spec\Sylius\InvoicingPlugin\Generator;
@@ -15,7 +24,7 @@ use Sylius\InvoicingPlugin\Generator\InvoiceNumberGenerator;
 
 final class SequentialInvoiceNumberGeneratorSpec extends ObjectBehavior
 {
-    function let(
+    public function let(
         RepositoryInterface $sequenceRepository,
         FactoryInterface $sequenceFactory,
         EntityManagerInterface $sequenceManager,
@@ -31,12 +40,12 @@ final class SequentialInvoiceNumberGeneratorSpec extends ObjectBehavior
         );
     }
 
-    function it_implements_invoice_number_generator_interface(): void
+    public function it_implements_invoice_number_generator_interface(): void
     {
         $this->shouldImplement(InvoiceNumberGenerator::class);
     }
 
-    function it_generates_invoice_number(
+    public function it_generates_invoice_number(
         RepositoryInterface $sequenceRepository,
         EntityManagerInterface $sequenceManager,
         DateTimeProvider $dateTimeProvider,
@@ -58,7 +67,7 @@ final class SequentialInvoiceNumberGeneratorSpec extends ObjectBehavior
         $this->generate()->shouldReturn($dateTime->format('Y/m') . '/000000001');
     }
 
-    function it_generates_invoice_number_when_sequence_is_null(
+    public function it_generates_invoice_number_when_sequence_is_null(
         RepositoryInterface $sequenceRepository,
         FactoryInterface $sequenceFactory,
         EntityManagerInterface $sequenceManager,
