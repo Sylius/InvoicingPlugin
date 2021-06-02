@@ -1,7 +1,11 @@
 ### UPGRADE FROM 0.14.0 TO 0.15.0
 
-Command bus `sylius_invoicing_plugin.command_bus` has been replaced with `sylius.command_bus`.
-Event bus `sylius_invoicing_plugin.event_bus` has been replaced with `sylius.event_bus`.
+1. Command bus `sylius_invoicing_plugin.command_bus` has been replaced with `sylius.command_bus`.
+
+1. Event bus `sylius_invoicing_plugin.event_bus` has been replaced with `sylius.event_bus`.
+
+1. Support for Sylius 1.8 has been dropped, upgrade your application to [Sylius 1.9](https://github.com/Sylius/Sylius/blob/master/UPGRADE-1.9.md) 
+or [Sylius 1.10](https://github.com/Sylius/Sylius/blob/master/UPGRADE-1.10.md).
 
 ### UPGRADE FROM 0.11.0 TO 0.12.0
 
