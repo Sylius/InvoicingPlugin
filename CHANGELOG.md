@@ -1,5 +1,12 @@
 # CHANGELOG
 
+### v0.15.0 (2021-06-02 )
+
+- [#221](https://github.com/Sylius/InvoicingPlugin/issues/221) unify usage of buses ([@SirDomin](https://github.com/SirDomin))
+- [#223](https://github.com/Sylius/InvoicingPlugin/issues/223) Drop support for Sylius 1.8 ([@GSadee](https://github.com/GSadee))
+- [#224](https://github.com/Sylius/InvoicingPlugin/issues/224) Add support for Sylius 1.10 + require PHP ^7.4 || ^8.0 ([@GSadee](https://github.com/GSadee))
+- [#225](https://github.com/Sylius/InvoicingPlugin/issues/225) Bring back easy-coding-standard + apply CS fixes ([@GSadee](https://github.com/GSadee))
+
 ### v0.14.0 (2021-03-18)
 
 - [#216](https://github.com/Sylius/InvoicingPlugin/issues/216) toggle doctrine migration ([@arti0090](https://github.com/arti0090))
