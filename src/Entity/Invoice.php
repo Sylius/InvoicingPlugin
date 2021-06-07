@@ -15,6 +15,7 @@ namespace Sylius\InvoicingPlugin\Entity;
 
 use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Core\Model\ChannelInterface;
+use Sylius\Component\Core\Model\OrderInterface;
 
 /** @final */
 class Invoice implements InvoiceInterface
@@ -25,8 +26,8 @@ class Invoice implements InvoiceInterface
     /** @var string */
     protected $number;
 
-    /** @var string */
-    protected $orderNumber;
+    /** @var OrderInterface */
+    protected $order;
 
     /** @var \DateTimeInterface */
     protected $issuedAt;
@@ -58,7 +59,7 @@ class Invoice implements InvoiceInterface
     public function __construct(
         string $id,
         string $number,
-        string $orderNumber,
+        OrderInterface $order,
         \DateTimeInterface $issuedAt,
         BillingDataInterface $billingData,
         string $currencyCode,
@@ -71,7 +72,7 @@ class Invoice implements InvoiceInterface
     ) {
         $this->id = $id;
         $this->number = $number;
-        $this->orderNumber = $orderNumber;
+        $this->order = $order;
         $this->issuedAt = clone $issuedAt;
         $this->billingData = $billingData;
         $this->currencyCode = $currencyCode;
@@ -108,9 +109,14 @@ class Invoice implements InvoiceInterface
         return $this->number;
     }
 
+    public function order(): OrderInterface
+    {
+        return $this->order;
+    }
+
     public function orderNumber(): string
     {
-        return $this->orderNumber;
+        return $this->order->getNumber();
     }
 
     public function issuedAt(): \DateTimeInterface

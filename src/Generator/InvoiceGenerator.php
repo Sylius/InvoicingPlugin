@@ -75,7 +75,7 @@ final class InvoiceGenerator implements InvoiceGeneratorInterface
         return $this->invoiceFactory->createForData(
             $this->uuidInvoiceIdentifierGenerator->generate(),
             $this->sequentialInvoiceNumberGenerator->generate(),
-            $order->getNumber(),
+            $order,
             $date,
             $this->billingDataConverter->convert($billingAddress),
             $order->getCurrencyCode(),

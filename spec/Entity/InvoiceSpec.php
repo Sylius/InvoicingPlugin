@@ -16,6 +16,7 @@ namespace spec\Sylius\InvoicingPlugin\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Core\Model\ChannelInterface;
+use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\InvoicingPlugin\Entity\BillingDataInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
@@ -30,14 +31,15 @@ final class InvoiceSpec extends ObjectBehavior
         LineItemInterface $lineItem,
         TaxItemInterface $taxItem,
         ChannelInterface $channel,
-        InvoiceShopBillingDataInterface $shopBillingData
+        InvoiceShopBillingDataInterface $shopBillingData,
+        OrderInterface $order
     ): void {
         $issuedAt = \DateTimeImmutable::createFromFormat('Y-m', '2019-01');
 
         $this->beConstructedWith(
             '7903c83a-4c5e-4bcf-81d8-9dc304c6a353',
             $issuedAt->format('Y/m') . '/000000001',
-            '007',
+            $order,
             $issuedAt,
             $billingData,
             'USD',
@@ -60,16 +62,17 @@ final class InvoiceSpec extends ObjectBehavior
         $this->shouldImplement(ResourceInterface::class);
     }
 
-    public function it_has_an_id(
+    public function it_has_data(
         BillingDataInterface $billingData,
         LineItemInterface $lineItem,
         TaxItemInterface $taxItem,
         ChannelInterface $channel,
-        InvoiceShopBillingDataInterface $shopBillingData
+        InvoiceShopBillingDataInterface $shopBillingData,
+        OrderInterface $order
     ): void {
         $this->id()->shouldReturn('7903c83a-4c5e-4bcf-81d8-9dc304c6a353');
         $this->number()->shouldReturn('2019/01/000000001');
-        $this->orderNumber()->shouldReturn('007');
+        $this->order()->shouldReturn($order);
         $this->billingData()->shouldReturn($billingData);
         $this->currencyCode()->shouldReturn('USD');
         $this->localeCode()->shouldReturn('en_US');

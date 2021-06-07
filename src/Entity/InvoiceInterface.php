@@ -15,6 +15,7 @@ namespace Sylius\InvoicingPlugin\Entity;
 
 use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Core\Model\ChannelInterface;
+use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 
 interface InvoiceInterface extends ResourceInterface
@@ -23,6 +24,9 @@ interface InvoiceInterface extends ResourceInterface
 
     public function number(): string;
 
+    public function order(): OrderInterface;
+
+    /** @deprecated this method is deprecated an will be remove in v1.0 - use InvoiceInterface::order() instead */
     public function orderNumber(): string;
 
     public function issuedAt(): \DateTimeInterface;
