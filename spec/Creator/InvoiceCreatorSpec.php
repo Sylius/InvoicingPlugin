@@ -45,9 +45,9 @@ final class InvoiceCreatorSpec extends ObjectBehavior
         OrderInterface $order,
         InvoiceInterface $invoice
     ): void {
-        $invoiceRepository->findOneByOrderNumber('0000001')->willReturn(null);
-
         $orderRepository->findOneByNumber('0000001')->willReturn($order);
+
+        $invoiceRepository->findOneByOrder($order)->willReturn(null);
 
         $invoiceDateTime = new \DateTimeImmutable('2019-02-25');
 
@@ -62,17 +62,19 @@ final class InvoiceCreatorSpec extends ObjectBehavior
         InvoiceRepositoryInterface $invoiceRepository,
         OrderRepositoryInterface $orderRepository,
         InvoiceGeneratorInterface $invoiceGenerator,
+        OrderInterface $order,
         InvoiceInterface $invoice
     ): void {
-        $invoiceRepository->findOneByOrderNumber('0000001')->willReturn($invoice);
+        $orderRepository->findOneByNumber('0000001')->willReturn($order);
+        $invoiceRepository->findOneByOrder($order)->willReturn($invoice);
 
         $invoiceDateTime = new \DateTimeImmutable('2019-02-25');
 
-        $orderRepository->findOneByNumber(Argument::any())->shouldNotBeCalled();
         $invoiceGenerator->generateForOrder(Argument::any(), Argument::any())->shouldNotBeCalled();
         $invoiceRepository->add(Argument::any())->shouldNotBeCalled();
 
-        $this->shouldThrow(InvoiceAlreadyGenerated::withOrderNumber('0000001'))
+        $this
+            ->shouldThrow(InvoiceAlreadyGenerated::withOrderNumber('0000001'))
             ->during('__invoke', ['0000001', $invoiceDateTime])
         ;
     }

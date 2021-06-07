@@ -116,7 +116,7 @@ class Invoice implements InvoiceInterface
 
     public function orderNumber(): string
     {
-        return $this->order->getNumber();
+        return (string) $this->order->getNumber();
     }
 
     public function issuedAt(): \DateTimeInterface
