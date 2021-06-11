@@ -26,4 +26,16 @@ class InvoiceRepository extends EntityRepository implements InvoiceRepositoryInt
 
         return $invoice;
     }
+
+    public function findByOrderNumber(string $orderNumber): array
+    {
+        return $this
+            ->createQueryBuilder('invoice')
+            ->innerJoin('invoice.order', 'o')
+            ->where('o.number = :orderNumber')
+            ->setParameter('orderNumber', $orderNumber)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

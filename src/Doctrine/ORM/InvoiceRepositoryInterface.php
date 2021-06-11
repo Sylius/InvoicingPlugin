@@ -20,4 +20,6 @@ use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 interface InvoiceRepositoryInterface extends RepositoryInterface
 {
     public function findOneByOrder(OrderInterface $order): ?InvoiceInterface;
+
+    public function findByOrderNumber(string $orderNumber): array;
 }

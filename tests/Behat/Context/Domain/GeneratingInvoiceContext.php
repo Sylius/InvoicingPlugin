@@ -27,7 +27,7 @@ final class GeneratingInvoiceContext implements Context
      */
     public function orderHasLostAllOfItsInvoices(string $orderNumber): void
     {
-        $invoice = $this->invoiceRepository->findOneByOrderNumber($orderNumber);
+        $invoice = $this->invoiceRepository->findByOrderNumber($orderNumber)[0];
 
         $this->invoiceManager->remove($invoice);
     }
