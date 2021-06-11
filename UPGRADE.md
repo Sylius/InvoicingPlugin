@@ -7,7 +7,6 @@
    `Sylius\InvoicingPlugin\Doctrine\ORM\InvoiceRepositoryInterface::findOneByOrder`.
 1. `Sylius\InvoicingPlugin\Factory\InvoiceFactoryInterface::createForData` takes `OrderInterface $order` as the 3rd argument instead
     of `string $orderNumber`.
-1. 
 
 ### UPGRADE FROM 0.14.0 TO 0.15.0
 
