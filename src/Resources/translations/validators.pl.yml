@@ -3,7 +3,7 @@ sylius_admin_order_creation:
         company:
             not_blank: 'Firma nie może być pusta'
         taxId:
-            not_blank: 'Tax ID nie może być pusty'
+            not_blank: 'NIP nie może być pusty'
         street:
             not_blank: 'Ulica nie może być pusta'
         city:

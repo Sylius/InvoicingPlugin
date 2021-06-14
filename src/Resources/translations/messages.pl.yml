@@ -1,6 +1,6 @@
 sylius_invoicing_plugin:
     ui:
-        billing_data: 'Billing data'
+        billing_data: 'Dane do faktury'
         buyer: 'Nabywca'
         download_invoice: 'Pobierz'
         invoice: 'Faktura'
@@ -13,5 +13,5 @@ sylius_invoicing_plugin:
         manage_invoices: 'Zarządzaj fakturami'
         order_number: 'Numer zamówienia'
         resend_invoice: 'Wyślij ponownie'
-        seller: 'Sprzedwca'
+        seller: 'Sprzedawca'
         tax_id: 'NIP'
