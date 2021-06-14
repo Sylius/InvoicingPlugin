@@ -1,0 +1,17 @@
+sylius_invoicing_plugin:
+    ui:
+        billing_data: 'Dane do faktury'
+        buyer: 'Nabywca'
+        download_invoice: 'Pobierz'
+        invoice: 'Faktura'
+        invoice_id: 'Identyfikator faktury'
+        invoice_number: 'Numer'
+        invoices: 'Faktury'
+        issued_at: 'Wystawiono'
+        issued_for_order: 'Wystawiono dla zamówienia'
+        issued_from: 'Wystawiono przez'
+        manage_invoices: 'Zarządzaj fakturami'
+        order_number: 'Numer zamówienia'
+        resend_invoice: 'Wyślij ponownie'
+        seller: 'Sprzedawca'
+        tax_id: 'NIP'

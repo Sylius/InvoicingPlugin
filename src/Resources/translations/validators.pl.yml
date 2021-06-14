@@ -1,0 +1,14 @@
+sylius_admin_order_creation:
+    channel:
+        company:
+            not_blank: 'Firma nie może być pusta'
+        taxId:
+            not_blank: 'NIP nie może być pusty'
+        street:
+            not_blank: 'Ulica nie może być pusta'
+        city:
+            not_blank: 'Miasto nie może być puste'
+        postcode:
+            not_blank: 'Kod pocztowy nie może być pusty'
+        countryCode:
+            not_blank: 'Kraj nie może być pusty'
