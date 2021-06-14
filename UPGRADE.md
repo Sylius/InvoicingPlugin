@@ -1,3 +1,13 @@
+### UPGRADE FROM 0.15.0 TO 0.16.0
+
+1. `orderNumber` field on `Sylius\InvoicingPlugin\Entity\Invoice` has been removed and replaced with relation to `Order` entity.
+1. `Sylius\InvoicingPlugin\Entity\InvoiceInterface::orderNumber` function is left due to easier and smoother upgrades,
+   but is also deprecated and will be removed in the `v1.0.0` release. Use `Sylius\InvoicingPlugin\Entity\InvoiceInterface::order` instead.
+1. `Sylius\InvoicingPlugin\Doctrine\ORM\InvoiceRepositoryInterface::findOneByOrderNumber` method has been replaced by
+   `Sylius\InvoicingPlugin\Doctrine\ORM\InvoiceRepositoryInterface::findOneByOrder`.
+1. `Sylius\InvoicingPlugin\Factory\InvoiceFactoryInterface::createForData` takes `OrderInterface $order` as the 3rd argument instead
+    of `string $orderNumber`.
+
 ### UPGRADE FROM 0.14.0 TO 0.15.0
 
 1. Command bus `sylius_invoicing_plugin.command_bus` has been replaced with `sylius.command_bus`.

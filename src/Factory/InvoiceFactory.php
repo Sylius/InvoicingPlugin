@@ -15,6 +15,7 @@ namespace Sylius\InvoicingPlugin\Factory;
 
 use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Core\Model\ChannelInterface;
+use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\InvoicingPlugin\Entity\BillingDataInterface;
 use Sylius\InvoicingPlugin\Entity\Invoice;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
@@ -26,7 +27,7 @@ final class InvoiceFactory implements InvoiceFactoryInterface
     public function createForData(
         string $id,
         string $number,
-        string $orderNumber,
+        OrderInterface $order,
         \DateTimeInterface $issuedAt,
         BillingDataInterface $billingData,
         string $currencyCode,
@@ -40,7 +41,7 @@ final class InvoiceFactory implements InvoiceFactoryInterface
         return new Invoice(
             $id,
             $number,
-            $orderNumber,
+            $order,
             $issuedAt,
             $billingData,
             $currencyCode,

@@ -50,7 +50,7 @@ final class OrderPaymentPaidProducerSpec extends ObjectBehavior
 
         $event = new OrderPaymentPaid('0000001', $dateTime);
 
-        $invoiceRepository->findOneByOrderNumber('0000001')->willReturn($invoice);
+        $invoiceRepository->findOneByOrder($order)->willReturn($invoice);
 
         $eventBus->dispatch($event)->shouldBeCalled()->willReturn(new Envelope($event));
 
@@ -80,7 +80,7 @@ final class OrderPaymentPaidProducerSpec extends ObjectBehavior
     ): void {
         $payment->getOrder()->willReturn($order);
         $order->getNumber()->willReturn('0000001');
-        $invoiceRepository->findOneByOrderNumber('0000001')->willReturn(null);
+        $invoiceRepository->findOneByOrder($order)->willReturn(null);
 
         $eventBus->dispatch(Argument::any())->shouldNotBeCalled();
         $dateTimeProvider->__invoke()->shouldNotBeCalled();

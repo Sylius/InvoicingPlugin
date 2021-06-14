@@ -5,7 +5,6 @@
         <id name="id" column="id" type="string" />
 
         <field name="number" column="number" />
-        <field name="orderNumber" column="order_number" />
         <field name="issuedAt" column="issued_at" type="datetime" />
         <field name="currencyCode" column="currency_code" length="3" />
         <field name="localeCode" column="locale_code" />
@@ -34,15 +33,15 @@
             <join-column name="channel_id" />
         </many-to-one>
 
+        <many-to-one field="order" target-entity="Sylius\Component\Order\Model\OrderInterface">
+            <join-column name="order_id" />
+        </many-to-one>
+
         <one-to-one field="shopBillingData" target-entity="Sylius\InvoicingPlugin\Entity\InvoiceShopBillingDataInterface">
             <cascade>
                 <cascade-all />
             </cascade>
             <join-column name="shop_billing_data_id" referenced-column-name="id" />
         </one-to-one>
-
-        <indexes>
-            <index columns="order_number" />
-        </indexes>
     </mapped-superclass>
 </doctrine-mapping>

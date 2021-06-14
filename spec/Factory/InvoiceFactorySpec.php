@@ -16,6 +16,7 @@ namespace spec\Sylius\InvoicingPlugin\Factory;
 use Doctrine\Common\Collections\ArrayCollection;
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Core\Model\ChannelInterface;
+use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\InvoicingPlugin\Entity\BillingDataInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceShopBillingDataInterface;
@@ -31,14 +32,15 @@ class InvoiceFactorySpec extends ObjectBehavior
     public function it_creates_an_invoice_for_given_data(
         BillingDataInterface $billingData,
         ChannelInterface $channel,
-        InvoiceShopBillingDataInterface $invoiceShopBillingData
+        InvoiceShopBillingDataInterface $invoiceShopBillingData,
+        OrderInterface $order
     ): void {
         $date = new \DateTimeImmutable('2019-03-06');
 
         $this->createForData(
             '7903c83a-4c5e-4bcf-81d8-9dc304c6a353',
             '2019/03/0000001',
-            '007',
+            $order,
             $date,
             $billingData,
             'USD',
@@ -53,14 +55,15 @@ class InvoiceFactorySpec extends ObjectBehavior
 
     public function it_allows_for_nullable_shop_billing_data(
         BillingDataInterface $billingData,
-        ChannelInterface $channel
+        ChannelInterface $channel,
+        OrderInterface $order
     ): void {
         $date = new \DateTimeImmutable('2019-03-06');
 
         $this->createForData(
             '7903c83a-4c5e-4bcf-81d8-9dc304c6a353',
             '2019/03/0000001',
-            '007',
+            $order,
             $date,
             $billingData,
             'USD',

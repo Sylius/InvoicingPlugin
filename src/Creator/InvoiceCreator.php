@@ -43,15 +43,15 @@ final class InvoiceCreator implements InvoiceCreatorInterface
 
     public function __invoke(string $orderNumber, \DateTimeInterface $dateTime): void
     {
+        /** @var OrderInterface $order */
+        $order = $this->orderRepository->findOneByNumber($orderNumber);
+
         /** @var InvoiceInterface|null $invoice */
-        $invoice = $this->invoiceRepository->findOneByOrderNumber($orderNumber);
+        $invoice = $this->invoiceRepository->findOneByOrder($order);
 
         if (null !== $invoice) {
             throw InvoiceAlreadyGenerated::withOrderNumber($orderNumber);
         }
-
-        /** @var OrderInterface $order */
-        $order = $this->orderRepository->findOneByNumber($orderNumber);
 
         $invoice = $this->invoiceGenerator->generateForOrder($order, $dateTime);
 

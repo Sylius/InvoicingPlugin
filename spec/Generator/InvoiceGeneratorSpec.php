@@ -77,7 +77,6 @@ final class InvoiceGeneratorSpec extends ObjectBehavior
         $uuidInvoiceIdentifierGenerator->generate()->willReturn('7903c83a-4c5e-4bcf-81d8-9dc304c6a353');
         $sequentialInvoiceNumberGenerator->generate()->willReturn($date->format('Y/m') . '/0000001');
 
-        $order->getNumber()->willReturn('007');
         $order->getCurrencyCode()->willReturn('USD');
         $order->getLocaleCode()->willReturn('en_US');
         $order->getTotal()->willReturn(10300);
@@ -95,7 +94,7 @@ final class InvoiceGeneratorSpec extends ObjectBehavior
         $invoiceFactory->createForData(
             '7903c83a-4c5e-4bcf-81d8-9dc304c6a353',
             '2019/03/0000001',
-            '007',
+            $order,
             $date,
             $billingData,
             'USD',

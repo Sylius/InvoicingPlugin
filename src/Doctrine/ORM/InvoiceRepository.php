@@ -14,15 +14,28 @@ declare(strict_types=1);
 namespace Sylius\InvoicingPlugin\Doctrine\ORM;
 
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
+use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 
 class InvoiceRepository extends EntityRepository implements InvoiceRepositoryInterface
 {
-    public function findOneByOrderNumber(string $orderNumber): ?InvoiceInterface
+    public function findOneByOrder(OrderInterface $order): ?InvoiceInterface
     {
         /** @var InvoiceInterface|null $invoice */
-        $invoice = $this->findOneBy(['orderNumber' => $orderNumber]);
+        $invoice = $this->findOneBy(['order' => $order]);
 
         return $invoice;
+    }
+
+    public function findByOrderNumber(string $orderNumber): array
+    {
+        return $this
+            ->createQueryBuilder('invoice')
+            ->innerJoin('invoice.order', 'o')
+            ->where('o.number = :orderNumber')
+            ->setParameter('orderNumber', $orderNumber)
+            ->getQuery()
+            ->getResult()
+        ;
     }
 }

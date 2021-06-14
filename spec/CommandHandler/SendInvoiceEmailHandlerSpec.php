@@ -40,9 +40,9 @@ final class SendInvoiceEmailHandlerSpec extends ObjectBehavior
         OrderInterface $order,
         CustomerInterface $customer
     ): void {
-        $invoiceRepository->findOneByOrderNumber('0000001')->willReturn($invoice);
-
         $orderRepository->findOneByNumber('0000001')->willReturn($order);
+
+        $invoiceRepository->findOneByOrder($order)->willReturn($invoice);
 
         $order->getCustomer()->willReturn($customer);
 
@@ -60,8 +60,8 @@ final class SendInvoiceEmailHandlerSpec extends ObjectBehavior
         OrderInterface $order,
         CustomerInterface $customer
     ): void {
-        $invoiceRepository->findOneByOrderNumber('0000001')->willReturn(null);
         $orderRepository->findOneByNumber('0000001')->willReturn($order);
+        $invoiceRepository->findOneByOrder($order)->willReturn(null);
 
         $order->getCustomer()->shouldNotBeCalled();
         $customer->getEmail()->shouldNotBeCalled();
