@@ -1,6 +1,11 @@
 # CHANGELOG
 
-### v0.15.0 (2021-06-02 )
+### v0.16.0 (2021-06-18)
+
+- [#226](https://github.com/Sylius/InvoicingPlugin/issues/226) Relate Invoice with Order ([@Zales0123](https://github.com/Zales0123))
+- [#220](https://github.com/Sylius/InvoicingPlugin/issues/220) Polish translations & invoice download template update ([@mysiar](https://github.com/mysiar), [@GSadee](https://github.com/GSadee))
+
+### v0.15.0 (2021-06-02)
 
 - [#221](https://github.com/Sylius/InvoicingPlugin/issues/221) unify usage of buses ([@SirDomin](https://github.com/SirDomin))
 - [#223](https://github.com/Sylius/InvoicingPlugin/issues/223) Drop support for Sylius 1.8 ([@GSadee](https://github.com/GSadee))
