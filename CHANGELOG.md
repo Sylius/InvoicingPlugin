@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### v0.16.1 (2021-06-23)
+
+- [#228](https://github.com/Sylius/InvoicingPlugin/issues/228) Fix sorting and filtering invoices by order in the grid ([@hurricane-voronin](https://github.com/hurricane-voronin))
+
 ### v0.16.0 (2021-06-18)
 
 - [#226](https://github.com/Sylius/InvoicingPlugin/issues/226) Relate Invoice with Order ([@Zales0123](https://github.com/Zales0123))
