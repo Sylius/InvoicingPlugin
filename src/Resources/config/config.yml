@@ -42,7 +42,7 @@ sylius_grid:
                     label: sylius.ui.order
                     options:
                         template: '@SyliusInvoicingPlugin/Invoice/Grid/Field/orderNumber.html.twig'
-                    sortable: true
+                    sortable: order.number
                 channel:
                     type: twig
                     label: sylius.ui.channel
@@ -65,6 +65,8 @@ sylius_grid:
                 orderNumber:
                     type: string
                     label: sylius_invoicing_plugin.ui.order_number
+                    options:
+                        fields: [order.number]
                 number:
                     type: string
                     label: sylius_invoicing_plugin.ui.invoice_number
