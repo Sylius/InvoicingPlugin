@@ -115,9 +115,11 @@ sylius_ui:
 framework:
     messenger:
         buses:
-            sylius.event_bus:
+            sylius.event_bus: &event_bus
                 default_middleware: allow_no_handlers
-            sylius.command_bus:
+            sylius.command_bus: &command_bus
                 middleware:
                     - 'validation'
                     - 'doctrine_transaction'
+            sylius_invoicing_plugin.command_bus: *command_bus
+            sylius_invoicing_plugin.event_bus: *event_bus
