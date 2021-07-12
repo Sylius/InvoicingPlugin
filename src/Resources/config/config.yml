@@ -1,5 +1,6 @@
 parameters:
     default_channel_color: "lightGrey"
+    sylius_invoicing.invoice_save_path: "%kernel.project_dir%/private/invoices/"
 
 sylius_mailer:
     emails:

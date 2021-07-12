@@ -22,6 +22,7 @@ final class ChannelContext implements Context
 
     /**
      * @Given I set shop billing data for channel :channel as :company, :taxId, :street, :postcode :city, :country
+     * @Given channel :channel has shop billing data set as :company, :taxId, :street, :postcode :city, :country
      */
     public function setShopBillingDataForChannel(
         ChannelInterface $channel,
