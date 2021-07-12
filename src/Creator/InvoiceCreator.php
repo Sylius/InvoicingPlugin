@@ -19,6 +19,8 @@ use Sylius\InvoicingPlugin\Doctrine\ORM\InvoiceRepositoryInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Sylius\InvoicingPlugin\Exception\InvoiceAlreadyGenerated;
 use Sylius\InvoicingPlugin\Generator\InvoiceGeneratorInterface;
+use Sylius\InvoicingPlugin\Generator\InvoicePdfFileGeneratorInterface;
+use Sylius\InvoicingPlugin\Saver\InvoiceFileSaverInterface;
 
 final class InvoiceCreator implements InvoiceCreatorInterface
 {
@@ -31,14 +33,24 @@ final class InvoiceCreator implements InvoiceCreatorInterface
     /** @var InvoiceGeneratorInterface */
     private $invoiceGenerator;
 
+    /** @var InvoicePdfFileGeneratorInterface */
+    private $invoicePdfFileGenerator;
+
+    /** @var InvoiceFileSaverInterface */
+    private $invoiceFileSaver;
+
     public function __construct(
         InvoiceRepositoryInterface $invoiceRepository,
         OrderRepositoryInterface $orderRepository,
-        InvoiceGeneratorInterface $invoiceGenerator
+        InvoiceGeneratorInterface $invoiceGenerator,
+        InvoicePdfFileGeneratorInterface $invoicePdfFileGenerator,
+        InvoiceFileSaverInterface $invoiceFileSaver
     ) {
         $this->invoiceRepository = $invoiceRepository;
         $this->orderRepository = $orderRepository;
         $this->invoiceGenerator = $invoiceGenerator;
+        $this->invoicePdfFileGenerator = $invoicePdfFileGenerator;
+        $this->invoiceFileSaver = $invoiceFileSaver;
     }
 
     public function __invoke(string $orderNumber, \DateTimeInterface $dateTime): void
@@ -54,6 +66,8 @@ final class InvoiceCreator implements InvoiceCreatorInterface
         }
 
         $invoice = $this->invoiceGenerator->generateForOrder($order, $dateTime);
+        $invoicePdf = $this->invoicePdfFileGenerator->generate($invoice);
+        $this->invoiceFileSaver->save($invoicePdf);
 
         $this->invoiceRepository->add($invoice);
     }

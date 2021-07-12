@@ -22,15 +22,26 @@ use Sylius\InvoicingPlugin\Doctrine\ORM\InvoiceRepositoryInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Sylius\InvoicingPlugin\Exception\InvoiceAlreadyGenerated;
 use Sylius\InvoicingPlugin\Generator\InvoiceGeneratorInterface;
+use Sylius\InvoicingPlugin\Generator\InvoicePdfFileGeneratorInterface;
+use Sylius\InvoicingPlugin\Model\InvoicePdf;
+use Sylius\InvoicingPlugin\Saver\InvoiceFileSaverInterface;
 
 final class InvoiceCreatorSpec extends ObjectBehavior
 {
     public function let(
         InvoiceRepositoryInterface $invoiceRepository,
         OrderRepositoryInterface $orderRepository,
-        InvoiceGeneratorInterface $invoiceGenerator
+        InvoiceGeneratorInterface $invoiceGenerator,
+        InvoicePdfFileGeneratorInterface $invoicePdfFileGenerator,
+        InvoiceFileSaverInterface $invoiceFileSaver
     ): void {
-        $this->beConstructedWith($invoiceRepository, $orderRepository, $invoiceGenerator);
+        $this->beConstructedWith(
+            $invoiceRepository,
+            $orderRepository,
+            $invoiceGenerator,
+            $invoicePdfFileGenerator,
+            $invoiceFileSaver
+        );
     }
 
     public function it_implements_invoice_for_order_creator_interface(): void
@@ -42,9 +53,13 @@ final class InvoiceCreatorSpec extends ObjectBehavior
         InvoiceRepositoryInterface $invoiceRepository,
         OrderRepositoryInterface $orderRepository,
         InvoiceGeneratorInterface $invoiceGenerator,
+        InvoicePdfFileGeneratorInterface $invoicePdfFileGenerator,
+        InvoiceFileSaverInterface $invoiceFileSaver,
         OrderInterface $order,
         InvoiceInterface $invoice
     ): void {
+        $invoicePdf = new InvoicePdf('invoice.pdf', 'CONTENT');
+
         $orderRepository->findOneByNumber('0000001')->willReturn($order);
 
         $invoiceRepository->findOneByOrder($order)->willReturn(null);
@@ -52,6 +67,8 @@ final class InvoiceCreatorSpec extends ObjectBehavior
         $invoiceDateTime = new \DateTimeImmutable('2019-02-25');
 
         $invoiceGenerator->generateForOrder($order, $invoiceDateTime)->willReturn($invoice);
+        $invoicePdfFileGenerator->generate($invoice)->willReturn($invoicePdf);
+        $invoiceFileSaver->save($invoicePdf)->shouldBeCalled();
 
         $invoiceRepository->add($invoice)->shouldBeCalled();
 
