@@ -14,8 +14,9 @@ declare(strict_types=1);
 namespace Sylius\InvoicingPlugin\Provider;
 
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
+use Sylius\InvoicingPlugin\Model\InvoicePdf;
 
-interface InvoiceFilePathProviderInterface
+interface InvoiceFileProviderInterface
 {
-    public function provide(InvoiceInterface $invoice): string;
+    public function provide(InvoiceInterface $invoice): InvoicePdf;
 }

@@ -15,7 +15,7 @@ namespace Sylius\InvoicingPlugin\Ui\Action;
 
 use Sylius\InvoicingPlugin\Doctrine\ORM\InvoiceRepositoryInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
-use Sylius\InvoicingPlugin\Provider\InvoiceFilePathProviderInterface;
+use Sylius\InvoicingPlugin\Provider\InvoiceFileProviderInterface;
 use Sylius\InvoicingPlugin\Security\Voter\InvoiceVoter;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -30,13 +30,13 @@ final class DownloadInvoiceAction
     /** @var AuthorizationCheckerInterface */
     private $authorizationChecker;
 
-    /** @var InvoiceFilePathProviderInterface */
+    /** @var InvoiceFileProviderInterface */
     private $invoiceFilePathProvider;
 
     public function __construct(
         InvoiceRepositoryInterface $invoiceRepository,
         AuthorizationCheckerInterface $authorizationChecker,
-        InvoiceFilePathProviderInterface $invoiceFilePathProvider
+        InvoiceFileProviderInterface $invoiceFilePathProvider
     ) {
         $this->invoiceRepository = $invoiceRepository;
         $this->authorizationChecker = $authorizationChecker;
@@ -53,14 +53,11 @@ final class DownloadInvoiceAction
             throw new AccessDeniedHttpException();
         }
 
-        $invoiceFilePath = $this->invoiceFilePathProvider->provide($invoice);
+        $invoiceFile = $this->invoiceFilePathProvider->provide($invoice);
 
-        $invoiceFilePathSplit = explode('/', $invoiceFilePath);
-        $invoiceFileName = $invoiceFilePathSplit[count($invoiceFilePathSplit) - 1];
-
-        $response = new Response((string) file_get_contents($invoiceFilePath), Response::HTTP_OK, ['Content-Type' => 'application/pdf']);
+        $response = new Response($invoiceFile->content(), Response::HTTP_OK, ['Content-Type' => 'application/pdf']);
         $response->headers->add([
-            'Content-Disposition' => $response->headers->makeDisposition('attachment', $invoiceFileName),
+            'Content-Disposition' => $response->headers->makeDisposition('attachment', $invoiceFile->filename()),
         ]);
 
         return $response;

@@ -21,6 +21,9 @@ final class InvoicePdf
     /** @var string */
     private $content;
 
+    /** @var string|null */
+    private $fullPath;
+
     public function __construct(string $filename, string $content)
     {
         $this->filename = $filename;
@@ -35,5 +38,15 @@ final class InvoicePdf
     public function content(): string
     {
         return $this->content;
+    }
+
+    public function fullPath(): ?string
+    {
+        return $this->fullPath;
+    }
+
+    public function setFullPath(?string $fullPath): void
+    {
+        $this->fullPath = $fullPath;
     }
 }

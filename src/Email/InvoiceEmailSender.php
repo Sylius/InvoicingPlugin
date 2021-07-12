@@ -15,30 +15,33 @@ namespace Sylius\InvoicingPlugin\Email;
 
 use Sylius\Component\Mailer\Sender\SenderInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
-use Sylius\InvoicingPlugin\Provider\InvoiceFilePathProviderInterface;
+use Sylius\InvoicingPlugin\Provider\InvoiceFileProviderInterface;
 
 final class InvoiceEmailSender implements InvoiceEmailSenderInterface
 {
     /** @var SenderInterface */
     private $emailSender;
 
-    /** @var InvoiceFilePathProviderInterface */
-    private $invoiceFilePathProvider;
+    /** @var InvoiceFileProviderInterface */
+    private $invoiceFileProvider;
 
     public function __construct(
         SenderInterface $emailSender,
-        InvoiceFilePathProviderInterface $invoiceFilePathProvider
+        InvoiceFileProviderInterface $invoiceFileProvider
     ) {
         $this->emailSender = $emailSender;
-        $this->invoiceFilePathProvider = $invoiceFilePathProvider;
+        $this->invoiceFileProvider = $invoiceFileProvider;
     }
 
     public function sendInvoiceEmail(
         InvoiceInterface $invoice,
         string $customerEmail
     ): void {
-        $filepath = $this->invoiceFilePathProvider->provide($invoice);
+        $invoicePdf = $this->invoiceFileProvider->provide($invoice);
 
-        $this->emailSender->send(Emails::INVOICE_GENERATED, [$customerEmail], ['invoice' => $invoice], [$filepath]);
+        $this
+            ->emailSender
+            ->send(Emails::INVOICE_GENERATED, [$customerEmail], ['invoice' => $invoice], [$invoicePdf->fullPath()])
+        ;
     }
 }

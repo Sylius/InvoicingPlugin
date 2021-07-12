@@ -18,15 +18,16 @@ use Sylius\Component\Mailer\Sender\SenderInterface;
 use Sylius\InvoicingPlugin\Email\Emails;
 use Sylius\InvoicingPlugin\Email\InvoiceEmailSenderInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
-use Sylius\InvoicingPlugin\Provider\InvoiceFilePathProviderInterface;
+use Sylius\InvoicingPlugin\Model\InvoicePdf;
+use Sylius\InvoicingPlugin\Provider\InvoiceFileProviderInterface;
 
 final class InvoiceEmailSenderSpec extends ObjectBehavior
 {
     function let(
         SenderInterface $sender,
-        InvoiceFilePathProviderInterface $invoiceFilePathProvider
+        InvoiceFileProviderInterface $invoiceFileProvider
     ): void {
-        $this->beConstructedWith($sender, $invoiceFilePathProvider);
+        $this->beConstructedWith($sender, $invoiceFileProvider);
     }
 
     function it_implements_invoice_email_sender_interface(): void
@@ -37,15 +38,18 @@ final class InvoiceEmailSenderSpec extends ObjectBehavior
     function it_sends_an_invoice_to_a_given_email_address(
         InvoiceInterface $invoice,
         SenderInterface $sender,
-        InvoiceFilePathProviderInterface $invoiceFilePathProvider
+        InvoiceFileProviderInterface $invoiceFileProvider
     ): void {
-        $invoiceFilePathProvider->provide($invoice)->willReturn('/path/to/invoice.pdf');
+        $invoicePdf = new InvoicePdf('invoice.pdf', 'CONTENT');
+        $invoicePdf->setFullPath('/path/to/invoices/invoice.pdf');
+
+        $invoiceFileProvider->provide($invoice)->willReturn($invoicePdf);
 
         $sender->send(
             Emails::INVOICE_GENERATED,
             ['sylius@example.com'],
             ['invoice' => $invoice],
-            ['/path/to/invoice.pdf']
+            ['/path/to/invoices/invoice.pdf']
         )->shouldBeCalled();
 
         $this->sendInvoiceEmail($invoice, 'sylius@example.com');
