@@ -51,6 +51,8 @@ default:
                 - sylius.behat.context.ui.shop.checkout.complete
                 - sylius.behat.context.ui.shop.currency
 
+                - Tests\Sylius\InvoicingPlugin\Behat\Context\Hook\InvoicesContext
+
                 - Tests\Sylius\InvoicingPlugin\Behat\Context\Ui\Admin\ManagingChannelsContext
                 - Tests\Sylius\InvoicingPlugin\Behat\Context\Ui\Admin\ManagingInvoicesContext
 
@@ -102,6 +104,8 @@ default:
                 - sylius.behat.context.transform.user
                 - sylius.behat.context.transform.zone
                 - sylius.behat.context.transform.shared_storage
+
+                - Tests\Sylius\InvoicingPlugin\Behat\Context\Hook\InvoicesContext
 
                 - Tests\Sylius\InvoicingPlugin\Behat\Context\Application\ManagingInvoicesContext
 
