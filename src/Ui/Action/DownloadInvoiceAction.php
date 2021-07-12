@@ -15,7 +15,6 @@ namespace Sylius\InvoicingPlugin\Ui\Action;
 
 use Sylius\InvoicingPlugin\Doctrine\ORM\InvoiceRepositoryInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
-use Sylius\InvoicingPlugin\Generator\InvoicePdfFileGeneratorInterface;
 use Sylius\InvoicingPlugin\Provider\InvoiceFilePathProviderInterface;
 use Sylius\InvoicingPlugin\Security\Voter\InvoiceVoter;
 use Symfony\Component\HttpFoundation\Response;
@@ -57,9 +56,9 @@ final class DownloadInvoiceAction
         $invoiceFilePath = $this->invoiceFilePathProvider->provide($invoice);
 
         $invoiceFilePathSplit = explode('/', $invoiceFilePath);
-        $invoiceFileName = $invoiceFilePathSplit[count($invoiceFilePathSplit)-1];
+        $invoiceFileName = $invoiceFilePathSplit[count($invoiceFilePathSplit) - 1];
 
-        $response = new Response(file_get_contents($invoiceFilePath), Response::HTTP_OK, ['Content-Type' => 'application/pdf']);
+        $response = new Response((string) file_get_contents($invoiceFilePath), Response::HTTP_OK, ['Content-Type' => 'application/pdf']);
         $response->headers->add([
             'Content-Disposition' => $response->headers->makeDisposition('attachment', $invoiceFileName),
         ]);

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Sylius package.
+ *
+ * (c) Paweł Jędrzejewski
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 declare(strict_types=1);
 
 namespace Sylius\InvoicingPlugin\Generator;
@@ -12,6 +21,6 @@ final class InvoiceFileNameGenerator implements InvoiceFileNameGeneratorInterfac
 
     public function generateForPdf(InvoiceInterface $invoice): string
     {
-        return str_replace('/', '_', $invoice->number()).self::PDF_FILE_EXTENSION;
+        return str_replace('/', '_', $invoice->number()) . self::PDF_FILE_EXTENSION;
     }
 }

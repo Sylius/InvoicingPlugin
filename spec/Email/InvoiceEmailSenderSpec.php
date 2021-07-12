@@ -14,30 +14,27 @@ declare(strict_types=1);
 namespace spec\Sylius\InvoicingPlugin\Email;
 
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 use Sylius\Component\Mailer\Sender\SenderInterface;
 use Sylius\InvoicingPlugin\Email\Emails;
 use Sylius\InvoicingPlugin\Email\InvoiceEmailSenderInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
-use Sylius\InvoicingPlugin\Generator\InvoicePdfFileGeneratorInterface;
-use Sylius\InvoicingPlugin\Model\InvoicePdf;
 use Sylius\InvoicingPlugin\Provider\InvoiceFilePathProviderInterface;
 
 final class InvoiceEmailSenderSpec extends ObjectBehavior
 {
-    public function let(
+    function let(
         SenderInterface $sender,
         InvoiceFilePathProviderInterface $invoiceFilePathProvider
     ): void {
         $this->beConstructedWith($sender, $invoiceFilePathProvider);
     }
 
-    public function it_implements_invoice_email_sender_interface(): void
+    function it_implements_invoice_email_sender_interface(): void
     {
         $this->shouldImplement(InvoiceEmailSenderInterface::class);
     }
 
-    public function it_sends_an_invoice_to_a_given_email_address(
+    function it_sends_an_invoice_to_a_given_email_address(
         InvoiceInterface $invoice,
         SenderInterface $sender,
         InvoiceFilePathProviderInterface $invoiceFilePathProvider

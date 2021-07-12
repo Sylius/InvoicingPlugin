@@ -3,6 +3,7 @@ default:
         customer_browsing_invoices_ui:
             contexts:
                 - sylius.behat.context.hook.doctrine_orm
+                - Tests\Sylius\InvoicingPlugin\Behat\Context\Hook\InvoicesContext
 
                 - sylius.behat.context.setup.channel
                 - sylius.behat.context.setup.currency
@@ -55,6 +56,7 @@ default:
         customer_browsing_invoices_application:
             contexts:
                 - sylius.behat.context.hook.doctrine_orm
+                - Tests\Sylius\InvoicingPlugin\Behat\Context\Hook\InvoicesContext
 
                 - sylius.behat.context.setup.channel
                 - sylius.behat.context.setup.currency

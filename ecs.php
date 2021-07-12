@@ -1,5 +1,6 @@
 <?php
 
+use PhpCsFixer\Fixer\ClassNotation\VisibilityRequiredFixer;
 use PhpCsFixer\Fixer\Comment\HeaderCommentFixer;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symplify\EasyCodingStandard\ValueObject\Option;
@@ -20,6 +21,7 @@ file that was distributed with this source code.',
     ]]);
 
     $containerConfigurator->parameters()->set(Option::SKIP, [
+        VisibilityRequiredFixer::class => ['*Spec.php'],
         '**/var/*',
     ]);
 };

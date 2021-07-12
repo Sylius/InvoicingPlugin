@@ -15,8 +15,6 @@ namespace Sylius\InvoicingPlugin\Email;
 
 use Sylius\Component\Mailer\Sender\SenderInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
-use Sylius\InvoicingPlugin\Filesystem\TemporaryFilesystem;
-use Sylius\InvoicingPlugin\Generator\InvoicePdfFileGeneratorInterface;
 use Sylius\InvoicingPlugin\Provider\InvoiceFilePathProviderInterface;
 
 final class InvoiceEmailSender implements InvoiceEmailSenderInterface
