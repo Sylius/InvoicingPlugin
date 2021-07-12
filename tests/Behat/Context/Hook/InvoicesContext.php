@@ -17,7 +17,7 @@ final class InvoicesContext implements Context
     }
 
     /**
-     * @AfterScenario
+     * @BeforeScenario
      */
     public function clearInvoicesPath(): void
     {

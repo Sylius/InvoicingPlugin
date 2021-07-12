@@ -7,7 +7,7 @@
         <service id="sylius_invoicing_plugin.ui.action.download_invoice" class="Sylius\InvoicingPlugin\Ui\Action\DownloadInvoiceAction">
             <argument type="service" id="sylius_invoicing_plugin.repository.invoice" />
             <argument type="service" id="security.authorization_checker" />
-            <argument type="service" id="sylius_invoicing_plugin.generator.invoice_pdf_file" />
+            <argument type="service" id="Sylius\InvoicingPlugin\Provider\InvoiceFilePathProviderInterface" />
         </service>
 
         <service id="sylius_invoicing_plugin.ui.action.resend_invoice" class="Sylius\InvoicingPlugin\Ui\Action\Admin\ResendInvoiceAction">
