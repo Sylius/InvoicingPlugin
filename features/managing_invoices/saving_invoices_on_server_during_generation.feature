@@ -21,4 +21,3 @@ Feature: Saving invoices on server during generation
         And for the billing address of "Mazikeen Lilim" in the "Pacific Coast Hwy", "90806" "Los Angeles", "United States"
         And the customer chose "UPS" shipping method with "Cash on Delivery" payment
         Then the invoice for order "#00000666" should be saved on the server
-

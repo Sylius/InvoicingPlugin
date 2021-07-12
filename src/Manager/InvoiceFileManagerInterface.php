@@ -11,11 +11,13 @@
 
 declare(strict_types=1);
 
-namespace Sylius\InvoicingPlugin\Saver;
+namespace Sylius\InvoicingPlugin\Manager;
 
 use Sylius\InvoicingPlugin\Model\InvoicePdf;
 
-interface InvoiceFileSaverInterface
+interface InvoiceFileManagerInterface
 {
     public function save(InvoicePdf $file): void;
+
+    public function remove(InvoicePdf $file): void;
 }

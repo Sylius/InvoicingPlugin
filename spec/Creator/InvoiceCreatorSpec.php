@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace spec\Sylius\InvoicingPlugin\Creator;
 
+use Doctrine\ORM\ORMException;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Sylius\Component\Core\Model\OrderInterface;
@@ -23,8 +24,8 @@ use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Sylius\InvoicingPlugin\Exception\InvoiceAlreadyGenerated;
 use Sylius\InvoicingPlugin\Generator\InvoiceGeneratorInterface;
 use Sylius\InvoicingPlugin\Generator\InvoicePdfFileGeneratorInterface;
+use Sylius\InvoicingPlugin\Manager\InvoiceFileManagerInterface;
 use Sylius\InvoicingPlugin\Model\InvoicePdf;
-use Sylius\InvoicingPlugin\Saver\InvoiceFileSaverInterface;
 
 final class InvoiceCreatorSpec extends ObjectBehavior
 {
@@ -33,14 +34,14 @@ final class InvoiceCreatorSpec extends ObjectBehavior
         OrderRepositoryInterface $orderRepository,
         InvoiceGeneratorInterface $invoiceGenerator,
         InvoicePdfFileGeneratorInterface $invoicePdfFileGenerator,
-        InvoiceFileSaverInterface $invoiceFileSaver
+        InvoiceFileManagerInterface $invoiceFileManager
     ): void {
         $this->beConstructedWith(
             $invoiceRepository,
             $orderRepository,
             $invoiceGenerator,
             $invoicePdfFileGenerator,
-            $invoiceFileSaver
+            $invoiceFileManager
         );
     }
 
@@ -54,7 +55,7 @@ final class InvoiceCreatorSpec extends ObjectBehavior
         OrderRepositoryInterface $orderRepository,
         InvoiceGeneratorInterface $invoiceGenerator,
         InvoicePdfFileGeneratorInterface $invoicePdfFileGenerator,
-        InvoiceFileSaverInterface $invoiceFileSaver,
+        InvoiceFileManagerInterface $invoiceFileManager,
         OrderInterface $order,
         InvoiceInterface $invoice
     ): void {
@@ -68,9 +69,36 @@ final class InvoiceCreatorSpec extends ObjectBehavior
 
         $invoiceGenerator->generateForOrder($order, $invoiceDateTime)->willReturn($invoice);
         $invoicePdfFileGenerator->generate($invoice)->willReturn($invoicePdf);
-        $invoiceFileSaver->save($invoicePdf)->shouldBeCalled();
+        $invoiceFileManager->save($invoicePdf)->shouldBeCalled();
 
         $invoiceRepository->add($invoice)->shouldBeCalled();
+
+        $this->__invoke('0000001', $invoiceDateTime);
+    }
+
+    public function it_removes_saved_invoice_file_if_database_update_fails(
+        InvoiceRepositoryInterface $invoiceRepository,
+        OrderRepositoryInterface $orderRepository,
+        InvoiceGeneratorInterface $invoiceGenerator,
+        InvoicePdfFileGeneratorInterface $invoicePdfFileGenerator,
+        InvoiceFileManagerInterface $invoiceFileManager,
+        OrderInterface $order,
+        InvoiceInterface $invoice
+    ): void {
+        $invoicePdf = new InvoicePdf('invoice.pdf', 'CONTENT');
+
+        $orderRepository->findOneByNumber('0000001')->willReturn($order);
+
+        $invoiceRepository->findOneByOrder($order)->willReturn(null);
+
+        $invoiceDateTime = new \DateTimeImmutable('2019-02-25');
+
+        $invoiceGenerator->generateForOrder($order, $invoiceDateTime)->willReturn($invoice);
+        $invoicePdfFileGenerator->generate($invoice)->willReturn($invoicePdf);
+        $invoiceFileManager->save($invoicePdf)->shouldBeCalled();
+
+        $invoiceRepository->add($invoice)->willThrow(ORMException::class);
+        $invoiceFileManager->remove($invoicePdf)->shouldBeCalled();
 
         $this->__invoke('0000001', $invoiceDateTime);
     }

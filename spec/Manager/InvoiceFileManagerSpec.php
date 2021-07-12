@@ -11,14 +11,14 @@
 
 declare(strict_types=1);
 
-namespace spec\Sylius\InvoicingPlugin\Saver;
+namespace spec\Sylius\InvoicingPlugin\Manager;
 
 use Gaufrette\FilesystemInterface;
 use PhpSpec\ObjectBehavior;
+use Sylius\InvoicingPlugin\Manager\InvoiceFileManagerInterface;
 use Sylius\InvoicingPlugin\Model\InvoicePdf;
-use Sylius\InvoicingPlugin\Saver\InvoiceFileSaverInterface;
 
-final class InvoiceFileSaverSpec extends ObjectBehavior
+final class InvoiceFileManagerSpec extends ObjectBehavior
 {
     function let(FilesystemInterface $filesystem): void
     {
@@ -27,7 +27,7 @@ final class InvoiceFileSaverSpec extends ObjectBehavior
 
     function it_implements_invoice_file_saver_interface(): void
     {
-        $this->shouldImplement(InvoiceFileSaverInterface::class);
+        $this->shouldImplement(InvoiceFileManagerInterface::class);
     }
 
     function it_saves_invoice_pdf_in_given_filesystem(FilesystemInterface $filesystem): void
@@ -35,5 +35,12 @@ final class InvoiceFileSaverSpec extends ObjectBehavior
         $filesystem->write('2020_01_01_invoice.pdf', 'CONTENT')->shouldBeCalled();
 
         $this->save(new InvoicePdf('2020_01_01_invoice.pdf', 'CONTENT'));
+    }
+
+    function it_removes_invoice_pdf_in_given_filesystem(FilesystemInterface $filesystem): void
+    {
+        $filesystem->delete('2020_01_01_invoice.pdf')->shouldBeCalled();
+
+        $this->remove(new InvoicePdf('2020_01_01_invoice.pdf', 'CONTENT'));
     }
 }

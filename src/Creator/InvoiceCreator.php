@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sylius\InvoicingPlugin\Creator;
 
+use Doctrine\ORM\ORMException;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Repository\OrderRepositoryInterface;
 use Sylius\InvoicingPlugin\Doctrine\ORM\InvoiceRepositoryInterface;
@@ -20,7 +21,7 @@ use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Sylius\InvoicingPlugin\Exception\InvoiceAlreadyGenerated;
 use Sylius\InvoicingPlugin\Generator\InvoiceGeneratorInterface;
 use Sylius\InvoicingPlugin\Generator\InvoicePdfFileGeneratorInterface;
-use Sylius\InvoicingPlugin\Saver\InvoiceFileSaverInterface;
+use Sylius\InvoicingPlugin\Manager\InvoiceFileManagerInterface;
 
 final class InvoiceCreator implements InvoiceCreatorInterface
 {
@@ -36,21 +37,21 @@ final class InvoiceCreator implements InvoiceCreatorInterface
     /** @var InvoicePdfFileGeneratorInterface */
     private $invoicePdfFileGenerator;
 
-    /** @var InvoiceFileSaverInterface */
-    private $invoiceFileSaver;
+    /** @var InvoiceFileManagerInterface */
+    private $invoiceFileManager;
 
     public function __construct(
         InvoiceRepositoryInterface $invoiceRepository,
         OrderRepositoryInterface $orderRepository,
         InvoiceGeneratorInterface $invoiceGenerator,
         InvoicePdfFileGeneratorInterface $invoicePdfFileGenerator,
-        InvoiceFileSaverInterface $invoiceFileSaver
+        InvoiceFileManagerInterface $invoiceFileManager
     ) {
         $this->invoiceRepository = $invoiceRepository;
         $this->orderRepository = $orderRepository;
         $this->invoiceGenerator = $invoiceGenerator;
         $this->invoicePdfFileGenerator = $invoicePdfFileGenerator;
-        $this->invoiceFileSaver = $invoiceFileSaver;
+        $this->invoiceFileManager = $invoiceFileManager;
     }
 
     public function __invoke(string $orderNumber, \DateTimeInterface $dateTime): void
@@ -67,8 +68,12 @@ final class InvoiceCreator implements InvoiceCreatorInterface
 
         $invoice = $this->invoiceGenerator->generateForOrder($order, $dateTime);
         $invoicePdf = $this->invoicePdfFileGenerator->generate($invoice);
-        $this->invoiceFileSaver->save($invoicePdf);
+        $this->invoiceFileManager->save($invoicePdf);
 
-        $this->invoiceRepository->add($invoice);
+        try {
+            $this->invoiceRepository->add($invoice);
+        } catch (ORMException $exception) {
+            $this->invoiceFileManager->remove($invoicePdf);
+        }
     }
 }

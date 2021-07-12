@@ -11,12 +11,12 @@
 
 declare(strict_types=1);
 
-namespace Sylius\InvoicingPlugin\Saver;
+namespace Sylius\InvoicingPlugin\Manager;
 
 use Gaufrette\FilesystemInterface;
 use Sylius\InvoicingPlugin\Model\InvoicePdf;
 
-final class InvoiceFileSaver implements InvoiceFileSaverInterface
+final class InvoiceFileManager implements InvoiceFileManagerInterface
 {
     /** @var FilesystemInterface */
     private $filesystem;
@@ -29,5 +29,10 @@ final class InvoiceFileSaver implements InvoiceFileSaverInterface
     public function save(InvoicePdf $file): void
     {
         $this->filesystem->write($file->filename(), $file->content());
+    }
+
+    public function remove(InvoicePdf $file): void
+    {
+        $this->filesystem->delete($file->filename());
     }
 }

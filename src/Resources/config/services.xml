@@ -39,7 +39,7 @@
 
         <service id="sylius_invoicing_plugin.custom_factory.invoice" class="Sylius\InvoicingPlugin\Factory\InvoiceFactory" />
 
-        <service id="Sylius\InvoicingPlugin\Saver\InvoiceFileSaverInterface" class="Sylius\InvoicingPlugin\Saver\InvoiceFileSaver">
+        <service id="Sylius\InvoicingPlugin\Manager\InvoiceFileManagerInterface" class="Sylius\InvoicingPlugin\Manager\InvoiceFileManager">
             <argument type="service" id="gaufrette.sylius_invoicing_invoice_filesystem" />
         </service>
 
