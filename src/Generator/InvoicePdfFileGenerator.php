@@ -21,8 +21,6 @@ use Twig\Environment;
 
 final class InvoicePdfFileGenerator implements InvoicePdfFileGeneratorInterface
 {
-    private const FILE_EXTENSION = '.pdf';
-
     /** @var Environment */
     private $templatingEngine;
 
@@ -31,6 +29,9 @@ final class InvoicePdfFileGenerator implements InvoicePdfFileGeneratorInterface
 
     /** @var FileLocatorInterface */
     private $fileLocator;
+
+    /** @var InvoiceFileNameGeneratorInterface */
+    private $invoiceFileNameGenerator;
 
     /** @var string */
     private $template;
@@ -42,20 +43,21 @@ final class InvoicePdfFileGenerator implements InvoicePdfFileGeneratorInterface
         Environment $templatingEngine,
         GeneratorInterface $pdfGenerator,
         FileLocatorInterface $fileLocator,
+        InvoiceFileNameGeneratorInterface $invoiceFileNameGenerator,
         string $template,
         string $invoiceLogoPath
     ) {
         $this->templatingEngine = $templatingEngine;
         $this->pdfGenerator = $pdfGenerator;
         $this->fileLocator = $fileLocator;
+        $this->invoiceFileNameGenerator = $invoiceFileNameGenerator;
         $this->template = $template;
         $this->invoiceLogoPath = $invoiceLogoPath;
     }
 
     public function generate(InvoiceInterface $invoice): InvoicePdf
     {
-        /** @var string $filename */
-        $filename = str_replace('/', '_', $invoice->number()) . self::FILE_EXTENSION;
+        $filename = $this->invoiceFileNameGenerator->generateForPdf($invoice);
 
         $pdf = $this->pdfGenerator->getOutputFromHtml(
             $this->templatingEngine->render($this->template, [
