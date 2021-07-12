@@ -1,3 +1,16 @@
+### UPGRADE FROM 0.16.1 TO 0.17.0
+
+Invoices are now saved on the server during their generation (by default, when the order is paid).
+
+1. `Sylius\InvoicingPlugin\Creator\InvoiceCreator` class has 2 more dependencies: `InvoicePdfFileGeneratorInterface $invoicePdfFileGenerator`
+    and `InvoiceFileManagerInterface $invoiceFileManager`
+1. `Sylius\InvoicingPlugin\Email\InvoiceEmailSender` class 2nd dependency has been changed from `InvoicePdfFileGeneratorInterface $invoicePdfFileGenerator`
+    to `InvoiceFileProviderInterface $invoiceFileProvider`
+1. `Sylius\InvoicingPlugin\Generator\InvoicePdfFileGenerator` class has additional `InvoiceFileNameGeneratorInterface $invoiceFileNameGenerator`
+    dependency, placed on 4th place, before `string $template`
+1. `Sylius\InvoicingPlugin\Ui\Action\DownloadInvoiceAction` class 4th dependency has been changed from `InvoicePdfFileGeneratorInterface $invoicePdfFileGenerator`
+    to `InvoiceFileProviderInterface $invoiceFilePathProvider`
+
 ### UPGRADE FROM 0.15.0 TO 0.16.0
 
 1. `orderNumber` field on `Sylius\InvoicingPlugin\Entity\Invoice` has been removed and replaced with relation to `Order` entity.
