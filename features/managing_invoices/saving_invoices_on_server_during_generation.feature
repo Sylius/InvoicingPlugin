@@ -1,6 +1,6 @@
 @managing_invoices
 Feature: Saving invoices on server during generation
-    In order to keep invoices in immutable for further usage
+    In order to keep invoices immutable for further usage
     As a Store Owner
     I want the invoices to be saved on a server during generation
 
