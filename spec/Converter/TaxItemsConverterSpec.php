@@ -22,12 +22,12 @@ use Sylius\InvoicingPlugin\Converter\TaxItemsConverterInterface;
 
 final class TaxItemsConverterSpec extends ObjectBehavior
 {
-    public function it_implements_tax_items_converter_interface(): void
+    function it_implements_tax_items_converter_interface(): void
     {
         $this->shouldImplement(TaxItemsConverterInterface::class);
     }
 
-    public function it_extracts_tax_items_from_order(
+    function it_extracts_tax_items_from_order(
         OrderInterface $order,
         AdjustmentInterface $taxAdjustment
     ): void {

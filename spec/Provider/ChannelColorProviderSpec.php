@@ -20,17 +20,17 @@ use Sylius\InvoicingPlugin\Provider\ChannelColorProviderInterface;
 
 final class ChannelColorProviderSpec extends ObjectBehavior
 {
-    public function let(ChannelRepositoryInterface $channelRepository): void
+    function let(ChannelRepositoryInterface $channelRepository): void
     {
         $this->beConstructedWith($channelRepository, 'whiteGrey');
     }
 
-    public function it_implements_channel_color_provider_interface(): void
+    function it_implements_channel_color_provider_interface(): void
     {
         $this->shouldImplement(ChannelColorProviderInterface::class);
     }
 
-    public function it_returns_channel_color(
+    function it_returns_channel_color(
         ChannelRepositoryInterface $channelRepository,
         ChannelInterface $channel
     ): void {
@@ -40,7 +40,7 @@ final class ChannelColorProviderSpec extends ObjectBehavior
         $this->provide('en_US')->shouldReturn('black');
     }
 
-    public function it_returns_default_channel_color_if_channel_does_not_provide_one(
+    function it_returns_default_channel_color_if_channel_does_not_provide_one(
         ChannelRepositoryInterface $channelRepository,
         ChannelInterface $channel
     ): void {

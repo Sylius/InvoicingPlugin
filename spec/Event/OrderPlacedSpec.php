@@ -17,7 +17,7 @@ use PhpSpec\ObjectBehavior;
 
 final class OrderPlacedSpec extends ObjectBehavior
 {
-    public function it_represents_an_immutable_fact_that_an_order_has_been_placed(): void
+    function it_represents_an_immutable_fact_that_an_order_has_been_placed(): void
     {
         $date = new \DateTimeImmutable();
 

@@ -24,7 +24,7 @@ use Sylius\InvoicingPlugin\Generator\InvoiceNumberGenerator;
 
 final class SequentialInvoiceNumberGeneratorSpec extends ObjectBehavior
 {
-    public function let(
+    function let(
         RepositoryInterface $sequenceRepository,
         FactoryInterface $sequenceFactory,
         EntityManagerInterface $sequenceManager,
@@ -40,12 +40,12 @@ final class SequentialInvoiceNumberGeneratorSpec extends ObjectBehavior
         );
     }
 
-    public function it_implements_invoice_number_generator_interface(): void
+    function it_implements_invoice_number_generator_interface(): void
     {
         $this->shouldImplement(InvoiceNumberGenerator::class);
     }
 
-    public function it_generates_invoice_number(
+    function it_generates_invoice_number(
         RepositoryInterface $sequenceRepository,
         EntityManagerInterface $sequenceManager,
         DateTimeProvider $dateTimeProvider,
@@ -67,7 +67,7 @@ final class SequentialInvoiceNumberGeneratorSpec extends ObjectBehavior
         $this->generate()->shouldReturn($dateTime->format('Y/m') . '/000000001');
     }
 
-    public function it_generates_invoice_number_when_sequence_is_null(
+    function it_generates_invoice_number_when_sequence_is_null(
         RepositoryInterface $sequenceRepository,
         FactoryInterface $sequenceFactory,
         EntityManagerInterface $sequenceManager,

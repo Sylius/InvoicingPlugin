@@ -25,7 +25,7 @@ use Twig\Environment;
 
 final class InvoicePdfFileGeneratorSpec extends ObjectBehavior
 {
-    public function let(
+    function let(
         Environment $twig,
         GeneratorInterface $pdfGenerator,
         FileLocatorInterface $fileLocator,
@@ -41,12 +41,12 @@ final class InvoicePdfFileGeneratorSpec extends ObjectBehavior
         );
     }
 
-    public function it_implements_invoice_pdf_file_generator_interface(): void
+    function it_implements_invoice_pdf_file_generator_interface(): void
     {
         $this->shouldImplement(InvoicePdfFileGeneratorInterface::class);
     }
 
-    public function it_creates_invoice_pdf_with_generated_content_and_filename_basing_on_invoice_number(
+    function it_creates_invoice_pdf_with_generated_content_and_filename_basing_on_invoice_number(
         FileLocatorInterface $fileLocator,
         Environment $twig,
         GeneratorInterface $pdfGenerator,

@@ -24,12 +24,12 @@ use Sylius\InvoicingPlugin\Factory\InvoiceFactoryInterface;
 
 class InvoiceFactorySpec extends ObjectBehavior
 {
-    public function it_implements_invoice_factory_interface(): void
+    function it_implements_invoice_factory_interface(): void
     {
         $this->shouldImplement(InvoiceFactoryInterface::class);
     }
 
-    public function it_creates_an_invoice_for_given_data(
+    function it_creates_an_invoice_for_given_data(
         BillingDataInterface $billingData,
         ChannelInterface $channel,
         InvoiceShopBillingDataInterface $invoiceShopBillingData,
@@ -53,7 +53,7 @@ class InvoiceFactorySpec extends ObjectBehavior
         )->shouldReturnAnInstanceOf(InvoiceInterface::class);
     }
 
-    public function it_allows_for_nullable_shop_billing_data(
+    function it_allows_for_nullable_shop_billing_data(
         BillingDataInterface $billingData,
         ChannelInterface $channel,
         OrderInterface $order

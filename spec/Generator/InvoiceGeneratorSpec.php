@@ -32,7 +32,7 @@ use Sylius\InvoicingPlugin\Generator\InvoiceNumberGenerator;
 
 final class InvoiceGeneratorSpec extends ObjectBehavior
 {
-    public function let(
+    function let(
         InvoiceIdentifierGenerator $uuidInvoiceIdentifierGenerator,
         InvoiceNumberGenerator $sequentialInvoiceNumberGenerator,
         InvoiceFactoryInterface $invoiceFactory,
@@ -52,12 +52,12 @@ final class InvoiceGeneratorSpec extends ObjectBehavior
         );
     }
 
-    public function it_is_an_invoice_generator(): void
+    function it_is_an_invoice_generator(): void
     {
         $this->shouldImplement(InvoiceGeneratorInterface::class);
     }
 
-    public function it_generates_an_invoice_for_a_given_order(
+    function it_generates_an_invoice_for_a_given_order(
         InvoiceIdentifierGenerator $uuidInvoiceIdentifierGenerator,
         InvoiceNumberGenerator $sequentialInvoiceNumberGenerator,
         InvoiceFactoryInterface $invoiceFactory,

@@ -19,12 +19,12 @@ use Sylius\InvoicingPlugin\Event\OrderPlaced;
 
 final class CreateInvoiceOnOrderPlacedListenerSpec extends ObjectBehavior
 {
-    public function let(InvoiceCreatorInterface $invoiceCreator): void
+    function let(InvoiceCreatorInterface $invoiceCreator): void
     {
         $this->beConstructedWith($invoiceCreator);
     }
 
-    public function it_requests_invoice_creation(InvoiceCreatorInterface $invoiceCreator): void
+    function it_requests_invoice_creation(InvoiceCreatorInterface $invoiceCreator): void
     {
         $issuedAt = new \DateTimeImmutable();
 

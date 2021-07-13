@@ -26,7 +26,7 @@ use Sylius\InvoicingPlugin\Entity\TaxItemInterface;
 
 final class InvoiceSpec extends ObjectBehavior
 {
-    public function let(
+    function let(
         BillingDataInterface $billingData,
         LineItemInterface $lineItem,
         TaxItemInterface $taxItem,
@@ -52,17 +52,17 @@ final class InvoiceSpec extends ObjectBehavior
         );
     }
 
-    public function it_implements_invoice_interface(): void
+    function it_implements_invoice_interface(): void
     {
         $this->shouldImplement(InvoiceInterface::class);
     }
 
-    public function it_implements_resource_interface(): void
+    function it_implements_resource_interface(): void
     {
         $this->shouldImplement(ResourceInterface::class);
     }
 
-    public function it_has_data(
+    function it_has_data(
         BillingDataInterface $billingData,
         LineItemInterface $lineItem,
         TaxItemInterface $taxItem,

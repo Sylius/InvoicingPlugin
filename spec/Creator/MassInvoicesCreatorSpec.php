@@ -20,14 +20,14 @@ use Sylius\InvoicingPlugin\DateTimeProvider;
 
 final class MassInvoicesCreatorSpec extends ObjectBehavior
 {
-    public function let(
+    function let(
         InvoiceCreatorInterface $invoiceCreator,
         DateTimeProvider $dateTimeProvider
     ): void {
         $this->beConstructedWith($invoiceCreator, $dateTimeProvider);
     }
 
-    public function it_requests_invoices_creation_for_multiple_orders(
+    function it_requests_invoices_creation_for_multiple_orders(
         InvoiceCreatorInterface $invoiceCreator,
         DateTimeProvider $dateTimeProvider,
         OrderInterface $firstOrder,
