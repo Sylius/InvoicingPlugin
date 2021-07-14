@@ -1,5 +1,7 @@
 parameters:
     default_channel_color: "lightGrey"
+    sylius_invoicing.invoice_save_path: "%kernel.project_dir%/private/invoices/"
+    sylius_invoicing.filesystem_adapter.invoice: "sylius_invoicing_invoice"
 
 sylius_mailer:
     emails:
@@ -121,3 +123,13 @@ framework:
                 middleware:
                     - 'validation'
                     - 'doctrine_transaction'
+
+knp_gaufrette:
+    adapters:
+        sylius_invoicing_invoice:
+            local:
+                directory: "%sylius_invoicing.invoice_save_path%"
+                create: true
+    filesystems:
+        sylius_invoicing_invoice:
+            adapter: "%sylius_invoicing.filesystem_adapter.invoice%"

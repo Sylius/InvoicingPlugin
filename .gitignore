@@ -8,3 +8,4 @@
 !/etc/build/.gitkeep
 
 /tests/Application/yarn.lock
+/tests/Application/private/invoices/*

@@ -123,6 +123,15 @@ The dot's color is dependant on a property defined on Channel entity or, if not 
 
 Like any other parameter, `default_channel_color` can also be overwritten in your `config.yml` file.
 
+### Invoices files
+
+By default, when the order is paid, an immutable Invoice pdf file is saved on the server. The save directory is specified
+with `%sylius_invoicing.invoice_save_path%` parameter, that can be overridden if needed. 
+
+There is no direct relation between `Sylius\InvoicingPlugin\Entity\Invoice` entity and its file. It's resolved based on
+the `Invoice::$number`, which is defined in `Sylius\InvoicingPlugin\Provider\InvoiceFileProviderInterface` service.
+By overriding this service, you can change a logic that is used to retrieve the invoice file.  
+
 ## Fixtures
 
 You can add `ShopBillingData` fixtures into a yaml to add Channel ShopBillingData info to your installation.

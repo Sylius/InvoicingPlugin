@@ -14,44 +14,42 @@ declare(strict_types=1);
 namespace spec\Sylius\InvoicingPlugin\Email;
 
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 use Sylius\Component\Mailer\Sender\SenderInterface;
 use Sylius\InvoicingPlugin\Email\Emails;
 use Sylius\InvoicingPlugin\Email\InvoiceEmailSenderInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
-use Sylius\InvoicingPlugin\Generator\InvoicePdfFileGeneratorInterface;
 use Sylius\InvoicingPlugin\Model\InvoicePdf;
+use Sylius\InvoicingPlugin\Provider\InvoiceFileProviderInterface;
 
 final class InvoiceEmailSenderSpec extends ObjectBehavior
 {
-    public function let(
+    function let(
         SenderInterface $sender,
-        InvoicePdfFileGeneratorInterface $invoicePdfFileGenerator
+        InvoiceFileProviderInterface $invoiceFileProvider
     ): void {
-        $this->beConstructedWith($sender, $invoicePdfFileGenerator);
+        $this->beConstructedWith($sender, $invoiceFileProvider);
     }
 
-    public function it_implements_invoice_email_sender_interface(): void
+    function it_implements_invoice_email_sender_interface(): void
     {
         $this->shouldImplement(InvoiceEmailSenderInterface::class);
     }
 
-    public function it_sends_an_invoice_to_a_given_email_address(
+    function it_sends_an_invoice_to_a_given_email_address(
         InvoiceInterface $invoice,
         SenderInterface $sender,
-        InvoicePdfFileGeneratorInterface $invoicePdfFileGenerator
+        InvoiceFileProviderInterface $invoiceFileProvider
     ): void {
-        $invoicePdf = new InvoicePdf('invoice.pdf', 'invoice_pdf_content');
+        $invoicePdf = new InvoicePdf('invoice.pdf', 'CONTENT');
+        $invoicePdf->setFullPath('/path/to/invoices/invoice.pdf');
 
-        $invoicePdfFileGenerator->generate($invoice)->willReturn($invoicePdf);
+        $invoiceFileProvider->provide($invoice)->willReturn($invoicePdf);
 
         $sender->send(
             Emails::INVOICE_GENERATED,
             ['sylius@example.com'],
             ['invoice' => $invoice],
-            Argument::that(function (array $argument): bool {
-                return count($argument) === 1 && preg_match('/.+invoice\.pdf$/', $argument[0]) === 1;
-            })
+            ['/path/to/invoices/invoice.pdf']
         )->shouldBeCalled();
 
         $this->sendInvoiceEmail($invoice, 'sylius@example.com');

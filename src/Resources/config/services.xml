@@ -17,7 +17,7 @@
 
         <service id="sylius_invoicing_plugin.email.invoice_email_sender" class="Sylius\InvoicingPlugin\Email\InvoiceEmailSender">
             <argument type="service" id="sylius.email_sender" />
-            <argument type="service" id="sylius_invoicing_plugin.generator.invoice_pdf_file" />
+            <argument type="service" id="Sylius\InvoicingPlugin\Provider\InvoiceFileProviderInterface" />
         </service>
 
         <service id="sylius_invoicing_plugin.command_handler.send_invoice_email" class="Sylius\InvoicingPlugin\CommandHandler\SendInvoiceEmailHandler">
@@ -38,5 +38,17 @@
         </service>
 
         <service id="sylius_invoicing_plugin.custom_factory.invoice" class="Sylius\InvoicingPlugin\Factory\InvoiceFactory" />
+
+        <service id="Sylius\InvoicingPlugin\Manager\InvoiceFileManagerInterface" class="Sylius\InvoicingPlugin\Manager\InvoiceFileManager">
+            <argument type="service" id="gaufrette.sylius_invoicing_invoice_filesystem" />
+        </service>
+
+        <service id="Sylius\InvoicingPlugin\Provider\InvoiceFileProviderInterface" class="Sylius\InvoicingPlugin\Provider\InvoiceFileProvider">
+            <argument type="service" id="Sylius\InvoicingPlugin\Generator\InvoiceFileNameGeneratorInterface" />
+            <argument type="service" id="gaufrette.sylius_invoicing_invoice_filesystem" />
+            <argument type="service" id="sylius_invoicing_plugin.generator.invoice_pdf_file" />
+            <argument type="service" id="Sylius\InvoicingPlugin\Manager\InvoiceFileManagerInterface" />
+            <argument>%sylius_invoicing.invoice_save_path%</argument>
+        </service>
     </services>
 </container>

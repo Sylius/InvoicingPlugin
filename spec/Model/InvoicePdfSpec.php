@@ -31,4 +31,10 @@ final class InvoicePdfSpec extends ObjectBehavior
     {
         $this->content()->shouldReturn('pdf content');
     }
+
+    function it_has_full_path(): void
+    {
+        $this->setFullPath('/full/path/invoice.pdf');
+        $this->fullPath()->shouldReturn('/full/path/invoice.pdf');
+    }
 }

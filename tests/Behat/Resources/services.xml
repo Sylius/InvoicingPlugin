@@ -29,6 +29,10 @@
             <argument type="service" id="sylius_invoicing_plugin.repository.invoice" />
         </service>
 
+        <service id="Tests\Sylius\InvoicingPlugin\Behat\Context\Hook\InvoicesContext" public="true">
+            <argument>%sylius_invoicing.invoice_save_path%</argument>
+        </service>
+
         <service id="Tests\Sylius\InvoicingPlugin\Behat\Context\Cli\InvoicesGenerationContext" public="true">
             <argument type="service" id="kernel" />
             <argument type="service" id="sylius_invoicing_plugin.creator.mass_invoices" />
@@ -51,6 +55,11 @@
 
         <service id="Tests\Sylius\InvoicingPlugin\Behat\Context\Setup\OrderContext" public="true">
             <argument type="service" id="sylius.manager.order" />
+        </service>
+
+        <service id="Tests\Sylius\InvoicingPlugin\Behat\Context\Application\ManagingInvoicesContext" public="true">
+            <argument>%sylius_invoicing.invoice_save_path%</argument>
+            <argument type="service" id="sylius_invoicing_plugin.repository.invoice" />
         </service>
 
         <service id="Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Invoice\IndexPageInterface"
