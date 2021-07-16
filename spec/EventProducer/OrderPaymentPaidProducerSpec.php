@@ -26,7 +26,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 
 final class OrderPaymentPaidProducerSpec extends ObjectBehavior
 {
-    public function let(
+    function let(
         MessageBusInterface $eventBus,
         DateTimeProvider $dateTimeProvider,
         InvoiceRepositoryInterface $invoiceRepository
@@ -34,7 +34,7 @@ final class OrderPaymentPaidProducerSpec extends ObjectBehavior
         $this->beConstructedWith($eventBus, $dateTimeProvider, $invoiceRepository);
     }
 
-    public function it_dispatches_order_payment_paid_event_for_payment(
+    function it_dispatches_order_payment_paid_event_for_payment(
         MessageBusInterface $eventBus,
         DateTimeProvider $dateTimeProvider,
         PaymentInterface $payment,
@@ -57,7 +57,7 @@ final class OrderPaymentPaidProducerSpec extends ObjectBehavior
         $this->__invoke($payment);
     }
 
-    public function it_does_not_dispatch_event_when_payment_is_not_related_to_order(
+    function it_does_not_dispatch_event_when_payment_is_not_related_to_order(
         MessageBusInterface $eventBus,
         DateTimeProvider $dateTimeProvider,
         PaymentInterface $payment
@@ -71,7 +71,7 @@ final class OrderPaymentPaidProducerSpec extends ObjectBehavior
         $this->__invoke($payment);
     }
 
-    public function it_does_not_dispatch_event_when_there_is_no_invoice_related_to_order(
+    function it_does_not_dispatch_event_when_there_is_no_invoice_related_to_order(
         MessageBusInterface $eventBus,
         DateTimeProvider $dateTimeProvider,
         PaymentInterface $payment,

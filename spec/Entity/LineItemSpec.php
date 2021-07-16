@@ -20,7 +20,7 @@ use Sylius\InvoicingPlugin\Entity\LineItemInterface;
 
 final class LineItemSpec extends ObjectBehavior
 {
-    public function let(): void
+    function let(): void
     {
         $this->beConstructedWith(
             'Mjolnir',
@@ -34,17 +34,17 @@ final class LineItemSpec extends ObjectBehavior
         );
     }
 
-    public function it_implements_line_item_interface(): void
+    function it_implements_line_item_interface(): void
     {
         $this->shouldImplement(LineItemInterface::class);
     }
 
-    public function it_implements_resource_interface(): void
+    function it_implements_resource_interface(): void
     {
         $this->shouldImplement(ResourceInterface::class);
     }
 
-    public function it_has_proper_line_item_data(): void
+    function it_has_proper_line_item_data(): void
     {
         $this->name()->shouldReturn('Mjolnir');
         $this->quantity()->shouldReturn(2);
@@ -56,7 +56,7 @@ final class LineItemSpec extends ObjectBehavior
         $this->variantCode()->shouldReturn('7903c83a-4c5e-4bcf-81d8-9dc304c6a353');
     }
 
-    public function it_has_an_invoice(InvoiceInterface $invoice): void
+    function it_has_an_invoice(InvoiceInterface $invoice): void
     {
         $this->setInvoice($invoice);
         $this->invoice()->shouldReturn($invoice);

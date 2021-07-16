@@ -21,12 +21,12 @@ use Symfony\Component\Messenger\MessageBusInterface;
 
 final class OrderPaymentPaidListenerSpec extends ObjectBehavior
 {
-    public function let(MessageBusInterface $commandBus): void
+    function let(MessageBusInterface $commandBus): void
     {
         $this->beConstructedWith($commandBus);
     }
 
-    public function it_dispatches_send_invoice_email_command(MessageBusInterface $commandBus): void
+    function it_dispatches_send_invoice_email_command(MessageBusInterface $commandBus): void
     {
         $command = new SendInvoiceEmail('00000001');
         $commandBus->dispatch($command)->shouldBeCalled()->willReturn(new Envelope($command));

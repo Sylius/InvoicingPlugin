@@ -24,7 +24,7 @@ use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 
 final class SendInvoiceEmailHandlerSpec extends ObjectBehavior
 {
-    public function let(
+    function let(
         InvoiceRepositoryInterface $invoiceRepository,
         OrderRepositoryInterface $orderRepository,
         InvoiceEmailSenderInterface $emailSender
@@ -32,7 +32,7 @@ final class SendInvoiceEmailHandlerSpec extends ObjectBehavior
         $this->beConstructedWith($invoiceRepository, $orderRepository, $emailSender);
     }
 
-    public function it_requests_an_email_with_an_invoice_to_be_sent(
+    function it_requests_an_email_with_an_invoice_to_be_sent(
         InvoiceRepositoryInterface $invoiceRepository,
         OrderRepositoryInterface $orderRepository,
         InvoiceEmailSenderInterface $emailSender,
@@ -53,7 +53,7 @@ final class SendInvoiceEmailHandlerSpec extends ObjectBehavior
         $this->__invoke(new SendInvoiceEmail('0000001', new \DateTime('now')));
     }
 
-    public function it_does_not_request_an_email_to_be_sent_if_invoice_was_not_found(
+    function it_does_not_request_an_email_to_be_sent_if_invoice_was_not_found(
         InvoiceRepositoryInterface $invoiceRepository,
         OrderRepositoryInterface $orderRepository,
         InvoiceEmailSenderInterface $emailSender,

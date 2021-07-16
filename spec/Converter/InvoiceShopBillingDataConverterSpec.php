@@ -21,12 +21,12 @@ use Sylius\InvoicingPlugin\Entity\InvoiceShopBillingDataInterface;
 
 final class InvoiceShopBillingDataConverterSpec extends ObjectBehavior
 {
-    public function it_implements_invoice_shop_billing_data_converter_interface(): void
+    function it_implements_invoice_shop_billing_data_converter_interface(): void
     {
         $this->shouldImplement(InvoiceShopBillingDataConverterInterface::class);
     }
 
-    public function it_extracts_shop_billing_data_from_channel(
+    function it_extracts_shop_billing_data_from_channel(
         ChannelInterface $channel,
         ShopBillingDataInterface $shopBillingData
     ): void {

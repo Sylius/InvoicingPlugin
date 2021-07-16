@@ -29,7 +29,7 @@ use Sylius\InvoicingPlugin\Model\InvoicePdf;
 
 final class InvoiceCreatorSpec extends ObjectBehavior
 {
-    public function let(
+    function let(
         InvoiceRepositoryInterface $invoiceRepository,
         OrderRepositoryInterface $orderRepository,
         InvoiceGeneratorInterface $invoiceGenerator,
@@ -45,12 +45,12 @@ final class InvoiceCreatorSpec extends ObjectBehavior
         );
     }
 
-    public function it_implements_invoice_for_order_creator_interface(): void
+    function it_implements_invoice_for_order_creator_interface(): void
     {
         $this->shouldImplement(InvoiceCreatorInterface::class);
     }
 
-    public function it_creates_invoice_for_order(
+    function it_creates_invoice_for_order(
         InvoiceRepositoryInterface $invoiceRepository,
         OrderRepositoryInterface $orderRepository,
         InvoiceGeneratorInterface $invoiceGenerator,
@@ -76,7 +76,7 @@ final class InvoiceCreatorSpec extends ObjectBehavior
         $this->__invoke('0000001', $invoiceDateTime);
     }
 
-    public function it_removes_saved_invoice_file_if_database_update_fails(
+    function it_removes_saved_invoice_file_if_database_update_fails(
         InvoiceRepositoryInterface $invoiceRepository,
         OrderRepositoryInterface $orderRepository,
         InvoiceGeneratorInterface $invoiceGenerator,
@@ -103,7 +103,7 @@ final class InvoiceCreatorSpec extends ObjectBehavior
         $this->__invoke('0000001', $invoiceDateTime);
     }
 
-    public function it_throws_an_exception_when_invoice_was_already_created_for_given_order(
+    function it_throws_an_exception_when_invoice_was_already_created_for_given_order(
         InvoiceRepositoryInterface $invoiceRepository,
         OrderRepositoryInterface $orderRepository,
         InvoiceGeneratorInterface $invoiceGenerator,

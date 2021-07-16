@@ -30,12 +30,12 @@ use Symfony\Component\Messenger\MessageBusInterface;
 
 final class OrderPlacedProducerSpec extends ObjectBehavior
 {
-    public function let(MessageBusInterface $eventBus, DateTimeProvider $dateTimeProvider): void
+    function let(MessageBusInterface $eventBus, DateTimeProvider $dateTimeProvider): void
     {
         $this->beConstructedWith($eventBus, $dateTimeProvider);
     }
 
-    public function it_dispatches_an_order_placed_event_for_persisted_order(
+    function it_dispatches_an_order_placed_event_for_persisted_order(
         MessageBusInterface $eventBus,
         DateTimeProvider $dateTimeProvider,
         OrderInterface $order,
@@ -55,7 +55,7 @@ final class OrderPlacedProducerSpec extends ObjectBehavior
         $this->postPersist($postPersistEvent);
     }
 
-    public function it_dispatches_an_order_placed_event_for_updated_order(
+    function it_dispatches_an_order_placed_event_for_updated_order(
         MessageBusInterface $eventBus,
         DateTimeProvider $dateTimeProvider,
         EntityManagerInterface $entityManager,
@@ -82,7 +82,7 @@ final class OrderPlacedProducerSpec extends ObjectBehavior
         $this->postUpdate($postUpdateEvent);
     }
 
-    public function it_does_nothing_after_persisting_if_event_entity_is_not_order(
+    function it_does_nothing_after_persisting_if_event_entity_is_not_order(
         MessageBusInterface $eventBus,
         LifecycleEventArgs $event
     ): void {
@@ -93,7 +93,7 @@ final class OrderPlacedProducerSpec extends ObjectBehavior
         $this->postPersist($event);
     }
 
-    public function it_does_nothing_after_update_if_event_entity_is_not_order(
+    function it_does_nothing_after_update_if_event_entity_is_not_order(
         MessageBusInterface $eventBus,
         LifecycleEventArgs $event
     ): void {
@@ -104,7 +104,7 @@ final class OrderPlacedProducerSpec extends ObjectBehavior
         $this->postUpdate($event);
     }
 
-    public function it_does_nothing_after_persisting_if_order_is_not_completed(
+    function it_does_nothing_after_persisting_if_order_is_not_completed(
         MessageBusInterface $eventBus,
         LifecycleEventArgs $event,
         OrderInterface $order
@@ -118,7 +118,7 @@ final class OrderPlacedProducerSpec extends ObjectBehavior
         $this->postPersist($event);
     }
 
-    public function it_does_nothing_after_update_if_order_checkout_state_has_not_changed(
+    function it_does_nothing_after_update_if_order_checkout_state_has_not_changed(
         MessageBusInterface $eventBus,
         LifecycleEventArgs $event,
         EntityManagerInterface $entityManager,
@@ -139,7 +139,7 @@ final class OrderPlacedProducerSpec extends ObjectBehavior
         $this->postUpdate($event);
     }
 
-    public function it_does_nothing_after_update_if_order_checkout_state_has_not_changed_to_completed(
+    function it_does_nothing_after_update_if_order_checkout_state_has_not_changed_to_completed(
         MessageBusInterface $eventBus,
         LifecycleEventArgs $event,
         EntityManagerInterface $entityManager,
