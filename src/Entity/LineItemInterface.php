@@ -33,6 +33,8 @@ interface LineItemInterface
 
     public function subtotal(): int;
 
+    public function taxRate(): ?string;
+
     public function taxTotal(): int;
 
     public function total(): int;

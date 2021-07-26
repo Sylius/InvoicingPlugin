@@ -42,6 +42,9 @@ class LineItem implements LineItemInterface, ResourceInterface
     /** @var int */
     protected $subtotal;
 
+    /** @var string|null */
+    protected $taxRate;
+
     /** @var int */
     protected $taxTotal;
 
@@ -56,7 +59,8 @@ class LineItem implements LineItemInterface, ResourceInterface
         int $taxTotal,
         int $total,
         ?string $variantName = null,
-        ?string $variantCode = null
+        ?string $variantCode = null,
+        ?string $taxRate = null
     ) {
         $this->name = $name;
         $this->quantity = $quantity;
@@ -66,6 +70,7 @@ class LineItem implements LineItemInterface, ResourceInterface
         $this->total = $total;
         $this->variantName = $variantName;
         $this->variantCode = $variantCode;
+        $this->taxRate = $taxRate;
     }
 
     public function getId(): string
@@ -116,6 +121,11 @@ class LineItem implements LineItemInterface, ResourceInterface
     public function subtotal(): int
     {
         return $this->subtotal;
+    }
+
+    public function taxRate(): ?string
+    {
+        return $this->taxRate;
     }
 
     public function taxTotal(): int

@@ -45,6 +45,8 @@ interface InvoiceInterface extends ResourceInterface
 
     public function subtotal(): int;
 
+    public function taxesTotal(): int;
+
     public function channel(): ChannelInterface;
 
     public function shopBillingData(): InvoiceShopBillingDataInterface;

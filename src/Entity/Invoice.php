@@ -166,6 +166,18 @@ class Invoice implements InvoiceInterface
         return $subtotal;
     }
 
+    public function taxesTotal(): int
+    {
+        $taxesTotal = 0;
+
+        /** @var LineItemInterface $lineItem */
+        foreach ($this->lineItems as $lineItem) {
+            $taxesTotal += $lineItem->taxTotal();
+        }
+
+        return $taxesTotal;
+    }
+
     public function channel(): ChannelInterface
     {
         return $this->channel;
