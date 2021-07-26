@@ -34,20 +34,28 @@ interface ShowPageInterface extends SymfonyPageInterface
         string $unitPrice,
         int $quantity,
         string $taxTotal,
-        string $total
+        string $total,
+        string $currencyCode = null,
+        string $netValue = null
     ): bool;
 
-    public function hasTaxItem(string $label, string $amount): bool;
+    public function hasTaxItem(string $label, string $amount, string $currencyCode): bool;
 
-    public function getSubtotal(): string;
+    public function hasNetTotal(string $netTotal, string $currencyCode): bool;
 
-    public function getTotal(): string;
+    public function hasTaxTotal(string $taxTotal, string $currencyCode): bool;
 
-    public function getChannel(): string;
+    public function hasTotal(string $total, string $currencyCode): bool;
 
-    public function download(): void;
+	public function getSubtotal(): string;
 
-    public function resend(): void;
+	public function getTotal(): string;
 
-    public function goBack(): void;
+	public function getChannel(): string;
+
+	public function download(): void;
+
+	public function resend(): void;
+
+	public function goBack(): void;
 }

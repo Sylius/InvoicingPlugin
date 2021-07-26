@@ -74,9 +74,7 @@
                  class="Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Invoice\ShowPage"
                  parent="sylius.behat.symfony_page"
                  public="true"
-        >
-            <argument type="service" id="sylius.behat.table_accessor" />
-        </service>
+        />
 
         <service id="Tests\Sylius\InvoicingPlugin\Behat\Page\Shop\Order\DownloadInvoicePageInterface"
                  class="Tests\Sylius\InvoicingPlugin\Behat\Page\Shop\Order\DownloadInvoicePage"

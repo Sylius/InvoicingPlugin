@@ -25,9 +25,9 @@ Feature: Seeing basic information about an invoice
         And it should have billing data as "Mazikeen Lilim", "Pacific Coast Hwy", "90806" "Los Angeles", "United States"
         And it should have shop billing data as "Ragnarok", "1100110011", "Pacific Coast Hwy", "90806" "Los Angeles", "United States"
         And it should have 2 items in the list
-        And it should have an item "Angel T-Shirt" with unit price "$60.00", quantity 2, tax total "$12.00" and total "$132.00"
-        And it should have a shipping item "UPS" with unit price "$10.00", quantity 1, tax total "$0.00" and total "$10.00"
-        And its total should be "$142.00"
+        Then it should have 2 "Angel T-Shirt" shipment with unit price "60.00", net value "120.00", tax total "12.00" and total "132.00" in "USD" currency
+        And it should have 1 "UPS" shipment with unit price "10.00", net value "10.00", tax total "0.00" and total "10.00" in "USD" currency
+        And its total should be "142.00"
         And it should be issued in "United States" channel
 
     Scenario: Downloading invoice
