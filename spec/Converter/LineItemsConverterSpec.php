@@ -20,22 +20,42 @@ use Sylius\Component\Core\Model\AdjustmentInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\OrderItemInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
+use Sylius\Component\Core\Model\ShipmentInterface;
 use Sylius\InvoicingPlugin\Converter\LineItemsConverterInterface;
+use Sylius\InvoicingPlugin\Provider\TaxRateProviderInterface;
 
 final class LineItemsConverterSpec extends ObjectBehavior
 {
+    function let(TaxRateProviderInterface $taxRateProvider): void
+    {
+        $this->beConstructedWith($taxRateProvider);
+    }
+
     function it_implements_line_items_converter_interface(): void
     {
         $this->shouldImplement(LineItemsConverterInterface::class);
     }
 
     function it_extracts_line_items_from_order(
+        TaxRateProviderInterface $taxRateProvider,
+        Collection $shipments,
+        ShipmentInterface $shipment,
+        Collection $promotionAdjustments,
+        Collection $shippingAdjustments,
         OrderInterface $order,
         OrderItemInterface $orderItem,
         AdjustmentInterface $shippingAdjustment,
         ProductVariantInterface $variant
     ): void {
         $order->getItems()->willReturn(new ArrayCollection([$orderItem->getWrappedObject()]));
+
+        $order->getShipments()->willReturn($shipments);
+        $shipments->first()->willReturn($shipment);
+        $shipment->getAdjustments(AdjustmentInterface::ORDER_SHIPPING_PROMOTION_ADJUSTMENT)->willReturn($promotionAdjustments);
+        $promotionAdjustments->isEmpty()->willReturn(true);
+        $shipment->getAdjustments(AdjustmentInterface::SHIPPING_ADJUSTMENT)->willReturn($shippingAdjustments);
+        $shippingAdjustments->first()->willReturn($shippingAdjustment);
+
         $order
             ->getAdjustments(AdjustmentInterface::SHIPPING_ADJUSTMENT)
             ->willReturn(new ArrayCollection([$shippingAdjustment->getWrappedObject()]))
