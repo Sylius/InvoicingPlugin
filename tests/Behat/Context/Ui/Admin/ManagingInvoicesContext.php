@@ -334,6 +334,7 @@ final class ManagingInvoicesContext implements Context
     }
 
     /**
+     * @Then it should have :quantity :name item with unit price :unitPrice, net value :netValue, tax total :taxTotal and total :total in :currencyCode currency
      * @Then it should have :quantity :name items with unit price :unitPrice, net value :netValue, tax total :taxTotal and total :total in :currencyCode currency
      */
     public function itShouldHaveItemsWithUnitPriceNetValueTaxTotalAndTotalInCurrency(

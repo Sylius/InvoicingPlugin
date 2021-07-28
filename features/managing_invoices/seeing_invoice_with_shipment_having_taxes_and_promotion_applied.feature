@@ -18,6 +18,17 @@ Feature: Seeing an invoice with shipment having taxes and promotion applied
         And I am logged in as an administrator
 
     @ui
+    Scenario: Seeing proper amount of shipment with taxes applied
+        And the customer chose "Space Pidgeons Post" shipping method to "United States" with "Space money" payment
+        And the order "#00000666" is already paid
+        When I view the summary of the invoice for order "#00000666"
+        Then it should have 1 "Space Pidgeons Post" shipment with unit price "10.00", net value "10.00", tax total "2.30" and total "12.30" in "USD" currency
+        And it should have a tax item "23%" with amount "2.30" in "USD" currency
+        And its net total should be "30.00" in "USD" currency
+        And its tax total should be "2.30" in "USD" currency
+        And its total should be "32.30" in "USD" currency
+
+    @ui
     Scenario: Seeing proper amount of shipment with taxes and a promotion applied
         And there is a promotion "50% shipping discount"
         And it gives "50%" discount on shipping to every order
@@ -25,18 +36,7 @@ Feature: Seeing an invoice with shipment having taxes and promotion applied
         And the order "#00000666" is already paid
         When I view the summary of the invoice for order "#00000666"
         Then it should have 1 "Space Pidgeons Post" shipment with unit price "5.00", net value "5.00", tax total "1.15" and total "6.15" in "USD" currency
-        And it should have a tax item "VAT (23%)" with amount "1.15" in "USD" currency
+        And it should have a tax item "23%" with amount "1.15" in "USD" currency
         And its net total should be "25.00" in "USD" currency
         And its tax total should be "1.15" in "USD" currency
         And its total should be "26.15" in "USD" currency
-
-    @ui
-    Scenario: Seeing proper amount of shipment with taxes applied
-        And the customer chose "Space Pidgeons Post" shipping method to "United States" with "Space money" payment
-        And the order "#00000666" is already paid
-        When I view the summary of the invoice for order "#00000666"
-        Then it should have 1 "Space Pidgeons Post" shipment with unit price "10.00", net value "10.00", tax total "2.30" and total "12.30" in "USD" currency
-        And it should have a tax item "VAT (23%)" with amount "2.30" in "USD" currency
-        And its net total should be "30.00" in "USD" currency
-        And its tax total should be "2.30" in "USD" currency
-        And its total should be "32.30" in "USD" currency
