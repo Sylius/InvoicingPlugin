@@ -1,0 +1,17 @@
+{% set billingData = invoice.billingData %}
+
+<h4 class="ui top attached styled header">
+    {{ 'sylius_invoicing_plugin.ui.buyer'|trans }}
+</h4>
+<div class="ui attached segment" id="billing-data">
+    <address>
+        <strong>{{ billingData.firstName }} {{ billingData.lastName }}</strong>
+        {% if billingData.company %}
+            {{ billingData.company }}<br/>
+        {% endif %}
+        {{ billingData.street }}<br/>
+        {{ billingData.city }}<br/>
+        <i class="{{ billingData.countryCode|lower }} flag"></i>
+        {{ billingData.countryCode|sylius_country_name|upper }} {{ billingData.postcode }}
+    </address>
+</div>

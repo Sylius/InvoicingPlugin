@@ -1,0 +1,22 @@
+{% set shopBillingData = invoice.shopBillingData %}
+
+{% if shopBillingData %}
+    <h4 class="ui top attached styled header">
+        {{ 'sylius_invoicing_plugin.ui.seller'|trans }}
+    </h4>
+    <div class="ui attached segment" id="shop-billing-data">
+        <address>
+            {% if shopBillingData.company %}<strong>{{ shopBillingData.company }}</strong>{% endif %}
+            {% if shopBillingData.representative %}<strong>{{ shopBillingData.representative }}</strong>{% endif %}
+            {% if shopBillingData.street %}{{ shopBillingData.street }}<br/>{% endif %}
+            {% if shopBillingData.city %}{{ shopBillingData.city }}<br/>{% endif %}
+            {% if shopBillingData.taxId %}{{ shopBillingData.taxId }}<br/>{% endif %}
+            {% if shopBillingData.countryCode %}
+                <i class="{{ shopBillingData.countryCode|lower }} flag"></i>
+            {% endif %}
+            {% if shopBillingData.countryCode and shopBillingData.postcode %}
+                {{ shopBillingData.countryCode|sylius_country_name|upper }} {{ shopBillingData.postcode }}
+            {% endif %}
+        </address>
+    </div>
+{% endif %}

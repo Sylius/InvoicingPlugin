@@ -11,6 +11,20 @@ use Symfony\Component\Routing\RouterInterface;
 
 final class ShowPage extends SymfonyPage implements ShowPageInterface
 {
+    /** @var TableAccessorInterface */
+    private $tableAccessor;
+
+    public function __construct(
+        Session $session,
+        $parameters,
+        RouterInterface $router,
+        TableAccessorInterface $tableAccessor
+    ) {
+        parent::__construct($session, $parameters, $router);
+
+        $this->tableAccessor = $tableAccessor;
+    }
+
     public function getIssuedAtDate(): \DateTimeInterface
     {
         // Jun 19, 2018, 2:17:29 PM
@@ -61,7 +75,7 @@ final class ShowPage extends SymfonyPage implements ShowPageInterface
 
     public function countItems(): int
     {
-        return count($this->getTableElements());
+        return $this->tableAccessor->countTableBodyRows($this->getElement('table'));
     }
 
     public function hasItemWithData(
@@ -73,21 +87,15 @@ final class ShowPage extends SymfonyPage implements ShowPageInterface
         string $currencyCode = null,
         string $netValue = null
     ): bool {
-        //todo $currencyCode $netValue
-        foreach ($this->getTableElements() as $element) {
-            if (
-                ($element->find('css', '[data-test-line-item-name]')->getText() === $name ||
-                $element->find('css', '[data-test-line-item-name]')->getText() === sprintf('%s (%s)', $name, $name)) &&
-                $element->find('css', '[data-test-line-item-unit-price]')->getText() === $unitPrice &&
-                $element->find('css', '[data-test-line-item-quantity]')->getText() === (string) $quantity &&
-                $element->find('css', '[data-test-line-item-tax-total]')->getText() === $taxTotal &&
-                $element->find('css', '[data-test-line-item-total]')->getText() === $total
-            ) {
-                return true;
-            }
-        }
+        $row = $this->tableAccessor->getRowsWithFields($this->getElement('table'), [
+            'name' => $name,
+            'unit_price' => $unitPrice,
+            'quantity' => $quantity,
+            'tax_total' => $taxTotal,
+            'total' => $total,
+        ])[0];
 
-        return false;
+        return null !== $row;
     }
 
     public function hasTaxItem(string $label, string $amount,  string $currencyCode): bool
@@ -106,17 +114,19 @@ final class ShowPage extends SymfonyPage implements ShowPageInterface
 
     public function hasNetTotal(string $netTotal, string $currencyCode): bool
     {
+        $netTotal = $currencyCode === 'USD' ? '$' . $netTotal : $netTotal . $currencyCode;
+
         return
-            $this->getDocument()->find('css', '[data-test-invoice-net-total]')->getText() === $netTotal &&
-            $this->getDocument()->find('css', '[data-test-invoice-currency-code]')->getText() === $currencyCode
+            $this->getDocument()->find('css', '[data-test-invoice-net-total]')->getText() === $netTotal
         ;
     }
 
     public function hasTaxTotal(string $taxTotal, string $currencyCode): bool
     {
+        $taxTotal = $currencyCode === 'USD' ? '$' . $taxTotal : $taxTotal . $currencyCode;
+
         return
-            $this->getDocument()->find('css', '[data-test-invoice-tax-total]')->getText() === $taxTotal &&
-            $this->getDocument()->find('css', '[data-test-invoice-currency-code]')->getText() === $currencyCode
+            $this->getDocument()->find('css', '[data-test-invoice-tax-total]')->getText() === $taxTotal
         ;
     }
 
@@ -135,7 +145,7 @@ final class ShowPage extends SymfonyPage implements ShowPageInterface
 
     public function getTotal(): string
     {
-        return str_replace('Total: ', '', $this->getElement('invoice_total')->getText());
+        return $this->getElement('invoice_total')->getText();
     }
 
     public function getChannel(): string
@@ -166,9 +176,10 @@ final class ShowPage extends SymfonyPage implements ShowPageInterface
             'invoice_channel_name' => '#invoice-channel-name',
             'invoice_subtotal' => '[data-test-invoice-net-total]',
             'invoice_tax_total' => '#invoice-tax-total',
-            'invoice_total' => '[data-test-invoice-total]',
+            'invoice_total' => '#invoice-total',
             'issued_at' => '#invoice-issued-at',
             'shop_billing_data' => '#shop-billing-data',
+            'table' => '.table',
         ]);
     }
 

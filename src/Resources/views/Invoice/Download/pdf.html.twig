@@ -5,7 +5,120 @@
     <meta charset="utf-8">
 </head>
 <body>
-    {% include '@SyliusInvoicingPlugin/Invoice/invoice.html.twig' with {'parrentTypeTemplate': 'pdf'} %}
+<div class="invoice-box">
+    <table cellpadding="0" cellspacing="0">
+        <tr class="top">
+            <td colspan="8">
+                <table>
+                    <tr>
+                        <td colspan="3" class="title">
+                            <img src="{{ invoiceLogoPath }}" style="width:300px;">
+                        </td>
+
+                        <td class="issued-at">
+                            {{ 'sylius_invoicing_plugin.ui.issued_at'|trans([], 'messages', invoice.localeCode) }}: {{ invoice.issuedAt|date('Y-m-d H:i:s') }}<br>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr class="information">
+            <td colspan="8">
+                <table>
+                    <tr>
+                        <td id="billing-data">
+                            <strong>{{ invoice.billingData.firstName }} {{ invoice.billingData.lastName }}</strong><br/>
+                            {% if invoice.billingData.company %}
+                                {{ invoice.billingData.company }}<br/>
+                            {% endif %}
+                            {{ invoice.billingData.street }}<br/>
+                            {{ invoice.billingData.city }}<br/>
+                            {{ invoice.billingData.countryCode|sylius_country_name|upper }} {{ invoice.billingData.postcode }}
+                        </td>
+
+                        {% if shopBillingData %}
+                            <td id="shop-billing-data">
+                                {% if shopBillingData.company %}<strong>{{ shopBillingData.company }}</strong><br/>{% endif %}
+                                {% if shopBillingData.street %}{{ shopBillingData.street }}<br/>{% endif %}
+                                {% if shopBillingData.city %}{{ shopBillingData.city }}<br/>{% endif %}
+                                {% if shopBillingData.taxId %}{{ shopBillingData.taxId }}<br/>{% endif %}
+                                {% if shopBillingData.countryCode and shopBillingData.postcode %}
+                                    {{ shopBillingData.countryCode|sylius_country_name|upper }} {{ shopBillingData.postcode }}
+                                {% endif %}
+                            </td>
+                        {% endif %}
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="invoice-number" colspan="8">{{ 'sylius_invoicing_plugin.ui.invoice'|trans([], 'messages', invoice.localeCode) }} #{{ invoice.number }}<br></td>
+        </tr>
+
+        <tr class="heading">
+            <td>{{ 'sylius.ui.name'|trans([], 'messages', invoice.localeCode) }}</td>
+            <td>{{ 'sylius.ui.quantity'|trans([], 'messages', invoice.localeCode) }}</td>
+            <td>{{ 'sylius_invoicing_plugin.ui.unit_net_price'|trans([], 'messages', invoice.localeCode) }}</td>
+            <td>{{ 'sylius_invoicing_plugin.ui.net_value'|trans([], 'messages', invoice.localeCode) }}</td>
+            <td>{{ 'sylius_invoicing_plugin.ui.tax_rate'|trans([], 'messages', invoice.localeCode) }}</td>
+            <td>{{ 'sylius_invoicing_plugin.ui.tax_amount'|trans([], 'messages', invoice.localeCode) }}</td>
+            <td>{{ 'sylius_invoicing_plugin.ui.gross_value'|trans([], 'messages', invoice.localeCode) }}</td>
+            <td>{{ 'sylius.ui.currency'|trans([], 'messages', invoice.localeCode) }}</td>
+        </tr>
+
+        {% for item in invoice.lineItems %}
+            <tr class="item" {{ sylius_test_html_attribute('line-item') }}>
+                <td {{ sylius_test_html_attribute('line-item-name') }}>{{ item.name }} {% if item.variantName is not null %}({{ item.variantName }}){% endif %}</td>
+                <td {{ sylius_test_html_attribute('line-item-quantity') }}>{{ item.quantity }}</td>
+                <td {{ sylius_test_html_attribute('line-item-unit-price') }}>{{ '%0.2f'|format(item.unitPrice/100) }}</td>
+                <td {{ sylius_test_html_attribute('line-item-subtotal') }}>{{ '%0.2f'|format(item.subtotal/100) }}</td>
+                <td {{ sylius_test_html_attribute('line-item-tax-rate') }}>{% if item.taxRate is null %}0{% else %}{{ item.taxRate }}{% endif %}%</td>
+                <td {{ sylius_test_html_attribute('line-item-tax-total') }}>{{ '%0.2f'|format(item.taxTotal/100) }}</td>
+                <td {{ sylius_test_html_attribute('line-item-total') }}>{{ '%0.2f'|format(item.total/100) }}</td>
+                <td {{ sylius_test_html_attribute('invoice-currency') }}>{{ invoice.currencyCode }}</td>
+            </tr>
+        {% endfor %}
+
+        <tr class="totals">
+            <td colspan="4"></td>
+            <td colspan="2">{{ 'sylius_invoicing_plugin.ui.net_total'|trans([], 'messages', invoice.localeCode) }}:</td>
+            <td {{ sylius_test_html_attribute('invoice-net-total') }} >{{ '%0.2f'|format(invoice.subtotal/100) }}</td>
+        </tr>
+
+        <tr class="totals">
+            <td colspan="4"></td>
+            <td colspan="2" >{{ 'sylius_invoicing_plugin.ui.taxes_total'|trans([], 'messages', invoice.localeCode) }}:</td>
+            <td {{ sylius_test_html_attribute('invoice-tax-total') }} >{{ '%0.2f'|format(invoice.taxesTotal/100) }}</td>
+        </tr>
+
+        <tr class="totals bold">
+            <td colspan="4"></td>
+            <td colspan="2">{{ 'sylius.ui.total'|trans([], 'messages', invoice.localeCode) }}:</td>
+            <td {{ sylius_test_html_attribute('invoice-total') }}>{{ '%0.2f'|format(invoice.total/100) }}</td>
+            <td {{ sylius_test_html_attribute('invoice-currency-code') }}  >{{ invoice.currencyCode }}</td>
+        </tr>
+
+        {% if invoice.taxItems.count() > 0 %}
+            <tr>
+                <td colspan="5"></td>
+                <td class="invoice-tax-tr" >{{ 'sylius.ui.tax'|trans([], 'messages', invoice.localeCode) }}</td>
+                <td class="invoice-tax-tr" >{{ 'sylius.ui.amount'|trans([], 'messages', invoice.localeCode) }}</td>
+                <td class="invoice-tax-tr" >{{ 'sylius.ui.currency'|trans([], 'messages', invoice.currencyCode) }}</td>
+            </tr>
+
+            {% for taxItem in invoice.taxItems %}
+                <tr class="tax-item" {{ sylius_test_html_attribute('invoice-tax-item') }} >
+                    <td colspan="5"></td>
+                    <td class="invoice-tax-td" {{ sylius_test_html_attribute('invoice-tax-label') }} >{{ percent_from_label(taxItem.label) }}</td>
+                    <td class="invoice-tax-td" {{ sylius_test_html_attribute('invoice-tax-item-amount') }} >{{ '%0.2f'|format(taxItem.amount/100) }}</td>
+                    <td class="invoice-tax-td" {{ sylius_test_html_attribute('invoice-tax-item-currency') }} >{{ invoice.currencyCode }}</td>
+                </tr>
+            {% endfor %}
+        {% endif %}
+    </table>
+</div>
 
     <style>
         .invoice-box { max-width: 1000px; margin: auto; padding: 30px; border: 1px solid #eee; box-shadow: 0 0 10px rgba(0, 0, 0, .15); font-size: 16px; line-height: 24px; font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; color: #555 }
