@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Sylius\InvoicingPlugin\Entity;
 
 use Sylius\Component\Resource\Model\ResourceInterface;
+use Sylius\InvoicingPlugin\Exception\LineItemsCannotBeMerged;
 
 /** @final */
 class LineItem implements LineItemInterface, ResourceInterface
@@ -136,5 +137,26 @@ class LineItem implements LineItemInterface, ResourceInterface
     public function total(): int
     {
         return $this->total;
+    }
+
+    public function merge(LineItemInterface $newLineItem): void
+    {
+        if (!$this->compare($newLineItem)) {
+            throw LineItemsCannotBeMerged::occur();
+        }
+
+        $this->quantity += $newLineItem->quantity();
+        $this->subtotal += $newLineItem->subtotal();
+        $this->total += $newLineItem->total();
+        $this->taxTotal += $newLineItem->taxTotal();
+    }
+
+    public function compare(LineItemInterface $lineItem): bool
+    {
+        return
+            $this->name() === $lineItem->name() &&
+            $this->unitPrice() === $lineItem->unitPrice() &&
+            $this->taxRate() === $lineItem->taxRate()
+        ;
     }
 }

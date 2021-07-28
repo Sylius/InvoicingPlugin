@@ -18,9 +18,11 @@ use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Core\Model\AdjustmentInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\OrderItemInterface;
+use Sylius\Component\Core\Model\OrderItemUnitInterface;
 use Sylius\Component\Core\Model\ShipmentInterface;
 use Sylius\Component\Order\Model\AdjustableInterface;
 use Sylius\InvoicingPlugin\Entity\LineItem;
+use Sylius\InvoicingPlugin\Entity\LineItemInterface;
 use Sylius\InvoicingPlugin\Exception\MoreThanOneTaxAdjustment;
 use Sylius\InvoicingPlugin\Provider\TaxRateProviderInterface;
 use Webmozart\Assert\Assert;
@@ -37,30 +39,93 @@ final class LineItemsConverter implements LineItemsConverterInterface
 
     public function convert(OrderInterface $order): Collection
     {
-        $orderItems = $order->getItems();
+        $lineItems = [];
 
-        $lineItems = new ArrayCollection();
-
-        $this->addLineItemForShipment($lineItems, $order);
-
-        /** @var OrderItemInterface $orderItem */
-        foreach ($orderItems as $orderItem) {
-            $variant = $orderItem->getVariant();
-
-            $lineItems->add(new LineItem(
-                $orderItem->getProductName(),
-                $orderItem->getQuantity(),
-                (int) ($orderItem->getTotal() / $orderItem->getQuantity() - $orderItem->getTaxTotal() / $orderItem->getQuantity()),
-                $orderItem->getTotal() - $orderItem->getTaxTotal(),
-                $orderItem->getTaxTotal(),
-                $orderItem->getTotal(),
-                $orderItem->getVariantName(),
-                $variant !== null ? $variant->getCode() : null,
-                $this->taxRateProvider->provide($orderItem)
-            ));
+        /** @var OrderItemUnitInterface $unit */
+        foreach ($order->getItemUnits() as $unit) {
+            $lineItems = $this->addLineItem($this->convertOrderItemUnitToLineItem($unit), $lineItems);
         }
 
+        /** @var AdjustmentInterface $shippingAdjustment */
+        foreach ($order->getAdjustments(AdjustmentInterface::SHIPPING_ADJUSTMENT) as $shippingAdjustment) {
+            $lineItems[] = $this->convertShippingAdjustmentToLineItem($shippingAdjustment);
+        }
+
+        return new ArrayCollection($lineItems);
+    }
+
+    private function convertOrderItemUnitToLineItem(OrderItemUnitInterface $unit): LineItemInterface
+    {
+        /** @var OrderItemInterface $item */
+        $item = $unit->getOrderItem();
+
+        $grossValue = $unit->getTotal();
+        $taxAmount = $unit->getTaxTotal();
+        $netValue = $grossValue - $taxAmount;
+
+        /** @var string|null $productName */
+        $productName = $item->getProductName();
+        Assert::notNull($productName);
+
+        $variant = $item->getVariant();
+
+        return new LineItem(
+            $productName,
+            1,
+            $netValue,
+            $netValue,
+            $taxAmount,
+            $grossValue,
+            $item->getVariantName(),
+            $variant !== null ? $variant->getCode() : null,
+            $this->taxRateProvider->provide($unit)
+        );
+    }
+
+    /**
+     * @param LineItemInterface[] $lineItems
+     *
+     * @return LineItemInterface[]
+     */
+    private function addLineItem(LineItemInterface $newLineItem, array $lineItems): array
+    {
+        /** @var LineItemInterface $lineItem */
+        foreach ($lineItems as $lineItem) {
+            if ($lineItem->compare($newLineItem)) {
+                $lineItem->merge($newLineItem);
+
+                return $lineItems;
+            }
+        }
+
+        $lineItems[] = $newLineItem;
+
         return $lineItems;
+    }
+
+    private function convertShippingAdjustmentToLineItem(AdjustmentInterface $shippingAdjustment): LineItemInterface
+    {
+        /** @var ShipmentInterface $shipment */
+        $shipment = $shippingAdjustment->getShipment();
+        Assert::notNull($shipment);
+        Assert::isInstanceOf($shipment, AdjustableInterface::class);
+
+        $grossValue = $shipment->getAdjustmentsTotal();
+        $taxAdjustment = $this->getShipmentTaxAdjustment($shipment);
+        $taxAmount = $taxAdjustment !== null ? $taxAdjustment->getAmount() : 0;
+        $netValue = $grossValue - $taxAmount;
+
+        return new LineItem(
+            $shippingAdjustment->getLabel(),
+            1,
+            $netValue,
+            $netValue,
+            $taxAmount,
+            $grossValue,
+            null,
+            null,
+            $this->taxRateProvider->provide($shipment)
+        );
     }
 
     private function getShipmentTaxAdjustment(ShipmentInterface $shipment): ?AdjustmentInterface
@@ -78,59 +143,5 @@ final class LineItemsConverter implements LineItemsConverterInterface
         $taxAdjustment = $taxAdjustments->first();
 
         return $taxAdjustment;
-    }
-
-    private function getShipmentPromotionsAdjustmentAmount(ShipmentInterface $shipment): int
-    {
-        $promotionAdjustments = $shipment->getAdjustments(AdjustmentInterface::ORDER_SHIPPING_PROMOTION_ADJUSTMENT);
-
-        if ($promotionAdjustments->isEmpty()) {
-            return 0;
-        }
-
-        $promotionAdjustmentsAmount = 0;
-
-        foreach ($promotionAdjustments as $promotionAdjustment) {
-            $promotionAdjustmentsAmount = $promotionAdjustmentsAmount + $promotionAdjustment->getAmount();
-        }
-
-        return $promotionAdjustmentsAmount;
-    }
-
-    private function addLineItemForShipment(ArrayCollection $lineItems, OrderInterface $order): void
-    {
-        /** @var ShipmentInterface $shipment */
-        $shipment = null;
-
-        if (!$order->getShipments()->isEmpty()) {
-            $shipment = $order->getShipments()->first();
-        }
-
-        Assert::notNull($shipment);
-        Assert::isInstanceOf($shipment, AdjustableInterface::class);
-
-        $promotionAdjustmentsAmount = $this->getShipmentPromotionsAdjustmentAmount($shipment);
-
-        /** @var AdjustmentInterface $shippingAdjustment */
-        $shippingAdjustment = $shipment->getAdjustments(AdjustmentInterface::SHIPPING_ADJUSTMENT)->first();
-
-        $taxAdjustment = $this->getShipmentTaxAdjustment($shipment);
-        $taxAdjustmentAmount = $taxAdjustment !== null ? $taxAdjustment->getAmount() : 0;
-
-        /** @var string|null $label */
-        $label = $shippingAdjustment->getLabel();
-        Assert::notNull($label);
-
-        $lineItems->add(new LineItem(
-            $label,
-            1,
-            $promotionAdjustmentsAmount + $shippingAdjustment->getAmount(),
-            $promotionAdjustmentsAmount + $shippingAdjustment->getAmount(),
-            $taxAdjustmentAmount,
-            $promotionAdjustmentsAmount + $shippingAdjustment->getAmount() + $taxAdjustmentAmount,
-            null,
-            null,
-            $this->taxRateProvider->provide($shipment)
-        ));
     }
 }

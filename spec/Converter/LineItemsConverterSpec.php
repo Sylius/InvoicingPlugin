@@ -14,14 +14,15 @@ declare(strict_types=1);
 namespace spec\Sylius\InvoicingPlugin\Converter;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Core\Model\AdjustmentInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\OrderItemInterface;
+use Sylius\Component\Core\Model\OrderItemUnitInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
 use Sylius\Component\Core\Model\ShipmentInterface;
 use Sylius\InvoicingPlugin\Converter\LineItemsConverterInterface;
+use Sylius\InvoicingPlugin\Entity\LineItem;
 use Sylius\InvoicingPlugin\Provider\TaxRateProviderInterface;
 
 final class LineItemsConverterSpec extends ObjectBehavior
@@ -38,48 +39,106 @@ final class LineItemsConverterSpec extends ObjectBehavior
 
     function it_extracts_line_items_from_order(
         TaxRateProviderInterface $taxRateProvider,
-        Collection $shipments,
-        ShipmentInterface $shipment,
-        Collection $promotionAdjustments,
-        Collection $shippingAdjustments,
         OrderInterface $order,
         OrderItemInterface $orderItem,
+        OrderItemUnitInterface $orderItemUnit,
         AdjustmentInterface $shippingAdjustment,
+        AdjustmentInterface $shippingTaxAdjustment,
+        ShipmentInterface $shipment,
         ProductVariantInterface $variant
     ): void {
-        $order->getItems()->willReturn(new ArrayCollection([$orderItem->getWrappedObject()]));
+        $order->getItemUnits()->willReturn(new ArrayCollection([$orderItemUnit->getWrappedObject()]));
 
-        $order->getShipments()->willReturn($shipments);
-        $shipments->first()->willReturn($shipment);
-        $shipment->getAdjustments(AdjustmentInterface::ORDER_SHIPPING_PROMOTION_ADJUSTMENT)->willReturn($promotionAdjustments);
-        $promotionAdjustments->isEmpty()->willReturn(true);
-        $shipment->getAdjustments(AdjustmentInterface::SHIPPING_ADJUSTMENT)->willReturn($shippingAdjustments);
-        $shippingAdjustments->first()->willReturn($shippingAdjustment);
-
-        $order
-            ->getAdjustments(AdjustmentInterface::SHIPPING_ADJUSTMENT)
-            ->willReturn(new ArrayCollection([$shippingAdjustment->getWrappedObject()]))
-        ;
+        $orderItemUnit->getTaxTotal()->willReturn(500);
+        $orderItemUnit->getTotal()->willReturn(5500);
+        $orderItemUnit->getOrderItem()->willReturn($orderItem);
 
         $orderItem->getProductName()->willReturn('Mjolnir');
-        $orderItem->getQuantity()->willReturn(2);
-        $orderItem->getUnitPrice()->willReturn(5000);
-        $orderItem->getSubtotal()->willReturn(10000);
-        $orderItem->getTaxTotal()->willReturn(500);
-        $orderItem->getTotal()->willReturn(10300);
-        $orderItem->getVariantName()->willReturn('Blue');
         $orderItem->getVariant()->willReturn($variant);
+        $orderItem->getVariantName()->willReturn(null);
 
-        $variant->getCode()->willReturn('7903c83a-4c5e-4bcf-81d8-9dc304c6a353');
+        $variant->getCode()->willReturn('CODE');
 
-        $shippingAdjustment->getLabel()->willReturn('UPS');
-        $shippingAdjustment->getAmount()->willReturn(800);
+        $taxRateProvider->provide($orderItemUnit)->willReturn('10%');
 
         $order
             ->getAdjustments(AdjustmentInterface::SHIPPING_ADJUSTMENT)
             ->willReturn(new ArrayCollection([$shippingAdjustment->getWrappedObject()]))
         ;
 
-        $this->convert($order)->shouldReturnAnInstanceOf(Collection::class);
+        $shippingAdjustment->getLabel()->willReturn('UPS');
+        $shippingAdjustment->getShipment()->willReturn($shipment);
+
+        $shipment->getAdjustmentsTotal()->willReturn(1200);
+        $shipment
+            ->getAdjustments(AdjustmentInterface::TAX_ADJUSTMENT)
+            ->willReturn(new ArrayCollection([$shippingTaxAdjustment->getWrappedObject()]))
+        ;
+
+        $shippingTaxAdjustment->getAmount()->willReturn(200);
+
+        $taxRateProvider->provide($shipment)->willReturn('20%');
+
+        $this->convert($order)->shouldBeLike(new ArrayCollection([
+            new LineItem('Mjolnir', 1, 5000, 5000, 500, 5500, null, 'CODE', '10%'),
+            new LineItem('UPS', 1, 1000, 1000, 200, 1200, null, null, '20%')
+        ]));
+    }
+
+    function it_groups_the_same_line_items_during_extracting(
+        TaxRateProviderInterface $taxRateProvider,
+        OrderInterface $order,
+        OrderItemInterface $orderItem,
+        OrderItemUnitInterface $firstOrderItemUnit,
+        OrderItemUnitInterface $secondOrderItemUnit,
+        AdjustmentInterface $shippingAdjustment,
+        AdjustmentInterface $shippingTaxAdjustment,
+        ShipmentInterface $shipment,
+        ProductVariantInterface $variant
+    ): void {
+        $order->getItemUnits()->willReturn(new ArrayCollection([
+            $firstOrderItemUnit->getWrappedObject(),
+            $secondOrderItemUnit->getWrappedObject()
+        ]));
+
+        $firstOrderItemUnit->getTaxTotal()->willReturn(500);
+        $firstOrderItemUnit->getTotal()->willReturn(5500);
+        $firstOrderItemUnit->getOrderItem()->willReturn($orderItem);
+
+        $secondOrderItemUnit->getTaxTotal()->willReturn(500);
+        $secondOrderItemUnit->getTotal()->willReturn(5500);
+        $secondOrderItemUnit->getOrderItem()->willReturn($orderItem);
+
+        $orderItem->getProductName()->willReturn('Mjolnir');
+        $orderItem->getVariant()->willReturn($variant);
+        $orderItem->getVariantName()->willReturn(null);
+
+        $variant->getCode()->willReturn('CODE');
+
+        $taxRateProvider->provide($firstOrderItemUnit)->willReturn('10%');
+        $taxRateProvider->provide($secondOrderItemUnit)->willReturn('10%');
+
+        $order
+            ->getAdjustments(AdjustmentInterface::SHIPPING_ADJUSTMENT)
+            ->willReturn(new ArrayCollection([$shippingAdjustment->getWrappedObject()]))
+        ;
+
+        $shippingAdjustment->getLabel()->willReturn('UPS');
+        $shippingAdjustment->getShipment()->willReturn($shipment);
+
+        $shipment->getAdjustmentsTotal()->willReturn(1200);
+        $shipment
+            ->getAdjustments(AdjustmentInterface::TAX_ADJUSTMENT)
+            ->willReturn(new ArrayCollection([$shippingTaxAdjustment->getWrappedObject()]))
+        ;
+
+        $shippingTaxAdjustment->getAmount()->willReturn(200);
+
+        $taxRateProvider->provide($shipment)->willReturn('20%');
+
+        $this->convert($order)->shouldBeLike(new ArrayCollection([
+            new LineItem('Mjolnir', 2, 5000, 10000, 1000, 11000, null, 'CODE', '10%'),
+            new LineItem('UPS', 1, 1000, 1000, 200, 1200, null, null, '20%')
+        ]));
     }
 }
