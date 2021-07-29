@@ -25,6 +25,8 @@ use Sylius\InvoicingPlugin\Converter\TaxItemsConverterInterface;
 use Sylius\InvoicingPlugin\Entity\BillingData;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceShopBillingDataInterface;
+use Sylius\InvoicingPlugin\Entity\LineItemInterface;
+use Sylius\InvoicingPlugin\Entity\TaxItemInterface;
 use Sylius\InvoicingPlugin\Factory\InvoiceFactoryInterface;
 use Sylius\InvoicingPlugin\Generator\InvoiceGeneratorInterface;
 use Sylius\InvoicingPlugin\Generator\InvoiceIdentifierGenerator;
@@ -38,7 +40,8 @@ final class InvoiceGeneratorSpec extends ObjectBehavior
         InvoiceFactoryInterface $invoiceFactory,
         BillingDataConverterInterface $billingDataConverter,
         InvoiceShopBillingDataConverterInterface $invoiceShopBillingDataConverter,
-        LineItemsConverterInterface $lineItemConverter,
+        LineItemsConverterInterface $orderItemUnitsToLineItemsConverter,
+        LineItemsConverterInterface $shippingAdjustmentsToLineItemsConverter,
         TaxItemsConverterInterface $taxItemsConverter
     ): void {
         $this->beConstructedWith(
@@ -47,7 +50,8 @@ final class InvoiceGeneratorSpec extends ObjectBehavior
             $invoiceFactory,
             $billingDataConverter,
             $invoiceShopBillingDataConverter,
-            $lineItemConverter,
+            $orderItemUnitsToLineItemsConverter,
+            $shippingAdjustmentsToLineItemsConverter,
             $taxItemsConverter
         );
     }
@@ -63,14 +67,18 @@ final class InvoiceGeneratorSpec extends ObjectBehavior
         InvoiceFactoryInterface $invoiceFactory,
         BillingDataConverterInterface $billingDataConverter,
         InvoiceShopBillingDataConverterInterface $invoiceShopBillingDataConverter,
-        LineItemsConverterInterface $lineItemConverter,
+        LineItemsConverterInterface $orderItemUnitsToLineItemsConverter,
+        LineItemsConverterInterface $shippingAdjustmentsToLineItemsConverter,
         TaxItemsConverterInterface $taxItemsConverter,
         OrderInterface $order,
         AddressInterface $billingAddress,
         ChannelInterface $channel,
         InvoiceShopBillingDataInterface $invoiceShopBillingData,
         BillingData $billingData,
-        InvoiceInterface $invoice
+        InvoiceInterface $invoice,
+        LineItemInterface $unitLineItem,
+        LineItemInterface $shippingLineItem,
+        TaxItemInterface $taxItem
     ): void {
         $date = new \DateTimeImmutable('2019-03-06');
 
@@ -83,13 +91,12 @@ final class InvoiceGeneratorSpec extends ObjectBehavior
         $order->getChannel()->willReturn($channel);
         $order->getBillingAddress()->willReturn($billingAddress);
 
-        $mockedLineItems = new ArrayCollection();
-        $mockedTaxItems = new ArrayCollection();
-
         $billingDataConverter->convert($billingAddress)->willReturn($billingData);
         $invoiceShopBillingDataConverter->convert($channel)->willReturn($invoiceShopBillingData);
-        $lineItemConverter->convert($order)->willReturn($mockedLineItems);
-        $taxItemsConverter->convert($order)->willReturn($mockedTaxItems);
+
+        $orderItemUnitsToLineItemsConverter->convert($order)->willReturn(new ArrayCollection([$unitLineItem->getWrappedObject()]));
+        $shippingAdjustmentsToLineItemsConverter->convert($order)->willReturn(new ArrayCollection([$shippingLineItem->getWrappedObject()]));
+        $taxItemsConverter->convert($order)->willReturn(new ArrayCollection([$taxItem->getWrappedObject()]));
 
         $invoiceFactory->createForData(
             '7903c83a-4c5e-4bcf-81d8-9dc304c6a353',
@@ -100,8 +107,8 @@ final class InvoiceGeneratorSpec extends ObjectBehavior
             'USD',
             'en_US',
             10300,
-            $mockedLineItems,
-            $mockedTaxItems,
+            new ArrayCollection([$unitLineItem->getWrappedObject(), $shippingLineItem->getWrappedObject()]),
+            new ArrayCollection([$taxItem->getWrappedObject()]),
             $channel,
             $invoiceShopBillingData
         )->willReturn($invoice);

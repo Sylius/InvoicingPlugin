@@ -17,8 +17,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Core\Model\AdjustmentInterface;
 use Sylius\Component\Core\Model\OrderInterface;
-use Sylius\Component\Core\Model\OrderItemInterface;
-use Sylius\Component\Core\Model\OrderItemUnitInterface;
 use Sylius\Component\Core\Model\ShipmentInterface;
 use Sylius\Component\Order\Model\AdjustableInterface;
 use Sylius\InvoicingPlugin\Entity\LineItem;
@@ -27,7 +25,7 @@ use Sylius\InvoicingPlugin\Exception\MoreThanOneTaxAdjustment;
 use Sylius\InvoicingPlugin\Provider\TaxRatePercentageProviderInterface;
 use Webmozart\Assert\Assert;
 
-final class LineItemsConverter implements LineItemsConverterInterface
+final class ShippingAdjustmentsToLineItemsConverter implements LineItemsConverterInterface
 {
     /** @var TaxRatePercentageProviderInterface */
     private $taxRatePercentageProvider;
@@ -39,65 +37,12 @@ final class LineItemsConverter implements LineItemsConverterInterface
 
     public function convert(OrderInterface $order): Collection
     {
-        $lineItems = [];
-
-        /** @var OrderItemUnitInterface $unit */
-        foreach ($order->getItemUnits() as $unit) {
-            $lineItems = $this->addLineItem($this->convertOrderItemUnitToLineItem($unit), $lineItems);
-        }
+        $lineItems = new ArrayCollection();
 
         /** @var AdjustmentInterface $shippingAdjustment */
         foreach ($order->getAdjustments(AdjustmentInterface::SHIPPING_ADJUSTMENT) as $shippingAdjustment) {
-            $lineItems[] = $this->convertShippingAdjustmentToLineItem($shippingAdjustment);
+            $lineItems->add($this->convertShippingAdjustmentToLineItem($shippingAdjustment));
         }
-
-        return new ArrayCollection($lineItems);
-    }
-
-    private function convertOrderItemUnitToLineItem(OrderItemUnitInterface $unit): LineItemInterface
-    {
-        /** @var OrderItemInterface $item */
-        $item = $unit->getOrderItem();
-
-        $grossValue = $unit->getTotal();
-        $taxAmount = $unit->getTaxTotal();
-        $netValue = $grossValue - $taxAmount;
-
-        /** @var string|null $productName */
-        $productName = $item->getProductName();
-        Assert::notNull($productName);
-
-        $variant = $item->getVariant();
-
-        return new LineItem(
-            $productName,
-            1,
-            $netValue,
-            $netValue,
-            $taxAmount,
-            $grossValue,
-            $item->getVariantName(),
-            $variant !== null ? $variant->getCode() : null,
-            $this->taxRatePercentageProvider->provideFromAdjustable($unit)
-        );
-    }
-
-    /**
-     * @param LineItemInterface[] $lineItems
-     *
-     * @return LineItemInterface[]
-     */
-    private function addLineItem(LineItemInterface $newLineItem, array $lineItems): array
-    {
-        foreach ($lineItems as $lineItem) {
-            if ($lineItem->compare($newLineItem)) {
-                $lineItem->merge($newLineItem);
-
-                return $lineItems;
-            }
-        }
-
-        $lineItems[] = $newLineItem;
 
         return $lineItems;
     }

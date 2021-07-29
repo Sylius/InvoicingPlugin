@@ -8,12 +8,16 @@
 
         <service id="sylius_invoicing_plugin.converter.invoice_shop_billing_data" class="Sylius\InvoicingPlugin\Converter\InvoiceShopBillingDataConverter" />
 
-        <service id="sylius_invoicing_plugin.converter.line_items" class="Sylius\InvoicingPlugin\Converter\LineItemsConverter">
-            <argument type="service" id="sylius_invoicing_plugin.provider.tax_rate" />
+        <service id="sylius_invoicing_plugin.converter.order_item_units_to_line_items" class="Sylius\InvoicingPlugin\Converter\OrderItemUnitsToLineItemsConverter">
+            <argument type="service" id="sylius_invoicing_plugin.provider.tax_rate_percentage" />
+        </service>
+
+        <service id="sylius_invoicing_plugin.converter.shipping_adjustments_to_line_items" class="Sylius\InvoicingPlugin\Converter\ShippingAdjustmentsToLineItemsConverter">
+            <argument type="service" id="sylius_invoicing_plugin.provider.tax_rate_percentage" />
         </service>
 
         <service id="sylius_invoicing_plugin.converter.tax_items" class="Sylius\InvoicingPlugin\Converter\TaxItemsConverter">
-            <argument type="service" id="sylius_invoicing_plugin.provider.tax_rate" />
+            <argument type="service" id="sylius_invoicing_plugin.provider.tax_rate_percentage" />
         </service>
     </services>
 </container>

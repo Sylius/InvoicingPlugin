@@ -13,7 +13,11 @@ Invoices are now saved on the server during their generation (by default, when t
 1. `Sylius\InvoicingPlugin\Converter\LineItemsConverter` class has additional `TaxRatePercentageProviderInterface $taxRatePercentageProvider`
    dependency
 1. `Sylius\InvoicingPlugin\Provider\TaxRateProvider` service has been changed to `Sylius\InvoicingPlugin\Provider\TaxRatePercentageProvider`
-   and its service definition from `sylius_invoicing_plugin.provider.tax_rate` to `sylius_invoicing_plugin.provider.tax_rate_percentage` 
+   and its service definition from `sylius_invoicing_plugin.provider.tax_rate` to `sylius_invoicing_plugin.provider.tax_rate_percentage`
+1. `Sylius\InvoicingPlugin\Converter\LineItemsConverter` service has been replaced by `Sylius\InvoicingPlugin\Converter\OrderItemUnitsToLineItemsConverter`
+   and `Sylius\InvoicingPlugin\Converter\ShippingAdjustmentsToLineItemsConverter`
+1. `Sylius\InvoicingPlugin\Generator\InvoiceGenerator` class has 2 more dependencies: `LineItemsConverterInterface $orderItemUnitsToLineItemsConverter`
+   and `LineItemsConverterInterface $shippingAdjustmentsToLineItemsConverter` that replaced `LineItemsConverterInterface $lineItemsConverter`
 
 ### UPGRADE FROM 0.15.0 TO 0.16.0
 

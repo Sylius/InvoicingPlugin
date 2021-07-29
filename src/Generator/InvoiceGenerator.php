@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sylius\InvoicingPlugin\Generator;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Sylius\Component\Core\Model\AddressInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\OrderInterface;
@@ -41,7 +42,10 @@ final class InvoiceGenerator implements InvoiceGeneratorInterface
     private $invoiceShopBillingDataConverter;
 
     /** @var LineItemsConverterInterface */
-    private $lineItemsConverter;
+    private $orderItemUnitsToLineItemsConverter;
+
+    /** @var LineItemsConverterInterface */
+    private $shippingAdjustmentsToLineItemsConverter;
 
     /** @var TaxItemsConverterInterface */
     private $taxItemsConverter;
@@ -52,7 +56,8 @@ final class InvoiceGenerator implements InvoiceGeneratorInterface
         InvoiceFactoryInterface $invoiceFactory,
         BillingDataConverterInterface $billingDataConverter,
         InvoiceShopBillingDataConverterInterface $invoiceShopBillingDataConverter,
-        LineItemsConverterInterface $lineItemConverter,
+        LineItemsConverterInterface $orderItemUnitsToLineItemsConverter,
+        LineItemsConverterInterface $shippingAdjustmentsToLineItemsConverter,
         TaxItemsConverterInterface $taxItemsConverter
     ) {
         $this->uuidInvoiceIdentifierGenerator = $uuidInvoiceIdentifierGenerator;
@@ -60,7 +65,8 @@ final class InvoiceGenerator implements InvoiceGeneratorInterface
         $this->invoiceFactory = $invoiceFactory;
         $this->billingDataConverter = $billingDataConverter;
         $this->invoiceShopBillingDataConverter = $invoiceShopBillingDataConverter;
-        $this->lineItemsConverter = $lineItemConverter;
+        $this->orderItemUnitsToLineItemsConverter = $orderItemUnitsToLineItemsConverter;
+        $this->shippingAdjustmentsToLineItemsConverter = $shippingAdjustmentsToLineItemsConverter;
         $this->taxItemsConverter = $taxItemsConverter;
     }
 
@@ -81,7 +87,10 @@ final class InvoiceGenerator implements InvoiceGeneratorInterface
             $order->getCurrencyCode(),
             $order->getLocaleCode(),
             $order->getTotal(),
-            $this->lineItemsConverter->convert($order),
+            new ArrayCollection(array_merge(
+                $this->orderItemUnitsToLineItemsConverter->convert($order)->toArray(),
+                $this->shippingAdjustmentsToLineItemsConverter->convert($order)->toArray()
+            )),
             $this->taxItemsConverter->convert($order),
             $channel,
             $this->invoiceShopBillingDataConverter->convert($channel)
