@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace spec\Sylius\InvoicingPlugin\Converter;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Core\Model\AdjustmentInterface;
 use Sylius\Component\Core\Model\OrderInterface;

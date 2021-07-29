@@ -41,6 +41,7 @@ final class OrderItemUnitsToLineItemsConverter implements LineItemsConverterInte
         foreach ($order->getItemUnits() as $unit) {
             $lineItems = $this->addLineItem($this->convertOrderItemUnitToLineItem($unit), $lineItems);
         }
+
         return new ArrayCollection($lineItems);
     }
 

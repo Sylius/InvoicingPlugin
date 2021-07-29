@@ -37,6 +37,7 @@ final class TaxItemsConverter implements TaxItemsConverterInterface
         $taxItems = new ArrayCollection();
 
         $taxAdjustments = $order->getAdjustmentsRecursively(AdjustmentInterface::TAX_ADJUSTMENT);
+        /** @var AdjustmentInterface $taxAdjustment */
         foreach ($taxAdjustments as $taxAdjustment) {
             $taxRateLabel = $this->taxRatePercentageProvider->provideFromAdjustment($taxAdjustment);
 
