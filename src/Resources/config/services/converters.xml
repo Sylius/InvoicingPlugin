@@ -5,10 +5,15 @@
         <defaults autoconfigure="true" autowire="true" public="true" />
 
         <service id="sylius_invoicing_plugin.converter.billing_data" class="Sylius\InvoicingPlugin\Converter\BillingDataConverter" />
+
         <service id="sylius_invoicing_plugin.converter.invoice_shop_billing_data" class="Sylius\InvoicingPlugin\Converter\InvoiceShopBillingDataConverter" />
+
         <service id="sylius_invoicing_plugin.converter.line_items" class="Sylius\InvoicingPlugin\Converter\LineItemsConverter">
             <argument type="service" id="sylius_invoicing_plugin.provider.tax_rate" />
         </service>
-        <service id="sylius_invoicing_plugin.converter.tax_items" class="Sylius\InvoicingPlugin\Converter\TaxItemsConverter" />
+
+        <service id="sylius_invoicing_plugin.converter.tax_items" class="Sylius\InvoicingPlugin\Converter\TaxItemsConverter">
+            <argument type="service" id="sylius_invoicing_plugin.provider.tax_rate" />
+        </service>
     </services>
 </container>

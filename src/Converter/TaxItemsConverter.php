@@ -18,10 +18,19 @@ use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Core\Model\AdjustmentInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\InvoicingPlugin\Entity\TaxItem;
+use Sylius\InvoicingPlugin\Provider\TaxRateProviderInterface;
 use Webmozart\Assert\Assert;
 
 final class TaxItemsConverter implements TaxItemsConverterInterface
 {
+    /** @var TaxRateProviderInterface */
+    private $taxRateProvider;
+
+    public function __construct(TaxRateProviderInterface $taxRateProvider)
+    {
+        $this->taxRateProvider = $taxRateProvider;
+    }
+
     public function convert(OrderInterface $order): Collection
     {
         $temporaryTaxItems = [];
@@ -29,17 +38,17 @@ final class TaxItemsConverter implements TaxItemsConverterInterface
 
         $taxAdjustments = $order->getAdjustmentsRecursively(AdjustmentInterface::TAX_ADJUSTMENT);
         foreach ($taxAdjustments as $taxAdjustment) {
-            $taxAdjustmentLabel = $taxAdjustment->getLabel();
+            $taxRateLabel = $this->taxRateProvider->provideFromAdjustment($taxAdjustment);
 
-            Assert::notNull($taxAdjustmentLabel);
+            Assert::notNull($taxRateLabel);
 
-            if (array_key_exists($taxAdjustmentLabel, $temporaryTaxItems)) {
-                $temporaryTaxItems[$taxAdjustmentLabel] += $taxAdjustment->getAmount();
+            if (array_key_exists($taxRateLabel, $temporaryTaxItems)) {
+                $temporaryTaxItems[$taxRateLabel] += $taxAdjustment->getAmount();
 
                 continue;
             }
 
-            $temporaryTaxItems[$taxAdjustmentLabel] = $taxAdjustment->getAmount();
+            $temporaryTaxItems[$taxRateLabel] = $taxAdjustment->getAmount();
         }
 
         foreach ($temporaryTaxItems as $label => $amount) {

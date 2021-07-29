@@ -19,15 +19,23 @@ use PhpSpec\ObjectBehavior;
 use Sylius\Component\Core\Model\AdjustmentInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\InvoicingPlugin\Converter\TaxItemsConverterInterface;
+use Sylius\InvoicingPlugin\Entity\TaxItem;
+use Sylius\InvoicingPlugin\Provider\TaxRateProviderInterface;
 
 final class TaxItemsConverterSpec extends ObjectBehavior
 {
+    function let(TaxRateProviderInterface $taxRateProvider): void
+    {
+        $this->beConstructedWith($taxRateProvider);
+    }
+
     function it_implements_tax_items_converter_interface(): void
     {
         $this->shouldImplement(TaxItemsConverterInterface::class);
     }
 
     function it_extracts_tax_items_from_order(
+        TaxRateProviderInterface $taxRateProvider,
         OrderInterface $order,
         AdjustmentInterface $taxAdjustment
     ): void {
@@ -36,9 +44,9 @@ final class TaxItemsConverterSpec extends ObjectBehavior
             ->willReturn(new ArrayCollection([$taxAdjustment->getWrappedObject()]))
         ;
 
-        $taxAdjustment->getLabel()->willReturn('VAT (10%)');
+        $taxRateProvider->provideFromAdjustment($taxAdjustment)->willReturn('10%');
         $taxAdjustment->getAmount()->willReturn(500);
 
-        $this->convert($order)->shouldReturnAnInstanceOf(Collection::class);
+        $this->convert($order)->shouldBeLike(new ArrayCollection([new TaxItem('10%', 500)]));
     }
 }

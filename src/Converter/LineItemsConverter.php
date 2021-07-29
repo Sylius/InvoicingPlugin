@@ -78,7 +78,7 @@ final class LineItemsConverter implements LineItemsConverterInterface
             $grossValue,
             $item->getVariantName(),
             $variant !== null ? $variant->getCode() : null,
-            $this->taxRateProvider->provide($unit)
+            $this->taxRateProvider->provideFromAdjustable($unit)
         );
     }
 
@@ -123,7 +123,7 @@ final class LineItemsConverter implements LineItemsConverterInterface
             $grossValue,
             null,
             null,
-            $this->taxRateProvider->provide($shipment)
+            $this->taxRateProvider->provideFromAdjustable($shipment)
         );
     }
 

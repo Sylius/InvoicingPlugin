@@ -27,7 +27,7 @@ final class TaxRateProviderSpec extends ObjectBehavior
         $this->shouldImplement(TaxRateProviderInterface::class);
     }
 
-    public function it_provides_a_tax_rate_from_tax_adjustment_details(
+    public function it_provides_a_tax_rate_from_adjustable_entity(
         OrderItemUnitInterface $orderItemUnit,
         AdjustmentInterface $taxAdjustment
     ): void {
@@ -38,16 +38,16 @@ final class TaxRateProviderSpec extends ObjectBehavior
 
         $taxAdjustment->getDetails()->willReturn(['taxRateAmount' => 0.2]);
 
-        $this->provide($orderItemUnit)->shouldReturn('20%');
+        $this->provideFromAdjustable($orderItemUnit)->shouldReturn('20%');
     }
 
-    public function it_returns_null_if_there_is_no_tax_adjustment(OrderItemUnitInterface $orderItemUnit): void
+    public function it_returns_null_if_there_is_no_tax_adjustment_on_adjustable_entity(OrderItemUnitInterface $orderItemUnit): void
     {
         $orderItemUnit
             ->getAdjustments(AdjustmentInterface::TAX_ADJUSTMENT)
             ->willReturn(new ArrayCollection([]));
 
-        $this->provide($orderItemUnit)->shouldReturn(null);
+        $this->provideFromAdjustable($orderItemUnit)->shouldReturn(null);
     }
 
     public function it_throws_an_exception_if_there_is_no_tax_rate_amount_in_details_of_adjustment(
@@ -61,7 +61,7 @@ final class TaxRateProviderSpec extends ObjectBehavior
 
         $taxAdjustment->getDetails()->willReturn([]);
 
-        $this->shouldThrow(\InvalidArgumentException::class)->during('provide', [$orderItemUnit]);
+        $this->shouldThrow(\InvalidArgumentException::class)->during('provideFromAdjustable', [$orderItemUnit]);
     }
 
     public function it_throws_an_exception_if_order_item_unit_has_more_adjustments_than_one(
@@ -74,6 +74,14 @@ final class TaxRateProviderSpec extends ObjectBehavior
             ->willReturn(new ArrayCollection([$firstTaxAdjustment->getWrappedObject(), $secondTaxAdjustment->getWrappedObject()]))
         ;
 
-        $this->shouldThrow(MoreThanOneTaxAdjustment::class)->during('provide', [$orderItemUnit]);
+        $this->shouldThrow(MoreThanOneTaxAdjustment::class)->during('provideFromAdjustable', [$orderItemUnit]);
+    }
+
+    public function it_provides_a_tax_rate_from_adjustment(
+        AdjustmentInterface $taxAdjustment
+    ): void {
+        $taxAdjustment->getDetails()->willReturn(['taxRateAmount' => 0.2]);
+
+        $this->provideFromAdjustment($taxAdjustment)->shouldReturn('20%');
     }
 }

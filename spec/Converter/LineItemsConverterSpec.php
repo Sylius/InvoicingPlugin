@@ -59,7 +59,7 @@ final class LineItemsConverterSpec extends ObjectBehavior
 
         $variant->getCode()->willReturn('CODE');
 
-        $taxRateProvider->provide($orderItemUnit)->willReturn('10%');
+        $taxRateProvider->provideFromAdjustable($orderItemUnit)->willReturn('10%');
 
         $order
             ->getAdjustments(AdjustmentInterface::SHIPPING_ADJUSTMENT)
@@ -77,7 +77,7 @@ final class LineItemsConverterSpec extends ObjectBehavior
 
         $shippingTaxAdjustment->getAmount()->willReturn(200);
 
-        $taxRateProvider->provide($shipment)->willReturn('20%');
+        $taxRateProvider->provideFromAdjustable($shipment)->willReturn('20%');
 
         $this->convert($order)->shouldBeLike(new ArrayCollection([
             new LineItem('Mjolnir', 1, 5000, 5000, 500, 5500, null, 'CODE', '10%'),
@@ -115,8 +115,8 @@ final class LineItemsConverterSpec extends ObjectBehavior
 
         $variant->getCode()->willReturn('CODE');
 
-        $taxRateProvider->provide($firstOrderItemUnit)->willReturn('10%');
-        $taxRateProvider->provide($secondOrderItemUnit)->willReturn('10%');
+        $taxRateProvider->provideFromAdjustable($firstOrderItemUnit)->willReturn('10%');
+        $taxRateProvider->provideFromAdjustable($secondOrderItemUnit)->willReturn('10%');
 
         $order
             ->getAdjustments(AdjustmentInterface::SHIPPING_ADJUSTMENT)
@@ -134,7 +134,7 @@ final class LineItemsConverterSpec extends ObjectBehavior
 
         $shippingTaxAdjustment->getAmount()->willReturn(200);
 
-        $taxRateProvider->provide($shipment)->willReturn('20%');
+        $taxRateProvider->provideFromAdjustable($shipment)->willReturn('20%');
 
         $this->convert($order)->shouldBeLike(new ArrayCollection([
             new LineItem('Mjolnir', 2, 5000, 10000, 1000, 11000, null, 'CODE', '10%'),

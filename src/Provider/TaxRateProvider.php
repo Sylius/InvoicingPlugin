@@ -21,7 +21,7 @@ use Webmozart\Assert\Assert;
 
 final class TaxRateProvider implements TaxRateProviderInterface
 {
-    public function provide(AdjustableInterface $adjustable): ?string
+    public function provideFromAdjustable(AdjustableInterface $adjustable): ?string
     {
         /** @var Collection|AdjustmentInterface[] $taxAdjustments */
         $taxAdjustments = $adjustable->getAdjustments(AdjustmentInterface::TAX_ADJUSTMENT);
@@ -34,7 +34,12 @@ final class TaxRateProvider implements TaxRateProviderInterface
             return null;
         }
 
-        $details = $taxAdjustments->first()->getDetails();
+        return $this->provideFromAdjustment($taxAdjustments->first());
+    }
+
+    public function provideFromAdjustment(AdjustmentInterface $adjustment): ?string
+    {
+        $details = $adjustment->getDetails();
 
         Assert::keyExists(
             $details,
