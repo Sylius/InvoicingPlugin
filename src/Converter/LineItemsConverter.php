@@ -24,17 +24,17 @@ use Sylius\Component\Order\Model\AdjustableInterface;
 use Sylius\InvoicingPlugin\Entity\LineItem;
 use Sylius\InvoicingPlugin\Entity\LineItemInterface;
 use Sylius\InvoicingPlugin\Exception\MoreThanOneTaxAdjustment;
-use Sylius\InvoicingPlugin\Provider\TaxRateProviderInterface;
+use Sylius\InvoicingPlugin\Provider\TaxRatePercentageProviderInterface;
 use Webmozart\Assert\Assert;
 
 final class LineItemsConverter implements LineItemsConverterInterface
 {
-    /** @var TaxRateProviderInterface */
-    private $taxRateProvider;
+    /** @var TaxRatePercentageProviderInterface */
+    private $taxRatePercentageProvider;
 
-    public function __construct(TaxRateProviderInterface $taxRateProvider)
+    public function __construct(TaxRatePercentageProviderInterface $taxRatePercentageProvider)
     {
-        $this->taxRateProvider = $taxRateProvider;
+        $this->taxRatePercentageProvider = $taxRatePercentageProvider;
     }
 
     public function convert(OrderInterface $order): Collection
@@ -78,7 +78,7 @@ final class LineItemsConverter implements LineItemsConverterInterface
             $grossValue,
             $item->getVariantName(),
             $variant !== null ? $variant->getCode() : null,
-            $this->taxRateProvider->provideFromAdjustable($unit)
+            $this->taxRatePercentageProvider->provideFromAdjustable($unit)
         );
     }
 
@@ -123,7 +123,7 @@ final class LineItemsConverter implements LineItemsConverterInterface
             $grossValue,
             null,
             null,
-            $this->taxRateProvider->provideFromAdjustable($shipment)
+            $this->taxRatePercentageProvider->provideFromAdjustable($shipment)
         );
     }
 

@@ -23,13 +23,13 @@ use Sylius\Component\Core\Model\ProductVariantInterface;
 use Sylius\Component\Core\Model\ShipmentInterface;
 use Sylius\InvoicingPlugin\Converter\LineItemsConverterInterface;
 use Sylius\InvoicingPlugin\Entity\LineItem;
-use Sylius\InvoicingPlugin\Provider\TaxRateProviderInterface;
+use Sylius\InvoicingPlugin\Provider\TaxRatePercentageProviderInterface;
 
 final class LineItemsConverterSpec extends ObjectBehavior
 {
-    function let(TaxRateProviderInterface $taxRateProvider): void
+    function let(TaxRatePercentageProviderInterface $taxRatePercentageProvider): void
     {
-        $this->beConstructedWith($taxRateProvider);
+        $this->beConstructedWith($taxRatePercentageProvider);
     }
 
     function it_implements_line_items_converter_interface(): void
@@ -38,7 +38,7 @@ final class LineItemsConverterSpec extends ObjectBehavior
     }
 
     function it_extracts_line_items_from_order(
-        TaxRateProviderInterface $taxRateProvider,
+        TaxRatePercentageProviderInterface $taxRatePercentageProvider,
         OrderInterface $order,
         OrderItemInterface $orderItem,
         OrderItemUnitInterface $orderItemUnit,
@@ -59,7 +59,7 @@ final class LineItemsConverterSpec extends ObjectBehavior
 
         $variant->getCode()->willReturn('CODE');
 
-        $taxRateProvider->provideFromAdjustable($orderItemUnit)->willReturn('10%');
+        $taxRatePercentageProvider->provideFromAdjustable($orderItemUnit)->willReturn('10%');
 
         $order
             ->getAdjustments(AdjustmentInterface::SHIPPING_ADJUSTMENT)
@@ -77,7 +77,7 @@ final class LineItemsConverterSpec extends ObjectBehavior
 
         $shippingTaxAdjustment->getAmount()->willReturn(200);
 
-        $taxRateProvider->provideFromAdjustable($shipment)->willReturn('20%');
+        $taxRatePercentageProvider->provideFromAdjustable($shipment)->willReturn('20%');
 
         $this->convert($order)->shouldBeLike(new ArrayCollection([
             new LineItem('Mjolnir', 1, 5000, 5000, 500, 5500, null, 'CODE', '10%'),
@@ -86,7 +86,7 @@ final class LineItemsConverterSpec extends ObjectBehavior
     }
 
     function it_groups_the_same_line_items_during_extracting(
-        TaxRateProviderInterface $taxRateProvider,
+        TaxRatePercentageProviderInterface $taxRatePercentageProvider,
         OrderInterface $order,
         OrderItemInterface $orderItem,
         OrderItemUnitInterface $firstOrderItemUnit,
@@ -115,8 +115,8 @@ final class LineItemsConverterSpec extends ObjectBehavior
 
         $variant->getCode()->willReturn('CODE');
 
-        $taxRateProvider->provideFromAdjustable($firstOrderItemUnit)->willReturn('10%');
-        $taxRateProvider->provideFromAdjustable($secondOrderItemUnit)->willReturn('10%');
+        $taxRatePercentageProvider->provideFromAdjustable($firstOrderItemUnit)->willReturn('10%');
+        $taxRatePercentageProvider->provideFromAdjustable($secondOrderItemUnit)->willReturn('10%');
 
         $order
             ->getAdjustments(AdjustmentInterface::SHIPPING_ADJUSTMENT)
@@ -134,7 +134,7 @@ final class LineItemsConverterSpec extends ObjectBehavior
 
         $shippingTaxAdjustment->getAmount()->willReturn(200);
 
-        $taxRateProvider->provideFromAdjustable($shipment)->willReturn('20%');
+        $taxRatePercentageProvider->provideFromAdjustable($shipment)->willReturn('20%');
 
         $this->convert($order)->shouldBeLike(new ArrayCollection([
             new LineItem('Mjolnir', 2, 5000, 10000, 1000, 11000, null, 'CODE', '10%'),

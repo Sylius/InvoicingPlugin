@@ -16,7 +16,7 @@ namespace Sylius\InvoicingPlugin\Provider;
 use Sylius\Component\Core\Model\AdjustmentInterface;
 use Sylius\Component\Order\Model\AdjustableInterface;
 
-interface TaxRateProviderInterface
+interface TaxRatePercentageProviderInterface
 {
     public function provideFromAdjustable(AdjustableInterface $adjustable): ?string;
 

@@ -18,13 +18,13 @@ use PhpSpec\ObjectBehavior;
 use Sylius\Component\Core\Model\AdjustmentInterface;
 use Sylius\Component\Core\Model\OrderItemUnitInterface;
 use Sylius\InvoicingPlugin\Exception\MoreThanOneTaxAdjustment;
-use Sylius\InvoicingPlugin\Provider\TaxRateProviderInterface;
+use Sylius\InvoicingPlugin\Provider\TaxRatePercentageProviderInterface;
 
-final class TaxRateProviderSpec extends ObjectBehavior
+final class TaxRatePercentageProviderSpec extends ObjectBehavior
 {
-    public function it_implements_tax_rate_provider_interface(): void
+    public function it_implements_tax_rate_percentage_provider_interface(): void
     {
-        $this->shouldImplement(TaxRateProviderInterface::class);
+        $this->shouldImplement(TaxRatePercentageProviderInterface::class);
     }
 
     public function it_provides_a_tax_rate_from_adjustable_entity(

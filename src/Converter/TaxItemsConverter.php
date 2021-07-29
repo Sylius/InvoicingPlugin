@@ -18,17 +18,17 @@ use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Core\Model\AdjustmentInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\InvoicingPlugin\Entity\TaxItem;
-use Sylius\InvoicingPlugin\Provider\TaxRateProviderInterface;
+use Sylius\InvoicingPlugin\Provider\TaxRatePercentageProviderInterface;
 use Webmozart\Assert\Assert;
 
 final class TaxItemsConverter implements TaxItemsConverterInterface
 {
-    /** @var TaxRateProviderInterface */
-    private $taxRateProvider;
+    /** @var TaxRatePercentageProviderInterface */
+    private $taxRatePercentageProvider;
 
-    public function __construct(TaxRateProviderInterface $taxRateProvider)
+    public function __construct(TaxRatePercentageProviderInterface $taxRatePercentageProvider)
     {
-        $this->taxRateProvider = $taxRateProvider;
+        $this->taxRatePercentageProvider = $taxRatePercentageProvider;
     }
 
     public function convert(OrderInterface $order): Collection
@@ -38,7 +38,7 @@ final class TaxItemsConverter implements TaxItemsConverterInterface
 
         $taxAdjustments = $order->getAdjustmentsRecursively(AdjustmentInterface::TAX_ADJUSTMENT);
         foreach ($taxAdjustments as $taxAdjustment) {
-            $taxRateLabel = $this->taxRateProvider->provideFromAdjustment($taxAdjustment);
+            $taxRateLabel = $this->taxRatePercentageProvider->provideFromAdjustment($taxAdjustment);
 
             Assert::notNull($taxRateLabel);
 

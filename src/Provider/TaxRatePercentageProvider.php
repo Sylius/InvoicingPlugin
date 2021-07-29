@@ -19,7 +19,7 @@ use Sylius\Component\Order\Model\AdjustableInterface;
 use Sylius\InvoicingPlugin\Exception\MoreThanOneTaxAdjustment;
 use Webmozart\Assert\Assert;
 
-final class TaxRateProvider implements TaxRateProviderInterface
+final class TaxRatePercentageProvider implements TaxRatePercentageProviderInterface
 {
     public function provideFromAdjustable(AdjustableInterface $adjustable): ?string
     {
