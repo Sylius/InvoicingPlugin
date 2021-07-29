@@ -89,7 +89,6 @@ final class LineItemsConverter implements LineItemsConverterInterface
      */
     private function addLineItem(LineItemInterface $newLineItem, array $lineItems): array
     {
-        /** @var LineItemInterface $lineItem */
         foreach ($lineItems as $lineItem) {
             if ($lineItem->compare($newLineItem)) {
                 $lineItem->merge($newLineItem);
@@ -105,7 +104,7 @@ final class LineItemsConverter implements LineItemsConverterInterface
 
     private function convertShippingAdjustmentToLineItem(AdjustmentInterface $shippingAdjustment): LineItemInterface
     {
-        /** @var ShipmentInterface $shipment */
+        /** @var ShipmentInterface|null $shipment */
         $shipment = $shippingAdjustment->getShipment();
         Assert::notNull($shipment);
         Assert::isInstanceOf($shipment, AdjustableInterface::class);

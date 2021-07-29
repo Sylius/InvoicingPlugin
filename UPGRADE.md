@@ -10,6 +10,8 @@ Invoices are now saved on the server during their generation (by default, when t
     dependency, placed on 4th place, before `string $template`
 1. `Sylius\InvoicingPlugin\Ui\Action\DownloadInvoiceAction` class 4th dependency has been changed from `InvoicePdfFileGeneratorInterface $invoicePdfFileGenerator`
     to `InvoiceFileProviderInterface $invoiceFilePathProvider`
+1. `Sylius\InvoicingPlugin\Converter\LineItemsConverter` class has additional `TaxRateProviderInterface $taxRateProvider`
+   dependency
 
 ### UPGRADE FROM 0.15.0 TO 0.16.0
 

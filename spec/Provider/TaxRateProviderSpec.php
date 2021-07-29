@@ -33,7 +33,8 @@ final class TaxRateProviderSpec extends ObjectBehavior
     ): void {
         $orderItemUnit
             ->getAdjustments(AdjustmentInterface::TAX_ADJUSTMENT)
-            ->willReturn(new ArrayCollection([$taxAdjustment->getWrappedObject()]));
+            ->willReturn(new ArrayCollection([$taxAdjustment->getWrappedObject()]))
+        ;
 
         $taxAdjustment->getDetails()->willReturn(['taxRateAmount' => 0.2]);
 
@@ -55,7 +56,8 @@ final class TaxRateProviderSpec extends ObjectBehavior
     ): void {
         $orderItemUnit
             ->getAdjustments(AdjustmentInterface::TAX_ADJUSTMENT)
-            ->willReturn(new ArrayCollection([$taxAdjustment->getWrappedObject()]));
+            ->willReturn(new ArrayCollection([$taxAdjustment->getWrappedObject()]))
+        ;
 
         $taxAdjustment->getDetails()->willReturn([]);
 
@@ -69,7 +71,8 @@ final class TaxRateProviderSpec extends ObjectBehavior
     ): void {
         $orderItemUnit
             ->getAdjustments(AdjustmentInterface::TAX_ADJUSTMENT)
-            ->willReturn(new ArrayCollection([$firstTaxAdjustment->getWrappedObject(), $secondTaxAdjustment->getWrappedObject()]));
+            ->willReturn(new ArrayCollection([$firstTaxAdjustment->getWrappedObject(), $secondTaxAdjustment->getWrappedObject()]))
+        ;
 
         $this->shouldThrow(MoreThanOneTaxAdjustment::class)->during('provide', [$orderItemUnit]);
     }
