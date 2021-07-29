@@ -47,10 +47,6 @@ interface ShowPageInterface extends SymfonyPageInterface
 
     public function hasTotal(string $total, string $currencyCode): bool;
 
-	public function getSubtotal(): string;
-
-	public function getTotal(): string;
-
 	public function getChannel(): string;
 
 	public function download(): void;

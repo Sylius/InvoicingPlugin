@@ -89,7 +89,7 @@
                     <th id="invoice-subtotal" class="right aligned" {{ sylius_test_html_attribute('invoice-net-total') }}>
                         {{ '%0.2f'|format(invoice.subtotal/100) }}
                     </th>
-                    <th id="invoice-net-total-currency-code" class="single line">
+                    <th id="invoice-net-total-currency-code" class="single line" {{ sylius_test_html_attribute('invoice-net-total-currency-code') }}>
                         {{ invoice.currencyCode }}
                     </th>
                 </tr>
@@ -97,10 +97,10 @@
                     <th colspan="7" class="right aligned">
                         <strong>{{ 'sylius_invoicing_plugin.ui.taxes_total'|trans([], 'messages', invoice.localeCode) }}</strong>:
                     </th>
-                    <th id="invoice-tax-total" class="right aligned" {{ sylius_test_html_attribute('invoice-net-total') }}>
+                    <th id="invoice-tax-total" class="right aligned" {{ sylius_test_html_attribute('invoice-taxes-total') }}>
                         {{ '%0.2f'|format(invoice.taxesTotal/100) }}
                     </th>
-                    <th id="invoice-taxes-total-currency-code" class="single line">
+                    <th id="invoice-taxes-total-currency-code" class="single line" {{ sylius_test_html_attribute('invoice-taxes-total-currency-code') }}>
                         {{ invoice.currencyCode }}
                     </th>
                 </tr>
@@ -108,10 +108,10 @@
                     <th colspan="7" class="right aligned">
                         <strong>{{ 'sylius.ui.total'|trans }}</strong>:
                     </th>
-                    <th id="invoice-total" class="right aligned" {{ sylius_test_html_attribute('invoice-tax-total') }}>
+                    <th id="invoice-total" class="right aligned" {{ sylius_test_html_attribute('invoice-total') }}>
                         {{ '%0.2f'|format(invoice.total/100) }}
                     </th>
-                    <th id="invoice-total-currency-code" class="single line">
+                    <th id="invoice-total-currency-code" class="single line" {{ sylius_test_html_attribute('invoice-total-currency-code') }}>
                         {{ invoice.currencyCode }}
                     </th>
                 </tr>
@@ -129,14 +129,14 @@
                         </th>
                     </tr>
                     {% for item in invoice.taxItems %}
-                        <tr class="tax-item">
+                        <tr class="tax-item" {{ sylius_test_html_attribute('invoice-tax-item') }}>
                             <th colspan="7" class="right aligned">
-                                <strong>{{ item.label }}</strong>:
+                                <strong {{ sylius_test_html_attribute('invoice-tax-item-label') }}>{{ item.label }}</strong>:
                             </th>
-                            <th class="right aligned tax-item-amount">
+                            <th class="right aligned tax-item-amount" {{ sylius_test_html_attribute('invoice-tax-item-amount') }}>
                                 {{ '%0.2f'|format(item.amount/100) }}
                             </th>
-                            <th class="single line">
+                            <th class="single line" {{ sylius_test_html_attribute('invoice-tax-item-currency-code') }}>
                                 {{ invoice.currencyCode }}
                             </th>
                         </tr>

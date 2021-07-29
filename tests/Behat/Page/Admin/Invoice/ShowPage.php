@@ -101,11 +101,15 @@ final class ShowPage extends SymfonyPage implements ShowPageInterface
     public function hasTaxItem(string $label, string $amount,  string $currencyCode): bool
     {
         foreach ($this->getDocument()->findAll('css', '[data-test-invoice-tax-item]') as $item) {
-            if ($item->find('css', '[data-test-invoice-tax-label]')->getText() === $label) {
-                return
-                    $item->find('css', '[data-test-invoice-tax-item-amount]')->getText() === $amount &&
-                    $item->find('css', '[data-test-invoice-tax-item-currency]')->getText() === $currencyCode
-                ;
+            $a = $item->find('css', '[data-test-invoice-tax-item-label]')->getText();
+            $b = $item->find('css', '[data-test-invoice-tax-item-amount]')->getText();
+            $c = $item->find('css', '[data-test-invoice-tax-item-currency-code]')->getText();
+            if (
+                $item->find('css', '[data-test-invoice-tax-item-label]')->getText() === $label &&
+                $item->find('css', '[data-test-invoice-tax-item-amount]')->getText() === $amount &&
+                $item->find('css', '[data-test-invoice-tax-item-currency-code]')->getText() === $currencyCode
+            ) {
+                return true;
             }
         }
 
@@ -114,38 +118,26 @@ final class ShowPage extends SymfonyPage implements ShowPageInterface
 
     public function hasNetTotal(string $netTotal, string $currencyCode): bool
     {
-        $netTotal = $currencyCode === 'USD' ? '$' . $netTotal : $netTotal . $currencyCode;
-
         return
-            $this->getDocument()->find('css', '[data-test-invoice-net-total]')->getText() === $netTotal
+            $this->getElement('invoice_net_total')->getText() === $netTotal &&
+            $this->getElement('invoice_net_total_currency_code')->getText() === $currencyCode
         ;
     }
 
     public function hasTaxTotal(string $taxTotal, string $currencyCode): bool
     {
-        $taxTotal = $currencyCode === 'USD' ? '$' . $taxTotal : $taxTotal . $currencyCode;
-
         return
-            $this->getDocument()->find('css', '[data-test-invoice-tax-total]')->getText() === $taxTotal
+            $this->getElement('invoice_taxes_total')->getText() === $taxTotal &&
+            $this->getElement('invoice_taxes_total_currency_code')->getText() === $currencyCode
         ;
     }
 
     public function hasTotal(string $total, string $currencyCode): bool
     {
         return
-            $this->getDocument()->find('css', '[data-test-invoice-total]')->getText() === $total &&
-            $this->getDocument()->find('css', '[data-test-invoice-currency-code]')->getText() === $currencyCode
+            $this->getElement('invoice_total')->getText() === $total &&
+            $this->getElement('invoice_total_currency_code')->getText() === $currencyCode
         ;
-    }
-
-    public function getSubtotal(): string
-    {
-        return str_replace('Subtotal: ', '', $this->getElement('invoice_subtotal')->getText());
-    }
-
-    public function getTotal(): string
-    {
-        return $this->getElement('invoice_total')->getText();
     }
 
     public function getChannel(): string
@@ -174,9 +166,12 @@ final class ShowPage extends SymfonyPage implements ShowPageInterface
             'back' => '#back',
             'billing_address' => '#billing-data',
             'invoice_channel_name' => '#invoice-channel-name',
-            'invoice_subtotal' => '[data-test-invoice-net-total]',
-            'invoice_tax_total' => '#invoice-tax-total',
-            'invoice_total' => '#invoice-total',
+            'invoice_net_total' => '[data-test-invoice-net-total]',
+            'invoice_net_total_currency_code' => '[data-test-invoice-net-total-currency-code]',
+            'invoice_taxes_total' => '[data-test-invoice-taxes-total]',
+            'invoice_taxes_total_currency_code' => '[data-test-invoice-taxes-total-currency-code]',
+            'invoice_total' => '[data-test-invoice-total]',
+            'invoice_total_currency_code' => '[data-test-invoice-total-currency-code]',
             'issued_at' => '#invoice-issued-at',
             'shop_billing_data' => '#shop-billing-data',
             'table' => '.table',

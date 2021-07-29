@@ -252,22 +252,6 @@ final class ManagingInvoicesContext implements Context
     }
 
     /**
-     * @Then its subtotal should be :total
-     */
-    public function itsSubtotalShouldBe(string $subtotal): void
-    {
-        Assert::same($this->showPage->getSubtotal(), $subtotal);
-    }
-
-    /**
-     * @Then its total should be :total
-     */
-    public function itsTotalShouldBe(string $total): void
-    {
-        Assert::same($this->showPage->getTotal(), $total);
-    }
-
-    /**
      * @Then it should be issued in :channel channel
      */
     public function itShouldBeIssuedInChannel(string $channel): void

@@ -24,9 +24,10 @@ Feature: Seeing included in price taxes on an invoice
 
     Scenario: Seeing proper taxes on an invoice
         When I view the summary of the invoice for order "#00000666"
-        Then it should have 2 "PHP T-Shirt" shipment with unit price "48.78", net value "97.56", tax total "22.44" and total "120.00" in "USD" currency
-        And it should have 3 "Symfony Mug" shipment with unit price "36.36", net value "109.09", tax total "10.91" and total "120.00" in "USD" currency
-        And its subtotal should be "216.65"
-        And it should have a tax item "US VAT (23%)" with amount "22.44" in "USD" currency
-        And it should have a tax item "Low VAT (10%)" with amount "10.91" in "USD" currency
-        And its total should be "250.00"
+        Then it should have 2 "PHP T-Shirt" items with unit price "48.78", net value "97.56", tax total "22.44" and total "120.00" in "USD" currency
+        And it should have 2 "Symfony Mug" items with unit price "36.36", net value "72.72", tax total "7.28" and total "80.00" in "USD" currency
+        And it should have 1 "Symfony Mug" items with unit price "36.37", net value "36.37", tax total "3.63" and total "40.00" in "USD" currency
+        And it should have a tax item "23%" with amount "22.44" in "USD" currency
+        And it should have a tax item "10%" with amount "10.91" in "USD" currency
+        And its net total should be "216.65" in "USD" currency
+        And its total should be "250.00" in "USD" currency
