@@ -101,9 +101,6 @@ final class ShowPage extends SymfonyPage implements ShowPageInterface
     public function hasTaxItem(string $label, string $amount,  string $currencyCode): bool
     {
         foreach ($this->getDocument()->findAll('css', '[data-test-invoice-tax-item]') as $item) {
-            $a = $item->find('css', '[data-test-invoice-tax-item-label]')->getText();
-            $b = $item->find('css', '[data-test-invoice-tax-item-amount]')->getText();
-            $c = $item->find('css', '[data-test-invoice-tax-item-currency-code]')->getText();
             if (
                 $item->find('css', '[data-test-invoice-tax-item-label]')->getText() === $label &&
                 $item->find('css', '[data-test-invoice-tax-item-amount]')->getText() === $amount &&

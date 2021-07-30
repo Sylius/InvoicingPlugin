@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <style>
         .invoice-box { max-width: 1000px; margin: auto; padding: 30px; border: 1px solid #eee; box-shadow: 0 0 10px rgba(0, 0, 0, .15); font-size: 16px; line-height: 24px; font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; color: #555 }
-        .invoice-box .issued-at { font-weight: bold }
+        .invoice-box .issued-at { font-weight: bold; }
         .invoice-box tr td.invoice-number { text-align: center; font-size: 20px; font-weight: bold; padding-bottom: 40px; }
         .invoice-box table { width: 100%; line-height: inherit; text-align: left; }
         .invoice-box table td { padding: 5px; vertical-align: top; text-align: right; }
@@ -13,14 +13,15 @@
         .invoice-box table tr.top table td { padding-bottom: 20px; }
         .invoice-box table tr.top table td.title:not(.totals) { font-size: 45px; line-height: 45px; color: #333; }
         .invoice-box table tr.information table td { padding-bottom: 40px; }
-        .invoice-box table tr.heading td { background: #eee; border-bottom: 1px solid #ddd; font-weight: bold; }
+        .invoice-box table tr.heading td { background: #eee; border-bottom: 1px solid #ddd; font-weight: bold; text-align: center; }
         .invoice-box table tr.details td { padding-bottom: 20px; }
-        .invoice-box table tr.item td{ border-bottom: 1px solid #eee; }
+        .invoice-box table tr.item td { border-bottom: 1px solid #eee; }
         .invoice-box table tr.item.last td { border-bottom: none; }
+        .invoice-box table tr.item td.name { text-align: left; }
         .invoice-box table .totals { border-top: 2px solid #eee; }
         .invoice-box .bold { font-weight: bold; }
-        .invoice-tax-tr { border-bottom: 1px solid #ddd; background: #eee; }
-        .invoice-tax-td { border-bottom: 1px solid #ddd; }
+        .invoice-tax-heading { border-bottom: 1px solid #ddd; background: #eee; text-align: center; }
+        .invoice-tax-item { border-bottom: 1px solid #ddd; }
     </style>
 </head>
 <body>
@@ -93,7 +94,7 @@
         {% for item in invoice.lineItems %}
             <tr class="item">
                 <td>{{ loop.index }}</td>
-                <td>{{ item.name }} {% if item.variantName is not null %}({{ item.variantName }}){% endif %}</td>
+                <td class="name">{{ item.name }} {% if item.variantName is not null %}({{ item.variantName }}){% endif %}</td>
                 <td>{{ item.quantity }}</td>
                 <td>{{ '%0.2f'|format(item.unitPrice/100) }}</td>
                 <td>{{ '%0.2f'|format(item.subtotal/100) }}</td>
@@ -128,17 +129,17 @@
         {% if invoice.taxItems.count() > 0 %}
             <tr>
                 <td colspan="6"></td>
-                <td class="invoice-tax-tr" >{{ 'sylius_invoicing_plugin.ui.tax_rate'|trans([], 'messages', invoice.localeCode) }}</td>
-                <td class="invoice-tax-tr" >{{ 'sylius_invoicing_plugin.ui.tax_amount'|trans([], 'messages', invoice.localeCode) }}</td>
-                <td class="invoice-tax-tr" >{{ 'sylius.ui.currency'|trans([], 'messages', invoice.currencyCode) }}</td>
+                <td class="invoice-tax-heading">{{ 'sylius_invoicing_plugin.ui.tax_rate'|trans([], 'messages', invoice.localeCode) }}</td>
+                <td class="invoice-tax-heading">{{ 'sylius_invoicing_plugin.ui.tax_amount'|trans([], 'messages', invoice.localeCode) }}</td>
+                <td class="invoice-tax-heading">{{ 'sylius.ui.currency'|trans([], 'messages', invoice.currencyCode) }}</td>
             </tr>
 
             {% for taxItem in invoice.taxItems %}
-                <tr class="tax-item">
+                <tr>
                     <td colspan="6"></td>
-                    <td class="invoice-tax-td">{{ taxItem.label }}</td>
-                    <td class="invoice-tax-td">{{ '%0.2f'|format(taxItem.amount/100) }}</td>
-                    <td class="invoice-tax-td">{{ invoice.currencyCode }}</td>
+                    <td class="invoice-tax-item">{{ taxItem.label }}</td>
+                    <td class="invoice-tax-item">{{ '%0.2f'|format(taxItem.amount/100) }}</td>
+                    <td class="invoice-tax-item">{{ invoice.currencyCode }}</td>
                 </tr>
             {% endfor %}
         {% endif %}
