@@ -19,7 +19,8 @@
             <argument type="service" id="sylius_invoicing_plugin.custom_factory.invoice" />
             <argument type="service" id="sylius_invoicing_plugin.converter.billing_data" />
             <argument type="service" id="sylius_invoicing_plugin.converter.invoice_shop_billing_data" />
-            <argument type="service" id="sylius_invoicing_plugin.converter.line_items" />
+            <argument type="service" id="sylius_invoicing_plugin.converter.order_item_units_to_line_items" />
+            <argument type="service" id="sylius_invoicing_plugin.converter.shipping_adjustments_to_line_items" />
             <argument type="service" id="sylius_invoicing_plugin.converter.tax_items" />
         </service>
 

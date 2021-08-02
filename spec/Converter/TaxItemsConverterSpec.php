@@ -14,20 +14,27 @@ declare(strict_types=1);
 namespace spec\Sylius\InvoicingPlugin\Converter;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Core\Model\AdjustmentInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\InvoicingPlugin\Converter\TaxItemsConverterInterface;
+use Sylius\InvoicingPlugin\Entity\TaxItem;
+use Sylius\InvoicingPlugin\Provider\TaxRatePercentageProviderInterface;
 
 final class TaxItemsConverterSpec extends ObjectBehavior
 {
+    function let(TaxRatePercentageProviderInterface $taxRatePercentageProvider): void
+    {
+        $this->beConstructedWith($taxRatePercentageProvider);
+    }
+
     function it_implements_tax_items_converter_interface(): void
     {
         $this->shouldImplement(TaxItemsConverterInterface::class);
     }
 
     function it_extracts_tax_items_from_order(
+        TaxRatePercentageProviderInterface $taxRatePercentageProvider,
         OrderInterface $order,
         AdjustmentInterface $taxAdjustment
     ): void {
@@ -36,9 +43,9 @@ final class TaxItemsConverterSpec extends ObjectBehavior
             ->willReturn(new ArrayCollection([$taxAdjustment->getWrappedObject()]))
         ;
 
-        $taxAdjustment->getLabel()->willReturn('VAT (10%)');
+        $taxRatePercentageProvider->provideFromAdjustment($taxAdjustment)->willReturn('10%');
         $taxAdjustment->getAmount()->willReturn(500);
 
-        $this->convert($order)->shouldReturnAnInstanceOf(Collection::class);
+        $this->convert($order)->shouldBeLike(new ArrayCollection([new TaxItem('10%', 500)]));
     }
 }

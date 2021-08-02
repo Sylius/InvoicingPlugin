@@ -1,4 +1,4 @@
-@managing_invoices @ui
+@managing_invoices
 Feature: Seeing taxes on an invoice
     In order to have proper amount on an invoice
     As an Administrator
@@ -22,11 +22,12 @@ Feature: Seeing taxes on an invoice
         And the customer chose "UPS" shipping method with "Cash on Delivery" payment
         And I am logged in as an administrator
 
+    @ui
     Scenario: Seeing proper taxes on an invoice
         When I view the summary of the invoice for order "#00000666"
-        Then it should have an item "PHP T-Shirt" with unit price "$60.00", quantity 2, tax total "$27.60" and total "$147.60"
-        And it should have an item "Symfony Mug" with unit price "$40.00", quantity 3, tax total "$12.00" and total "$132.00"
-        And its subtotal should be "$250.00"
-        And it should have a tax item "US VAT (23%)" with amount "$27.60"
-        And it should have a tax item "Low VAT (10%)" with amount "$12.00"
-        And its total should be "$289.60"
+        Then it should have 2 "PHP T-Shirt" items with unit price "60.00", net value "120.00", tax total "27.60" and total "147.60" in "USD" currency
+        And it should have 3 "Symfony Mug" items with unit price "40.00", net value "120.00", tax total "12.00" and total "132.00" in "USD" currency
+        And it should have a tax item "10%" with amount "12.00" in "USD" currency
+        And it should have a tax item "23%" with amount "27.60" in "USD" currency
+        And its net total should be "250.00" in "USD" currency
+        And its total should be "289.60" in "USD" currency

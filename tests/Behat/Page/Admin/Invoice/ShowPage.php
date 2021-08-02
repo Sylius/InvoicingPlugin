@@ -83,7 +83,9 @@ final class ShowPage extends SymfonyPage implements ShowPageInterface
         string $unitPrice,
         int $quantity,
         string $taxTotal,
-        string $total
+        string $total,
+        string $currencyCode = null,
+        string $netValue = null
     ): bool {
         $row = $this->tableAccessor->getRowsWithFields($this->getElement('table'), [
             'name' => $name,
@@ -96,21 +98,43 @@ final class ShowPage extends SymfonyPage implements ShowPageInterface
         return null !== $row;
     }
 
-    public function hasTaxItem(string $label, string $amount): bool
+    public function hasTaxItem(string $label, string $amount,  string $currencyCode): bool
     {
-        $taxItemAmountElement = $this->getElement('tax_item_amount', ['%label%' => $label]);
+        foreach ($this->getDocument()->findAll('css', '[data-test-invoice-tax-item]') as $item) {
+            if (
+                $item->find('css', '[data-test-invoice-tax-item-label]')->getText() === $label &&
+                $item->find('css', '[data-test-invoice-tax-item-amount]')->getText() === $amount &&
+                $item->find('css', '[data-test-invoice-tax-item-currency-code]')->getText() === $currencyCode
+            ) {
+                return true;
+            }
+        }
 
-        return $amount === $taxItemAmountElement->getText();
+        return false;
     }
 
-    public function getSubtotal(): string
+    public function hasNetTotal(string $netTotal, string $currencyCode): bool
     {
-        return $this->getElement('invoice_subtotal')->getText();
+        return
+            $this->getElement('invoice_net_total')->getText() === $netTotal &&
+            $this->getElement('invoice_net_total_currency_code')->getText() === $currencyCode
+        ;
     }
 
-    public function getTotal(): string
+    public function hasTaxTotal(string $taxTotal, string $currencyCode): bool
     {
-        return $this->getElement('invoice_total')->getText();
+        return
+            $this->getElement('invoice_taxes_total')->getText() === $taxTotal &&
+            $this->getElement('invoice_taxes_total_currency_code')->getText() === $currencyCode
+        ;
+    }
+
+    public function hasTotal(string $total, string $currencyCode): bool
+    {
+        return
+            $this->getElement('invoice_total')->getText() === $total &&
+            $this->getElement('invoice_total_currency_code')->getText() === $currencyCode
+        ;
     }
 
     public function getChannel(): string
@@ -139,13 +163,20 @@ final class ShowPage extends SymfonyPage implements ShowPageInterface
             'back' => '#back',
             'billing_address' => '#billing-data',
             'invoice_channel_name' => '#invoice-channel-name',
-            'invoice_subtotal' => '#invoice-subtotal',
-            'invoice_tax_total' => '#invoice-tax-total',
-            'invoice_total' => '#invoice-total',
+            'invoice_net_total' => '[data-test-invoice-net-total]',
+            'invoice_net_total_currency_code' => '[data-test-invoice-net-total-currency-code]',
+            'invoice_taxes_total' => '[data-test-invoice-taxes-total]',
+            'invoice_taxes_total_currency_code' => '[data-test-invoice-taxes-total-currency-code]',
+            'invoice_total' => '[data-test-invoice-total]',
+            'invoice_total_currency_code' => '[data-test-invoice-total-currency-code]',
             'issued_at' => '#invoice-issued-at',
             'shop_billing_data' => '#shop-billing-data',
             'table' => '.table',
-            'tax_item_amount' => 'tr.tax-item:contains("%label%") .tax-item-amount',
         ]);
+    }
+
+    private function getTableElements(): array
+    {
+        return $this->getDocument()->findAll('css', '[data-test-line-item]');
     }
 }

@@ -14,6 +14,7 @@
         <field name="total" type="integer" />
         <field name="variantCode" column="variant_code" nullable="true" />
         <field name="variantName" column="variant_name" nullable="true" />
+        <field name="taxRate" column="tax_rate" nullable="true" />
 
         <many-to-one field="invoice" target-entity="Sylius\InvoicingPlugin\Entity\InvoiceInterface" inversed-by="lineItems">
             <join-column name="invoice_id" nullable="false" on-delete="CASCADE" />

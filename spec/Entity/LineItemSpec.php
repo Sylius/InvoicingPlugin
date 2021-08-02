@@ -17,6 +17,7 @@ use PhpSpec\ObjectBehavior;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Sylius\InvoicingPlugin\Entity\LineItemInterface;
+use Sylius\InvoicingPlugin\Exception\LineItemsCannotBeMerged;
 
 final class LineItemSpec extends ObjectBehavior
 {
@@ -27,10 +28,11 @@ final class LineItemSpec extends ObjectBehavior
             2,
             5000,
             10000,
-            300,
-            10300,
+            1000,
+            11000,
             'Blue',
-            '7903c83a-4c5e-4bcf-81d8-9dc304c6a353'
+            '7903c83a-4c5e-4bcf-81d8-9dc304c6a353',
+            '10%'
         );
     }
 
@@ -50,8 +52,8 @@ final class LineItemSpec extends ObjectBehavior
         $this->quantity()->shouldReturn(2);
         $this->unitPrice()->shouldReturn(5000);
         $this->subtotal()->shouldReturn(10000);
-        $this->taxTotal()->shouldReturn(300);
-        $this->total()->shouldReturn(10300);
+        $this->taxTotal()->shouldReturn(1000);
+        $this->total()->shouldReturn(11000);
         $this->variantName()->shouldReturn('Blue');
         $this->variantCode()->shouldReturn('7903c83a-4c5e-4bcf-81d8-9dc304c6a353');
     }
@@ -60,5 +62,48 @@ final class LineItemSpec extends ObjectBehavior
     {
         $this->setInvoice($invoice);
         $this->invoice()->shouldReturn($invoice);
+    }
+
+    public function it_merges_with_another_line_item(LineItemInterface $newLineItem): void
+    {
+        $newLineItem->name()->willReturn('Mjolnir');
+        $newLineItem->quantity()->willReturn(1);
+        $newLineItem->unitPrice()->willReturn(5000);
+        $newLineItem->subtotal()->willReturn(5000);
+        $newLineItem->total()->willReturn(5500);
+        $newLineItem->taxTotal()->willReturn(500);
+        $newLineItem->taxRate()->willReturn('10%');
+
+        $this->merge($newLineItem);
+
+        $this->quantity()->shouldReturn(3);
+        $this->subtotal()->shouldReturn(15000);
+        $this->total()->shouldReturn(16500);
+        $this->taxTotal()->shouldReturn(1500);
+    }
+
+    public function it_throws_an_exception_if_another_line_item_is_different_during_merging(LineItemInterface $newLineItem): void
+    {
+        $newLineItem->name()->willReturn('Stormbreaker');
+        $newLineItem->unitPrice()->willReturn(5000);
+        $newLineItem->taxRate()->willReturn('10%');
+
+        $this->shouldThrow(LineItemsCannotBeMerged::class)->during('merge', [$newLineItem]);
+    }
+
+    public function it_compares_with_another_line_item(
+        LineItemInterface $theSameLineItem,
+        LineItemInterface $differentLineItem
+    ): void {
+        $theSameLineItem->name()->willReturn('Mjolnir');
+        $theSameLineItem->unitPrice()->willReturn(5000);
+        $theSameLineItem->taxRate()->willReturn('10%');
+
+        $differentLineItem->name()->willReturn('Stormbreaker');
+        $differentLineItem->unitPrice()->willReturn(5000);
+        $differentLineItem->taxRate()->willReturn('10%');
+
+        $this->compare($theSameLineItem)->shouldReturn(true);
+        $this->compare($differentLineItem)->shouldReturn(false);
     }
 }

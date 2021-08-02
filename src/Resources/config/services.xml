@@ -37,6 +37,8 @@
             <argument>%default_channel_color%</argument>
         </service>
 
+        <service id="sylius_invoicing_plugin.provider.tax_rate_percentage" class="Sylius\InvoicingPlugin\Provider\TaxRatePercentageProvider" />
+
         <service id="sylius_invoicing_plugin.custom_factory.invoice" class="Sylius\InvoicingPlugin\Factory\InvoiceFactory" />
 
         <service id="Sylius\InvoicingPlugin\Manager\InvoiceFileManagerInterface" class="Sylius\InvoicingPlugin\Manager\InvoiceFileManager">

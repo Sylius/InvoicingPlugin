@@ -33,7 +33,13 @@ interface LineItemInterface
 
     public function subtotal(): int;
 
+    public function taxRate(): ?string;
+
     public function taxTotal(): int;
 
     public function total(): int;
+
+    public function merge(self $newLineItem): void;
+
+    public function compare(self $lineItem): bool;
 }

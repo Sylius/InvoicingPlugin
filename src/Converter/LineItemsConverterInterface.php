@@ -13,10 +13,11 @@ declare(strict_types=1);
 
 namespace Sylius\InvoicingPlugin\Converter;
 
-use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Core\Model\OrderInterface;
+use Sylius\InvoicingPlugin\Entity\LineItemInterface;
 
 interface LineItemsConverterInterface
 {
-    public function convert(OrderInterface $order): Collection;
+    /** @return LineItemInterface[] */
+    public function convert(OrderInterface $order): array;
 }

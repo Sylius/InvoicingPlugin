@@ -207,11 +207,35 @@ final class ManagingInvoicesContext implements Context
     }
 
     /**
-     * @Then it should have a tax item :label with amount :amount
+     * @Then it should have a tax item :label with amount :amount in :currencyCode currency
      */
-    public function itShouldHaveATaxItemWithAmount(string $label, string $amount): void
+    public function itShouldHaveATaxItemWithAmountInCurrency(string $label, string $amount, string $currencyCode): void
     {
-        Assert::true($this->showPage->hasTaxItem($label, $amount));
+        Assert::true($this->showPage->hasTaxItem($label, $amount, $currencyCode));
+    }
+
+    /**
+     * @Then its net total should be :netTotal in :currencyCode currency
+     */
+    public function itsNetTotalShouldBeInCurrency(string $netTotal, string $currencyCode): void
+    {
+        Assert::true($this->showPage->hasNetTotal($netTotal, $currencyCode));
+    }
+
+    /**
+     * @Then its tax total should be :taxTotal in :currencyCode currency
+     */
+    public function itsTaxTotalShouldBeInCurrency(string $taxTotal, string $currencyCode): void
+    {
+        Assert::true($this->showPage->hasTaxTotal($taxTotal, $currencyCode));
+    }
+
+    /**
+     * @Then its total should be :total in :currencyCode currency
+     */
+    public function itsTotalShouldBeInCurrency($total, $currencyCode): void
+    {
+        Assert::true($this->showPage->hasTotal($total, $currencyCode));
     }
 
     /**
@@ -225,22 +249,6 @@ final class ManagingInvoicesContext implements Context
         string $total
     ): void {
         Assert::true($this->showPage->hasItemWithData($name, $unitPrice, $quantity, $taxTotal, $total));
-    }
-
-    /**
-     * @Then its subtotal should be :total
-     */
-    public function itsSubtotalShouldBe(string $subtotal): void
-    {
-        Assert::same($this->showPage->getSubtotal(), $subtotal);
-    }
-
-    /**
-     * @Then its total should be :total
-     */
-    public function itsTotalShouldBe(string $total): void
-    {
-        Assert::same($this->showPage->getTotal(), $total);
     }
 
     /**
@@ -292,5 +300,36 @@ final class ManagingInvoicesContext implements Context
             'Invoice has been successfully resent to the customer',
             NotificationType::success()
         );
+    }
+
+    /**
+     * @Then it should have :quantity :name shipment with unit price :unitPrice, net value :netValue, tax total :taxTotal and total :total in :currencyCode currency
+     */
+    public function itShouldHaveShipmentWithUnitPriceNetValueTaxTotalAndTotalInCurrency(
+        int $quantity,
+        string $name,
+        string $unitPrice,
+        string $netValue,
+        string $taxTotal,
+        string $total,
+        string $currencyCode
+    ): void {
+        Assert::true($this->showPage->hasItemWithData($name, $unitPrice, $quantity, $taxTotal, $total, $currencyCode, $netValue));
+    }
+
+    /**
+     * @Then it should have :quantity :name item with unit price :unitPrice, net value :netValue, tax total :taxTotal and total :total in :currencyCode currency
+     * @Then it should have :quantity :name items with unit price :unitPrice, net value :netValue, tax total :taxTotal and total :total in :currencyCode currency
+     */
+    public function itShouldHaveItemsWithUnitPriceNetValueTaxTotalAndTotalInCurrency(
+        int $quantity,
+        string $name,
+        string $unitPrice,
+        string $netValue,
+        string $taxTotal,
+        string $total,
+        string $currencyCode
+    ): void {
+        Assert::true($this->showPage->hasItemWithData($name, $unitPrice, $quantity, $taxTotal, $total, $currencyCode, $netValue));
     }
 }

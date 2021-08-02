@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Sylius\InvoicingPlugin\Entity;
 
 use Sylius\Component\Resource\Model\ResourceInterface;
+use Sylius\InvoicingPlugin\Exception\LineItemsCannotBeMerged;
 
 /** @final */
 class LineItem implements LineItemInterface, ResourceInterface
@@ -42,6 +43,9 @@ class LineItem implements LineItemInterface, ResourceInterface
     /** @var int */
     protected $subtotal;
 
+    /** @var string|null */
+    protected $taxRate;
+
     /** @var int */
     protected $taxTotal;
 
@@ -56,7 +60,8 @@ class LineItem implements LineItemInterface, ResourceInterface
         int $taxTotal,
         int $total,
         ?string $variantName = null,
-        ?string $variantCode = null
+        ?string $variantCode = null,
+        ?string $taxRate = null
     ) {
         $this->name = $name;
         $this->quantity = $quantity;
@@ -66,6 +71,7 @@ class LineItem implements LineItemInterface, ResourceInterface
         $this->total = $total;
         $this->variantName = $variantName;
         $this->variantCode = $variantCode;
+        $this->taxRate = $taxRate;
     }
 
     public function getId(): string
@@ -118,6 +124,11 @@ class LineItem implements LineItemInterface, ResourceInterface
         return $this->subtotal;
     }
 
+    public function taxRate(): ?string
+    {
+        return $this->taxRate;
+    }
+
     public function taxTotal(): int
     {
         return $this->taxTotal;
@@ -126,5 +137,26 @@ class LineItem implements LineItemInterface, ResourceInterface
     public function total(): int
     {
         return $this->total;
+    }
+
+    public function merge(LineItemInterface $newLineItem): void
+    {
+        if (!$this->compare($newLineItem)) {
+            throw LineItemsCannotBeMerged::occur();
+        }
+
+        $this->quantity += $newLineItem->quantity();
+        $this->subtotal += $newLineItem->subtotal();
+        $this->total += $newLineItem->total();
+        $this->taxTotal += $newLineItem->taxTotal();
+    }
+
+    public function compare(LineItemInterface $lineItem): bool
+    {
+        return
+            $this->name() === $lineItem->name() &&
+            $this->unitPrice() === $lineItem->unitPrice() &&
+            $this->taxRate() === $lineItem->taxRate()
+        ;
     }
 }
