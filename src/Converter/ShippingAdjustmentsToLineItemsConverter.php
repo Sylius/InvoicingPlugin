@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace Sylius\InvoicingPlugin\Converter;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Core\Model\AdjustmentInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\ShipmentInterface;
@@ -35,13 +33,13 @@ final class ShippingAdjustmentsToLineItemsConverter implements LineItemsConverte
         $this->taxRatePercentageProvider = $taxRatePercentageProvider;
     }
 
-    public function convert(OrderInterface $order): Collection
+    public function convert(OrderInterface $order): array
     {
-        $lineItems = new ArrayCollection();
+        $lineItems = [];
 
         /** @var AdjustmentInterface $shippingAdjustment */
         foreach ($order->getAdjustments(AdjustmentInterface::SHIPPING_ADJUSTMENT) as $shippingAdjustment) {
-            $lineItems->add($this->convertShippingAdjustmentToLineItem($shippingAdjustment));
+            $lineItems[] = $this->convertShippingAdjustmentToLineItem($shippingAdjustment);
         }
 
         return $lineItems;

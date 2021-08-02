@@ -117,30 +117,31 @@
                 </tr>
 
                 {% if invoice.taxItems.count() > 0 %}
-                    <tr>
-                        <th colspan="7" class="right aligned">
-                            <strong>{{ 'sylius_invoicing_plugin.ui.tax_rate'|trans }}</strong>
-                        </th>
-                        <th class="right aligned">
-                            <strong>{{ 'sylius_invoicing_plugin.ui.tax_amount'|trans }}</strong>
-                        </th>
-                        <th class="left aligned">
-                            <strong>{{ 'sylius.ui.currency'|trans }}</strong>
-                        </th>
-                    </tr>
-                    {% for item in invoice.taxItems %}
-                        <tr class="tax-item" {{ sylius_test_html_attribute('invoice-tax-item') }}>
-                            <th colspan="7" class="right aligned">
-                                <strong {{ sylius_test_html_attribute('invoice-tax-item-label') }}>{{ item.label }}</strong>:
-                            </th>
-                            <th class="right aligned tax-item-amount" {{ sylius_test_html_attribute('invoice-tax-item-amount') }}>
-                                {{ '%0.2f'|format(item.amount/100) }}
-                            </th>
-                            <th class="single line" {{ sylius_test_html_attribute('invoice-tax-item-currency-code') }}>
-                                {{ invoice.currencyCode }}
-                            </th>
-                        </tr>
-                    {% endfor %}
+                <tr>
+                    <th colspan="7" class="right aligned">
+                        <strong>{{ 'sylius_invoicing_plugin.ui.tax_rate'|trans }}</strong>
+                    </th>
+                    <th class="right aligned">
+                        <strong>{{ 'sylius_invoicing_plugin.ui.tax_amount'|trans }}</strong>
+                    </th>
+                    <th class="left aligned">
+                        <strong>{{ 'sylius.ui.currency'|trans }}</strong>
+                    </th>
+                </tr>
+
+                {% for item in invoice.taxItems %}
+                <tr class="tax-item" {{ sylius_test_html_attribute('invoice-tax-item') }}>
+                    <th colspan="7" class="right aligned">
+                        <strong {{ sylius_test_html_attribute('invoice-tax-item-label') }}>{{ item.label }}</strong>:
+                    </th>
+                    <th class="right aligned tax-item-amount" {{ sylius_test_html_attribute('invoice-tax-item-amount') }}>
+                        {{ '%0.2f'|format(item.amount/100) }}
+                    </th>
+                    <th class="single line" {{ sylius_test_html_attribute('invoice-tax-item-currency-code') }}>
+                        {{ invoice.currencyCode }}
+                    </th>
+                </tr>
+                {% endfor %}
                 {% endif %}
                 </tfoot>
             </table>

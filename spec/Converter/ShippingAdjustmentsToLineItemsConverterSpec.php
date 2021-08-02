@@ -65,8 +65,8 @@ final class ShippingAdjustmentsToLineItemsConverterSpec extends ObjectBehavior
 
         $taxRatePercentageProvider->provideFromAdjustable($shipment)->willReturn('20%');
 
-        $this->convert($order)->shouldBeLike(new ArrayCollection([
+        $this->convert($order)->shouldBeLike([
             new LineItem('UPS', 1, 1000, 1000, 200, 1200, null, null, '20%')
-        ]));
+        ]);
     }
 }

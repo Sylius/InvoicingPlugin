@@ -88,8 +88,8 @@ final class InvoiceGenerator implements InvoiceGeneratorInterface
             $order->getLocaleCode(),
             $order->getTotal(),
             new ArrayCollection(array_merge(
-                $this->orderItemUnitsToLineItemsConverter->convert($order)->toArray(),
-                $this->shippingAdjustmentsToLineItemsConverter->convert($order)->toArray()
+                $this->orderItemUnitsToLineItemsConverter->convert($order),
+                $this->shippingAdjustmentsToLineItemsConverter->convert($order)
             )),
             $this->taxItemsConverter->convert($order),
             $channel,

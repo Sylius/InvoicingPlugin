@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace Sylius\InvoicingPlugin\Converter;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\OrderItemInterface;
 use Sylius\Component\Core\Model\OrderItemUnitInterface;
@@ -33,7 +31,7 @@ final class OrderItemUnitsToLineItemsConverter implements LineItemsConverterInte
         $this->taxRatePercentageProvider = $taxRatePercentageProvider;
     }
 
-    public function convert(OrderInterface $order): Collection
+    public function convert(OrderInterface $order): array
     {
         $lineItems = [];
 
@@ -42,7 +40,7 @@ final class OrderItemUnitsToLineItemsConverter implements LineItemsConverterInte
             $lineItems = $this->addLineItem($this->convertOrderItemUnitToLineItem($unit), $lineItems);
         }
 
-        return new ArrayCollection($lineItems);
+        return $lineItems;
     }
 
     private function convertOrderItemUnitToLineItem(OrderItemUnitInterface $unit): LineItemInterface

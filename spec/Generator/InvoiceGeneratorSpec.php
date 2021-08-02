@@ -94,8 +94,8 @@ final class InvoiceGeneratorSpec extends ObjectBehavior
         $billingDataConverter->convert($billingAddress)->willReturn($billingData);
         $invoiceShopBillingDataConverter->convert($channel)->willReturn($invoiceShopBillingData);
 
-        $orderItemUnitsToLineItemsConverter->convert($order)->willReturn(new ArrayCollection([$unitLineItem->getWrappedObject()]));
-        $shippingAdjustmentsToLineItemsConverter->convert($order)->willReturn(new ArrayCollection([$shippingLineItem->getWrappedObject()]));
+        $orderItemUnitsToLineItemsConverter->convert($order)->willReturn([$unitLineItem->getWrappedObject()]);
+        $shippingAdjustmentsToLineItemsConverter->convert($order)->willReturn([$shippingLineItem->getWrappedObject()]);
         $taxItemsConverter->convert($order)->willReturn(new ArrayCollection([$taxItem->getWrappedObject()]));
 
         $invoiceFactory->createForData(

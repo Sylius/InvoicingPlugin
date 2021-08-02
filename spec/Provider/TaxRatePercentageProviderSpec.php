@@ -45,7 +45,8 @@ final class TaxRatePercentageProviderSpec extends ObjectBehavior
     {
         $orderItemUnit
             ->getAdjustments(AdjustmentInterface::TAX_ADJUSTMENT)
-            ->willReturn(new ArrayCollection([]));
+            ->willReturn(new ArrayCollection([]))
+        ;
 
         $this->provideFromAdjustable($orderItemUnit)->shouldReturn(null);
     }

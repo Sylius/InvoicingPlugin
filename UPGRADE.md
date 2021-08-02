@@ -18,6 +18,8 @@ Invoices are now saved on the server during their generation (by default, when t
    and `Sylius\InvoicingPlugin\Converter\ShippingAdjustmentsToLineItemsConverter`
 1. `Sylius\InvoicingPlugin\Generator\InvoiceGenerator` class has 2 more dependencies: `LineItemsConverterInterface $orderItemUnitsToLineItemsConverter`
    and `LineItemsConverterInterface $shippingAdjustmentsToLineItemsConverter` that replaced `LineItemsConverterInterface $lineItemsConverter`
+1. The return type of `Sylius\InvoicingPlugin\Converter\LineItemsConverterInterface:convert` method has been changed 
+   from `Collection` to `array`
 
 ### UPGRADE FROM 0.15.0 TO 0.16.0
 
