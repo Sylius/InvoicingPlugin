@@ -24,11 +24,12 @@ final class AdminMenuListener
 
         /** @var ItemInterface $salesMenu */
         $salesMenu = $menu->getChild('sales');
-
-        $salesMenu
-            ->addChild('invoices', ['route' => 'sylius_invoicing_plugin_admin_invoice_index'])
-                ->setLabel('sylius_invoicing_plugin.ui.invoices')
-                ->setLabelAttribute('icon', 'file')
-        ;
+        if($salesMenu) {
+            $salesMenu
+                ->addChild('invoices', ['route' => 'sylius_invoicing_plugin_admin_invoice_index'])
+                    ->setLabel('sylius_invoicing_plugin.ui.invoices')
+                    ->setLabelAttribute('icon', 'file')
+            ;
+        }
     }
 }
