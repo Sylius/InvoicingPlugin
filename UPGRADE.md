@@ -20,6 +20,7 @@ Invoices are now saved on the server during their generation (by default, when t
    and `LineItemsConverterInterface $shippingAdjustmentsToLineItemsConverter` that replaced `LineItemsConverterInterface $lineItemsConverter`
 1. The return type of `Sylius\InvoicingPlugin\Converter\LineItemsConverterInterface:convert` method has been changed 
    from `Collection` to `array`
+1. `Sylius\InvoicingPlugin\Filesystem\TemporaryFilesystem` class has been removed
 
 ### UPGRADE FROM 0.15.0 TO 0.16.0
 
