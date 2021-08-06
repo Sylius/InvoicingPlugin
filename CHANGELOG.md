@@ -1,5 +1,16 @@
 # CHANGELOG
 
+### v0.17.0 (2021-08-06)
+
+- [#233](https://github.com/Sylius/InvoicingPlugin/issues/233) Upgrade to stable Sylius 1.10 ([@GSadee](https://github.com/GSadee))
+- [#231](https://github.com/Sylius/InvoicingPlugin/issues/231) Save invoices on server during generation ([@Zales0123](https://github.com/Zales0123))
+- [#232](https://github.com/Sylius/InvoicingPlugin/issues/232) Do not require visibility in PHPSpec functions ([@Zales0123](https://github.com/Zales0123))
+- [#230](https://github.com/Sylius/InvoicingPlugin/issues/230) change information on WKHTMLTOPDF_PATH in README ([@DennisdeBest](https://github.com/DennisdeBest))
+- [#238](https://github.com/Sylius/InvoicingPlugin/issues/238) Extract wkhtmltopdf file path to env variable ([@GSadee](https://github.com/GSadee))
+- [#234](https://github.com/Sylius/InvoicingPlugin/issues/234) Rework invoice template on pdf and admin show page ([@Tomanhez](https://github.com/Tomanhez), [@GSadee](https://github.com/GSadee))
+- [#240](https://github.com/Sylius/InvoicingPlugin/issues/240) Remove unneeded TemporaryFilesystem service ([@GSadee](https://github.com/GSadee))
+- [#241](https://github.com/Sylius/InvoicingPlugin/issues/241) Add note to UPGRADE filem about removing TemporaryFilesystem ([@GSadee](https://github.com/GSadee))
+
 ### v0.16.1 (2021-06-23)
 
 - [#228](https://github.com/Sylius/InvoicingPlugin/issues/228) Fix sorting and filtering invoices by order in the grid ([@hurricane-voronin](https://github.com/hurricane-voronin))
