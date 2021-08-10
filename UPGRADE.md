@@ -1,3 +1,38 @@
+### UPGRADE FROM 0.17.0 TO 0.18.0
+
+1. The getter methods of `Sylius\InvoicingPlugin\Entity\Invoice` are now deprecated and will be replaced with:
+
+    ```diff
+    -   public function id(): ?int
+    +   public function getId()
+    -   public function number(): string
+    +   public function getNumber(): string
+    -   public function order(): OrderInterface
+    +   public function getOrder(): OrderInterface
+    -   public function issuedAt(): \DateTimeInterface
+    +   public function getIssuedAt(): \DateTimeInterface
+    -   public function billingData(): BillingDataInterface
+    +   public function getBillingData(): BillingDataInterface
+    -   public function currencyCode(): string
+    +   public function getCurrencyCode(): string
+    -   public function localeCode(): string
+    +   public function getLocaleCode(): string
+    -   public function total(): int
+    +   public function getTotal(): int
+    -   public function lineItems(): Collection
+    +   public function getLineItems(): Collection
+    -   public function taxItems(): Collection
+    +   public function getTaxItems(): Collection
+    -   public function subtotal(): int
+    +   public function getSubtotal(): int
+    -   public function taxesTotal(): int
+    +   public function getTaxesTotal(): int
+    -   public function channel(): ChannelInterface
+    +   public function getChannel(): ChannelInterface
+    -   public function shopBillingData(): InvoiceShopBillingDataInterface
+    +   public function getShopBillingData(): InvoiceShopBillingDataInterface
+   ```
+
 ### UPGRADE FROM 0.16.1 TO 0.17.0
 
 Invoices are now saved on the server during their generation (by default, when the order is paid).

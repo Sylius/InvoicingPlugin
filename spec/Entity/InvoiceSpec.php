@@ -70,16 +70,91 @@ final class InvoiceSpec extends ObjectBehavior
         InvoiceShopBillingDataInterface $shopBillingData,
         OrderInterface $order
     ): void {
-        $this->id()->shouldReturn('7903c83a-4c5e-4bcf-81d8-9dc304c6a353');
-        $this->number()->shouldReturn('2019/01/000000001');
-        $this->order()->shouldReturn($order);
-        $this->billingData()->shouldReturn($billingData);
-        $this->currencyCode()->shouldReturn('USD');
-        $this->localeCode()->shouldReturn('en_US');
-        $this->total()->shouldReturn(10300);
-        $this->lineItems()->shouldBeLike(new ArrayCollection([$lineItem->getWrappedObject()]));
-        $this->taxItems()->shouldBeLike(new ArrayCollection([$taxItem->getWrappedObject()]));
-        $this->channel()->shouldReturn($channel);
-        $this->shopBillingData()->shouldReturn($shopBillingData);
+        $this->getId()->shouldReturn('7903c83a-4c5e-4bcf-81d8-9dc304c6a353');
+        $this->getNumber()->shouldReturn('2019/01/000000001');
+        $this->getOrder()->shouldReturn($order);
+        $this->getBillingData()->shouldReturn($billingData);
+        $this->getCurrencyCode()->shouldReturn('USD');
+        $this->getLocaleCode()->shouldReturn('en_US');
+        $this->getTotal()->shouldReturn(10300);
+        $this->getLineItems()->shouldBeLike(new ArrayCollection([$lineItem->getWrappedObject()]));
+        $this->getTaxItems()->shouldBeLike(new ArrayCollection([$taxItem->getWrappedObject()]));
+        $this->getChannel()->shouldReturn($channel);
+        $this->getShopBillingData()->shouldReturn($shopBillingData);
+    }
+
+    function it_has_an_id(): void
+    {
+        $this->setId(1234);
+        $this->getId()->shouldReturn(1234);
+    }
+
+    function it_has_a_number(): void
+    {
+        $this->setNumber('1234');
+        $this->getNumber()->shouldReturn('1234');
+    }
+
+    function it_has_an_order(OrderInterface $order): void
+    {
+        $this->setOrder($order);
+        $this->getOrder()->shouldReturn($order);
+    }
+
+    function it_has_an_issued_at_date(): void
+    {
+        $issuedAt = \DateTimeImmutable::createFromFormat('Y-m', '2019-01');
+
+        $this->setIssuedAt($issuedAt);
+        $this->getIssuedAt()->shouldReturn($issuedAt);
+    }
+
+    function it_has_a_billing_data(BillingDataInterface $billingData): void
+    {
+        $this->setBillingData($billingData);
+        $this->getBillingData()->shouldReturn($billingData);
+    }
+
+    function it_has_a_currency_code(): void
+    {
+        $this->setCurrencyCode('EN_US');
+        $this->getCurrencyCode()->shouldReturn('EN_US');
+    }
+
+    function it_has_a_locale_code(): void
+    {
+        $this->setLocaleCode('EN');
+        $this->getLocaleCode()->shouldReturn('EN');
+    }
+
+    function it_has_a_total(): void
+    {
+        $this->setTotal(1000);
+        $this->getTotal()->shouldReturn(1000);
+    }
+
+    function it_has_line_items(LineItemInterface $lineItem): void
+    {
+        $this->setLineItems([$lineItem->getWrappedObject()]);
+        $this->getLineItems()->shouldReturn([$lineItem]);
+    }
+
+    function it_has_tax_items(TaxItemInterface $taxItem): void
+    {
+        $this->setTaxItems([$taxItem->getWrappedObject()]);
+        $this->getTaxItems()->shouldReturn([$taxItem]);
+    }
+
+    function it_has_a_channel(ChannelInterface $channel): void
+    {
+        $this->setChannel($channel);
+        $this->getChannel()->shouldReturn($channel);
+    }
+
+    function it_has_a_shop_billing_data(InvoiceShopBillingDataInterface $shopBillingData): void
+    {
+        $this->setShopBillingData($shopBillingData);
+        $this->getShopBillingData()->shouldReturn($shopBillingData);
+
     }
 }

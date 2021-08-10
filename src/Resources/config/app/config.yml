@@ -1,0 +1,5 @@
+sylius_resource:
+    resources:
+        sylius_invoicing.invoice:
+            classes:
+                model: Sylius\InvoicingPlugin\Entity\Invoice
