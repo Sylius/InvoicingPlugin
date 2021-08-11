@@ -49,6 +49,7 @@ class InvoiceFactorySpec extends ObjectBehavior
             new ArrayCollection(),
             new ArrayCollection(),
             $channel,
+            true,
             $invoiceShopBillingData
         )->shouldReturnAnInstanceOf(InvoiceInterface::class);
     }
@@ -72,6 +73,7 @@ class InvoiceFactorySpec extends ObjectBehavior
             new ArrayCollection(),
             new ArrayCollection(),
             $channel,
+            true,
             null
         )->shouldReturnAnInstanceOf(InvoiceInterface::class);
     }

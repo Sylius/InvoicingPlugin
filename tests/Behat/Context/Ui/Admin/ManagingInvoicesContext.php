@@ -332,4 +332,12 @@ final class ManagingInvoicesContext implements Context
     ): void {
         Assert::true($this->showPage->hasItemWithData($name, $unitPrice, $quantity, $taxTotal, $total, $currencyCode, $netValue));
     }
+
+    /**
+     * @Then it should be unpaid
+     */
+    public function itShouldBeUnpaid(): void
+    {
+        Assert::false($this->showPage->isPaid());
+    }
 }

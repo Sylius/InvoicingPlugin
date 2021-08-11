@@ -16,6 +16,10 @@ sylius_invoicing_plugin:
         net_value: 'Net value'
         no: 'No.'
         order_number: 'Order number'
+        payment:
+            paid: 'Paid'
+            yes: 'Yes'
+            no: 'No'
         resend_invoice: 'Resend'
         seller: 'Seller'
         tax_amount: 'Tax amount'

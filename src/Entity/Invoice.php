@@ -53,6 +53,9 @@ class Invoice implements InvoiceInterface
     /** @var ChannelInterface */
     protected $channel;
 
+    /** @var bool */
+    protected $isPaid;
+
     /** @var InvoiceShopBillingDataInterface */
     protected $shopBillingData;
 
@@ -68,6 +71,7 @@ class Invoice implements InvoiceInterface
         Collection $lineItems,
         Collection $taxItems,
         ChannelInterface $channel,
+        bool $isPaid,
         InvoiceShopBillingDataInterface $shopBillingData
     ) {
         $this->id = $id;
@@ -81,6 +85,7 @@ class Invoice implements InvoiceInterface
         $this->lineItems = $lineItems;
         $this->taxItems = $taxItems;
         $this->channel = $channel;
+        $this->isPaid = $isPaid;
         $this->shopBillingData = $shopBillingData;
 
         /** @var LineItemInterface $lineItem */
@@ -186,5 +191,15 @@ class Invoice implements InvoiceInterface
     public function shopBillingData(): InvoiceShopBillingDataInterface
     {
         return $this->shopBillingData;
+    }
+
+    public function isPaid(): bool
+    {
+        return $this->isPaid;
+    }
+
+    public function setIsPaid(bool $isPaid): void
+    {
+        $this->isPaid = $isPaid;
     }
 }

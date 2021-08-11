@@ -36,6 +36,7 @@ final class InvoiceFactory implements InvoiceFactoryInterface
         Collection $lineItems,
         Collection $taxItems,
         ChannelInterface $channel,
+        bool $isPaid,
         InvoiceShopBillingDataInterface $shopBillingData = null
     ): InvoiceInterface {
         return new Invoice(
@@ -50,6 +51,7 @@ final class InvoiceFactory implements InvoiceFactoryInterface
             $lineItems,
             $taxItems,
             $channel,
+            $isPaid,
             $shopBillingData ?? new InvoiceShopBillingData()
         );
     }

@@ -50,4 +50,8 @@ interface InvoiceInterface extends ResourceInterface
     public function channel(): ChannelInterface;
 
     public function shopBillingData(): InvoiceShopBillingDataInterface;
+
+    public function isPaid(): bool;
+
+    public function setIsPaid(bool $isPaid): void;
 }

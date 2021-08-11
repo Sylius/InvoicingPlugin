@@ -157,6 +157,11 @@ final class ShowPage extends SymfonyPage implements ShowPageInterface
         $this->getElement('back')->click();
     }
 
+    public function isPaid(): bool
+    {
+        return str_contains($this->getElement('paid')->getHtml(), 'Yes');
+    }
+
     protected function getDefinedElements(): array
     {
         return array_merge(parent::getDefinedElements(), [
@@ -170,6 +175,7 @@ final class ShowPage extends SymfonyPage implements ShowPageInterface
             'invoice_total' => '[data-test-invoice-total]',
             'invoice_total_currency_code' => '[data-test-invoice-total-currency-code]',
             'issued_at' => '#invoice-issued-at',
+            'paid' => '[data-test-invoice-is-paid]',
             'shop_billing_data' => '#shop-billing-data',
             'table' => '.table',
         ]);

@@ -125,6 +125,17 @@
             <td>{{ '%0.2f'|format(invoice.total/100) }}</td>
             <td>{{ invoice.currencyCode }}</td>
         </tr>
+        <tr class="paid">
+            <td colspan="5"></td>
+            <td colspan="2" class="bold">{{ 'sylius_invoicing_plugin.ui.payment.paid'|trans }}:</td>
+            <td>
+                {% if invoice.isPaid() %}
+                    {{ 'sylius_invoicing_plugin.ui.payment.yes'|trans }}
+                {% else %}
+                    {{ 'sylius_invoicing_plugin.ui.payment.no'|trans }}
+                {% endif %}
+            </td>
+        </tr>
 
         {% if invoice.taxItems.count() > 0 %}
             <tr>
