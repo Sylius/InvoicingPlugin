@@ -129,7 +129,7 @@
             <td colspan="5"></td>
             <td colspan="2" class="bold">{{ 'sylius_invoicing_plugin.ui.payment.paid'|trans }}:</td>
             <td>
-                {% if invoice.isPaid() %}
+                {% if invoice.paymentState() is constant('Sylius\\InvoicingPlugin\\Entity\\InvoiceInterface::PAYMENT_STATE_COMPLETED') %}
                     {{ 'sylius_invoicing_plugin.ui.payment.yes'|trans }}
                 {% else %}
                     {{ 'sylius_invoicing_plugin.ui.payment.no'|trans }}

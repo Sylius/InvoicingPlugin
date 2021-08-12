@@ -150,7 +150,7 @@
             <div class="ui segment" {{ sylius_test_html_attribute('invoice-is-paid') }}>
                 <strong>{{ 'sylius_invoicing_plugin.ui.payment.paid'|trans }}: </strong>
                 <span>
-                    {% if invoice.isPaid() %}
+                {% if invoice.paymentState() is constant('Sylius\\InvoicingPlugin\\Entity\\InvoiceInterface::PAYMENT_STATE_COMPLETED') %}
                        {{ 'sylius_invoicing_plugin.ui.payment.yes'|trans }}
                     {% else %}
                         {{ 'sylius_invoicing_plugin.ui.payment.no'|trans }}

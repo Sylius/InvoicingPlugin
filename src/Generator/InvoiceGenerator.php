@@ -79,8 +79,8 @@ final class InvoiceGenerator implements InvoiceGeneratorInterface
         /** @var ChannelInterface $channel */
         $channel = $order->getChannel();
 
-        /** @var bool $isPaid */
-        $isPaid = $order->getPaymentState() === PaymentInterface::STATE_COMPLETED;
+        $paymentState = $order->getPaymentState() === PaymentInterface::STATE_COMPLETED ?
+            InvoiceInterface::PAYMENT_STATE_COMPLETED : InvoiceInterface::PAYMENT_STATE_PENDING;
 
         return $this->invoiceFactory->createForData(
             $this->uuidInvoiceIdentifierGenerator->generate(),
@@ -97,7 +97,7 @@ final class InvoiceGenerator implements InvoiceGeneratorInterface
             )),
             $this->taxItemsConverter->convert($order),
             $channel,
-            $isPaid,
+            $paymentState,
             $this->invoiceShopBillingDataConverter->convert($channel)
         );
     }

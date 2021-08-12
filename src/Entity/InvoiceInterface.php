@@ -20,6 +20,10 @@ use Sylius\Component\Resource\Model\ResourceInterface;
 
 interface InvoiceInterface extends ResourceInterface
 {
+    public const PAYMENT_STATE_COMPLETED = 'Completed';
+
+    public const PAYMENT_STATE_PENDING = 'Pending';
+
     public function id(): string;
 
     public function number(): string;
@@ -51,7 +55,5 @@ interface InvoiceInterface extends ResourceInterface
 
     public function shopBillingData(): InvoiceShopBillingDataInterface;
 
-    public function isPaid(): bool;
-
-    public function setIsPaid(bool $isPaid): void;
+    public function paymentState(): string;
 }

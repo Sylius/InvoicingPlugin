@@ -2,7 +2,7 @@
 
 Now on invoice admin and shop user can check if related order was paid before invoice generated.
 
-1. `src/Entity/Invoice.php` model has new field (`isPaid`), and updated constructor arguments: 
+1. `src/Entity/Invoice.php` model has new field (`paymentState`), and updated constructor arguments: 
 
     ```dif
         public function __construct(
@@ -17,7 +17,7 @@ Now on invoice admin and shop user can check if related order was paid before in
             Collection $lineItems,
             Collection $taxItems,
             ChannelInterface $channel,
-    +       bool $isPaid,
+    +       string $paymentState,
             InvoiceShopBillingDataInterface $shopBillingData
         ) {
             $this->id = $id;
@@ -31,7 +31,7 @@ Now on invoice admin and shop user can check if related order was paid before in
             $this->lineItems = $lineItems;
             $this->taxItems = $taxItems;
             $this->channel = $channel;
-    +       $this->isPaid = $isPaid;
+    +       $this->paymentState = $paymentState;
             $this->shopBillingData = $shopBillingData; 
    ```
    
@@ -69,7 +69,7 @@ Invoices are now saved on the server during their generation (by default, when t
     to `InvoiceFileProviderInterface $invoiceFileProvider`
 1. `Sylius\InvoicingPlugin\Generator\InvoicePdfFileGenerator` class has additional `InvoiceFileNameGeneratorInterface $invoiceFileNameGenerator`
     dependency, placed on 4th place, before `string $template`
-1. `Sylius\InvoicingPlugin\Ui\Action\DownloadInvoisrc/Resources/views/Invoice/show.html.twigceAction` class 4th dependency has been changed from `InvoicePdfFileGeneratorInterface $invoicePdfFileGenerator`
+1. `Sylius\InvoicingPlugin\Ui\Action\DownloadInvoiceAction` class 4th dependency has been changed from `InvoicePdfFileGeneratorInterface $invoicePdfFileGenerator`
     to `InvoiceFileProviderInterface $invoiceFilePathProvider`
 1. `Sylius\InvoicingPlugin\Converter\LineItemsConverter` class has additional `TaxRatePercentageProviderInterface $taxRatePercentageProvider`
    dependency

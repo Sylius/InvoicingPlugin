@@ -112,7 +112,7 @@ final class InvoiceGeneratorSpec extends ObjectBehavior
             new ArrayCollection([$unitLineItem->getWrappedObject(), $shippingLineItem->getWrappedObject()]),
             new ArrayCollection([$taxItem->getWrappedObject()]),
             $channel,
-            true,
+            InvoiceInterface::PAYMENT_STATE_COMPLETED,
             $invoiceShopBillingData
         )->willReturn($invoice);
 
