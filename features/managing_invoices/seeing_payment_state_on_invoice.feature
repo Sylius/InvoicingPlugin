@@ -18,15 +18,15 @@ Feature: Seeing payment state of an invoice
         And the customer bought 2 "Angel T-Shirt" products
         And the customer "Lucifer Morningstar" addressed it to "Seaside Fwy", "90802" "Los Angeles" in the "United States"
         And for the billing address of "Mazikeen Lilim" in the "Pacific Coast Hwy", "90806" "Los Angeles", "United States"
-        Given the customer chose "UPS" shipping method with "Cash on Delivery" payment
+        And the customer chose "UPS" shipping method with "Cash on Delivery" payment
 
     @ui
     Scenario: Seeing unpaid invoice details
         When I view the summary of the invoice for order "#00000666"
-        And it should be unpaid
+        Then it should be unpaid
 
     @ui
     Scenario: Seeing invoice details after payment made
         Given this order is already paid
         When I view the summary of the invoice for order "#00000666"
-        And it should be unpaid
+        Then it should be unpaid

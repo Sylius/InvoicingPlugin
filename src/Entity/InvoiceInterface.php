@@ -20,9 +20,8 @@ use Sylius\Component\Resource\Model\ResourceInterface;
 
 interface InvoiceInterface extends ResourceInterface
 {
-    public const PAYMENT_STATE_COMPLETED = 'Completed';
-
-    public const PAYMENT_STATE_PENDING = 'Pending';
+    public const PAYMENT_STATE_COMPLETED = 'completed';
+    public const PAYMENT_STATE_PENDING = 'pending';
 
     public function id(): string;
 
