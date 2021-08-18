@@ -18,6 +18,7 @@ use PhpSpec\ObjectBehavior;
 use Sylius\Component\Core\Model\AddressInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\OrderInterface;
+use Sylius\Component\Payment\Model\PaymentInterface;
 use Sylius\InvoicingPlugin\Converter\BillingDataConverterInterface;
 use Sylius\InvoicingPlugin\Converter\InvoiceShopBillingDataConverterInterface;
 use Sylius\InvoicingPlugin\Converter\LineItemsConverterInterface;
@@ -89,6 +90,7 @@ final class InvoiceGeneratorSpec extends ObjectBehavior
         $order->getLocaleCode()->willReturn('en_US');
         $order->getTotal()->willReturn(10300);
         $order->getChannel()->willReturn($channel);
+        $order->getPaymentState()->willReturn(PaymentInterface::STATE_COMPLETED);
         $order->getBillingAddress()->willReturn($billingAddress);
 
         $billingDataConverter->convert($billingAddress)->willReturn($billingData);
@@ -110,6 +112,7 @@ final class InvoiceGeneratorSpec extends ObjectBehavior
             new ArrayCollection([$unitLineItem->getWrappedObject(), $shippingLineItem->getWrappedObject()]),
             new ArrayCollection([$taxItem->getWrappedObject()]),
             $channel,
+            InvoiceInterface::PAYMENT_STATE_COMPLETED,
             $invoiceShopBillingData
         )->willReturn($invoice);
 

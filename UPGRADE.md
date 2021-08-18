@@ -1,3 +1,64 @@
+### UPGRADE FROM 0.17.0 TO 0.18.0
+
+Now on invoice admin and shop user can check if related order was paid before invoice generated.
+
+1. `src/Entity/Invoice.php` model has new field (`paymentState`), and updated constructor arguments: 
+
+    ```dif
+        public function __construct(
+            string $id,
+            string $number,
+            OrderInterface $order,
+            \DateTimeInterface $issuedAt,
+            BillingDataInterface $billingData,
+            string $currencyCode,
+            string $localeCode,
+            int $total,
+            Collection $lineItems,
+            Collection $taxItems,
+            ChannelInterface $channel,
+    +       string $paymentState,
+            InvoiceShopBillingDataInterface $shopBillingData
+        ) {
+            $this->id = $id;
+            $this->number = $number;
+            $this->order = $order;
+            $this->issuedAt = clone $issuedAt;
+            $this->billingData = $billingData;
+            $this->currencyCode = $currencyCode;
+            $this->localeCode = $localeCode;
+            $this->total = $total;
+            $this->lineItems = $lineItems;
+            $this->taxItems = $taxItems;
+            $this->channel = $channel;
+    +       $this->paymentState = $paymentState;
+            $this->shopBillingData = $shopBillingData; 
+   ```
+   
+1. New field on `src/Entity/Invoice.php` implies a database update
+   
+1. Method `createForData` from `src/Factory/InvoiceFactory.php` service was updated: 
+
+    ```dif
+        public function createForData(
+            string $id,
+            string $number,
+            OrderInterface $order,
+            \DateTimeInterface $issuedAt,
+            BillingDataInterface $billingData,
+            string $currencyCode,
+            string $localeCode,
+            int $total,
+            Collection $lineItems,
+            Collection $taxItems,
+            ChannelInterface $channel,
+    +       string $paymentState,
+            InvoiceShopBillingDataInterface $shopBillingData = null
+        ): InvoiceInterface {
+            // ...
+        }
+    ```
+
 ### UPGRADE FROM 0.16.1 TO 0.17.0
 
 Invoices are now saved on the server during their generation (by default, when the order is paid).

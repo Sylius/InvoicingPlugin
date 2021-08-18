@@ -48,6 +48,7 @@ final class InvoiceSpec extends ObjectBehavior
             new ArrayCollection([$lineItem->getWrappedObject()]),
             new ArrayCollection([$taxItem->getWrappedObject()]),
             $channel,
+            InvoiceInterface::PAYMENT_STATE_COMPLETED,
             $shopBillingData
         );
     }

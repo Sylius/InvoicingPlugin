@@ -54,4 +54,6 @@ interface ShowPageInterface extends SymfonyPageInterface
 	public function resend(): void;
 
 	public function goBack(): void;
+
+    public function isPaid(): bool;
 }

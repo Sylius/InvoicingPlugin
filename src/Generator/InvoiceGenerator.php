@@ -17,6 +17,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Sylius\Component\Core\Model\AddressInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\OrderInterface;
+use Sylius\Component\Payment\Model\PaymentInterface;
 use Sylius\InvoicingPlugin\Converter\BillingDataConverterInterface;
 use Sylius\InvoicingPlugin\Converter\InvoiceShopBillingDataConverterInterface;
 use Sylius\InvoicingPlugin\Converter\LineItemsConverterInterface;
@@ -78,6 +79,9 @@ final class InvoiceGenerator implements InvoiceGeneratorInterface
         /** @var ChannelInterface $channel */
         $channel = $order->getChannel();
 
+        $paymentState = $order->getPaymentState() === PaymentInterface::STATE_COMPLETED ?
+            InvoiceInterface::PAYMENT_STATE_COMPLETED : InvoiceInterface::PAYMENT_STATE_PENDING;
+
         return $this->invoiceFactory->createForData(
             $this->uuidInvoiceIdentifierGenerator->generate(),
             $this->sequentialInvoiceNumberGenerator->generate(),
@@ -93,6 +97,7 @@ final class InvoiceGenerator implements InvoiceGeneratorInterface
             )),
             $this->taxItemsConverter->convert($order),
             $channel,
+            $paymentState,
             $this->invoiceShopBillingDataConverter->convert($channel)
         );
     }
