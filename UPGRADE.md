@@ -52,7 +52,7 @@ Now on invoice admin and shop user can check if related order was paid before in
             Collection $lineItems,
             Collection $taxItems,
             ChannelInterface $channel,
-    +       bool $isPaid,
+    +       string $paymentState,
             InvoiceShopBillingDataInterface $shopBillingData = null
         ): InvoiceInterface {
             // ...
