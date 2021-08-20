@@ -17,19 +17,18 @@ use Doctrine\Common\Collections\ArrayCollection;
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Core\Model\AdjustmentInterface;
 use Sylius\Component\Core\Model\OrderInterface;
-use Sylius\Component\Core\Model\OrderItemInterface;
-use Sylius\Component\Core\Model\OrderItemUnitInterface;
-use Sylius\Component\Core\Model\ProductVariantInterface;
 use Sylius\Component\Core\Model\ShipmentInterface;
 use Sylius\InvoicingPlugin\Converter\LineItemsConverterInterface;
 use Sylius\InvoicingPlugin\Entity\LineItem;
+use Sylius\InvoicingPlugin\Entity\LineItemInterface;
+use Sylius\InvoicingPlugin\Factory\LineItemFactoryInterface;
 use Sylius\InvoicingPlugin\Provider\TaxRatePercentageProviderInterface;
 
 final class ShippingAdjustmentsToLineItemsConverterSpec extends ObjectBehavior
 {
-    function let(TaxRatePercentageProviderInterface $taxRatePercentageProvider): void
+    function let(TaxRatePercentageProviderInterface $taxRatePercentageProvider, LineItemFactoryInterface $lineItemFactory): void
     {
-        $this->beConstructedWith(LineItem::class, $taxRatePercentageProvider);
+        $this->beConstructedWith($taxRatePercentageProvider, $lineItemFactory);
     }
 
     function it_implements_line_items_converter_interface(): void
@@ -39,14 +38,15 @@ final class ShippingAdjustmentsToLineItemsConverterSpec extends ObjectBehavior
 
     function it_extracts_line_items_from_orders_shipping_adjusments(
         TaxRatePercentageProviderInterface $taxRatePercentageProvider,
+        LineItemFactoryInterface $lineItemFactory,
+        LineItemInterface $lineItem,
         OrderInterface $order,
-        OrderItemInterface $orderItem,
-        OrderItemUnitInterface $orderItemUnit,
         AdjustmentInterface $shippingAdjustment,
         AdjustmentInterface $shippingTaxAdjustment,
-        ShipmentInterface $shipment,
-        ProductVariantInterface $variant
+        ShipmentInterface $shipment
     ): void {
+        $lineItemFactory->createWithData('UPS', 1, 1000, 1000, 200, 1200, null, null, '20%')->willReturn($lineItem);
+
         $order
             ->getAdjustments(AdjustmentInterface::SHIPPING_ADJUSTMENT)
             ->willReturn(new ArrayCollection([$shippingAdjustment->getWrappedObject()]))
@@ -65,8 +65,6 @@ final class ShippingAdjustmentsToLineItemsConverterSpec extends ObjectBehavior
 
         $taxRatePercentageProvider->provideFromAdjustable($shipment)->willReturn('20%');
 
-        $this->convert($order)->shouldBeLike([
-            new LineItem('UPS', 1, 1000, 1000, 200, 1200, null, null, '20%')
-        ]);
+        $this->convert($order)->shouldBeLike([$lineItem]);
     }
 }

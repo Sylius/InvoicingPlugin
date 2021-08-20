@@ -39,7 +39,7 @@ class TaxItemFactorySpec extends ObjectBehavior
         $this->shouldThrow(UnsupportedMethodException::class)->during('createNew');
     }
 
-    function it_allows_only_for_injection_of_fqcn_that_are_tax_item_or_its_descendants(AddressInterface $address): void
+    function it_allows_only_for_injection_of_fqcn_that_are_tax_item_or_its_descendants(): void
     {
         $this->beConstructedWith(\stdClass::class);
 

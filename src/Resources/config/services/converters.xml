@@ -13,13 +13,13 @@
         </service>
 
         <service id="sylius_invoicing_plugin.converter.order_item_units_to_line_items" class="Sylius\InvoicingPlugin\Converter\OrderItemUnitsToLineItemsConverter">
-            <argument>%sylius_invoicing_plugin.model.line_item.class%</argument>
             <argument type="service" id="sylius_invoicing_plugin.provider.tax_rate_percentage" />
+            <argument type="service" id="sylius_invoicing_plugin.factory.line_item" />
         </service>
 
         <service id="sylius_invoicing_plugin.converter.shipping_adjustments_to_line_items" class="Sylius\InvoicingPlugin\Converter\ShippingAdjustmentsToLineItemsConverter">
-            <argument>%sylius_invoicing_plugin.model.line_item.class%</argument>
             <argument type="service" id="sylius_invoicing_plugin.provider.tax_rate_percentage" />
+            <argument type="service" id="sylius_invoicing_plugin.factory.line_item" />
         </service>
 
         <service id="sylius_invoicing_plugin.converter.tax_items" class="Sylius\InvoicingPlugin\Converter\TaxItemsConverter">

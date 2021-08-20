@@ -21,13 +21,15 @@ use Sylius\Component\Core\Model\OrderItemUnitInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
 use Sylius\InvoicingPlugin\Converter\LineItemsConverterInterface;
 use Sylius\InvoicingPlugin\Entity\LineItem;
+use Sylius\InvoicingPlugin\Entity\LineItemInterface;
+use Sylius\InvoicingPlugin\Factory\LineItemFactoryInterface;
 use Sylius\InvoicingPlugin\Provider\TaxRatePercentageProviderInterface;
 
 final class OrderItemUnitsToLineItemsConverterSpec extends ObjectBehavior
 {
-    function let(TaxRatePercentageProviderInterface $taxRatePercentageProvider): void
+    function let(TaxRatePercentageProviderInterface $taxRatePercentageProvider, LineItemFactoryInterface $lineItemFactory): void
     {
-        $this->beConstructedWith(LineItem::class, $taxRatePercentageProvider);
+        $this->beConstructedWith($taxRatePercentageProvider, $lineItemFactory);
     }
 
     function it_implements_line_items_converter_interface(): void
@@ -37,11 +39,15 @@ final class OrderItemUnitsToLineItemsConverterSpec extends ObjectBehavior
 
     function it_extracts_line_items_from_order_item_units(
         TaxRatePercentageProviderInterface $taxRatePercentageProvider,
+        LineItemFactoryInterface $lineItemFactory,
+        LineItemInterface $lineItem,
         OrderInterface $order,
         OrderItemInterface $orderItem,
         OrderItemUnitInterface $orderItemUnit,
         ProductVariantInterface $variant
     ): void {
+        $lineItemFactory->createWithData('Mjolnir', 1, 5000, 5000, 500, 5500, null, 'CODE', '10%')->willReturn($lineItem);
+
         $order->getItemUnits()->willReturn(new ArrayCollection([$orderItemUnit->getWrappedObject()]));
 
         $orderItemUnit->getTaxTotal()->willReturn(500);
@@ -56,13 +62,14 @@ final class OrderItemUnitsToLineItemsConverterSpec extends ObjectBehavior
 
         $taxRatePercentageProvider->provideFromAdjustable($orderItemUnit)->willReturn('10%');
 
-        $this->convert($order)->shouldBeLike([
-            new LineItem('Mjolnir', 1, 5000, 5000, 500, 5500, null, 'CODE', '10%'),
-        ]);
+        $this->convert($order)->shouldBeLike([$lineItem]);
     }
 
     function it_groups_the_same_line_items_during_extracting_order_item_units(
         TaxRatePercentageProviderInterface $taxRatePercentageProvider,
+        LineItemFactoryInterface $lineItemFactory,
+        LineItemInterface $mjolnirLineItem,
+        LineItemInterface $stormbreakerLineItem,
         OrderInterface $order,
         OrderItemInterface $firstOrderItem,
         OrderItemInterface $secondOrderItem,
@@ -72,6 +79,15 @@ final class OrderItemUnitsToLineItemsConverterSpec extends ObjectBehavior
         ProductVariantInterface $firstVariant,
         ProductVariantInterface $secondVariant
     ): void {
+        $lineItemFactory->createWithData('Mjolnir', 1, 5000, 5000, 500, 5500, null, 'MJOLNIR', '10%')->willReturn($mjolnirLineItem);
+        $lineItemFactory->createWithData('Stormbreaker', 1, 8000, 8000, 1600, 9600, null, 'STORMBREAKER', '20%')->willReturn($stormbreakerLineItem);
+
+        $mjolnirLineItem->compare($mjolnirLineItem)->willReturn(true);
+        $mjolnirLineItem->compare($stormbreakerLineItem)->willReturn(false);
+
+        $mjolnirLineItem->merge($mjolnirLineItem)->shouldBeCalled();
+        $mjolnirLineItem->merge($stormbreakerLineItem)->shouldNotBeCalled();
+
         $order->getItemUnits()->willReturn(new ArrayCollection([
             $firstOrderItemUnit->getWrappedObject(),
             $secondOrderItemUnit->getWrappedObject(),
@@ -105,9 +121,6 @@ final class OrderItemUnitsToLineItemsConverterSpec extends ObjectBehavior
         $taxRatePercentageProvider->provideFromAdjustable($secondOrderItemUnit)->willReturn('10%');
         $taxRatePercentageProvider->provideFromAdjustable($thirdOrderItemUnit)->willReturn('20%');
 
-        $this->convert($order)->shouldBeLike([
-            new LineItem('Mjolnir', 2, 5000, 10000, 1000, 11000, null, 'MJOLNIR', '10%'),
-            new LineItem('Stormbreaker', 1, 8000, 8000, 1600, 9600, null, 'STORMBREAKER', '20%'),
-        ]);
+        $this->convert($order)->shouldBeLike([$mjolnirLineItem, $stormbreakerLineItem]);
     }
 }
