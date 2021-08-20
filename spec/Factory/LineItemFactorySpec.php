@@ -15,10 +15,7 @@ namespace spec\Sylius\InvoicingPlugin\Factory;
 
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Resource\Exception\UnsupportedMethodException;
-use Sylius\InvoicingPlugin\Converter\LineItemConverterInterface;
 use Sylius\InvoicingPlugin\Entity\LineItem;
-use Sylius\InvoicingPlugin\Entity\InvoiceShopLineItem;
-use Sylius\InvoicingPlugin\Entity\InvoiceShopLineItemInterface;
 use Sylius\InvoicingPlugin\Factory\LineItemFactoryInterface;
 
 class LineItemFactorySpec extends ObjectBehavior

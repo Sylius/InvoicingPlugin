@@ -14,12 +14,8 @@ declare(strict_types=1);
 namespace spec\Sylius\InvoicingPlugin\Factory;
 
 use PhpSpec\ObjectBehavior;
-use Sylius\Component\Core\Model\AddressInterface;
 use Sylius\Component\Resource\Exception\UnsupportedMethodException;
-use Sylius\InvoicingPlugin\Converter\TaxItemConverterInterface;
 use Sylius\InvoicingPlugin\Entity\TaxItem;
-use Sylius\InvoicingPlugin\Entity\InvoiceShopTaxItem;
-use Sylius\InvoicingPlugin\Entity\InvoiceShopTaxItemInterface;
 use Sylius\InvoicingPlugin\Factory\TaxItemFactoryInterface;
 
 class TaxItemFactorySpec extends ObjectBehavior
@@ -48,6 +44,6 @@ class TaxItemFactorySpec extends ObjectBehavior
 
     function it_creates_tax_item_from_label_and_amount(): void
     {
-        $this->createWithData('Tax', 17)->shouldBeLike(new TaxItem('Tax',17));
+        $this->createWithData('Tax', 17)->shouldBeLike(new TaxItem('Tax', 17));
     }
 }

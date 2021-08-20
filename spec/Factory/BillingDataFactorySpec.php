@@ -13,22 +13,11 @@ declare(strict_types=1);
 
 namespace spec\Sylius\InvoicingPlugin\Factory;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Core\Model\AddressInterface;
-use Sylius\Component\Core\Model\ChannelInterface;
-use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Resource\Exception\UnsupportedMethodException;
-use Sylius\Component\Resource\Factory\FactoryInterface;
-use Sylius\InvoicingPlugin\Converter\BillingDataConverterInterface;
 use Sylius\InvoicingPlugin\Entity\BillingData;
-use Sylius\InvoicingPlugin\Entity\BillingDataInterface;
-use Sylius\InvoicingPlugin\Entity\Invoice;
-use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
-use Sylius\InvoicingPlugin\Entity\InvoiceShopBillingData;
-use Sylius\InvoicingPlugin\Entity\InvoiceShopBillingDataInterface;
 use Sylius\InvoicingPlugin\Factory\BillingDataFactoryInterface;
-use Sylius\InvoicingPlugin\Factory\InvoiceFactoryInterface;
 
 class BillingDataFactorySpec extends ObjectBehavior
 {

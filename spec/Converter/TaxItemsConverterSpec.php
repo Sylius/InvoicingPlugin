@@ -18,7 +18,6 @@ use PhpSpec\ObjectBehavior;
 use Sylius\Component\Core\Model\AdjustmentInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\InvoicingPlugin\Converter\TaxItemsConverterInterface;
-use Sylius\InvoicingPlugin\Entity\TaxItem;
 use Sylius\InvoicingPlugin\Entity\TaxItemInterface;
 use Sylius\InvoicingPlugin\Factory\TaxItemFactoryInterface;
 use Sylius\InvoicingPlugin\Provider\TaxRatePercentageProviderInterface;
