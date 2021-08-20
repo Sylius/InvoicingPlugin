@@ -23,8 +23,8 @@
         </service>
 
         <service id="sylius_invoicing_plugin.converter.tax_items" class="Sylius\InvoicingPlugin\Converter\TaxItemsConverter">
-            <argument>%sylius_invoicing_plugin.model.tax_item.class%</argument>
             <argument type="service" id="sylius_invoicing_plugin.provider.tax_rate_percentage" />
+            <argument type="service" id="sylius_invoicing_plugin.factory.tax_item" />
         </service>
     </services>
 </container>

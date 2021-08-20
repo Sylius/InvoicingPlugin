@@ -17,24 +17,19 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Core\Model\AdjustmentInterface;
 use Sylius\Component\Core\Model\OrderInterface;
+use Sylius\InvoicingPlugin\Factory\TaxItemFactoryInterface;
 use Sylius\InvoicingPlugin\Provider\TaxRatePercentageProviderInterface;
 use Webmozart\Assert\Assert;
 
 final class TaxItemsConverter implements TaxItemsConverterInterface
 {
-    /**
-     * @var string
-     * @psalm-var class-string
-     */
-    private $className;
+    private TaxRatePercentageProviderInterface $taxRatePercentageProvider;
+    private TaxItemFactoryInterface $taxItemFactory;
 
-    /** @var TaxRatePercentageProviderInterface */
-    private $taxRatePercentageProvider;
-
-    public function __construct(string $className, TaxRatePercentageProviderInterface $taxRatePercentageProvider)
+    public function __construct(TaxRatePercentageProviderInterface $taxRatePercentageProvider, TaxItemFactoryInterface $taxItemFactory)
     {
-        $this->className = $className;
         $this->taxRatePercentageProvider = $taxRatePercentageProvider;
+        $this->taxItemFactory = $taxItemFactory;
     }
 
     public function convert(OrderInterface $order): Collection
@@ -59,7 +54,7 @@ final class TaxItemsConverter implements TaxItemsConverterInterface
         }
 
         foreach ($temporaryTaxItems as $label => $amount) {
-            $taxItems->add(new $this->className($label, $amount));
+            $taxItems->add($this->taxItemFactory->createWithData($label, $amount));
         }
 
         return $taxItems;
