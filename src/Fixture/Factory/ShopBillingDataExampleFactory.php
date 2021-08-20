@@ -19,19 +19,19 @@ use Sylius\Component\Channel\Context\ChannelNotFoundException;
 use Sylius\Component\Channel\Repository\ChannelRepositoryInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\ShopBillingData;
+use Sylius\Component\Resource\Factory\FactoryInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class ShopBillingDataExampleFactory extends AbstractExampleFactory implements ExampleFactoryInterface
 {
-    /** @var ChannelRepositoryInterface */
-    private $channelRepository;
+    private ChannelRepositoryInterface $channelRepository;
+    private FactoryInterface $factory;
+    private OptionsResolver $optionsResolver;
 
-    /** @var OptionsResolver */
-    private $optionsResolver;
-
-    public function __construct(ChannelRepositoryInterface $channelRepository)
+    public function __construct(ChannelRepositoryInterface $channelRepository, FactoryInterface $factory)
     {
         $this->channelRepository = $channelRepository;
+        $this->factory = $factory;
 
         $this->optionsResolver = new OptionsResolver();
 
@@ -51,15 +51,16 @@ final class ShopBillingDataExampleFactory extends AbstractExampleFactory impleme
             throw new ChannelNotFoundException(sprintf('Channel %s has not been found, please create it before adding this fixture !', $options['code']));
         }
 
-        $billingData = new ShopBillingData();
-        $billingData->setCompany($options['company']);
-        $billingData->setCountryCode($options['country_code']);
-        $billingData->setCity($options['city']);
-        $billingData->setPostcode($options['postcode']);
-        $billingData->setTaxId($options['tax_id']);
-        $billingData->setStreet($options['street_address']);
+        /** @var ShopBillingData $shopBillingData */
+        $shopBillingData = $this->factory->createNew();
+        $shopBillingData->setCompany($options['company']);
+        $shopBillingData->setCountryCode($options['country_code']);
+        $shopBillingData->setCity($options['city']);
+        $shopBillingData->setPostcode($options['postcode']);
+        $shopBillingData->setTaxId($options['tax_id']);
+        $shopBillingData->setStreet($options['street_address']);
 
-        $channel->setShopBillingData($billingData);
+        $channel->setShopBillingData($shopBillingData);
 
         return $channel;
     }
