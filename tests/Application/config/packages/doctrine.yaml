@@ -21,4 +21,3 @@ doctrine:
                 type: annotation
                 dir: '%kernel.project_dir%/src/Entity'
                 prefix: 'Tests\Sylius\InvoicingPlugin\Application\Entity'
-                alias: App
