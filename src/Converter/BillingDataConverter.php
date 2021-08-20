@@ -15,35 +15,19 @@ namespace Sylius\InvoicingPlugin\Converter;
 
 use Sylius\Component\Core\Model\AddressInterface;
 use Sylius\InvoicingPlugin\Entity\BillingDataInterface;
+use Sylius\InvoicingPlugin\Factory\BillingDataFactoryInterface;
 
 final class BillingDataConverter implements BillingDataConverterInterface
 {
-    /**
-     * @var string
-     * @psalm-var class-string
-     */
-    private $className;
+    private BillingDataFactoryInterface $billingDataFactory;
 
-    /**
-     * @psalm-param class-string $className
-     */
-    public function __construct(string $className)
+    public function __construct(BillingDataFactoryInterface $billingDataFactory)
     {
-        $this->className = $className;
+        $this->billingDataFactory = $billingDataFactory;
     }
 
     public function convert(AddressInterface $billingAddress): BillingDataInterface
     {
-        return new $this->className(
-            $billingAddress->getFirstName(),
-            $billingAddress->getLastName(),
-            $billingAddress->getCountryCode(),
-            $billingAddress->getStreet(),
-            $billingAddress->getCity(),
-            $billingAddress->getPostcode(),
-            $billingAddress->getProvinceCode(),
-            $billingAddress->getProvinceName(),
-            $billingAddress->getCompany()
-        );
+        return $this->billingDataFactory->createFromAddress($billingAddress);
     }
 }

@@ -16,16 +16,14 @@ namespace spec\Sylius\InvoicingPlugin\Converter;
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Core\Model\AddressInterface;
 use Sylius\InvoicingPlugin\Converter\BillingDataConverterInterface;
-use Sylius\InvoicingPlugin\Entity\BillingData;
 use Sylius\InvoicingPlugin\Entity\BillingDataInterface;
+use Sylius\InvoicingPlugin\Factory\BillingDataFactoryInterface;
 
 final class BillingDataConverterSpec extends ObjectBehavior
 {
-    function let(): void
+    function let(BillingDataFactoryInterface $billingDataFactory): void
     {
-        $this->beConstructedWith(
-            BillingData::class
-        );
+        $this->beConstructedWith($billingDataFactory);
     }
 
     function it_implements_billing_data_converter_interface(): void
@@ -33,18 +31,13 @@ final class BillingDataConverterSpec extends ObjectBehavior
         $this->shouldImplement(BillingDataConverterInterface::class);
     }
 
-    function it_converts_address_to_billing_data(AddressInterface $address): void
-    {
-        $address->getCountryCode()->willReturn('US');
-        $address->getCity()->willReturn('Las Vegas');
-        $address->getPostcode()->willReturn('000001');
-        $address->getStreet()->willReturn('Fremont Street');
-        $address->getProvinceCode()->willReturn('sample_province_code');
-        $address->getProvinceName()->willReturn('sample_province_name');
-        $address->getFirstName()->willReturn('Thomas');
-        $address->getLastName()->willReturn('Shelby');
-        $address->getCompany()->willReturn('Shelby Company Limited');
+    function it_converts_address_to_billing_data(
+        AddressInterface $address,
+        BillingDataFactoryInterface $billingDataFactory,
+        BillingDataInterface $billingData
+    ): void {
+        $billingDataFactory->createFromAddress($address)->willReturn($billingData);
 
-        $this->convert($address)->shouldReturnAnInstanceOf(BillingDataInterface::class);
+        $this->convert($address)->shouldReturn($billingData);
     }
 }
