@@ -66,10 +66,10 @@ class InvoiceFactorySpec extends ObjectBehavior
     }
 
     function it_allows_for_nullable_shop_billing_data(
-        BillingDataInterface $billingData,
-        ChannelInterface $channel,
+        FactoryInterface $invoiceShopBillingDataFactory,
         OrderInterface $order,
-        FactoryInterface $invoiceShopBillingDataFactory
+        BillingDataInterface $billingData,
+        ChannelInterface $channel
     ): void {
         $date = new \DateTimeImmutable('2019-03-06');
 

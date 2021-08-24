@@ -4,10 +4,6 @@
     <services>
         <defaults autoconfigure="true" autowire="true" public="true" />
 
-        <service id="sylius_invoicing_plugin.converter.billing_data" class="Sylius\InvoicingPlugin\Converter\BillingDataConverter">
-            <argument type="service" id="sylius_invoicing_plugin.factory.billing_data" />
-        </service>
-
         <service id="sylius_invoicing_plugin.converter.invoice_shop_billing_data" class="Sylius\InvoicingPlugin\Converter\InvoiceShopBillingDataConverter">
             <argument type="service" id="sylius_invoicing_plugin.factory.shop_billing_data" />
         </service>
