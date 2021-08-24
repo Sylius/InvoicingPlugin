@@ -2,4 +2,5 @@ knp_snappy:
     pdf:
         enabled: true
         binary: '%env(resolve:WKHTMLTOPDF_PATH)%'
-        options: []
+        options:
+            enable-local-file-access: true
