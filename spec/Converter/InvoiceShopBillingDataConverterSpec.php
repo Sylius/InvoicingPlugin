@@ -25,9 +25,7 @@ final class InvoiceShopBillingDataConverterSpec extends ObjectBehavior
 {
     function let(FactoryInterface $invoiceShopBillingDataFactory): void
     {
-        $this->beConstructedWith(
-            $invoiceShopBillingDataFactory
-        );
+        $this->beConstructedWith($invoiceShopBillingDataFactory);
     }
 
     function it_implements_invoice_shop_billing_data_converter_interface(): void
