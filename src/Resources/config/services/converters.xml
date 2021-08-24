@@ -4,10 +4,6 @@
     <services>
         <defaults autoconfigure="true" autowire="true" public="true" />
 
-        <service id="sylius_invoicing_plugin.converter.invoice_shop_billing_data" class="Sylius\InvoicingPlugin\Converter\InvoiceShopBillingDataConverter">
-            <argument type="service" id="sylius_invoicing_plugin.factory.shop_billing_data" />
-        </service>
-
         <service id="sylius_invoicing_plugin.converter.order_item_units_to_line_items" class="Sylius\InvoicingPlugin\Converter\OrderItemUnitsToLineItemsConverter">
             <argument type="service" id="sylius_invoicing_plugin.provider.tax_rate_percentage" />
             <argument type="service" id="sylius_invoicing_plugin.factory.line_item" />
