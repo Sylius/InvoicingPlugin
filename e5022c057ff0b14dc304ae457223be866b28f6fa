@@ -1,0 +1,49 @@
+---------------------------------------------------------------------------
+
+by Prometee at 2020-11-26T18:31:30Z
+
+@GSadee that's also why I make the previous PR #200, because of this bug.
+
+---------------------------------------------------------------------------
+
+by Prometee at 2020-11-27T12:45:20Z
+
+@GSadee @pamil the bug was due to a fixed factory class, this PR fix it.
+
+Maybe the other `Resource` could have the same problem.
+
+---------------------------------------------------------------------------
+
+by Prometee at 2020-11-27T19:09:36Z
+
+@GSadee ready for review
+
+---------------------------------------------------------------------------
+
+by floriangosse at 2021-01-06T14:15:53Z
+
+Can the community help as well to make the review easier?
+
+---------------------------------------------------------------------------
+
+by Prometee at 2021-01-12T13:38:23Z
+
+yes you can start comment it if you want to, but final reviews have to be done by Sylius/core-team
+
+---------------------------------------------------------------------------
+
+by Prometee at 2021-02-10T17:32:28Z
+
+@GSadee the build was passing a month ago and now it fail due to the outdated ecs version, can you comment or check this PR to start helping you on resolving all build problem you can have with Sylius 1.9 ;)
+
+---------------------------------------------------------------------------
+
+by Prometee at 2021-03-18T10:07:36Z
+
+@GSadee rebase and fixed, it just miss your review 😩
+
+---------------------------------------------------------------------------
+
+by GSadee at 2021-08-26T09:54:35Z
+
+Thank you, Francis! :tada:
