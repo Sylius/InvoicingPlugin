@@ -28,6 +28,10 @@ use Sylius\InvoicingPlugin\Entity\LineItem;
 use Sylius\InvoicingPlugin\Entity\LineItemInterface;
 use Sylius\InvoicingPlugin\Entity\TaxItem;
 use Sylius\InvoicingPlugin\Entity\TaxItemInterface;
+use Sylius\InvoicingPlugin\Factory\BillingDataFactory;
+use Sylius\InvoicingPlugin\Factory\InvoiceShopBillingDataFactory;
+use Sylius\InvoicingPlugin\Factory\LineItemFactory;
+use Sylius\InvoicingPlugin\Factory\TaxItemFactory;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -69,7 +73,7 @@ final class Configuration implements ConfigurationInterface
                                         ->scalarNode('model')->defaultValue(BillingData::class)->cannotBeEmpty()->end()
                                         ->scalarNode('interface')->defaultValue(BillingDataInterface::class)->cannotBeEmpty()->end()
                                         ->scalarNode('controller')->defaultValue(ResourceController::class)->cannotBeEmpty()->end()
-                                        ->scalarNode('factory')->defaultValue(Factory::class)->cannotBeEmpty()->end()
+                                        ->scalarNode('factory')->defaultValue(BillingDataFactory::class)->cannotBeEmpty()->end()
                                         ->scalarNode('repository')->cannotBeEmpty()->end()
                                     ->end()
                                 ->end()
@@ -85,7 +89,7 @@ final class Configuration implements ConfigurationInterface
                                         ->scalarNode('model')->defaultValue(InvoiceShopBillingData::class)->cannotBeEmpty()->end()
                                         ->scalarNode('interface')->defaultValue(InvoiceShopBillingDataInterface::class)->cannotBeEmpty()->end()
                                         ->scalarNode('controller')->defaultValue(ResourceController::class)->cannotBeEmpty()->end()
-                                        ->scalarNode('factory')->defaultValue(Factory::class)->cannotBeEmpty()->end()
+                                        ->scalarNode('factory')->defaultValue(InvoiceShopBillingDataFactory::class)->cannotBeEmpty()->end()
                                         ->scalarNode('repository')->cannotBeEmpty()->end()
                                     ->end()
                                 ->end()
@@ -101,7 +105,7 @@ final class Configuration implements ConfigurationInterface
                                         ->scalarNode('model')->defaultValue(LineItem::class)->cannotBeEmpty()->end()
                                         ->scalarNode('interface')->defaultValue(LineItemInterface::class)->cannotBeEmpty()->end()
                                         ->scalarNode('controller')->defaultValue(ResourceController::class)->cannotBeEmpty()->end()
-                                        ->scalarNode('factory')->defaultValue(Factory::class)->cannotBeEmpty()->end()
+                                        ->scalarNode('factory')->defaultValue(LineItemFactory::class)->cannotBeEmpty()->end()
                                         ->scalarNode('repository')->cannotBeEmpty()->end()
                                     ->end()
                                 ->end()
@@ -117,7 +121,7 @@ final class Configuration implements ConfigurationInterface
                                         ->scalarNode('model')->defaultValue(TaxItem::class)->cannotBeEmpty()->end()
                                         ->scalarNode('interface')->defaultValue(TaxItemInterface::class)->cannotBeEmpty()->end()
                                         ->scalarNode('controller')->defaultValue(ResourceController::class)->cannotBeEmpty()->end()
-                                        ->scalarNode('factory')->defaultValue(Factory::class)->cannotBeEmpty()->end()
+                                        ->scalarNode('factory')->defaultValue(TaxItemFactory::class)->cannotBeEmpty()->end()
                                         ->scalarNode('repository')->cannotBeEmpty()->end()
                                     ->end()
                                 ->end()

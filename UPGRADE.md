@@ -1,5 +1,8 @@
 ### UPGRADE FROM 0.17.0 TO 0.18.0
 
+- The `Sylius\InvoicingPlugin\Converter\BillingDataConverter` has been removed in favor of `Sylius\InvoicingPlugin\Factory\BillingDataFactory->createFromAddress`.
+- The `Sylius\InvoicingPlugin\Converter\InvoiceShopBillingDataConverter` has been removed in favor of `Sylius\InvoicingPlugin\Factory\InvoiceShopBillingDataFactory->createFromChannel`.
+
 Now on invoice admin and shop user can check if related order was paid before invoice generated.
 
 1. `src/Entity/Invoice.php` model has new field (`paymentState`), and updated constructor arguments: 

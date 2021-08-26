@@ -17,7 +17,7 @@ interface TaxItemInterface
 {
     public function id(): string;
 
-    public function invoice(): InvoiceInterface;
+    public function invoice(): ?InvoiceInterface;
 
     public function setInvoice(InvoiceInterface $invoice): void;
 

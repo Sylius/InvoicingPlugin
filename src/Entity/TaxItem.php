@@ -21,7 +21,7 @@ class TaxItem implements TaxItemInterface, ResourceInterface
     /** @var string */
     protected $id;
 
-    /** @var InvoiceInterface */
+    /** @var InvoiceInterface|null */
     protected $invoice;
 
     /** @var string */
@@ -46,7 +46,7 @@ class TaxItem implements TaxItemInterface, ResourceInterface
         return $this->id;
     }
 
-    public function invoice(): InvoiceInterface
+    public function invoice(): ?InvoiceInterface
     {
         return $this->invoice;
     }

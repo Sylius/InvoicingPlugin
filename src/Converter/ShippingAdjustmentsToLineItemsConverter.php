@@ -17,20 +17,24 @@ use Sylius\Component\Core\Model\AdjustmentInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\ShipmentInterface;
 use Sylius\Component\Order\Model\AdjustableInterface;
-use Sylius\InvoicingPlugin\Entity\LineItem;
 use Sylius\InvoicingPlugin\Entity\LineItemInterface;
 use Sylius\InvoicingPlugin\Exception\MoreThanOneTaxAdjustment;
+use Sylius\InvoicingPlugin\Factory\LineItemFactoryInterface;
 use Sylius\InvoicingPlugin\Provider\TaxRatePercentageProviderInterface;
 use Webmozart\Assert\Assert;
 
 final class ShippingAdjustmentsToLineItemsConverter implements LineItemsConverterInterface
 {
-    /** @var TaxRatePercentageProviderInterface */
-    private $taxRatePercentageProvider;
+    private TaxRatePercentageProviderInterface $taxRatePercentageProvider;
 
-    public function __construct(TaxRatePercentageProviderInterface $taxRatePercentageProvider)
-    {
+    private LineItemFactoryInterface $lineItemFactory;
+
+    public function __construct(
+        TaxRatePercentageProviderInterface $taxRatePercentageProvider,
+        LineItemFactoryInterface $lineItemFactory
+    ) {
         $this->taxRatePercentageProvider = $taxRatePercentageProvider;
+        $this->lineItemFactory = $lineItemFactory;
     }
 
     public function convert(OrderInterface $order): array
@@ -57,7 +61,7 @@ final class ShippingAdjustmentsToLineItemsConverter implements LineItemsConverte
         $taxAmount = $taxAdjustment !== null ? $taxAdjustment->getAmount() : 0;
         $netValue = $grossValue - $taxAmount;
 
-        return new LineItem(
+        return $this->lineItemFactory->createWithData(
             $shippingAdjustment->getLabel(),
             1,
             $netValue,

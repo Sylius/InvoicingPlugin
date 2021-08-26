@@ -16,14 +16,31 @@ namespace Sylius\InvoicingPlugin\Factory;
 use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\OrderInterface;
+use Sylius\Component\Resource\Factory\FactoryInterface;
 use Sylius\InvoicingPlugin\Entity\BillingDataInterface;
-use Sylius\InvoicingPlugin\Entity\Invoice;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
-use Sylius\InvoicingPlugin\Entity\InvoiceShopBillingData;
 use Sylius\InvoicingPlugin\Entity\InvoiceShopBillingDataInterface;
 
 final class InvoiceFactory implements InvoiceFactoryInterface
 {
+    /**
+     * @var string
+     * @psalm-var class-string
+     */
+    private $className;
+
+    /** @var FactoryInterface */
+    private $invoiceShopBillingDataFactory;
+
+    /**
+     * @psalm-param class-string $className
+     */
+    public function __construct(string $className, FactoryInterface $invoiceShopBillingDataFactory)
+    {
+        $this->className = $className;
+        $this->invoiceShopBillingDataFactory = $invoiceShopBillingDataFactory;
+    }
+
     public function createForData(
         string $id,
         string $number,
@@ -39,7 +56,7 @@ final class InvoiceFactory implements InvoiceFactoryInterface
         string $paymentState,
         InvoiceShopBillingDataInterface $shopBillingData = null
     ): InvoiceInterface {
-        return new Invoice(
+        return new $this->className(
             $id,
             $number,
             $order,
@@ -52,7 +69,7 @@ final class InvoiceFactory implements InvoiceFactoryInterface
             $taxItems,
             $channel,
             $paymentState,
-            $shopBillingData ?? new InvoiceShopBillingData()
+            $shopBillingData ?? $this->invoiceShopBillingDataFactory->createNew()
         );
     }
 }

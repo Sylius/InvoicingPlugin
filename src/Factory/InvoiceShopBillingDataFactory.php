@@ -11,25 +11,47 @@
 
 declare(strict_types=1);
 
-namespace Sylius\InvoicingPlugin\Converter;
+namespace Sylius\InvoicingPlugin\Factory;
 
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\ShopBillingDataInterface;
-use Sylius\InvoicingPlugin\Entity\InvoiceShopBillingData;
 use Sylius\InvoicingPlugin\Entity\InvoiceShopBillingDataInterface;
 
-final class InvoiceShopBillingDataConverter implements InvoiceShopBillingDataConverterInterface
+final class InvoiceShopBillingDataFactory implements InvoiceShopBillingDataFactoryInterface
 {
-    public function convert(ChannelInterface $channel): InvoiceShopBillingDataInterface
+    /**
+     * @var string
+     * @psalm-var class-string
+     */
+    private $className;
+
+    /**
+     * @psalm-param class-string $className
+     */
+    public function __construct(string $className)
     {
-        /** @var ShopBillingDataInterface|null $shopBillingData */
+        $this->className = $className;
+    }
+
+    public function createNew(): InvoiceShopBillingDataInterface
+    {
+        return new $this->className();
+    }
+
+    public function createFromChannel(ChannelInterface $channel): InvoiceShopBillingDataInterface
+    {
         $shopBillingData = $channel->getShopBillingData();
 
-        $invoiceShopBillingData = new InvoiceShopBillingData();
-
         if (null === $shopBillingData) {
-            return $invoiceShopBillingData;
+            return $this->createNew();
         }
+
+        return $this->createFromShopBillingData($shopBillingData);
+    }
+
+    public function createFromShopBillingData(ShopBillingDataInterface $shopBillingData): InvoiceShopBillingDataInterface
+    {
+        $invoiceShopBillingData = $this->createNew();
 
         $invoiceShopBillingData->setCompany($shopBillingData->getCompany());
         $invoiceShopBillingData->setTaxId($shopBillingData->getTaxId());

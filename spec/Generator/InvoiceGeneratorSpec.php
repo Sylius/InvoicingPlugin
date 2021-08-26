@@ -19,8 +19,6 @@ use Sylius\Component\Core\Model\AddressInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Payment\Model\PaymentInterface;
-use Sylius\InvoicingPlugin\Converter\BillingDataConverterInterface;
-use Sylius\InvoicingPlugin\Converter\InvoiceShopBillingDataConverterInterface;
 use Sylius\InvoicingPlugin\Converter\LineItemsConverterInterface;
 use Sylius\InvoicingPlugin\Converter\TaxItemsConverterInterface;
 use Sylius\InvoicingPlugin\Entity\BillingData;
@@ -28,7 +26,9 @@ use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceShopBillingDataInterface;
 use Sylius\InvoicingPlugin\Entity\LineItemInterface;
 use Sylius\InvoicingPlugin\Entity\TaxItemInterface;
+use Sylius\InvoicingPlugin\Factory\BillingDataFactoryInterface;
 use Sylius\InvoicingPlugin\Factory\InvoiceFactoryInterface;
+use Sylius\InvoicingPlugin\Factory\InvoiceShopBillingDataFactoryInterface;
 use Sylius\InvoicingPlugin\Generator\InvoiceGeneratorInterface;
 use Sylius\InvoicingPlugin\Generator\InvoiceIdentifierGenerator;
 use Sylius\InvoicingPlugin\Generator\InvoiceNumberGenerator;
@@ -39,8 +39,8 @@ final class InvoiceGeneratorSpec extends ObjectBehavior
         InvoiceIdentifierGenerator $uuidInvoiceIdentifierGenerator,
         InvoiceNumberGenerator $sequentialInvoiceNumberGenerator,
         InvoiceFactoryInterface $invoiceFactory,
-        BillingDataConverterInterface $billingDataConverter,
-        InvoiceShopBillingDataConverterInterface $invoiceShopBillingDataConverter,
+        BillingDataFactoryInterface $billingDataFactory,
+        InvoiceShopBillingDataFactoryInterface $invoiceShopBillingDataFactory,
         LineItemsConverterInterface $orderItemUnitsToLineItemsConverter,
         LineItemsConverterInterface $shippingAdjustmentsToLineItemsConverter,
         TaxItemsConverterInterface $taxItemsConverter
@@ -49,8 +49,8 @@ final class InvoiceGeneratorSpec extends ObjectBehavior
             $uuidInvoiceIdentifierGenerator,
             $sequentialInvoiceNumberGenerator,
             $invoiceFactory,
-            $billingDataConverter,
-            $invoiceShopBillingDataConverter,
+            $billingDataFactory,
+            $invoiceShopBillingDataFactory,
             $orderItemUnitsToLineItemsConverter,
             $shippingAdjustmentsToLineItemsConverter,
             $taxItemsConverter
@@ -66,8 +66,8 @@ final class InvoiceGeneratorSpec extends ObjectBehavior
         InvoiceIdentifierGenerator $uuidInvoiceIdentifierGenerator,
         InvoiceNumberGenerator $sequentialInvoiceNumberGenerator,
         InvoiceFactoryInterface $invoiceFactory,
-        BillingDataConverterInterface $billingDataConverter,
-        InvoiceShopBillingDataConverterInterface $invoiceShopBillingDataConverter,
+        BillingDataFactoryInterface $billingDataFactory,
+        InvoiceShopBillingDataFactoryInterface $invoiceShopBillingDataFactory,
         LineItemsConverterInterface $orderItemUnitsToLineItemsConverter,
         LineItemsConverterInterface $shippingAdjustmentsToLineItemsConverter,
         TaxItemsConverterInterface $taxItemsConverter,
@@ -93,8 +93,8 @@ final class InvoiceGeneratorSpec extends ObjectBehavior
         $order->getPaymentState()->willReturn(PaymentInterface::STATE_COMPLETED);
         $order->getBillingAddress()->willReturn($billingAddress);
 
-        $billingDataConverter->convert($billingAddress)->willReturn($billingData);
-        $invoiceShopBillingDataConverter->convert($channel)->willReturn($invoiceShopBillingData);
+        $billingDataFactory->createFromAddress($billingAddress)->willReturn($billingData);
+        $invoiceShopBillingDataFactory->createFromChannel($channel)->willReturn($invoiceShopBillingData);
 
         $orderItemUnitsToLineItemsConverter->convert($order)->willReturn([$unitLineItem->getWrappedObject()]);
         $shippingAdjustmentsToLineItemsConverter->convert($order)->willReturn([$shippingLineItem->getWrappedObject()]);
