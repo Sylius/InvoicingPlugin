@@ -1,5 +1,11 @@
 # CHANGELOG
 
+### v0.18.0 (2021-08-27)
+
+- [#246](https://github.com/Sylius/InvoicingPlugin/issues/246) [Invoice] Add payment status ([@AdamKasp](https://github.com/AdamKasp), [@Tomanhez](https://github.com/Tomanhez), [@arti0090](https://github.com/arti0090))
+- [#247](https://github.com/Sylius/InvoicingPlugin/issues/247) Update knp snappy file ([@arti0090](https://github.com/arti0090))
+- [#201](https://github.com/Sylius/InvoicingPlugin/issues/201) Fix extended resource entities ([@Prometee](https://github.com/Prometee), [@lchrusciel](https://github.com/lchrusciel))
+
 ### v0.17.0 (2021-08-06)
 
 - [#233](https://github.com/Sylius/InvoicingPlugin/issues/233) Upgrade to stable Sylius 1.10 ([@GSadee](https://github.com/GSadee))
