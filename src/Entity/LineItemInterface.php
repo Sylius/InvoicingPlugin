@@ -17,7 +17,7 @@ interface LineItemInterface
 {
     public function id();
 
-    public function invoice(): InvoiceInterface;
+    public function invoice(): ?InvoiceInterface;
 
     public function setInvoice(InvoiceInterface $invoice): void;
 

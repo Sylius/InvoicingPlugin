@@ -1,3 +1,8 @@
+### UPGRADE FROM 0.18.0 TO 0.19.0
+
+1. The return type of `Sylius\InvoicingPlugin\Entity\LineItemInterface:invoice` method has been changed
+   from `InvoiceInterface` to `?InvoiceInterface`
+
 ### UPGRADE FROM 0.17.0 TO 0.18.0
 
 1. The `Sylius\InvoicingPlugin\Converter\BillingDataConverter` has been removed in favor of `Sylius\InvoicingPlugin\Factory\BillingDataFactory->createFromAddress`.

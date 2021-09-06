@@ -74,7 +74,7 @@ class LineItem implements LineItemInterface, ResourceInterface
         return $this->id;
     }
 
-    public function invoice(): InvoiceInterface
+    public function invoice(): ?InvoiceInterface
     {
         return $this->invoice;
     }
