@@ -11,8 +11,7 @@ use Sylius\Component\Core\Model\OrderInterface;
 
 final class OrderContext implements Context
 {
-    /** @var ObjectManager */
-    private $orderManager;
+    private ObjectManager $orderManager;
 
     public function __construct(ObjectManager $orderManager)
     {

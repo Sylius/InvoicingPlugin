@@ -12,11 +12,9 @@ use Sylius\Component\Payment\PaymentTransitions;
 
 final class OrderContext implements Context
 {
-    /** @var ObjectManager */
-    private $objectManager;
+    private ObjectManager $objectManager;
 
-    /** @var StateMachineFactoryInterface */
-    private $stateMachineFactory;
+    private StateMachineFactoryInterface $stateMachineFactory;
 
     public function __construct(ObjectManager $objectManager, StateMachineFactoryInterface $stateMachineFactory)
     {

@@ -16,17 +16,13 @@ use Symfony\Component\HttpKernel\KernelInterface;
 
 final class InvoicesGenerationContext implements Context
 {
-    /** @var KernelInterface */
-    private $kernel;
+    private KernelInterface $kernel;
 
-    /** @var MassInvoicesCreatorInterface */
-    private $massInvoicesCreator;
+    private MassInvoicesCreatorInterface $massInvoicesCreator;
 
-    /** @var InvoiceRepositoryInterface */
-    private $invoiceRepository;
+    private InvoiceRepositoryInterface $invoiceRepository;
 
-    /** @var OrderRepositoryInterface */
-    private $orderRepository;
+    private OrderRepositoryInterface $orderRepository;
 
     public function __construct(
         KernelInterface $kernel,

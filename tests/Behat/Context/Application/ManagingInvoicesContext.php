@@ -13,11 +13,9 @@ use Webmozart\Assert\Assert;
 
 final class ManagingInvoicesContext implements Context
 {
-    /** @var string */
-    private $invoicesSavePath;
+    private string $invoicesSavePath;
 
-    /** @var InvoiceRepositoryInterface */
-    private $invoiceRepository;
+    private InvoiceRepositoryInterface $invoiceRepository;
 
     public function __construct(string $invoicesSavePath, InvoiceRepositoryInterface $invoiceRepository)
     {
