@@ -24,14 +24,11 @@ use Webmozart\Assert\Assert;
 
 final class DownloadInvoiceAction
 {
-    /** @var InvoiceRepositoryInterface */
-    private $invoiceRepository;
+    private InvoiceRepositoryInterface $invoiceRepository;
 
-    /** @var AuthorizationCheckerInterface */
-    private $authorizationChecker;
+    private AuthorizationCheckerInterface $authorizationChecker;
 
-    /** @var InvoiceFileProviderInterface */
-    private $invoiceFilePathProvider;
+    private InvoiceFileProviderInterface $invoiceFilePathProvider;
 
     public function __construct(
         InvoiceRepositoryInterface $invoiceRepository,

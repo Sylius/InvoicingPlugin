@@ -23,20 +23,15 @@ use Sylius\InvoicingPlugin\Model\InvoicePdf;
 
 final class InvoiceFileProvider implements InvoiceFileProviderInterface
 {
-    /** @var InvoiceFileNameGeneratorInterface */
-    private $invoiceFileNameGenerator;
+    private InvoiceFileNameGeneratorInterface $invoiceFileNameGenerator;
 
-    /** @var FilesystemInterface */
-    private $filesystem;
+    private FilesystemInterface $filesystem;
 
-    /** @var InvoicePdfFileGeneratorInterface */
-    private $invoicePdfFileGenerator;
+    private InvoicePdfFileGeneratorInterface $invoicePdfFileGenerator;
 
-    /** @var InvoiceFileManagerInterface */
-    private $invoiceFileManager;
+    private InvoiceFileManagerInterface $invoiceFileManager;
 
-    /** @var string */
-    private $invoicesDirectory;
+    private string $invoicesDirectory;
 
     public function __construct(
         InvoiceFileNameGeneratorInterface $invoiceFileNameGenerator,

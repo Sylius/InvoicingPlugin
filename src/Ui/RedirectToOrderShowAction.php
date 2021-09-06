@@ -23,11 +23,9 @@ use Webmozart\Assert\Assert;
 
 final class RedirectToOrderShowAction
 {
-    /** @var RouterInterface */
-    private $router;
+    private RouterInterface $router;
 
-    /** @var OrderRepositoryInterface */
-    private $orderRepository;
+    private OrderRepositoryInterface $orderRepository;
 
     public function __construct(RouterInterface $router, OrderRepositoryInterface $orderRepository)
     {

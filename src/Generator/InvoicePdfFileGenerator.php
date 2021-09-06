@@ -21,23 +21,17 @@ use Twig\Environment;
 
 final class InvoicePdfFileGenerator implements InvoicePdfFileGeneratorInterface
 {
-    /** @var Environment */
-    private $templatingEngine;
+    private Environment $templatingEngine;
 
-    /** @var GeneratorInterface */
-    private $pdfGenerator;
+    private GeneratorInterface $pdfGenerator;
 
-    /** @var FileLocatorInterface */
-    private $fileLocator;
+    private FileLocatorInterface $fileLocator;
 
-    /** @var InvoiceFileNameGeneratorInterface */
-    private $invoiceFileNameGenerator;
+    private InvoiceFileNameGeneratorInterface $invoiceFileNameGenerator;
 
-    /** @var string */
-    private $template;
+    private string $template;
 
-    /** @var string */
-    private $invoiceLogoPath;
+    private string $invoiceLogoPath;
 
     public function __construct(
         Environment $templatingEngine,

@@ -21,11 +21,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 final class GenerateInvoicesCommand extends Command
 {
-    /** @var MassInvoicesCreatorInterface */
-    private $massInvoicesCreator;
+    private MassInvoicesCreatorInterface $massInvoicesCreator;
 
-    /** @var OrderRepositoryInterface */
-    private $orderRepository;
+    private OrderRepositoryInterface $orderRepository;
 
     public function __construct(
         MassInvoicesCreatorInterface $massInvoicesCreator,

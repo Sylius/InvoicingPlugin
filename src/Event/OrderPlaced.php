@@ -15,11 +15,9 @@ namespace Sylius\InvoicingPlugin\Event;
 
 final class OrderPlaced
 {
-    /** @var string */
-    private $orderNumber;
+    private string $orderNumber;
 
-    /** @var \DateTimeInterface */
-    private $date;
+    private \DateTimeInterface $date;
 
     public function __construct(string $orderNumber, \DateTimeInterface $date)
     {

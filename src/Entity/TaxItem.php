@@ -21,14 +21,11 @@ class TaxItem implements TaxItemInterface, ResourceInterface
     /** @var mixed */
     protected $id;
 
-    /** @var InvoiceInterface|null */
-    protected $invoice;
+    protected ?InvoiceInterface $invoice = null;
 
-    /** @var string */
-    protected $label;
+    protected string $label;
 
-    /** @var int */
-    protected $amount;
+    protected int $amount;
 
     public function __construct(string $label, int $amount)
     {
@@ -41,7 +38,7 @@ class TaxItem implements TaxItemInterface, ResourceInterface
         return $this->id();
     }
 
-    public function id(): string
+    public function id()
     {
         return $this->id;
     }

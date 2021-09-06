@@ -22,35 +22,25 @@ class LineItem implements LineItemInterface, ResourceInterface
     /** @var mixed */
     protected $id;
 
-    /** @var InvoiceInterface */
-    protected $invoice;
+    protected ?InvoiceInterface $invoice = null;
 
-    /** @var string */
-    protected $name;
+    protected string $name;
 
-    /** @var string|null */
-    protected $variantName;
+    protected ?string $variantName;
 
-    /** @var string|null */
-    protected $variantCode;
+    protected ?string $variantCode;
 
-    /** @var int */
-    protected $quantity;
+    protected int $quantity;
 
-    /** @var int */
-    protected $unitPrice;
+    protected int $unitPrice;
 
-    /** @var int */
-    protected $subtotal;
+    protected int $subtotal;
 
-    /** @var string|null */
-    protected $taxRate;
+    protected ?string $taxRate;
 
-    /** @var int */
-    protected $taxTotal;
+    protected int $taxTotal;
 
-    /** @var int */
-    protected $total;
+    protected int $total;
 
     public function __construct(
         string $name,
@@ -79,7 +69,7 @@ class LineItem implements LineItemInterface, ResourceInterface
         return $this->id();
     }
 
-    public function id(): string
+    public function id()
     {
         return $this->id;
     }

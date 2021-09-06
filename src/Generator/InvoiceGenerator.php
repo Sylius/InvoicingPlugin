@@ -27,29 +27,21 @@ use Sylius\InvoicingPlugin\Factory\InvoiceShopBillingDataFactoryInterface;
 
 final class InvoiceGenerator implements InvoiceGeneratorInterface
 {
-    /** @var InvoiceIdentifierGenerator */
-    private $uuidInvoiceIdentifierGenerator;
+    private InvoiceIdentifierGenerator $uuidInvoiceIdentifierGenerator;
 
-    /** @var InvoiceNumberGenerator */
-    private $sequentialInvoiceNumberGenerator;
+    private InvoiceNumberGenerator $sequentialInvoiceNumberGenerator;
 
-    /** @var InvoiceFactoryInterface */
-    private $invoiceFactory;
+    private InvoiceFactoryInterface $invoiceFactory;
 
-    /** @var BillingDataFactoryInterface */
-    private $billingDataFactory;
+    private BillingDataFactoryInterface $billingDataFactory;
 
-    /** @var InvoiceShopBillingDataFactoryInterface */
-    private $invoiceShopBillingFactory;
+    private InvoiceShopBillingDataFactoryInterface $invoiceShopBillingFactory;
 
-    /** @var LineItemsConverterInterface */
-    private $orderItemUnitsToLineItemsConverter;
+    private LineItemsConverterInterface $orderItemUnitsToLineItemsConverter;
 
-    /** @var LineItemsConverterInterface */
-    private $shippingAdjustmentsToLineItemsConverter;
+    private LineItemsConverterInterface $shippingAdjustmentsToLineItemsConverter;
 
-    /** @var TaxItemsConverterInterface */
-    private $taxItemsConverter;
+    private TaxItemsConverterInterface $taxItemsConverter;
 
     public function __construct(
         InvoiceIdentifierGenerator $uuidInvoiceIdentifierGenerator,

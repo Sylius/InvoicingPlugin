@@ -19,8 +19,7 @@ use Sylius\InvoicingPlugin\Exception\InvoiceAlreadyGenerated;
 
 final class CreateInvoiceOnOrderPlacedListener
 {
-    /** @var InvoiceCreatorInterface */
-    private $invoiceCreator;
+    private InvoiceCreatorInterface $invoiceCreator;
 
     public function __construct(InvoiceCreatorInterface $invoiceCreator)
     {
