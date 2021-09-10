@@ -19,7 +19,7 @@ use Sylius\InvoicingPlugin\Exception\LineItemsCannotBeMerged;
 /** @final */
 class LineItem implements LineItemInterface, ResourceInterface
 {
-    /** @var string */
+    /** @var mixed */
     protected $id;
 
     /** @var InvoiceInterface */
@@ -74,7 +74,7 @@ class LineItem implements LineItemInterface, ResourceInterface
         $this->taxRate = $taxRate;
     }
 
-    public function getId(): string
+    public function getId()
     {
         return $this->id();
     }

@@ -18,7 +18,7 @@ use Sylius\Component\Resource\Model\ResourceInterface;
 /** @final */
 class TaxItem implements TaxItemInterface, ResourceInterface
 {
-    /** @var string */
+    /** @var mixed */
     protected $id;
 
     /** @var InvoiceInterface */
@@ -36,7 +36,7 @@ class TaxItem implements TaxItemInterface, ResourceInterface
         $this->amount = $amount;
     }
 
-    public function getId(): string
+    public function getId()
     {
         return $this->id();
     }
