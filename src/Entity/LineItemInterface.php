@@ -15,7 +15,7 @@ namespace Sylius\InvoicingPlugin\Entity;
 
 interface LineItemInterface
 {
-    public function id(): string;
+    public function id();
 
     public function invoice(): InvoiceInterface;
 

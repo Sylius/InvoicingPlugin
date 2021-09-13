@@ -12,4 +12,6 @@ parameters:
 
     ignoreErrors:
         - '/Parameter #1 \$configuration of method Symfony\\Component\\DependencyInjection\\Extension\\Extension::processConfiguration\(\) expects Symfony\\Component\\Config\\Definition\\ConfigurationInterface, Symfony\\Component\\Config\\Definition\\ConfigurationInterface\|null given\./'
+        - '/Method Sylius\\InvoicingPlugin\\Entity\\\w+::id\(\) has no return typehint specified\./'
+        - '/Method Sylius\\InvoicingPlugin\\Entity\\\w+::getId\(\) has no return typehint specified\./'
         - '/expects string, string\|null given\.$/'

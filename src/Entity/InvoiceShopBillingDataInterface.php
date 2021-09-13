@@ -15,7 +15,7 @@ namespace Sylius\InvoicingPlugin\Entity;
 
 interface InvoiceShopBillingDataInterface
 {
-    public function getId(): string;
+    public function getId();
 
     public function getTaxId(): ?string;
 
