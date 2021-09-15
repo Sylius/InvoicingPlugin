@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### v0.18.1 (2021-09-15)
+
+- [#250](https://github.com/Sylius/InvoicingPlugin/issues/250) [Maintenance] Remove wrong return types ([@lchrusciel](https://github.com/lchrusciel))
+
 ### v0.18.0 (2021-08-27)
 
 - [#246](https://github.com/Sylius/InvoicingPlugin/issues/246) [Invoice] Add payment status ([@AdamKasp](https://github.com/AdamKasp), [@Tomanhez](https://github.com/Tomanhez), [@arti0090](https://github.com/arti0090))
