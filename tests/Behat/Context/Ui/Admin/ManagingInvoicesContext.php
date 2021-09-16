@@ -16,20 +16,15 @@ use Webmozart\Assert\Assert;
 
 final class ManagingInvoicesContext implements Context
 {
-    /** @var IndexPageInterface */
-    private $indexPage;
+    private IndexPageInterface $indexPage;
 
-    /** @var ShowPageInterface */
-    private $showPage;
+    private \Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Invoice\ShowPageInterface $showPage;
 
-    /** @var OrderShowPageInterface */
-    private $orderShowPage;
+    private OrderShowPageInterface $orderShowPage;
 
-    /** @var InvoiceRepositoryInterface */
-    private $invoiceRepository;
+    private InvoiceRepositoryInterface $invoiceRepository;
 
-    /** @var NotificationCheckerInterface */
-    private $notificationChecker;
+    private NotificationCheckerInterface $notificationChecker;
 
     public function __construct(
         IndexPageInterface $indexPage,

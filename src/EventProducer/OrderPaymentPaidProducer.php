@@ -23,14 +23,11 @@ use Webmozart\Assert\Assert;
 
 final class OrderPaymentPaidProducer
 {
-    /** @var MessageBusInterface */
-    private $eventBus;
+    private MessageBusInterface $eventBus;
 
-    /** @var DateTimeProvider */
-    private $dateTimeProvider;
+    private DateTimeProvider $dateTimeProvider;
 
-    /** @var InvoiceRepositoryInterface */
-    private $invoiceRepository;
+    private InvoiceRepositoryInterface $invoiceRepository;
 
     public function __construct(
         MessageBusInterface $eventBus,

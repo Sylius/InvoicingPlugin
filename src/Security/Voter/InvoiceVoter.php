@@ -29,8 +29,7 @@ final class InvoiceVoter extends Voter
 
     private const ATTRIBUTES = [self::ACCESS];
 
-    /** @var OrderRepositoryInterface */
-    private $orderRepository;
+    private OrderRepositoryInterface $orderRepository;
 
     public function __construct(OrderRepositoryInterface $orderRepository)
     {

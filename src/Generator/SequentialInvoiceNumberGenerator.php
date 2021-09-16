@@ -22,23 +22,17 @@ use Sylius\InvoicingPlugin\Entity\InvoiceSequenceInterface;
 
 final class SequentialInvoiceNumberGenerator implements InvoiceNumberGenerator
 {
-    /** @var RepositoryInterface */
-    private $sequenceRepository;
+    private RepositoryInterface $sequenceRepository;
 
-    /** @var FactoryInterface */
-    private $sequenceFactory;
+    private FactoryInterface $sequenceFactory;
 
-    /** @var EntityManagerInterface */
-    private $sequenceManager;
+    private EntityManagerInterface $sequenceManager;
 
-    /** @var int */
-    private $startNumber;
+    private int $startNumber;
 
-    /** @var int */
-    private $numberLength;
+    private int $numberLength;
 
-    /** @var DateTimeProvider */
-    private $dateTimeProvider;
+    private DateTimeProvider $dateTimeProvider;
 
     public function __construct(
         RepositoryInterface $sequenceRepository,

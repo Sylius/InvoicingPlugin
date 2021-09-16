@@ -8,8 +8,7 @@ use Behat\Behat\Context\Context;
 
 final class InvoicesContext implements Context
 {
-    /** @var string */
-    private $invoicesSavePath;
+    private string $invoicesSavePath;
 
     public function __construct(string $invoicesSavePath)
     {

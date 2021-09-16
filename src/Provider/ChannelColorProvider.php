@@ -18,11 +18,9 @@ use Sylius\Component\Core\Model\ChannelInterface;
 
 final class ChannelColorProvider implements ChannelColorProviderInterface
 {
-    /** @var ChannelRepositoryInterface */
-    private $channelRepository;
+    private ChannelRepositoryInterface $channelRepository;
 
-    /** @var string */
-    private $defaultChannelColor;
+    private string $defaultChannelColor;
 
     public function __construct(ChannelRepositoryInterface $channelRepository, string $defaultChannelColor)
     {

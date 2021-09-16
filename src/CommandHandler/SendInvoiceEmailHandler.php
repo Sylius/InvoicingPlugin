@@ -22,14 +22,11 @@ use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 
 final class SendInvoiceEmailHandler
 {
-    /** @var InvoiceRepositoryInterface */
-    private $invoiceRepository;
+    private InvoiceRepositoryInterface $invoiceRepository;
 
-    /** @var OrderRepositoryInterface */
-    private $orderRepository;
+    private OrderRepositoryInterface $orderRepository;
 
-    /** @var InvoiceEmailSenderInterface */
-    private $emailSender;
+    private InvoiceEmailSenderInterface $emailSender;
 
     public function __construct(
         InvoiceRepositoryInterface $invoiceRepository,

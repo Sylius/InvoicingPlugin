@@ -15,14 +15,11 @@ namespace Sylius\InvoicingPlugin\Model;
 
 final class InvoicePdf
 {
-    /** @var string */
-    private $filename;
+    private string $filename;
 
-    /** @var string */
-    private $content;
+    private string $content;
 
-    /** @var string|null */
-    private $fullPath;
+    private ?string $fullPath = null;
 
     public function __construct(string $filename, string $content)
     {

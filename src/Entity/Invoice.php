@@ -20,44 +20,33 @@ use Sylius\Component\Core\Model\OrderInterface;
 /** @final */
 class Invoice implements InvoiceInterface
 {
-    /** @var string */
-    protected $id;
+    protected string $id;
 
-    /** @var string */
-    protected $number;
+    protected string $number;
 
-    /** @var OrderInterface */
-    protected $order;
+    protected OrderInterface $order;
 
-    /** @var \DateTimeInterface */
-    protected $issuedAt;
+    protected \DateTimeInterface $issuedAt;
 
-    /** @var BillingDataInterface */
-    protected $billingData;
+    protected BillingDataInterface $billingData;
 
-    /** @var string */
-    protected $currencyCode;
+    protected string $currencyCode;
 
-    /** @var string */
-    protected $localeCode;
+    protected string $localeCode;
 
-    /** @var int */
-    protected $total;
+    protected int $total;
 
     /** @var Collection|LineItemInterface[] */
-    protected $lineItems;
+    protected Collection $lineItems;
 
     /** @var Collection|TaxItemInterface[] */
-    protected $taxItems;
+    protected Collection $taxItems;
 
-    /** @var ChannelInterface */
-    protected $channel;
+    protected ChannelInterface $channel;
 
-    /** @var string */
-    protected $paymentState;
+    protected string $paymentState;
 
-    /** @var InvoiceShopBillingDataInterface */
-    protected $shopBillingData;
+    protected InvoiceShopBillingDataInterface $shopBillingData;
 
     public function __construct(
         string $id,

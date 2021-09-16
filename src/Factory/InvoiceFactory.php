@@ -29,8 +29,7 @@ final class InvoiceFactory implements InvoiceFactoryInterface
      */
     private $className;
 
-    /** @var FactoryInterface */
-    private $invoiceShopBillingDataFactory;
+    private FactoryInterface $invoiceShopBillingDataFactory;
 
     /**
      * @psalm-param class-string $className

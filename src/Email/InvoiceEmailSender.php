@@ -19,11 +19,9 @@ use Sylius\InvoicingPlugin\Provider\InvoiceFileProviderInterface;
 
 final class InvoiceEmailSender implements InvoiceEmailSenderInterface
 {
-    /** @var SenderInterface */
-    private $emailSender;
+    private SenderInterface $emailSender;
 
-    /** @var InvoiceFileProviderInterface */
-    private $invoiceFileProvider;
+    private InvoiceFileProviderInterface $invoiceFileProvider;
 
     public function __construct(
         SenderInterface $emailSender,

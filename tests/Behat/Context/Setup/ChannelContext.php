@@ -12,8 +12,7 @@ use Sylius\Component\Core\Model\ShopBillingData;
 
 final class ChannelContext implements Context
 {
-    /** @var ObjectManager */
-    private $channelManager;
+    private ObjectManager $channelManager;
 
     public function __construct(ObjectManager $channelManager)
     {

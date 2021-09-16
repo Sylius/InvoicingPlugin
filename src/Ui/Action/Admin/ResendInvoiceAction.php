@@ -27,20 +27,15 @@ use Webmozart\Assert\Assert;
 
 final class ResendInvoiceAction
 {
-    /** @var InvoiceRepositoryInterface */
-    private $invoiceRepository;
+    private InvoiceRepositoryInterface $invoiceRepository;
 
-    /** @var OrderRepositoryInterface */
-    private $orderRepository;
+    private OrderRepositoryInterface $orderRepository;
 
-    /** @var InvoiceEmailSenderInterface */
-    private $invoiceEmailSender;
+    private InvoiceEmailSenderInterface $invoiceEmailSender;
 
-    /** @var UrlGeneratorInterface */
-    private $urlGenerator;
+    private UrlGeneratorInterface $urlGenerator;
 
-    /** @var Session */
-    private $session;
+    private Session $session;
 
     public function __construct(
         InvoiceRepositoryInterface $invoiceRepository,

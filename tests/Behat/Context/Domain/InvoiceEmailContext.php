@@ -10,8 +10,7 @@ use Webmozart\Assert\Assert;
 
 final class InvoiceEmailContext implements Context
 {
-    /** @var EmailCheckerInterface */
-    private $emailChecker;
+    private EmailCheckerInterface $emailChecker;
 
     public function __construct(EmailCheckerInterface $emailChecker)
     {

@@ -22,11 +22,9 @@ use Symfony\Component\Messenger\MessageBusInterface;
 
 final class OrderPlacedProducer
 {
-    /** @var MessageBusInterface */
-    private $eventBus;
+    private MessageBusInterface $eventBus;
 
-    /** @var DateTimeProvider */
-    private $dateTimeProvider;
+    private DateTimeProvider $dateTimeProvider;
 
     public function __construct(MessageBusInterface $eventBus, DateTimeProvider $dateTimeProvider)
     {

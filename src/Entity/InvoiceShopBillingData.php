@@ -21,26 +21,19 @@ class InvoiceShopBillingData implements InvoiceShopBillingDataInterface, Resourc
     /** @var mixed */
     protected $id;
 
-    /** @var string|null */
-    protected $company;
+    protected ?string $company = null;
 
-    /** @var string|null */
-    protected $taxId;
+    protected ?string $taxId = null;
 
-    /** @var string|null */
-    protected $countryCode;
+    protected ?string $countryCode = null;
 
-    /** @var string|null */
-    protected $street;
+    protected ?string $street = null;
 
-    /** @var string|null */
-    protected $city;
+    protected ?string $city = null;
 
-    /** @var string|null */
-    protected $postcode;
+    protected ?string $postcode = null;
 
-    /** @var string|null */
-    protected $representative;
+    protected ?string $representative = null;
 
     public function getId()
     {
