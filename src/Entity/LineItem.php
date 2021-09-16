@@ -22,7 +22,7 @@ class LineItem implements LineItemInterface, ResourceInterface
     /** @var mixed */
     protected $id;
 
-    protected ?InvoiceInterface $invoice = null;
+    protected InvoiceInterface $invoice;
 
     protected string $name;
 
@@ -74,7 +74,7 @@ class LineItem implements LineItemInterface, ResourceInterface
         return $this->id;
     }
 
-    public function invoice(): ?InvoiceInterface
+    public function invoice(): InvoiceInterface
     {
         return $this->invoice;
     }
