@@ -18,7 +18,7 @@ final class ManagingInvoicesContext implements Context
 {
     private IndexPageInterface $indexPage;
 
-    private \Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Invoice\ShowPageInterface $showPage;
+    private ShowPageInterface $showPage;
 
     private OrderShowPageInterface $orderShowPage;
 
