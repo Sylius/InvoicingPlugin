@@ -6,7 +6,7 @@
     composer require sylius/invoicing-plugin
     ```
     
-2. Add plugin class to your `AppKernel`:
+1. Add plugin class to your `AppKernel`:
 
     ```php
     $bundles = [
@@ -15,14 +15,14 @@
     ];
     ```
 
-3. Import configuration:
+1. Import configuration:
 
     ```yaml
     imports:
         - { resource: "@SyliusInvoicingPlugin/Resources/config/config.yml" }
     ```
 
-4. Import routing:
+1. Import routing:
 
     ```yaml
     sylius_invoicing_plugin_admin:
@@ -36,7 +36,7 @@
             _locale: ^[a-z]{2}(?:_[A-Z]{2})?$
     ```
 
-5. Check if you have `wkhtmltopdf` binary. If not, you can download it [here](https://wkhtmltopdf.org/downloads.html).
+1. Check if you have `wkhtmltopdf` binary. If not, you can download it [here](https://wkhtmltopdf.org/downloads.html).
 
     In case `wkhtmltopdf` is not located in `/usr/local/bin/wkhtmltopdf`, add a following snippet at the end of your application's `config.yml`:
     
@@ -48,20 +48,19 @@
             options: []
     ```   
 
-6. Copy plugin migrations to your migrations directory (e.g. `src/Migrations`) and apply them to your database:
+1. Apply migrations to your database:
 
     ```bash
-    cp -R vendor/sylius/invoicing-plugin/migrations/* src/Migrations
     bin/console doctrine:migrations:migrate
     ```
 
-7. If you want to generate invoices for orders placed before plugin's installation run the following command using your terminal:
+1. If you want to generate invoices for orders placed before plugin's installation run the following command using your terminal:
 
-```bash
-bin/console sylius-invoicing:generate-invoices
-```
+   ```bash
+   bin/console sylius-invoicing:generate-invoices
+   ```
 
-8. Clear cache:
+1. Clear cache:
 
     ```bash
     bin/console cache:clear
