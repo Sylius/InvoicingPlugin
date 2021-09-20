@@ -36,25 +36,25 @@ Additional feature of the plugin that fulfills Invoicing domain is the ability t
     
     > Remember to allow community recipes with `composer config extra.symfony.allow-contrib true` or during plugin installation process
 
-2. Apply migration to your database:
+1. Apply migrations to your database:
 
     ```bash
     bin/console doctrine:migrations:migrate
     ```
 
-3. Check if you have wkhtmltopdf binary. If not, you can download it [here](https://wkhtmltopdf.org/downloads.html).
+1. Check if you have wkhtmltopdf binary. If not, you can download it [here](https://wkhtmltopdf.org/downloads.html).
    
-In case wkhtmltopdf is not located in /usr/local/bin/wkhtmltopdf modify the `WKHTMLTOPDF_PATH` environment variable in the `.env` file:
+In case wkhtmltopdf is not located in `/usr/local/bin/wkhtmltopdf` modify the `WKHTMLTOPDF_PATH` environment variable in the `.env` file:
 
 ```
 WKHTMLTOPDF_PATH=/usr/local/bin/wkhtmltopdf # Change this! :)
 ```
 
-4. If you want to generate invoices for orders placed before plugin's installation run the following command using your terminal:
+1. If you want to generate invoices for orders placed before plugin's installation run the following command using your terminal:
 
-```bash
-bin/console sylius-invoicing:generate-invoices
-```
+   ```bash
+   bin/console sylius-invoicing:generate-invoices
+   ```
 
 #### Beware!
 
