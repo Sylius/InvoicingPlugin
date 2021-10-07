@@ -28,6 +28,10 @@ interface BillingDataInterface
 
     public function vatNumber(): ?string;
 
+    public function siret(): ?string;
+
+    public function code(): ?string;
+
     public function setFirstName(?string $firstName): BillingDataInterface;
 
     public function setLastName(?string $lastName): BillingDataInterface;
@@ -45,4 +49,8 @@ interface BillingDataInterface
     public function setCompany(?string $company): BillingDataInterface;
 
     public function setVatNumber(?string $vatNumber): BillingDataInterface;
+
+    public function setSiret(?string $siret): BillingDataInterface;
+
+    public function setCode(?string $code): BillingDataInterface;
 }

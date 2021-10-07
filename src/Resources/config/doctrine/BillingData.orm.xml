@@ -16,5 +16,7 @@
         <field name="provinceCode" column="province_code" nullable="true" />
         <field name="provinceName" column="province_name" nullable="true" />
         <field name="vatNumber" column="vat_number" nullable="true" />
+        <field name="siret" column="siret" nullable="true" />
+        <field name="code" column="code" nullable="true" />
     </entity>
 </doctrine-mapping>
