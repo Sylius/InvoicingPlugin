@@ -41,6 +41,12 @@ class BillingData implements BillingDataInterface, ResourceInterface
     /** @var string|null */
     protected $vatNumber;
 
+    /** @var string|null */
+    protected $code;
+
+    /** @var string|null */
+    protected $siret;
+
     public function __construct(
         string $firstName,
         string $lastName,
@@ -51,7 +57,9 @@ class BillingData implements BillingDataInterface, ResourceInterface
         ?string $provinceCode = null,
         ?string $provinceName = null,
         ?string $company = null,
-        ?string $vatNumber = null
+        ?string $vatNumber = null,
+        ?string $code = null,
+        ?string $siret = null
     ) {
         $this->firstName = $firstName;
         $this->lastName = $lastName;
@@ -63,6 +71,8 @@ class BillingData implements BillingDataInterface, ResourceInterface
         $this->provinceName = $provinceName;
         $this->company = $company;
         $this->vatNumber = $vatNumber;
+        $this->code = $code;
+        $this->siret = $siret;
     }
 
     public function getId(): string
@@ -125,6 +135,16 @@ class BillingData implements BillingDataInterface, ResourceInterface
         return $this->vatNumber;
     }
 
+    public function code(): ?string
+    {
+        return $this->code;
+    }
+
+    public function siret(): ?string
+    {
+        return $this->siret;
+    }
+
     public function setFirstName(?string $firstName): BillingDataInterface
     {
         $this->firstName = $firstName;
@@ -176,6 +196,18 @@ class BillingData implements BillingDataInterface, ResourceInterface
     public function setVatNumber(?string $vatNumber): BillingDataInterface
     {
         $this->vatNumber = $vatNumber;
+        return $this;
+    }
+
+    public function setCode(?string $code): BillingDataInterface
+    {
+        $this->code = $code;
+        return $this;
+    }
+
+    public function setSiret(?string $siret): BillingDataInterface
+    {
+        $this->siret = $siret;
         return $this;
     }
 }
