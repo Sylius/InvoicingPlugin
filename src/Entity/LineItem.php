@@ -145,6 +145,7 @@ class LineItem implements LineItemInterface, ResourceInterface
     {
         return
             $this->name() === $lineItem->name() &&
+            $this->variantCode() === $lineItem->variantCode() &&
             $this->unitPrice() === $lineItem->unitPrice() &&
             $this->taxRate() === $lineItem->taxRate()
         ;
