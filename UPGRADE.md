@@ -1,3 +1,8 @@
+### UPGRADE FROM 0.18.0 TO 0.19.0
+
+1. Support for Sylius 1.9 has been dropped, upgrade your application to [Sylius 1.10](https://github.com/Sylius/Sylius/blob/master/UPGRADE-1.10.md).
+1. Support for Symfony 5.2 has been dropped.
+
 ### UPGRADE FROM 0.17.0 TO 0.18.0
 
 1. The `Sylius\InvoicingPlugin\Converter\BillingDataConverter` has been removed in favor of `Sylius\InvoicingPlugin\Factory\BillingDataFactory->createFromAddress`.
