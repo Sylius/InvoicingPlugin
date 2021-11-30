@@ -93,17 +93,26 @@ final class LineItemSpec extends ObjectBehavior
 
     public function it_compares_with_another_line_item(
         LineItemInterface $theSameLineItem,
-        LineItemInterface $differentLineItem
+        LineItemInterface $differentLineItemName,
+        LineItemInterface $differentLineItemCode
     ): void {
         $theSameLineItem->name()->willReturn('Mjolnir');
         $theSameLineItem->unitPrice()->willReturn(5000);
         $theSameLineItem->taxRate()->willReturn('10%');
+        $theSameLineItem->variantCode()->willReturn('7903c83a-4c5e-4bcf-81d8-9dc304c6a353');
 
-        $differentLineItem->name()->willReturn('Stormbreaker');
-        $differentLineItem->unitPrice()->willReturn(5000);
-        $differentLineItem->taxRate()->willReturn('10%');
+        $differentLineItemName->name()->willReturn('Stormbreaker');
+        $differentLineItemName->unitPrice()->willReturn(5000);
+        $differentLineItemName->taxRate()->willReturn('10%');
+        $differentLineItemName->variantCode()->willReturn('7903c83a-4c5e-4bcf-81d8-9dc304c6a353');
+
+        $differentLineItemCode->name()->willReturn('Mjolnir');
+        $differentLineItemCode->unitPrice()->willReturn(5000);
+        $differentLineItemCode->taxRate()->willReturn('10%');
+        $differentLineItemCode->variantCode()->willReturn('7903c83a-4c5e-4bcf-81d8-9dc304c6a350');
 
         $this->compare($theSameLineItem)->shouldReturn(true);
-        $this->compare($differentLineItem)->shouldReturn(false);
+        $this->compare($differentLineItemName)->shouldReturn(false);
+        $this->compare($differentLineItemCode)->shouldReturn(false);
     }
 }
