@@ -17,7 +17,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Sylius\Component\Core\Model\AddressInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\OrderInterface;
-use Sylius\Component\Payment\Model\PaymentInterface;
+use Sylius\Component\Core\OrderPaymentStates;
 use Sylius\InvoicingPlugin\Converter\LineItemsConverterInterface;
 use Sylius\InvoicingPlugin\Converter\TaxItemsConverterInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
@@ -71,7 +71,7 @@ final class InvoiceGenerator implements InvoiceGeneratorInterface
         /** @var ChannelInterface $channel */
         $channel = $order->getChannel();
 
-        $paymentState = $order->getPaymentState() === PaymentInterface::STATE_COMPLETED ?
+        $paymentState = $order->getPaymentState() === OrderPaymentStates::STATE_PAID ?
             InvoiceInterface::PAYMENT_STATE_COMPLETED : InvoiceInterface::PAYMENT_STATE_PENDING;
 
         return $this->invoiceFactory->createForData(
