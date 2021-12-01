@@ -73,6 +73,7 @@ final class LineItemSpec extends ObjectBehavior
         $newLineItem->total()->willReturn(5500);
         $newLineItem->taxTotal()->willReturn(500);
         $newLineItem->taxRate()->willReturn('10%');
+        $newLineItem->variantCode()->willReturn('7903c83a-4c5e-4bcf-81d8-9dc304c6a353');
 
         $this->merge($newLineItem);
 
