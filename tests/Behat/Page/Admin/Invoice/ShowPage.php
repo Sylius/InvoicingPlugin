@@ -168,7 +168,6 @@ final class ShowPage extends SymfonyPage implements ShowPageInterface
         return array_merge(parent::getDefinedElements(), [
             'back' => '#back',
             'billing_address' => '#billing-data',
-            'invoice_channel_name' => '#invoice-channel-name',
             'invoice_net_total' => '[data-test-invoice-net-total]',
             'invoice_net_total_currency_code' => '[data-test-invoice-net-total-currency-code]',
             'invoice_taxes_total' => '[data-test-invoice-taxes-total]',
