@@ -17,7 +17,7 @@
             {{ buttons.default(path, '', 'back', 'arrow alternate circle left outline') }}
 
             {% set path = path('sylius_invoicing_plugin_admin_invoice_download', {'id': invoice.id}) %}
-            {{ buttons.default(path, 'sylius_invoicing_plugin.ui.download_invoice'|trans, invoice.id, 'download') }}
+            {{ buttons.default(path, 'sylius_invoicing_plugin.ui.download_invoice'|trans, invoice.id, 'download', 'blue') }}
 
             {% set path = path('sylius_invoicing_plugin_admin_invoice_resend', {'id': invoice.id}) %}
             {{ buttons.default(path, 'sylius_invoicing_plugin.ui.resend_invoice'|trans, invoice.id, 'send') }}
