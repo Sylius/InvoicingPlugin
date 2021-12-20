@@ -1,0 +1,43 @@
+---------------------------------------------------------------------------
+
+by GSadee at 2021-11-30T13:06:36Z
+
+@Snowbaha thank you for your contribution, can you rebase the PR with master and fix the build by adjusting failing PHPSpec to your changes?
+
+---------------------------------------------------------------------------
+
+by Snowbaha at 2021-11-30T13:41:17Z
+
+I am not the more confident with PHPSpec :(
+
+---------------------------------------------------------------------------
+
+by GSadee at 2021-11-30T13:48:33Z
+
+You need to adjust this spec: https://github.com/Sylius/InvoicingPlugin/blob/master/spec/Entity/LineItemSpec.php#L94:L108 to use there a variant code that you've added to LineItem compare method, I encourage you to try 😃
+
+---------------------------------------------------------------------------
+
+by Snowbaha at 2021-11-30T14:03:28Z
+
+I tried, tell me if it is ok?
+
+---------------------------------------------------------------------------
+
+by GSadee at 2021-12-01T07:02:50Z
+
+> I tried, tell me if it is ok?
+
+Yup, it looks OK 😃 but... there is also a need to adjust `it_merges_with_another_line_item` method in this spec because of added checking variant's code
+
+---------------------------------------------------------------------------
+
+by Snowbaha at 2021-12-01T09:06:55Z
+
+it shoudl be ok! :)
+
+---------------------------------------------------------------------------
+
+by GSadee at 2021-12-20T11:43:12Z
+
+Thank you, Julien! :tada:
