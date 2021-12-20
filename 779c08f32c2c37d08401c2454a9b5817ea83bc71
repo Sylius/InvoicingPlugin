@@ -1,0 +1,47 @@
+---------------------------------------------------------------------------
+
+by CoderMaggie at 2021-03-21T20:46:38Z
+
+@diimpp to me it **looks** more than okay, although the build is failing 😭
+
+---------------------------------------------------------------------------
+
+by diimpp at 2021-09-27T12:30:12Z
+
+@GSadee hey man, if you're taking part of the PR and merge it in another PR, please don't forget to add mention about that -- I'm spending time to rebase this PR only to see, that some changes already in master. (I'm talking about show invoice layout https://github.com/Sylius/InvoicingPlugin/pull/210/commits/06faf608c0a0aaee6fc044cb6d5559d26031aca0 https://github.com/Sylius/InvoicingPlugin/pull/210/commits/d3c516dff0b4be14db7bab784b9665dc617c1fa5)
+
+---------------------------------------------------------------------------
+
+by diimpp at 2021-09-27T12:40:28Z
+
+@CoderMaggie ready for review, though points 2 and 3 already in master. Please start CI for this PR.
+
+---------------------------------------------------------------------------
+
+by GSadee at 2021-11-30T11:35:12Z
+
+@diimpp please rebase with master to fix the conflict, it should also fix problems with failing builds. I'm also sorry for not answering for a very long time 😞
+
+---------------------------------------------------------------------------
+
+by CoderMaggie at 2021-12-02T22:10:39Z
+
+Fingers crossed it will get merged soon! 🤞🏼 🤞🏼 🤞🏼
+
+---------------------------------------------------------------------------
+
+by diimpp at 2021-12-03T09:12:06Z
+
+@GSadee rebase is done.
+
+---------------------------------------------------------------------------
+
+by diimpp at 2021-12-20T07:36:39Z
+
+@GSadee  @CoderMaggie ping
+
+---------------------------------------------------------------------------
+
+by Zales0123 at 2021-12-20T11:29:01Z
+
+Thank you, Dmitri! :tada:
