@@ -18,9 +18,9 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                php: ["7.4", "8.0"]
-                symfony: ["^4.4", "5.3.*"]
-                sylius: ["~1.10.0"]
+                php: ["8.0"]
+                symfony: ["^4.4", "5.4.*"]
+                sylius: ["~1.10.0", "^1.11-alpha"]
                 node: ["10.x"]
                 mysql: ["5.7", "8.0"]
 
