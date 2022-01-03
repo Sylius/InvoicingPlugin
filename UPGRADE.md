@@ -8,6 +8,12 @@ Override `src/Sylius/Bundle/AdminBundle/Resources/views/Common/_channel.html.twi
     - Interface `Sylius\InvoicingPlugin\Provider\ChannelColorProviderInterface` was removed.
     - Class `Sylius\InvoicingPlugin\Twig\ChannelColorExtension` and twig filter `sylius_channel_color` were removed.
     - Parameter `default_channel_color` was removed
+4. Way to configure resources has been changed:
+    ```dif
+    -    sylius_invoicing:
+    +    sylius_resource:
+            resources:
+    ```
 
 ### UPGRADE FROM 0.17.0 TO 0.18.0
 

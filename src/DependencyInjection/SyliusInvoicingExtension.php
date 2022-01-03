@@ -29,8 +29,6 @@ final class SyliusInvoicingExtension extends AbstractResourceExtension implement
         $config = $this->processConfiguration($this->getConfiguration([], $container), $config);
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
 
-        $this->registerResources('sylius_invoicing_plugin', 'doctrine/orm', $config['resources'], $container);
-
         $loader->load('services.xml');
     }
 

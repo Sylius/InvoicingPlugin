@@ -1,23 +1,23 @@
 imports:
     - { resource: "@SyliusInvoicingPlugin/Resources/config/config.yml" }
-            
-sylius_invoicing:
+
+sylius_resource:
     resources:
-        billing_data:
+        sylius_invoicing_plugin.billing_data:
             classes:
                 model: Tests\Sylius\InvoicingPlugin\Application\Entity\SyliusInvoicingPlugin\BillingData
-        invoice:
+        sylius_invoicing_plugin.invoice:
             classes:
                 model: Tests\Sylius\InvoicingPlugin\Application\Entity\SyliusInvoicingPlugin\Invoice
-        invoice_sequence:
+        sylius_invoicing_plugin.invoice_sequence:
             classes:
                 model: Tests\Sylius\InvoicingPlugin\Application\Entity\SyliusInvoicingPlugin\InvoiceSequence
-        shop_billing_data:
+        sylius_invoicing_plugin.shop_billing_data:
             classes:
                 model: Tests\Sylius\InvoicingPlugin\Application\Entity\SyliusInvoicingPlugin\InvoiceShopBillingData
-        line_item:
+        sylius_invoicing_plugin.line_item:
             classes:
                 model: Tests\Sylius\InvoicingPlugin\Application\Entity\SyliusInvoicingPlugin\LineItem
-        tax_item:
+        sylius_invoicing_plugin.tax_item:
             classes:
                 model: Tests\Sylius\InvoicingPlugin\Application\Entity\SyliusInvoicingPlugin\TaxItem

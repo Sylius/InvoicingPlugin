@@ -2,6 +2,38 @@ parameters:
     sylius_invoicing.invoice_save_path: "%kernel.project_dir%/private/invoices/"
     sylius_invoicing.filesystem_adapter.invoice: "sylius_invoicing_invoice"
 
+sylius_resource:
+    resources:
+        sylius_invoicing_plugin.invoice:
+            classes:
+                model: Sylius\InvoicingPlugin\Entity\Invoice
+                interface: Sylius\InvoicingPlugin\Entity\InvoiceInterface
+                repository: Sylius\InvoicingPlugin\Doctrine\ORM\InvoiceRepository
+        sylius_invoicing_plugin.billing_data:
+            classes:
+                model: Sylius\InvoicingPlugin\Entity\BillingData
+                interface: Sylius\InvoicingPlugin\Entity\BillingDataInterface
+                factory: Sylius\InvoicingPlugin\Factory\BillingDataFactory
+        sylius_invoicing_plugin.shop_billing_data:
+            classes:
+                model: Sylius\InvoicingPlugin\Entity\InvoiceShopBillingData
+                interface: Sylius\InvoicingPlugin\Entity\InvoiceShopBillingDataInterface
+                factory: Sylius\InvoicingPlugin\Factory\InvoiceShopBillingDataFactory
+        sylius_invoicing_plugin.line_item:
+            classes:
+                model: Sylius\InvoicingPlugin\Entity\LineItem
+                interface: Sylius\InvoicingPlugin\Entity\LineItemInterface
+                factory: Sylius\InvoicingPlugin\Factory\LineItemFactory
+        sylius_invoicing_plugin.tax_item:
+            classes:
+                model: Sylius\InvoicingPlugin\Entity\TaxItem
+                interface: Sylius\InvoicingPlugin\Entity\TaxItemInterface
+                factory: Sylius\InvoicingPlugin\Factory\TaxItemFactory
+        sylius_invoicing_plugin.invoice_sequence:
+            classes:
+                model: Sylius\InvoicingPlugin\Entity\InvoiceSequence
+                interface: Sylius\InvoicingPlugin\Entity\InvoiceSequenceInterface
+
 sylius_mailer:
     emails:
         invoice_generated:
