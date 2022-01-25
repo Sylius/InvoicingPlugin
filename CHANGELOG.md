@@ -1,5 +1,23 @@
 # CHANGELOG
 
+### v0.19.0 (2022-01-25)
+
+- [#249](https://github.com/Sylius/InvoicingPlugin/issues/249) Use PHP 7.4 syntax ([@GSadee](https://github.com/GSadee))
+- [#251](https://github.com/Sylius/InvoicingPlugin/issues/251) New PDF layout ([@kulczy](https://github.com/kulczy))
+- [#252](https://github.com/Sylius/InvoicingPlugin/issues/252) [Behat] Fix type of show page ([@GSadee](https://github.com/GSadee))
+- [#253](https://github.com/Sylius/InvoicingPlugin/issues/253) [Maintenance] Minor installation guide improvements ([@GSadee](https://github.com/GSadee))
+- [#255](https://github.com/Sylius/InvoicingPlugin/issues/255) Added missing french translations ([@Snowbaha](https://github.com/Snowbaha))
+- [#261](https://github.com/Sylius/InvoicingPlugin/issues/261) Drop support for Sylius 1.9 & Symfony 5.2 ([@GSadee](https://github.com/GSadee))
+- [#262](https://github.com/Sylius/InvoicingPlugin/issues/262) [PDF] Fix minor locale code typo ([@GSadee](https://github.com/GSadee))
+- [#256](https://github.com/Sylius/InvoicingPlugin/issues/256) Fix invoice payment state not updating when given order is paid ()
+- [#210](https://github.com/Sylius/InvoicingPlugin/issues/210) Minor admin ui redesign ([@dmitri](https://github.com/dmitri).[@perunov](https://github.com/perunov)@[@gmail](https://github.com/gmail).[@com](https://github.com/com))
+- [#258](https://github.com/Sylius/InvoicingPlugin/issues/258) fix: compare when name is the same but not variant ([@Snowbaha](https://github.com/Snowbaha))
+- [#266](https://github.com/Sylius/InvoicingPlugin/issues/266) Remove duplicated config for wkhtmltopdf ([@Zales0123](https://github.com/Zales0123))
+- [#263](https://github.com/Sylius/InvoicingPlugin/issues/263) resolve SYLIUS_INVOICING_LOGO_FILE ()
+- [#267](https://github.com/Sylius/InvoicingPlugin/issues/267) Drop support for PHP 7.4 ([@GSadee](https://github.com/GSadee))
+- [#269](https://github.com/Sylius/InvoicingPlugin/issues/269) Upgrade node in GitHub Actions builds ([@GSadee](https://github.com/GSadee))
+- [#268](https://github.com/Sylius/InvoicingPlugin/issues/268) Drop support for Symfony 5.3 ([@GSadee](https://github.com/GSadee))
+
 ### v0.18.1 (2021-09-15)
 
 - [#250](https://github.com/Sylius/InvoicingPlugin/issues/250) [Maintenance] Remove wrong return types ([@lchrusciel](https://github.com/lchrusciel))
