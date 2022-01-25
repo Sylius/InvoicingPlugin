@@ -1,7 +1,7 @@
 ### UPGRADE FROM 0.18.0 TO 0.19.0
 
 1. Support for Sylius 1.9 has been dropped, upgrade your application to [Sylius 1.10](https://github.com/Sylius/Sylius/blob/master/UPGRADE-1.10.md).
-2. Support for Symfony 5.2 has been dropped.
+2. Support for Symfony 5.2 and 5.3 has been dropped.
 3. Default channel color feature was removed in favour of `sylius/sylius` standard solution.
 Override `src/Sylius/Bundle/AdminBundle/Resources/views/Common/_channel.html.twig` if custom default color is neccesasary.
     - Class `Sylius\InvoicingPlugin\Provider\ChannelColorProvider` was removed.
