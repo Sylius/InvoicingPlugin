@@ -1,3 +1,9 @@
+### UPGRADE FROM 0.19.0 TO 0.20.0
+
+1. Since 0.20.0, the recommended Sylius version to use with InvoicingPlugin is `1.11.*`. If you would like to upgrade Sylius to v1.11.0,
+   please follow [Sylius's upgrade instructions](https://github.com/Sylius/Sylius/blob/master/UPGRADE-1.11.md)
+   and [Sylius API's upgrade instructions](https://github.com/Sylius/Sylius/blob/master/UPGRADE-API-1.11.md).
+
 ### UPGRADE FROM 0.18.0 TO 0.19.0
 
 1. Support for Sylius 1.9 has been dropped, upgrade your application to [Sylius 1.10](https://github.com/Sylius/Sylius/blob/master/UPGRADE-1.10.md).
