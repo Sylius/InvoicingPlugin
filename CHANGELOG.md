@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### v0.20.0 (2022-02-17)
+
+- [#270](https://github.com/Sylius/InvoicingPlugin/issues/270) [Maintenance] Support stable Sylius v1.11.0 ([@GSadee](https://github.com/GSadee))
+
 ### v0.19.0 (2022-01-25)
 
 - [#249](https://github.com/Sylius/InvoicingPlugin/issues/249) Use PHP 7.4 syntax ([@GSadee](https://github.com/GSadee))
