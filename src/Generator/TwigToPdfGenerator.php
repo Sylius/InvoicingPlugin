@@ -23,6 +23,7 @@ final class TwigToPdfGenerator implements TwigToPdfGeneratorInterface
         private Environment $twig,
         private GeneratorInterface $pdfGenerator,
         private FileLocatorInterface $fileLocator,
+        private array $knpSnappyOptions,
         private array $allowedFiles
     ) {
     }
@@ -37,12 +38,23 @@ final class TwigToPdfGenerator implements TwigToPdfGeneratorInterface
 
     private function getOptions(): array
     {
+        $options = $this->knpSnappyOptions;
+
         if (empty($this->allowedFiles)) {
-            return [];
+            return $options;
         }
 
-        return [
-            'allow' => array_map(fn ($file) => $this->fileLocator->locate($file), $this->allowedFiles),
-        ];
+        if (!isset($options['allow'])) {
+            $options['allow'] = [];
+        } elseif (!is_array($options['allow'])) {
+            $options['allow'] = [$options['allow']];
+        }
+
+        $options['allow'] = array_merge(
+            $options['allow'],
+            array_map(fn ($file) => $this->fileLocator->locate($file), $this->allowedFiles)
+        );
+
+        return $options;
     }
 }

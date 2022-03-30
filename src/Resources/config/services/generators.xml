@@ -54,6 +54,7 @@
             <argument type="service" id="twig" />
             <argument type="service" id="knp_snappy.pdf" />
             <argument type="service" id="file_locator" />
+            <argument>%knp_snappy.pdf.options%</argument>
             <argument>%sylius_invoicing.pdf_generator.allowed_files%</argument>
         </service>
     </services>

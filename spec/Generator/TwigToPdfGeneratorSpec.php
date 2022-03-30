@@ -30,6 +30,7 @@ final class TwigToPdfGeneratorSpec extends ObjectBehavior
             $twig,
             $pdfGenerator,
             $fileLocator,
+            ['allow' => 'allowed_file_in_knp_snappy_config.png'],
             ['swans.png']
         );
     }
@@ -52,7 +53,7 @@ final class TwigToPdfGeneratorSpec extends ObjectBehavior
         $pdfGenerator
             ->getOutputFromHtml(
                 '<html>I am a pdf file generated from twig template</html>',
-                ['allow' => ['located-path/swans.png']]
+                ['allow' => ['allowed_file_in_knp_snappy_config.png', 'located-path/swans.png']]
             )
             ->willReturn('PDF FILE')
         ;
