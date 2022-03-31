@@ -13,47 +13,36 @@ declare(strict_types=1);
 
 namespace Sylius\InvoicingPlugin\Generator;
 
+use Knp\Snappy\GeneratorInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Sylius\InvoicingPlugin\Model\InvoicePdf;
 use Symfony\Component\Config\FileLocatorInterface;
+use Twig\Environment;
 
 final class InvoicePdfFileGenerator implements InvoicePdfFileGeneratorInterface
 {
-    private TwigToPdfGeneratorInterface $twigToPdfGenerator;
-
-    private FileLocatorInterface $fileLocator;
-
-    private InvoiceFileNameGeneratorInterface $invoiceFileNameGenerator;
-
-    private string $template;
-
-    private string $invoiceLogoPath;
-
     public function __construct(
-        TwigToPdfGeneratorInterface $twigToPdfGenerator,
-        FileLocatorInterface $fileLocator,
-        InvoiceFileNameGeneratorInterface $invoiceFileNameGenerator,
-        string $template,
-        string $invoiceLogoPath
+        private Environment $templatingEngine,
+        private GeneratorInterface $pdfGenerator,
+        private PdfOptionsGeneratorInterface $pdfOptionsGenerator,
+        private FileLocatorInterface $fileLocator,
+        private InvoiceFileNameGeneratorInterface $invoiceFileNameGenerator,
+        private string $template,
+        private string $invoiceLogoPath
     ) {
-        $this->twigToPdfGenerator = $twigToPdfGenerator;
-        $this->fileLocator = $fileLocator;
-        $this->invoiceFileNameGenerator = $invoiceFileNameGenerator;
-        $this->template = $template;
-        $this->invoiceLogoPath = $invoiceLogoPath;
     }
 
     public function generate(InvoiceInterface $invoice): InvoicePdf
     {
         $filename = $this->invoiceFileNameGenerator->generateForPdf($invoice);
 
-        $pdf = $this->twigToPdfGenerator->generate(
-            $this->template,
-            [
+        $pdf = $this->pdfGenerator->getOutputFromHtml(
+            $this->templatingEngine->render($this->template, [
                 'invoice' => $invoice,
                 'channel' => $invoice->channel(),
                 'invoiceLogoPath' => $this->fileLocator->locate($this->invoiceLogoPath),
-            ]
+            ]),
+            $this->pdfOptionsGenerator->generate()
         );
 
         return new InvoicePdf($filename, $pdf);

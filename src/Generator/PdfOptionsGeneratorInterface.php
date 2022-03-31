@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Sylius\InvoicingPlugin\Generator;
 
-interface TwigToPdfGeneratorInterface
+interface PdfOptionsGeneratorInterface
 {
-    public function generate(string $templateName, array $templateParams): string;
+    public function generate(): array;
 }

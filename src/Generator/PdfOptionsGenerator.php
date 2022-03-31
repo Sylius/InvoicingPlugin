@@ -13,30 +13,18 @@ declare(strict_types=1);
 
 namespace Sylius\InvoicingPlugin\Generator;
 
-use Knp\Snappy\GeneratorInterface;
 use Symfony\Component\Config\FileLocatorInterface;
-use Twig\Environment;
 
-final class TwigToPdfGenerator implements TwigToPdfGeneratorInterface
+final class PdfOptionsGenerator implements PdfOptionsGeneratorInterface
 {
     public function __construct(
-        private Environment $twig,
-        private GeneratorInterface $pdfGenerator,
         private FileLocatorInterface $fileLocator,
         private array $knpSnappyOptions,
         private array $allowedFiles
     ) {
     }
 
-    public function generate(string $templateName, array $templateParams): string
-    {
-        return $this->pdfGenerator->getOutputFromHtml(
-            $this->twig->render($templateName, $templateParams),
-            $this->getOptions()
-        );
-    }
-
-    private function getOptions(): array
+    public function generate(): array
     {
         $options = $this->knpSnappyOptions;
 

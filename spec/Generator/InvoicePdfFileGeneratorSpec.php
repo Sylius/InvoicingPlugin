@@ -13,24 +13,30 @@ declare(strict_types=1);
 
 namespace spec\Sylius\InvoicingPlugin\Generator;
 
+use Knp\Snappy\GeneratorInterface;
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Sylius\InvoicingPlugin\Generator\InvoiceFileNameGeneratorInterface;
 use Sylius\InvoicingPlugin\Generator\InvoicePdfFileGeneratorInterface;
-use Sylius\InvoicingPlugin\Generator\TwigToPdfGeneratorInterface;
+use Sylius\InvoicingPlugin\Generator\PdfOptionsGeneratorInterface;
 use Sylius\InvoicingPlugin\Model\InvoicePdf;
 use Symfony\Component\Config\FileLocatorInterface;
+use Twig\Environment;
 
 final class InvoicePdfFileGeneratorSpec extends ObjectBehavior
 {
     function let(
-        TwigToPdfGeneratorInterface $twigToPdfGenerator,
+        Environment $twig,
+        GeneratorInterface $pdfGenerator,
+        PdfOptionsGeneratorInterface $pdfOptionsGenerator,
         FileLocatorInterface $fileLocator,
         InvoiceFileNameGeneratorInterface $invoiceFileNameGenerator
     ): void {
         $this->beConstructedWith(
-            $twigToPdfGenerator,
+            $twig,
+            $pdfGenerator,
+            $pdfOptionsGenerator,
             $fileLocator,
             $invoiceFileNameGenerator,
             'invoiceTemplate.html.twig',
@@ -45,7 +51,9 @@ final class InvoicePdfFileGeneratorSpec extends ObjectBehavior
 
     function it_creates_invoice_pdf_with_generated_content_and_filename_basing_on_invoice_number(
         FileLocatorInterface $fileLocator,
-        TwigToPdfGeneratorInterface $twigToPdfGenerator,
+        Environment $twig,
+        GeneratorInterface $pdfGenerator,
+        PdfOptionsGeneratorInterface $pdfOptionsGenerator,
         InvoiceFileNameGeneratorInterface $invoiceFileNameGenerator,
         InvoiceInterface $invoice,
         ChannelInterface $channel
@@ -55,14 +63,24 @@ final class InvoicePdfFileGeneratorSpec extends ObjectBehavior
 
         $fileLocator->locate('@SyliusInvoicingPlugin/Resources/assets/sylius-logo.png')->willReturn('located-path/sylius-logo.png');
 
-        $twigToPdfGenerator
-            ->generate(
-                'invoiceTemplate.html.twig',
-                ['invoice' => $invoice, 'channel' => $channel, 'invoiceLogoPath' => 'located-path/sylius-logo.png']
-            )
+        $twig
+            ->render('invoiceTemplate.html.twig', ['invoice' => $invoice, 'channel' => $channel, 'invoiceLogoPath' => 'located-path/sylius-logo.png'])
+            ->willReturn('<html>I am an invoice pdf file content</html>')
+        ;
+
+        $pdfOptionsGenerator
+            ->generate()
+            ->willReturn(['allow' => ['located-path/sylius-logo.png']])
+        ;
+
+        $pdfGenerator
+            ->getOutputFromHtml('<html>I am an invoice pdf file content</html>', ['allow' => ['located-path/sylius-logo.png']])
             ->willReturn('PDF FILE')
         ;
 
-        $this->generate($invoice)->shouldBeLike(new InvoicePdf('2015_05_00004444.pdf', 'PDF FILE'));
+        $this
+            ->generate($invoice)
+            ->shouldBeLike(new InvoicePdf('2015_05_00004444.pdf', 'PDF FILE'))
+        ;
     }
 }
