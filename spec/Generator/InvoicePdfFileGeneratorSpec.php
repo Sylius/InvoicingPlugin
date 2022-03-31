@@ -19,6 +19,7 @@ use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Sylius\InvoicingPlugin\Generator\InvoiceFileNameGeneratorInterface;
 use Sylius\InvoicingPlugin\Generator\InvoicePdfFileGeneratorInterface;
+use Sylius\InvoicingPlugin\Generator\PdfOptionsGeneratorInterface;
 use Sylius\InvoicingPlugin\Model\InvoicePdf;
 use Symfony\Component\Config\FileLocatorInterface;
 use Twig\Environment;
@@ -28,12 +29,14 @@ final class InvoicePdfFileGeneratorSpec extends ObjectBehavior
     function let(
         Environment $twig,
         GeneratorInterface $pdfGenerator,
+        PdfOptionsGeneratorInterface $pdfOptionsGenerator,
         FileLocatorInterface $fileLocator,
         InvoiceFileNameGeneratorInterface $invoiceFileNameGenerator
     ): void {
         $this->beConstructedWith(
             $twig,
             $pdfGenerator,
+            $pdfOptionsGenerator,
             $fileLocator,
             $invoiceFileNameGenerator,
             'invoiceTemplate.html.twig',
@@ -50,6 +53,7 @@ final class InvoicePdfFileGeneratorSpec extends ObjectBehavior
         FileLocatorInterface $fileLocator,
         Environment $twig,
         GeneratorInterface $pdfGenerator,
+        PdfOptionsGeneratorInterface $pdfOptionsGenerator,
         InvoiceFileNameGeneratorInterface $invoiceFileNameGenerator,
         InvoiceInterface $invoice,
         ChannelInterface $channel
@@ -64,8 +68,19 @@ final class InvoicePdfFileGeneratorSpec extends ObjectBehavior
             ->willReturn('<html>I am an invoice pdf file content</html>')
         ;
 
-        $pdfGenerator->getOutputFromHtml('<html>I am an invoice pdf file content</html>')->willReturn('PDF FILE');
+        $pdfOptionsGenerator
+            ->generate()
+            ->willReturn(['allow' => ['located-path/sylius-logo.png']])
+        ;
 
-        $this->generate($invoice)->shouldBeLike(new InvoicePdf('2015_05_00004444.pdf', 'PDF FILE'));
+        $pdfGenerator
+            ->getOutputFromHtml('<html>I am an invoice pdf file content</html>', ['allow' => ['located-path/sylius-logo.png']])
+            ->willReturn('PDF FILE')
+        ;
+
+        $this
+            ->generate($invoice)
+            ->shouldBeLike(new InvoicePdf('2015_05_00004444.pdf', 'PDF FILE'))
+        ;
     }
 }

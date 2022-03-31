@@ -2,6 +2,11 @@ parameters:
     sylius_invoicing.invoice_save_path: "%kernel.project_dir%/private/invoices/"
     sylius_invoicing.filesystem_adapter.invoice: "sylius_invoicing_invoice"
 
+sylius_invoicing:
+    pdf_generator:
+        allowed_files:
+            - '%env(default:default_logo_file:resolve:SYLIUS_INVOICING_LOGO_FILE)%'
+
 sylius_mailer:
     emails:
         invoice_generated:

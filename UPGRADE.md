@@ -1,3 +1,7 @@
+### UPGRADE FROM 0.20.0 TO 0.21.0
+
+1. `Sylius\InvoicingPlugin\Generator\InvoicePdfFileGenerator` takes `Sylius\InvoicingPlugin\Generator\PdfOptionsGeneratorInterface` as the third argument after `Knp\Snappy\GeneratorInterface`.
+
 ### UPGRADE FROM 0.19.0 TO 0.20.0
 
 1. Since 0.20.0, the recommended Sylius version to use with InvoicingPlugin is `1.11.*`. If you would like to upgrade Sylius to v1.11.0,

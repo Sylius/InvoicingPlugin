@@ -21,32 +21,15 @@ use Twig\Environment;
 
 final class InvoicePdfFileGenerator implements InvoicePdfFileGeneratorInterface
 {
-    private Environment $templatingEngine;
-
-    private GeneratorInterface $pdfGenerator;
-
-    private FileLocatorInterface $fileLocator;
-
-    private InvoiceFileNameGeneratorInterface $invoiceFileNameGenerator;
-
-    private string $template;
-
-    private string $invoiceLogoPath;
-
     public function __construct(
-        Environment $templatingEngine,
-        GeneratorInterface $pdfGenerator,
-        FileLocatorInterface $fileLocator,
-        InvoiceFileNameGeneratorInterface $invoiceFileNameGenerator,
-        string $template,
-        string $invoiceLogoPath
+        private Environment $templatingEngine,
+        private GeneratorInterface $pdfGenerator,
+        private PdfOptionsGeneratorInterface $pdfOptionsGenerator,
+        private FileLocatorInterface $fileLocator,
+        private InvoiceFileNameGeneratorInterface $invoiceFileNameGenerator,
+        private string $template,
+        private string $invoiceLogoPath
     ) {
-        $this->templatingEngine = $templatingEngine;
-        $this->pdfGenerator = $pdfGenerator;
-        $this->fileLocator = $fileLocator;
-        $this->invoiceFileNameGenerator = $invoiceFileNameGenerator;
-        $this->template = $template;
-        $this->invoiceLogoPath = $invoiceLogoPath;
     }
 
     public function generate(InvoiceInterface $invoice): InvoicePdf
@@ -58,7 +41,8 @@ final class InvoicePdfFileGenerator implements InvoicePdfFileGeneratorInterface
                 'invoice' => $invoice,
                 'channel' => $invoice->channel(),
                 'invoiceLogoPath' => $this->fileLocator->locate($this->invoiceLogoPath),
-            ])
+            ]),
+            $this->pdfOptionsGenerator->generate()
         );
 
         return new InvoicePdf($filename, $pdf);
