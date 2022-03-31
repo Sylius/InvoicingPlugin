@@ -1,5 +1,10 @@
 # CHANGELOG
 
+### v0.21.0 (2022-03-31)
+
+- [#271](https://github.com/Sylius/InvoicingPlugin/issues/271) [GitHub Actions] Configure workflow to run on the workflow_dispatch event ([@GSadee](https://github.com/GSadee))
+- [#272](https://github.com/Sylius/InvoicingPlugin/issues/272) Enable local file access in InvoicePdfFileGenerator ([@coldic3](https://github.com/coldic3))
+
 ### v0.20.0 (2022-02-17)
 
 - [#270](https://github.com/Sylius/InvoicingPlugin/issues/270) [Maintenance] Support stable Sylius v1.11.0 ([@GSadee](https://github.com/GSadee))
