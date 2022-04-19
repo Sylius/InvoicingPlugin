@@ -30,9 +30,7 @@
         />
 
         <service id="sylius_invoicing_plugin.generator.invoice_pdf_file" class="Sylius\InvoicingPlugin\Generator\InvoicePdfFileGenerator">
-            <argument type="service" id="twig" />
-            <argument type="service" id="knp_snappy.pdf" />
-            <argument type="service" id="sylius_invoicing_plugin.generator.pdf_options" />
+            <argument type="service" id="sylius_invoicing_plugin.generator.twig_to_pdf" />
             <argument type="service" id="file_locator" />
             <argument type="service" id="Sylius\InvoicingPlugin\Generator\InvoiceFileNameGeneratorInterface" />
             <argument>@SyliusInvoicingPlugin/Invoice/Download/pdf.html.twig</argument>
@@ -56,6 +54,12 @@
             <argument type="service" id="file_locator" />
             <argument>%knp_snappy.pdf.options%</argument>
             <argument>%sylius_invoicing.pdf_generator.allowed_files%</argument>
+        </service>
+
+        <service id="sylius_invoicing_plugin.generator.twig_to_pdf" class="Sylius\InvoicingPlugin\Generator\TwigToPdfGenerator">
+            <argument type="service" id="twig" />
+            <argument type="service" id="knp_snappy.pdf" />
+            <argument type="service" id="sylius_invoicing_plugin.generator.pdf_options" />
         </service>
     </services>
 </container>

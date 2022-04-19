@@ -1,3 +1,7 @@
+### UPGRADE FROM 0.21.0 TO 0.22.0
+
+1. `Sylius\InvoicingPlugin\Generator\InvoicePdfFileGenerator` takes `Sylius\InvoicingPlugin\Generator\TwigToPdfGeneratorInterface` as the first argument in place of `Twig\Environment`, `Knp\Snappy\GeneratorInterface` and `Sylius\InvoicingPlugin\Generator\PdfOptionsGeneratorInterface`.
+
 ### UPGRADE FROM 0.20.0 TO 0.21.0
 
 1. `Sylius\InvoicingPlugin\Generator\InvoicePdfFileGenerator` takes `Sylius\InvoicingPlugin\Generator\PdfOptionsGeneratorInterface` as the third argument after `Knp\Snappy\GeneratorInterface`.
