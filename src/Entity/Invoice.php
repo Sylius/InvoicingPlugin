@@ -66,6 +66,9 @@ class Invoice implements InvoiceInterface, ResourceInterface
     /** @var string|null */
     protected $promotionCouponUsed;
 
+    /** @var string|null */
+    protected $additionalInfos;
+
     public function __construct(
         string $id,
         string $number,
@@ -85,7 +88,8 @@ class Invoice implements InvoiceInterface, ResourceInterface
         ?string $paymentReference = null,
         ?string $paymentCommitmentNumber = null,
         ?string $orderCustomerReference = null,
-        ?string $promotionCouponUsed = null
+        ?string $promotionCouponUsed = null,
+        ?string $additionalInfos = null
     ) {
         $this->id = $id;
         $this->number = $number;
@@ -106,6 +110,7 @@ class Invoice implements InvoiceInterface, ResourceInterface
         $this->paymentCommitmentNumber = $paymentCommitmentNumber;
         $this->orderCustomerReference = $orderCustomerReference;
         $this->promotionCouponUsed = $promotionCouponUsed;
+        $this->additionalInfos = $additionalInfos;
 
         /** @var LineItemInterface $lineItem */
         foreach ($lineItems as $lineItem) {
@@ -267,5 +272,15 @@ class Invoice implements InvoiceInterface, ResourceInterface
     public function promotionCouponUsed(): ?string
     {
         return $this->promotionCouponUsed;
+    }
+
+    public function additionalInfos(): ?string
+    {
+        return $this->additionalInfos;
+    }
+
+    public function setAdditionalInfos(?string $additionalInfos): void
+    {
+        $this->additionalInfos = $additionalInfos;
     }
 }

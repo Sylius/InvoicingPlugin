@@ -16,6 +16,7 @@
         <field name="paymentCommitmentNumber" column="payment_commitment_number" nullable="true"/>
         <field name="orderCustomerReference" column="order_customer_reference" nullable="true"/>
         <field name="promotionCouponUsed" column="promotion_coupon_used" nullable="true"/>
+        <field name="additionalInfos" column="additional_infos" nullable="true"/>
 
         <one-to-one field="billingData" target-entity="Sylius\InvoicingPlugin\Entity\BillingDataInterface">
             <cascade>
