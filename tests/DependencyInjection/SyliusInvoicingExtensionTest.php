@@ -81,14 +81,9 @@ class SyliusInvoicingExtensionTest extends AbstractExtensionTestCase
     }
 
     /** @test */
-    public function it_prepends_configuration_with_allowed_files_for_pdf_generator(): void
+    public function it_loads_allowed_files_for_pdf_generator_configuration(): void
     {
-        $this->container->prependExtensionConfig(
-            'sylius_invoicing',
-            ['pdf_generator' => ['allowed_files' => ['swans.png', 'product.png']]]
-        );
-
-        $this->prepend();
+        $this->load(['pdf_generator' => ['allowed_files' => ['swans.png', 'product.png']]]);
 
         $this->assertContainerBuilderHasParameter(
             'sylius_invoicing.pdf_generator.allowed_files',

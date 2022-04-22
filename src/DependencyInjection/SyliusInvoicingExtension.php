@@ -28,14 +28,18 @@ final class SyliusInvoicingExtension extends AbstractResourceExtension implement
     public function load(array $config, ContainerBuilder $container): void
     {
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
-
         $loader->load('services.xml');
+
+        /** @var ConfigurationInterface $configuration */
+        $configuration = $this->getConfiguration([], $container);
+
+        $config = $this->processConfiguration($configuration, $config);
+        $container->setParameter('sylius_invoicing.pdf_generator.allowed_files', $config['pdf_generator']['allowed_files']);
     }
 
     public function prepend(ContainerBuilder $container): void
     {
         $config = $this->getCurrentConfiguration($container);
-        $container->setParameter('sylius_invoicing.pdf_generator.allowed_files', $config['pdf_generator']['allowed_files']);
 
         $this->registerResources('sylius_invoicing_plugin', 'doctrine/orm', $config['resources'], $container);
 
