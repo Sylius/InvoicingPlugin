@@ -8,11 +8,8 @@ use Behat\Behat\Context\Context;
 
 final class InvoicesContext implements Context
 {
-    private string $invoicesSavePath;
-
-    public function __construct(string $invoicesSavePath)
+    public function __construct(private string $invoicesSavePath)
     {
-        $this->invoicesSavePath = $invoicesSavePath;
     }
 
     /**
@@ -20,6 +17,10 @@ final class InvoicesContext implements Context
      */
     public function clearInvoicesPath(): void
     {
+        if (!is_dir($this->invoicesSavePath)) {
+            return;
+        }
+
         foreach (scandir($this->invoicesSavePath) as $file) {
             if (is_file($this->invoicesSavePath.'/'.$file)) {
                 unlink($this->invoicesSavePath.'/'.$file);
