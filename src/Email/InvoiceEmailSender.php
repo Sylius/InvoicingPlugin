@@ -16,6 +16,7 @@ namespace Sylius\InvoicingPlugin\Email;
 use Sylius\Component\Mailer\Sender\SenderInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Sylius\InvoicingPlugin\Provider\InvoiceFileProviderInterface;
+use Webmozart\Assert\Assert;
 
 final class InvoiceEmailSender implements InvoiceEmailSenderInterface
 {
@@ -36,10 +37,9 @@ final class InvoiceEmailSender implements InvoiceEmailSenderInterface
         string $customerEmail
     ): void {
         $invoicePdf = $this->invoiceFileProvider->provide($invoice);
+        $invoicePdfPath = $invoicePdf->fullPath();
+        Assert::notNull($invoicePdfPath);
 
-        $this
-            ->emailSender
-            ->send(Emails::INVOICE_GENERATED, [$customerEmail], ['invoice' => $invoice], [$invoicePdf->fullPath()])
-        ;
+        $this->emailSender->send(Emails::INVOICE_GENERATED, [$customerEmail], ['invoice' => $invoice], [$invoicePdfPath]);
     }
 }
