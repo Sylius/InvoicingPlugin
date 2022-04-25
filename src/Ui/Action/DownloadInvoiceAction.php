@@ -24,24 +24,20 @@ use Webmozart\Assert\Assert;
 
 final class DownloadInvoiceAction
 {
-    private InvoiceRepositoryInterface $invoiceRepository;
-
-    private AuthorizationCheckerInterface $authorizationChecker;
-
-    private InvoiceFileProviderInterface $invoiceFilePathProvider;
-
     public function __construct(
-        InvoiceRepositoryInterface $invoiceRepository,
-        AuthorizationCheckerInterface $authorizationChecker,
-        InvoiceFileProviderInterface $invoiceFilePathProvider
+        private InvoiceRepositoryInterface $invoiceRepository,
+        private AuthorizationCheckerInterface $authorizationChecker,
+        private InvoiceFileProviderInterface $invoiceFilePathProvider,
+        private bool $hasEnabledPdfFileGenerator = true
     ) {
-        $this->invoiceRepository = $invoiceRepository;
-        $this->authorizationChecker = $authorizationChecker;
-        $this->invoiceFilePathProvider = $invoiceFilePathProvider;
     }
 
     public function __invoke(string $id): Response
     {
+        if (!$this->hasEnabledPdfFileGenerator) {
+            return new Response('', Response::HTTP_NOT_FOUND);
+        }
+
         /** @var InvoiceInterface|null $invoice */
         $invoice = $this->invoiceRepository->find($id);
         Assert::notNull($invoice);

@@ -43,6 +43,7 @@
             <argument type="service" id="sylius_invoicing_plugin.generator.invoice" />
             <argument type="service" id="sylius_invoicing_plugin.generator.invoice_pdf_file" />
             <argument type="service" id="Sylius\InvoicingPlugin\Manager\InvoiceFileManagerInterface" />
+            <argument>%sylius_invoicing.pdf_generator.enabled%</argument>
         </service>
 
         <service id="sylius_invoicing_plugin.creator.mass_invoices" class="Sylius\InvoicingPlugin\Creator\MassInvoicesCreator">
