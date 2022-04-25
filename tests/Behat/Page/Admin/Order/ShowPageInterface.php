@@ -17,4 +17,6 @@ interface ShowPageInterface extends SymfonyPageInterface
     public function resendFirstInvoice(): void;
 
     public function isPdfFileDownloaded(): bool;
+
+    public function hasDownloadButtonForInvoice(): bool;
 }

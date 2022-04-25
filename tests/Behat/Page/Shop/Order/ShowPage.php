@@ -31,6 +31,13 @@ final class ShowPage extends SymfonyPage implements ShowPageInterface
         ;
     }
 
+    public function hasDownloadButtonForInvoice(): bool
+    {
+        $invoice = $this->getFirstInvoice();
+
+        return $invoice->hasLink('Download');
+    }
+
     protected function getDefinedElements(): array
     {
         return array_merge(parent::getDefinedElements(), [

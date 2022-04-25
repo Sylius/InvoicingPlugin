@@ -1,4 +1,4 @@
-@managing_invoices @ui
+@managing_invoices
 Feature: Downloading invoices on a single order view
     In order to store all invoices related to the order
     As an Administrator
@@ -14,6 +14,7 @@ Feature: Downloading invoices on a single order view
         And the customer chose "Free" shipping method to "United States" with "Cash on Delivery" payment
         And I am logged in as an administrator
 
+    @ui
     Scenario: Downloading an invoice on order view
         When I view the summary of the order "#00000022"
         And I download the first invoice
