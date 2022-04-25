@@ -92,6 +92,19 @@ class SyliusInvoicingExtensionTest extends AbstractExtensionTestCase
     }
 
     /** @test */
+    public function it_prepends_configuration_with_enabled_pdf_generator(): void
+    {
+        $this->container->prependExtensionConfig(
+            'sylius_invoicing',
+            ['pdf_generator' => ['enabled' => false]]
+        );
+
+        $this->prepend();
+
+        $this->assertContainerBuilderHasParameter('sylius_invoicing.pdf_generator.enabled', false);
+    }
+
+    /** @test */
     public function it_prepends_configuration_with_invoice_resource_services(): void
     {
         $this->prepend();
