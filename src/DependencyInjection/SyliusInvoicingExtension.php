@@ -15,6 +15,7 @@ namespace Sylius\InvoicingPlugin\DependencyInjection;
 
 use Sylius\Bundle\CoreBundle\DependencyInjection\PrependDoctrineMigrationsTrait;
 use Sylius\Bundle\ResourceBundle\DependencyInjection\Extension\AbstractResourceExtension;
+use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
@@ -26,18 +27,22 @@ final class SyliusInvoicingExtension extends AbstractResourceExtension implement
 
     public function load(array $config, ContainerBuilder $container): void
     {
-        $config = $this->processConfiguration($this->getConfiguration([], $container), $config);
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
-
-        $this->registerResources('sylius_invoicing_plugin', 'doctrine/orm', $config['resources'], $container);
-
         $loader->load('services.xml');
 
+        /** @var ConfigurationInterface $configuration */
+        $configuration = $this->getConfiguration([], $container);
+
+        $config = $this->processConfiguration($configuration, $config);
         $container->setParameter('sylius_invoicing.pdf_generator.allowed_files', $config['pdf_generator']['allowed_files']);
     }
 
     public function prepend(ContainerBuilder $container): void
     {
+        $config = $this->getCurrentConfiguration($container);
+
+        $this->registerResources('sylius_invoicing_plugin', 'doctrine/orm', $config['resources'], $container);
+
         $this->prependDoctrineMigrations($container);
     }
 
@@ -54,5 +59,15 @@ final class SyliusInvoicingExtension extends AbstractResourceExtension implement
     protected function getNamespacesOfMigrationsExecutedBefore(): array
     {
         return ['Sylius\Bundle\CoreBundle\Migrations'];
+    }
+
+    private function getCurrentConfiguration(ContainerBuilder $container): array
+    {
+        /** @var ConfigurationInterface $configuration */
+        $configuration = $this->getConfiguration([], $container);
+
+        $configs = $container->getExtensionConfig($this->getAlias());
+
+        return $this->processConfiguration($configuration, $configs);
     }
 }

@@ -35,7 +35,7 @@ sylius_grid:
             driver:
                 name: doctrine/orm
                 options:
-                    class: 'expr:parameter("sylius_invoicing_plugin.model.invoice.class")'
+                    class: '%sylius_invoicing_plugin.model.invoice.class%'
             sorting:
                 issuedAt: desc
             fields:
