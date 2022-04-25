@@ -18,6 +18,7 @@
         <service id="sylius_invoicing_plugin.email.invoice_email_sender" class="Sylius\InvoicingPlugin\Email\InvoiceEmailSender">
             <argument type="service" id="sylius.email_sender" />
             <argument type="service" id="Sylius\InvoicingPlugin\Provider\InvoiceFileProviderInterface" />
+            <argument>%sylius_invoicing.pdf_generator.enabled%</argument>
         </service>
 
         <service id="sylius_invoicing_plugin.command_handler.send_invoice_email" class="Sylius\InvoicingPlugin\CommandHandler\SendInvoiceEmailHandler">

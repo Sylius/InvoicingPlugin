@@ -54,4 +54,18 @@ final class InvoiceEmailSenderSpec extends ObjectBehavior
 
         $this->sendInvoiceEmail($invoice, 'sylius@example.com');
     }
+
+    function it_sends_an_invoice_without_attachment_to_a_given_email_address(
+        InvoiceInterface $invoice,
+        SenderInterface $sender,
+        InvoiceFileProviderInterface $invoiceFileProvider
+    ): void {
+        $this->beConstructedWith($sender, $invoiceFileProvider, false);
+
+        $invoiceFileProvider->provide($invoice)->shouldNotBeCalled();
+
+        $sender->send(Emails::INVOICE_GENERATED, ['sylius@example.com'], ['invoice' => $invoice])->shouldBeCalled();
+
+        $this->sendInvoiceEmail($invoice, 'sylius@example.com');
+    }
 }
