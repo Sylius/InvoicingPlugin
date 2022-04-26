@@ -76,6 +76,40 @@ final class InvoiceCreatorSpec extends ObjectBehavior
         $this->__invoke('0000001', $invoiceDateTime);
     }
 
+    function it_creates_invoice_without_generating_pdf_file(
+        InvoiceRepositoryInterface $invoiceRepository,
+        OrderRepositoryInterface $orderRepository,
+        InvoiceGeneratorInterface $invoiceGenerator,
+        InvoicePdfFileGeneratorInterface $invoicePdfFileGenerator,
+        InvoiceFileManagerInterface $invoiceFileManager,
+        OrderInterface $order,
+        InvoiceInterface $invoice
+    ): void {
+        $this->beConstructedWith(
+            $invoiceRepository,
+            $orderRepository,
+            $invoiceGenerator,
+            $invoicePdfFileGenerator,
+            $invoiceFileManager,
+            false
+        );
+
+        $orderRepository->findOneByNumber('0000001')->willReturn($order);
+
+        $invoiceRepository->findOneByOrder($order)->willReturn(null);
+
+        $invoiceDateTime = new \DateTimeImmutable('2019-02-25');
+
+        $invoiceGenerator->generateForOrder($order, $invoiceDateTime)->willReturn($invoice);
+
+        $invoicePdfFileGenerator->generate($invoice)->shouldNotBeCalled();
+        $invoiceFileManager->save(Argument::any())->shouldNotBeCalled();
+
+        $invoiceRepository->add($invoice)->shouldBeCalled();
+
+        $this('0000001', $invoiceDateTime);
+    }
+
     function it_removes_saved_invoice_file_if_database_update_fails(
         InvoiceRepositoryInterface $invoiceRepository,
         OrderRepositoryInterface $orderRepository,

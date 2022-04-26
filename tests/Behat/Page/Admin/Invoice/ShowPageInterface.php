@@ -56,4 +56,6 @@ interface ShowPageInterface extends SymfonyPageInterface
 	public function goBack(): void;
 
     public function isPaid(): bool;
+
+    public function hasDownloadButton(): bool;
 }

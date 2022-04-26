@@ -2,8 +2,6 @@
 
 {% import '@SyliusAdmin/Common/Macro/money.html.twig' as money %}
 
-{% import '@SyliusUi/Macro/buttons.html.twig' as buttons %}
-
 {% block title %}{{ 'sylius.ui.invoice'|trans ~ ' ' ~ invoice.number }} {{ parent() }}{% endblock %}
 
 {% block content %}
@@ -13,14 +11,7 @@
             {% include '@SyliusInvoicingPlugin/Invoice/Show/_breadcrumb.html.twig' %}
         </div>
         <div class="six wide right aligned column">
-            {% set path = path('sylius_invoicing_plugin_admin_invoice_index') %}
-            {{ buttons.default(path, '', 'back', 'arrow alternate circle left outline') }}
-
-            {% set path = path('sylius_invoicing_plugin_admin_invoice_download', {'id': invoice.id}) %}
-            {{ buttons.default(path, 'sylius_invoicing_plugin.ui.download_invoice'|trans, invoice.id, 'download', 'blue') }}
-
-            {% set path = path('sylius_invoicing_plugin_admin_invoice_resend', {'id': invoice.id}) %}
-            {{ buttons.default(path, 'sylius_invoicing_plugin.ui.resend_invoice'|trans, invoice.id, 'send') }}
+            {{ sylius_template_event('sylius_invoicing.admin.invoice.buttons', _context) }}
         </div>
     </div>
 

@@ -41,3 +41,11 @@ default:
                 class: Tests\Sylius\InvoicingPlugin\Application\Kernel
 
         FriendsOfBehat\VariadicExtension: ~
+
+        FriendsOfBehat\SuiteSettingsExtension:
+            paths:
+                - features
+
+        FriendsOfBehat\ExcludeSpecificationsExtension:
+            features:
+                - features/managing_invoices/pdf_generation_disabled

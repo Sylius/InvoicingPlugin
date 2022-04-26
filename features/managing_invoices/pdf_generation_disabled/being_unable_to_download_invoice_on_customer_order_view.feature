@@ -1,8 +1,8 @@
-@customer_browsing_invoices @ui
-Feature: Downloading invoices on a single order view
-    In order to have access to all invoices related to the order that I've placed
+@customer_browsing_invoices
+Feature: Being unable to download an invoice on a single order view
+    In order not to generate a PDF file for an invoice related to the order
     As a Customer
-    I want to be able to download invoices on a single order view
+    I want to be unable to download an invoice on a single order view
 
     Background:
         Given the store operates on a single channel in "United States"
@@ -16,7 +16,7 @@ Feature: Downloading invoices on a single order view
         And for the billing address of "Mazikeen Lilim" in the "Pacific Coast Hwy", "90806" "Los Angeles", "United States"
         And I chose "Free" shipping method with "Cash on Delivery" payment
 
-    Scenario: Downloading an invoice on order view
+    @ui
+    Scenario: Being unable to download an invoice on a single order view
         When I view the summary of the order "#00000666"
-        And I download the first invoice
-        Then the pdf file for this invoice should be downloaded successfully
+        Then I should not be able to download the first invoice

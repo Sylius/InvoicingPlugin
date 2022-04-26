@@ -52,7 +52,7 @@ default:
                 - Tests\Sylius\InvoicingPlugin\Behat\Context\Ui\Shop\CustomerBrowsingInvoicesContext
 
             filters:
-                tags: "@customer_browsing_invoices && @ui"
+                tags: "@customer_browsing_invoices&&@ui"
         customer_browsing_invoices_application:
             contexts:
                 - sylius.behat.context.hook.doctrine_orm
@@ -94,4 +94,4 @@ default:
                 - sylius.behat.context.transform.shared_storage
 
             filters:
-                tags: "@customer_browsing_invoices && @application"
+                tags: "@customer_browsing_invoices&&@application"

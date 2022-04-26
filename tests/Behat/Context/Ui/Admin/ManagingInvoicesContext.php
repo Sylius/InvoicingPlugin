@@ -335,4 +335,20 @@ final class ManagingInvoicesContext implements Context
     {
         Assert::false($this->showPage->isPaid());
     }
+
+    /**
+     * @Then I should not be able to download the first invoice
+     */
+    public function iShouldNotBeAbleToDownloadTheFirstInvoice(): void
+    {
+        Assert::false($this->orderShowPage->hasDownloadButtonForInvoice());
+    }
+
+    /**
+     * @Then I should not be able to download the invoice
+     */
+    public function iShouldNotBeAbleToDownloadTheInvoice(): void
+    {
+        Assert::false($this->showPage->hasDownloadButton());
+    }
 }

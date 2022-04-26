@@ -89,6 +89,7 @@ sylius_grid:
                     download:
                         type: default
                         label: sylius_invoicing_plugin.ui.download_invoice
+                        enabled: '%sylius_invoicing.pdf_generator.enabled%'
                         icon: download
                         options:
                             link:
@@ -112,11 +113,42 @@ sylius_ui:
                 sylius_invoicing_plugin:
                     template: '@SyliusInvoicingPlugin/Order/Admin/fetchInvoices.html.twig'
                     priority: 15
+
         sylius.shop.account.order.show.subcontent:
             blocks:
                 sylius_invoicing_plugin:
                     template: '@SyliusInvoicingPlugin/Order/Shop/fetchInvoices.html.twig'
                     priority: 15
+
+        sylius_invoicing.admin.invoice.buttons:
+            blocks:
+                back_button:
+                    template: '@SyliusInvoicingPlugin/Invoice/Show/_backButton.html.twig'
+                    priority: 30
+                download_button:
+                    template: '@SyliusInvoicingPlugin/Invoice/Admin/_downloadButton.html.twig'
+                    enabled: '%sylius_invoicing.pdf_generator.enabled%'
+                    priority: 20
+                resend_button:
+                    template: '@SyliusInvoicingPlugin/Invoice/Admin/_resendButton.html.twig'
+                    priority: 10
+
+        sylius_invoicing.admin.order.invoices.list.actions.buttons:
+            blocks:
+                download_button:
+                    template: '@SyliusInvoicingPlugin/Invoice/Admin/_downloadButton.html.twig'
+                    enabled: '%sylius_invoicing.pdf_generator.enabled%'
+                    priority: 20
+                resend_button:
+                    template: '@SyliusInvoicingPlugin/Invoice/Admin/_resendButton.html.twig'
+                    priority: 10
+
+        sylius_invoicing.shop.order.invoices.list.actions:
+            blocks:
+                download_button:
+                    template: '@SyliusInvoicingPlugin/Order/Shop/_downloadButton.html.twig'
+                    enabled: '%sylius_invoicing.pdf_generator.enabled%'
+                    priority: 10
 
 framework:
     messenger:

@@ -16,30 +16,31 @@ namespace Sylius\InvoicingPlugin\Email;
 use Sylius\Component\Mailer\Sender\SenderInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Sylius\InvoicingPlugin\Provider\InvoiceFileProviderInterface;
+use Webmozart\Assert\Assert;
 
 final class InvoiceEmailSender implements InvoiceEmailSenderInterface
 {
-    private SenderInterface $emailSender;
-
-    private InvoiceFileProviderInterface $invoiceFileProvider;
-
     public function __construct(
-        SenderInterface $emailSender,
-        InvoiceFileProviderInterface $invoiceFileProvider
+        private SenderInterface $emailSender,
+        private InvoiceFileProviderInterface $invoiceFileProvider,
+        private bool $hasEnabledPdfFileGenerator = true
     ) {
-        $this->emailSender = $emailSender;
-        $this->invoiceFileProvider = $invoiceFileProvider;
     }
 
     public function sendInvoiceEmail(
         InvoiceInterface $invoice,
         string $customerEmail
     ): void {
-        $invoicePdf = $this->invoiceFileProvider->provide($invoice);
+        if (!$this->hasEnabledPdfFileGenerator) {
+            $this->emailSender->send(Emails::INVOICE_GENERATED, [$customerEmail], ['invoice' => $invoice]);
 
-        $this
-            ->emailSender
-            ->send(Emails::INVOICE_GENERATED, [$customerEmail], ['invoice' => $invoice], [$invoicePdf->fullPath()])
-        ;
+            return;
+        }
+
+        $invoicePdf = $this->invoiceFileProvider->provide($invoice);
+        $invoicePdfPath = $invoicePdf->fullPath();
+        Assert::notNull($invoicePdfPath);
+
+        $this->emailSender->send(Emails::INVOICE_GENERATED, [$customerEmail], ['invoice' => $invoice], [$invoicePdfPath]);
     }
 }

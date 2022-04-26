@@ -163,6 +163,11 @@ final class ShowPage extends SymfonyPage implements ShowPageInterface
         return str_contains($this->getElement('paid')->getHtml(), 'Yes');
     }
 
+    public function hasDownloadButton(): bool
+    {
+        return $this->getDocument()->hasLink('Download');
+    }
+
     protected function getDefinedElements(): array
     {
         return array_merge(parent::getDefinedElements(), [

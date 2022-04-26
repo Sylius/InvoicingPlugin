@@ -66,4 +66,12 @@ final class CustomerBrowsingInvoicesContext implements Context
 
         Assert::false($this->downloadInvoicePage->isOpen(['id' => $invoice->id()]));
     }
+
+    /**
+     * @Then I should not be able to download the first invoice
+     */
+    public function iShouldNotBeAbleToDownloadTheFirstInvoice(): void
+    {
+        Assert::false($this->orderShowPage->hasDownloadButtonForInvoice());
+    }
 }

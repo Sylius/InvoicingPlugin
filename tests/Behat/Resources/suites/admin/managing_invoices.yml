@@ -61,7 +61,7 @@ default:
                 - Tests\Sylius\InvoicingPlugin\Behat\Context\Setup\OrderContext
 
             filters:
-                tags: "@managing_invoices && @ui"
+                tags: "@managing_invoices&&@ui"
 
         managing_invoices_application:
             contexts:
@@ -102,7 +102,7 @@ default:
                 - Tests\Sylius\InvoicingPlugin\Behat\Context\Application\ManagingInvoicesContext
 
             filters:
-                tags: "@managing_invoices && @application"
+                tags: "@managing_invoices&&@application"
 
         managing_invoices_cli:
             contexts:
@@ -157,4 +157,4 @@ default:
                 - Tests\Sylius\InvoicingPlugin\Behat\Context\Cli\InvoicesGenerationContext
 
             filters:
-                tags: "@managing_invoices && @cli"
+                tags: "@managing_invoices&&@cli"

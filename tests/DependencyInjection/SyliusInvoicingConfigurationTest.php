@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Sylius\InvoicingPlugin\Unit\DependencyInjection;
+namespace Tests\Sylius\InvoicingPlugin\DependencyInjection;
 
 use Matthias\SymfonyConfigTest\PhpUnit\ConfigurationTestCaseTrait;
 use PHPUnit\Framework\TestCase;
@@ -27,7 +27,7 @@ final class SyliusInvoicingConfigurationTest extends TestCase
         $this->assertProcessedConfigurationEquals(
             [[]],
             ['pdf_generator' => ['allowed_files' => []]],
-            'pdf_generator'
+            'pdf_generator.allowed_files'
         );
     }
 
@@ -37,7 +37,27 @@ final class SyliusInvoicingConfigurationTest extends TestCase
         $this->assertProcessedConfigurationEquals(
             [['pdf_generator' => ['allowed_files' => ['swans.png', 'product.png']]]],
             ['pdf_generator' => ['allowed_files' => ['swans.png', 'product.png']]],
-            'pdf_generator'
+            'pdf_generator.allowed_files'
+        );
+    }
+
+    /** @test */
+    public function it_has_enabled_pdf_generator_by_default(): void
+    {
+        $this->assertProcessedConfigurationEquals(
+            [],
+            ['pdf_generator' => ['enabled' => true]],
+            'pdf_generator.enabled'
+        );
+    }
+
+    /** @test */
+    public function it_allows_to_disable_pdf_generator(): void
+    {
+        $this->assertProcessedConfigurationEquals(
+            [['pdf_generator' => ['enabled' => false]]],
+            ['pdf_generator' => ['enabled' => false]],
+            'pdf_generator.enabled'
         );
     }
 

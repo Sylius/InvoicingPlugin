@@ -42,7 +42,16 @@ Additional feature of the plugin that fulfills Invoicing domain is the ability t
     bin/console doctrine:migrations:migrate
     ```
 
-3. Check if you have wkhtmltopdf binary. If not, you can download it [here](https://wkhtmltopdf.org/downloads.html).
+3. Default configuration assumes enabled PDF file generation. If you don't want to use that feature change your app configuration:
+
+    ```yaml
+    # config/packages/sylius_invoicing.yaml
+    sylius_invoicing:
+        pdf_generator:
+            enabled: false
+    ```
+
+    Otherwise, check if you have wkhtmltopdf binary. If not, you can download it [here](https://wkhtmltopdf.org/downloads.html).
 
     In case wkhtmltopdf is not located in `/usr/local/bin/wkhtmltopdf` modify the `WKHTMLTOPDF_PATH` environment variable in the `.env` file:
 
