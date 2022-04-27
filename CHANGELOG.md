@@ -1,5 +1,13 @@
 # CHANGELOG
 
+### v0.22.0 (2022-04-27)
+
+- [#274](https://github.com/Sylius/InvoicingPlugin/issues/274) [Maintenance] Support PHP 8.1 ([@GSadee](https://github.com/GSadee))
+- [#275](https://github.com/Sylius/InvoicingPlugin/issues/275) [Maintenance] Add TwigToPdfGenerator ([@coldic3](https://github.com/coldic3))
+- [#277](https://github.com/Sylius/InvoicingPlugin/issues/277) [DependencyInjection] Move registering resources to prepend method ([@GSadee](https://github.com/GSadee))
+- [#278](https://github.com/Sylius/InvoicingPlugin/issues/278) Optional parameter to turn off the PDF generation ([@GSadee](https://github.com/GSadee))
+- [#279](https://github.com/Sylius/InvoicingPlugin/issues/279) [GitHub Actions] Include build with PDF generation disabled to the main workflow ([@GSadee](https://github.com/GSadee))
+
 ### v0.21.0 (2022-03-31)
 
 - [#271](https://github.com/Sylius/InvoicingPlugin/issues/271) [GitHub Actions] Configure workflow to run on the workflow_dispatch event ([@GSadee](https://github.com/GSadee))
