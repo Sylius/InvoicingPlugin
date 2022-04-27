@@ -70,14 +70,12 @@ jobs:
                     mysql root password: "root"
 
             -
-                name: Remove wkhtmltopdf binary
-                if: matrix.pdf == false
-                run: rm tests/Application/etc/wkhtmltopdf
-
-            -
                 name: Disable PDF generation
                 if: matrix.pdf == false
-                run: mv tests/Application/etc/sylius_invoicing_pdf_generation_disabled.yaml tests/Application/config/packages
+                run: |
+                    rm tests/Application/etc/wkhtmltopdf
+                    mv tests/Application/etc/sylius_invoicing_pdf_generation_disabled.yaml tests/Application/config/packages
+                    sed -i 's/pdf_generation_disabled/pdf_generation_enabled/g' behat.yml.dist
 
             -
                 name: Get Composer cache directory
@@ -162,11 +160,6 @@ jobs:
             -
                 name: Run PHPUnit
                 run: vendor/bin/phpunit --colors=always
-
-            -
-                name: Replace excluded directory in Behat
-                if: matrix.pdf == false
-                run: sed -i 's/pdf_generation_disabled/pdf_generation_enabled/g' behat.yml.dist
 
             -
                 name: Run Behat
