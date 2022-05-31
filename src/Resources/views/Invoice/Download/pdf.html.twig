@@ -106,7 +106,7 @@
                 <td class="border-0" colspan="6"></td>
                 <td class="text-right">{{ 'sylius_invoicing_plugin.ui.tax_rate'|trans([], 'messages', invoice.localeCode) }}</td>
                 <td class="text-right">{{ 'sylius_invoicing_plugin.ui.tax_amount'|trans([], 'messages', invoice.localeCode) }}</td>
-                <td class="text-right">{{ 'sylius.ui.currency'|trans([], 'messages', invoice.currencyCode) }}</td>
+                <td class="text-right">{{ 'sylius.ui.currency'|trans([], 'messages', invoice.localeCode) }}</td>
             </tr>
 
             {% for taxItem in invoice.taxItems %}
