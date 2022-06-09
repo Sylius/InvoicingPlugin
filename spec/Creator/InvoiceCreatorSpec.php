@@ -61,7 +61,7 @@ final class InvoiceCreatorSpec extends ObjectBehavior
     ): void {
         $invoicePdf = new InvoicePdf('invoice.pdf', 'CONTENT');
 
-        $orderRepository->findOneByNumber('0000001')->willReturn($order);
+        $orderRepository->findOneBy(['number' => '0000001'])->willReturn($order);
 
         $invoiceRepository->findOneByOrder($order)->willReturn(null);
 
@@ -94,7 +94,7 @@ final class InvoiceCreatorSpec extends ObjectBehavior
             false
         );
 
-        $orderRepository->findOneByNumber('0000001')->willReturn($order);
+        $orderRepository->findOneBy(['number' => '0000001'])->willReturn($order);
 
         $invoiceRepository->findOneByOrder($order)->willReturn(null);
 
@@ -121,7 +121,7 @@ final class InvoiceCreatorSpec extends ObjectBehavior
     ): void {
         $invoicePdf = new InvoicePdf('invoice.pdf', 'CONTENT');
 
-        $orderRepository->findOneByNumber('0000001')->willReturn($order);
+        $orderRepository->findOneBy(['number' => '0000001'])->willReturn($order);
 
         $invoiceRepository->findOneByOrder($order)->willReturn(null);
 
@@ -144,7 +144,7 @@ final class InvoiceCreatorSpec extends ObjectBehavior
         OrderInterface $order,
         InvoiceInterface $invoice
     ): void {
-        $orderRepository->findOneByNumber('0000001')->willReturn($order);
+        $orderRepository->findOneBy(['number' => '0000001'])->willReturn($order);
         $invoiceRepository->findOneByOrder($order)->willReturn($invoice);
 
         $invoiceDateTime = new \DateTimeImmutable('2019-02-25');

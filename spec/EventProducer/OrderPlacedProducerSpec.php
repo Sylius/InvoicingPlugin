@@ -47,12 +47,11 @@ final class OrderPlacedProducerSpec extends ObjectBehavior
         $order->getNumber()->willReturn('000666');
         $order->getCheckoutState()->willReturn(OrderCheckoutStates::STATE_COMPLETED);
 
-        $postPersistEvent = new LifecycleEventArgs($order->getWrappedObject(), $objectManager->getWrappedObject());
         $orderPlacedEvent = new OrderPlaced('000666', $dateTime);
 
         $eventBus->dispatch($orderPlacedEvent)->shouldBeCalled()->willReturn(new Envelope($orderPlacedEvent));
 
-        $this->postPersist($postPersistEvent);
+        $this->__invoke($order);
     }
 
     function it_dispatches_an_order_placed_event_for_updated_order(
@@ -74,12 +73,11 @@ final class OrderPlacedProducerSpec extends ObjectBehavior
 
         $order->getNumber()->willReturn('000666');
 
-        $postUpdateEvent = new LifecycleEventArgs($order->getWrappedObject(), $entityManager->getWrappedObject());
         $orderPlacedEvent = new OrderPlaced('000666', $dateTime);
 
         $eventBus->dispatch($orderPlacedEvent)->shouldBeCalled()->willReturn(new Envelope($orderPlacedEvent));
 
-        $this->postUpdate($postUpdateEvent);
+        $this->__invoke($order);
     }
 
     function it_does_nothing_after_persisting_if_event_entity_is_not_order(
@@ -89,8 +87,6 @@ final class OrderPlacedProducerSpec extends ObjectBehavior
         $event->getEntity()->willReturn('notAnOrder');
 
         $eventBus->dispatch(Argument::any())->shouldNotBeCalled();
-
-        $this->postPersist($event);
     }
 
     function it_does_nothing_after_update_if_event_entity_is_not_order(
@@ -100,65 +96,5 @@ final class OrderPlacedProducerSpec extends ObjectBehavior
         $event->getEntity()->willReturn('notAnOrder');
 
         $eventBus->dispatch(Argument::any())->shouldNotBeCalled();
-
-        $this->postUpdate($event);
-    }
-
-    function it_does_nothing_after_persisting_if_order_is_not_completed(
-        MessageBusInterface $eventBus,
-        LifecycleEventArgs $event,
-        OrderInterface $order
-    ): void {
-        $event->getEntity()->willReturn($order);
-
-        $order->getCheckoutState()->willReturn(OrderCheckoutStates::STATE_CART);
-
-        $eventBus->dispatch(Argument::any())->shouldNotBeCalled();
-
-        $this->postPersist($event);
-    }
-
-    function it_does_nothing_after_update_if_order_checkout_state_has_not_changed(
-        MessageBusInterface $eventBus,
-        LifecycleEventArgs $event,
-        EntityManagerInterface $entityManager,
-        OrderInterface $order
-    ): void {
-        $event->getEntity()->willReturn($order);
-
-        $event->getEntityManager()->willReturn($entityManager);
-
-        /** @var UnitOfWork|MockInterface $unitOfWork */
-        $unitOfWork = Mockery::mock(UnitOfWork::class);
-        $unitOfWork->shouldReceive('getEntityChangeSet')->withArgs([$order->getWrappedObject()])->andReturn([]);
-
-        $entityManager->getUnitOfWork()->willReturn($unitOfWork);
-
-        $eventBus->dispatch(Argument::any())->shouldNotBeCalled();
-
-        $this->postUpdate($event);
-    }
-
-    function it_does_nothing_after_update_if_order_checkout_state_has_not_changed_to_completed(
-        MessageBusInterface $eventBus,
-        LifecycleEventArgs $event,
-        EntityManagerInterface $entityManager,
-        OrderInterface $order
-    ): void {
-        $event->getEntity()->willReturn($order);
-
-        $event->getEntityManager()->willReturn($entityManager);
-
-        /** @var UnitOfWork|MockInterface $unitOfWork */
-        $unitOfWork = Mockery::mock(UnitOfWork::class);
-        $unitOfWork->shouldReceive('getEntityChangeSet')->withArgs([$order->getWrappedObject()])->andReturn([
-            'checkoutState' => [OrderCheckoutStates::STATE_CART, OrderCheckoutStates::STATE_ADDRESSED],
-        ]);
-
-        $entityManager->getUnitOfWork()->willReturn($unitOfWork);
-
-        $eventBus->dispatch(Argument::any())->shouldNotBeCalled();
-
-        $this->postUpdate($event);
     }
 }
