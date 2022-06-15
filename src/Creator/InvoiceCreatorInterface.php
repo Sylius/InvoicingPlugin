@@ -15,5 +15,5 @@ namespace Sylius\InvoicingPlugin\Creator;
 
 interface InvoiceCreatorInterface
 {
-    public function __invoke(string $orderNumber, \DateTimeInterface $dateTime): void;
+    public function __invoke(int $orderId, \DateTimeInterface $dateTime): void;
 }

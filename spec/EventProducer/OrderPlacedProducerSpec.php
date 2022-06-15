@@ -44,10 +44,10 @@ final class OrderPlacedProducerSpec extends ObjectBehavior
         $dateTime = new \DateTime('2018-12-14');
         $dateTimeProvider->__invoke()->willReturn($dateTime);
 
-        $order->getNumber()->willReturn('000666');
+        $order->getId()->willReturn(666);
         $order->getCheckoutState()->willReturn(OrderCheckoutStates::STATE_COMPLETED);
 
-        $orderPlacedEvent = new OrderPlaced('000666', $dateTime);
+        $orderPlacedEvent = new OrderPlaced(666, $dateTime);
 
         $eventBus->dispatch($orderPlacedEvent)->shouldBeCalled()->willReturn(new Envelope($orderPlacedEvent));
 
@@ -71,9 +71,9 @@ final class OrderPlacedProducerSpec extends ObjectBehavior
 
         $entityManager->getUnitOfWork()->willReturn($unitOfWork);
 
-        $order->getNumber()->willReturn('000666');
+        $order->getId()->willReturn(666);
 
-        $orderPlacedEvent = new OrderPlaced('000666', $dateTime);
+        $orderPlacedEvent = new OrderPlaced(666, $dateTime);
 
         $eventBus->dispatch($orderPlacedEvent)->shouldBeCalled()->willReturn(new Envelope($orderPlacedEvent));
 

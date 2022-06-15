@@ -15,8 +15,8 @@ namespace Sylius\InvoicingPlugin\Exception;
 
 final class InvoiceAlreadyGenerated extends \DomainException
 {
-    public static function withOrderNumber(string $orderNumber): self
+    public static function withOrderId(int $orderId): self
     {
-        return new self(sprintf('An invoice for order with number %s was already generated', $orderNumber));
+        return new self(sprintf('An invoice for order with id %s was already generated', $orderId));
     }
 }

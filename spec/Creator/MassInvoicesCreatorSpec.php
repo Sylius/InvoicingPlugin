@@ -34,9 +34,9 @@ final class MassInvoicesCreatorSpec extends ObjectBehavior
         OrderInterface $secondOrder,
         OrderInterface $thirdOrder
     ): void {
-        $firstOrder->getNumber()->willReturn('0000001');
-        $secondOrder->getNumber()->willReturn('0000002');
-        $thirdOrder->getNumber()->willReturn('0000003');
+        $firstOrder->getId()->willReturn(1);
+        $secondOrder->getId()->willReturn(2);
+        $thirdOrder->getId()->willReturn(3);
 
         $firstInvoiceDateTime = new \DateTimeImmutable('2019-02-25');
         $secondInvoiceDateTime = new \DateTimeImmutable('2019-02-25');
@@ -44,9 +44,9 @@ final class MassInvoicesCreatorSpec extends ObjectBehavior
 
         $dateTimeProvider->__invoke()->willReturn($firstInvoiceDateTime, $secondInvoiceDateTime, $thirdInvoiceDateTime);
 
-        $invoiceCreator->__invoke('0000001', $firstInvoiceDateTime)->shouldBeCalled();
-        $invoiceCreator->__invoke('0000002', $secondInvoiceDateTime)->shouldBeCalled();
-        $invoiceCreator->__invoke('0000003', $thirdInvoiceDateTime)->shouldBeCalled();
+        $invoiceCreator->__invoke(1, $firstInvoiceDateTime)->shouldBeCalled();
+        $invoiceCreator->__invoke(2, $secondInvoiceDateTime)->shouldBeCalled();
+        $invoiceCreator->__invoke(3, $thirdInvoiceDateTime)->shouldBeCalled();
 
         $this->__invoke([$firstOrder->getWrappedObject(), $secondOrder->getWrappedObject(), $thirdOrder->getWrappedObject()]);
     }

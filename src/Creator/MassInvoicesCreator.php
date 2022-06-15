@@ -36,7 +36,7 @@ final class MassInvoicesCreator implements MassInvoicesCreatorInterface
         /** @var OrderInterface $order */
         foreach ($orders as $order) {
             try {
-                $this->invoiceCreator->__invoke($order->getNumber(), $this->dateTimeProvider->__invoke());
+                $this->invoiceCreator->__invoke($order->getId(), $this->dateTimeProvider->__invoke());
             } catch (InvoiceAlreadyGenerated $exception) {
                 continue;
             }

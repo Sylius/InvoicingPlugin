@@ -33,7 +33,7 @@ final class OrderPlacedProducer
     public function __invoke(OrderInterface $order): void
     {
         $this->eventBus->dispatch(
-            new OrderPlaced($order->getNumber(), $this->dateTimeProvider->__invoke())
+            new OrderPlaced($order->getId(), $this->dateTimeProvider->__invoke())
         );
     }
 }

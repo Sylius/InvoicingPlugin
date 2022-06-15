@@ -21,9 +21,9 @@ final class OrderPlacedSpec extends ObjectBehavior
     {
         $date = new \DateTimeImmutable();
 
-        $this->beConstructedWith('000001', $date);
+        $this->beConstructedWith(1, $date);
 
-        $this->orderNumber()->shouldReturn('000001');
+        $this->orderId()->shouldReturn(1);
         $this->date()->shouldBeLike($date);
     }
 }
