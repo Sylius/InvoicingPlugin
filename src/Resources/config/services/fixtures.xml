@@ -14,5 +14,11 @@
             <argument id="sylius_invoicing_plugin.fixture.example_factory.invoicing_plugin_shop_billing_data" type="service"/>
             <tag name="sylius_fixtures.fixture"/>
         </service>
+
+        <service id="Sylius\InvoicingPlugin\Fixture\Listener\InvoicesPurgerListener">
+            <argument type="service" id="filesystem" />
+            <argument>%sylius_invoicing.invoice_save_path%</argument>
+            <tag name="sylius_fixtures.listener" />
+        </service>
     </services>
 </container>

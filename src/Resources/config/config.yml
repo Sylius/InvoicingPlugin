@@ -169,3 +169,9 @@ knp_gaufrette:
     filesystems:
         sylius_invoicing_invoice:
             adapter: "%sylius_invoicing.filesystem_adapter.invoice%"
+
+sylius_fixtures:
+    suites:
+        default:
+            listeners:
+                invoices_purger: ~
