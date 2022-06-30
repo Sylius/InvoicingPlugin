@@ -38,7 +38,7 @@ final class InvoiceCreator implements InvoiceCreatorInterface
 
     public function __invoke(string $orderNumber, \DateTimeInterface $dateTime): void
     {
-        /** @var OrderInterface $order */
+        /** @var OrderInterface|null $order */
         $order = $this->orderRepository->findOneBy(['number' => $orderNumber]);
         Assert::notNull($order, sprintf('Order with number "%s" does not exist.', $orderNumber));
 
