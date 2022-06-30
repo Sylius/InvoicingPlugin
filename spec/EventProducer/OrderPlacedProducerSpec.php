@@ -44,10 +44,10 @@ final class OrderPlacedProducerSpec extends ObjectBehavior
         $dateTime = new \DateTime('2018-12-14');
         $dateTimeProvider->__invoke()->willReturn($dateTime);
 
-        $order->getId()->willReturn(666);
+        $order->getNumber()->willReturn('000666');
         $order->getCheckoutState()->willReturn(OrderCheckoutStates::STATE_COMPLETED);
 
-        $orderPlacedEvent = new OrderPlaced(666, $dateTime);
+        $orderPlacedEvent = new OrderPlaced('000666', $dateTime);
 
         $eventBus->dispatch($orderPlacedEvent)->shouldBeCalled()->willReturn(new Envelope($orderPlacedEvent));
 
@@ -71,30 +71,12 @@ final class OrderPlacedProducerSpec extends ObjectBehavior
 
         $entityManager->getUnitOfWork()->willReturn($unitOfWork);
 
-        $order->getId()->willReturn(666);
+        $order->getNumber()->willReturn('000666');
 
-        $orderPlacedEvent = new OrderPlaced(666, $dateTime);
+        $orderPlacedEvent = new OrderPlaced('000666', $dateTime);
 
         $eventBus->dispatch($orderPlacedEvent)->shouldBeCalled()->willReturn(new Envelope($orderPlacedEvent));
 
         $this->__invoke($order);
-    }
-
-    function it_does_nothing_after_persisting_if_event_entity_is_not_order(
-        MessageBusInterface $eventBus,
-        LifecycleEventArgs $event
-    ): void {
-        $event->getEntity()->willReturn('notAnOrder');
-
-        $eventBus->dispatch(Argument::any())->shouldNotBeCalled();
-    }
-
-    function it_does_nothing_after_update_if_event_entity_is_not_order(
-        MessageBusInterface $eventBus,
-        LifecycleEventArgs $event
-    ): void {
-        $event->getEntity()->willReturn('notAnOrder');
-
-        $eventBus->dispatch(Argument::any())->shouldNotBeCalled();
     }
 }

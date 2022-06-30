@@ -29,7 +29,7 @@ final class CreateInvoiceOnOrderPlacedListener
     public function __invoke(OrderPlaced $event): void
     {
         try {
-            $this->invoiceCreator->__invoke($event->orderId(), $event->date());
+            $this->invoiceCreator->__invoke($event->orderNumber(), $event->date());
         } catch (InvoiceAlreadyGenerated $exception) {
             return;
         }

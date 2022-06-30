@@ -28,8 +28,8 @@ final class CreateInvoiceOnOrderPlacedListenerSpec extends ObjectBehavior
     {
         $issuedAt = new \DateTimeImmutable();
 
-        $invoiceCreator->__invoke(1, $issuedAt)->shouldBeCalled();
+        $invoiceCreator->__invoke('000001', $issuedAt)->shouldBeCalled();
 
-        $this(new OrderPlaced(1, $issuedAt));
+        $this(new OrderPlaced('000001', $issuedAt));
     }
 }

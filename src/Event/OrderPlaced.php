@@ -15,19 +15,19 @@ namespace Sylius\InvoicingPlugin\Event;
 
 final class OrderPlaced
 {
-    private int $orderId;
+    private string $orderNumber;
 
     private \DateTimeInterface $date;
 
-    public function __construct(int $orderId, \DateTimeInterface $date)
+    public function __construct(string $orderNumber, \DateTimeInterface $date)
     {
-        $this->orderId = $orderId;
+        $this->orderNumber = $orderNumber;
         $this->date = clone $date;
     }
 
-    public function orderId(): int
+    public function orderNumber(): string
     {
-        return $this->orderId;
+        return $this->orderNumber;
     }
 
     public function date(): \DateTimeInterface

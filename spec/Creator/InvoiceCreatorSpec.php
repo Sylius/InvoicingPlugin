@@ -61,7 +61,7 @@ final class InvoiceCreatorSpec extends ObjectBehavior
     ): void {
         $invoicePdf = new InvoicePdf('invoice.pdf', 'CONTENT');
 
-        $orderRepository->find(1)->willReturn($order);
+        $orderRepository->findOneBy(['number' => '0000001'])->willReturn($order);
 
         $invoiceRepository->findOneByOrder($order)->willReturn(null);
 
@@ -73,7 +73,7 @@ final class InvoiceCreatorSpec extends ObjectBehavior
 
         $invoiceRepository->add($invoice)->shouldBeCalled();
 
-        $this->__invoke(1, $invoiceDateTime);
+        $this->__invoke('0000001', $invoiceDateTime);
     }
 
     function it_creates_invoice_without_generating_pdf_file(
@@ -94,7 +94,7 @@ final class InvoiceCreatorSpec extends ObjectBehavior
             false
         );
 
-        $orderRepository->find(1)->willReturn($order);
+        $orderRepository->findOneBy(['number' => '0000001'])->willReturn($order);
 
         $invoiceRepository->findOneByOrder($order)->willReturn(null);
 
@@ -121,7 +121,7 @@ final class InvoiceCreatorSpec extends ObjectBehavior
     ): void {
         $invoicePdf = new InvoicePdf('invoice.pdf', 'CONTENT');
 
-        $orderRepository->find(1)->willReturn($order);
+        $orderRepository->findOneBy(['number' => '0000001'])->willReturn($order);
 
         $invoiceRepository->findOneByOrder($order)->willReturn(null);
 
@@ -134,7 +134,7 @@ final class InvoiceCreatorSpec extends ObjectBehavior
         $invoiceRepository->add($invoice)->willThrow(ORMException::class);
         $invoiceFileManager->remove($invoicePdf)->shouldBeCalled();
 
-        $this->__invoke(1, $invoiceDateTime);
+        $this->__invoke('0000001', $invoiceDateTime);
     }
 
     function it_throws_an_exception_when_invoice_was_already_created_for_given_order(
@@ -144,7 +144,7 @@ final class InvoiceCreatorSpec extends ObjectBehavior
         OrderInterface $order,
         InvoiceInterface $invoice
     ): void {
-        $orderRepository->find(1)->willReturn($order);
+        $orderRepository->findOneBy(['number' => '0000001'])->willReturn($order);
         $invoiceRepository->findOneByOrder($order)->willReturn($invoice);
 
         $invoiceDateTime = new \DateTimeImmutable('2019-02-25');
@@ -153,8 +153,8 @@ final class InvoiceCreatorSpec extends ObjectBehavior
         $invoiceRepository->add(Argument::any())->shouldNotBeCalled();
 
         $this
-            ->shouldThrow(InvoiceAlreadyGenerated::withOrderId(1))
-            ->during('__invoke', [1, $invoiceDateTime])
+            ->shouldThrow(InvoiceAlreadyGenerated::withOrderNumber('0000001'))
+            ->during('__invoke', ['0000001', $invoiceDateTime])
         ;
     }
 }

@@ -13,15 +13,16 @@ declare(strict_types=1);
 
 namespace Sylius\InvoicingPlugin\Creator;
 
+use Webmozart\Assert\Assert;
 use Doctrine\ORM\ORMException;
 use Sylius\Component\Core\Model\OrderInterface;
-use Sylius\Component\Core\Repository\OrderRepositoryInterface;
-use Sylius\InvoicingPlugin\Doctrine\ORM\InvoiceRepositoryInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Sylius\InvoicingPlugin\Exception\InvoiceAlreadyGenerated;
+use Sylius\Component\Core\Repository\OrderRepositoryInterface;
 use Sylius\InvoicingPlugin\Generator\InvoiceGeneratorInterface;
-use Sylius\InvoicingPlugin\Generator\InvoicePdfFileGeneratorInterface;
 use Sylius\InvoicingPlugin\Manager\InvoiceFileManagerInterface;
+use Sylius\InvoicingPlugin\Doctrine\ORM\InvoiceRepositoryInterface;
+use Sylius\InvoicingPlugin\Generator\InvoicePdfFileGeneratorInterface;
 
 final class InvoiceCreator implements InvoiceCreatorInterface
 {
@@ -35,16 +36,17 @@ final class InvoiceCreator implements InvoiceCreatorInterface
     ) {
     }
 
-    public function __invoke(int $orderId, \DateTimeInterface $dateTime): void
+    public function __invoke(string $orderNumber, \DateTimeInterface $dateTime): void
     {
         /** @var OrderInterface $order */
-        $order = $this->orderRepository->find($orderId);
+        $order = $this->orderRepository->findOneBy(['number' => $orderNumber]);
+        Assert::notNull($order, sprintf('Order with number "%s" does not exist.', $orderNumber));
 
         /** @var InvoiceInterface|null $invoice */
         $invoice = $this->invoiceRepository->findOneByOrder($order);
 
         if (null !== $invoice) {
-            throw InvoiceAlreadyGenerated::withOrderId($orderId);
+            throw InvoiceAlreadyGenerated::withOrderNumber($orderNumber);
         }
 
         $invoice = $this->invoiceGenerator->generateForOrder($order, $dateTime);
