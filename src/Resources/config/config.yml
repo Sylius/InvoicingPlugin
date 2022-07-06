@@ -25,6 +25,13 @@ winzou_state_machine:
                     on: ['complete']
                     do: ['@sylius_invoicing_plugin.event_producer.order_payment_paid', '__invoke']
                     args: ['object']
+    sylius_order_checkout:
+        callbacks:
+            after:
+                sylius_invoicing_plugin_order_placed_producer:
+                    on: ['complete']
+                    do: ['@sylius_invoicing_plugin.event_producer.order_placed', '__invoke']
+                    args: ['object']
 
 sylius_grid:
     templates:
