@@ -16,7 +16,6 @@ namespace spec\Sylius\InvoicingPlugin\EventProducer;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\UnitOfWork;
-use Doctrine\Persistence\ObjectManager;
 use Mockery;
 use Mockery\MockInterface;
 use PhpSpec\ObjectBehavior;
@@ -39,7 +38,7 @@ final class OrderPlacedProducerSpec extends ObjectBehavior
         MessageBusInterface $eventBus,
         DateTimeProvider $dateTimeProvider,
         OrderInterface $order,
-        ObjectManager $objectManager
+        EntityManagerInterface $entityManager,
     ): void {
         $dateTime = new \DateTime('2018-12-14');
         $dateTimeProvider->__invoke()->willReturn($dateTime);
@@ -47,7 +46,7 @@ final class OrderPlacedProducerSpec extends ObjectBehavior
         $order->getNumber()->willReturn('000666');
         $order->getCheckoutState()->willReturn(OrderCheckoutStates::STATE_COMPLETED);
 
-        $postPersistEvent = new LifecycleEventArgs($order->getWrappedObject(), $objectManager->getWrappedObject());
+        $postPersistEvent = new LifecycleEventArgs($order->getWrappedObject(), $entityManager->getWrappedObject());
         $orderPlacedEvent = new OrderPlaced('000666', $dateTime);
 
         $eventBus->dispatch($orderPlacedEvent)->shouldBeCalled()->willReturn(new Envelope($orderPlacedEvent));
