@@ -26,4 +26,5 @@ sylius_invoicing_plugin:
         tax_id: 'Tax ID'
         tax_rate: 'Tax rate %'
         taxes_total: 'Taxes total'
+        original_unit_net_price: 'Original unit net price'
         unit_net_price: 'Unit net price'
