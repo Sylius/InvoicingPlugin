@@ -22,9 +22,9 @@ Feature: Seeing an invoice with items and shipment having promotion applied
     @ui
     Scenario: Seeing proper amounts of line items having promotions applied on an invoice
         When I view the summary of the invoice for order "#00000666"
-        Then it should have 2 "Angel T-Shirt" items with unit price "6.67", net value "13.34", tax total "0.00" and total "13.34" in "USD" currency
-        And it should have 1 "Angel T-Shirt" item with unit price "6.66", net value "6.66", tax total "0.00" and total "6.66" in "USD" currency
-        And it should have 1 "Galaxy Post" shipment with unit price "20.00", net value "20.00", tax total "0.00" and total "20.00" in "USD" currency
+        Then it should have 2 "Angel T-Shirt" items with original unit price "10", unit price "6.67", net value "13.34", tax total "0.00" and total "13.34" in "USD" currency
+        And it should have 1 "Angel T-Shirt" item with original unit price "10", unit price "6.66", net value "6.66", tax total "0.00" and total "6.66" in "USD" currency
+        And it should have 1 "Galaxy Post" shipment with original unit price "20", unit price "20.00", net value "20.00", tax total "0.00" and total "20.00" in "USD" currency
         And its net total should be "40.00" in "USD" currency
         And its tax total should be "0.00" in "USD" currency
         And its total should be "40.00" in "USD" currency
