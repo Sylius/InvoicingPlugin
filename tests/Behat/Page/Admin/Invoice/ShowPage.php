@@ -79,6 +79,7 @@ final class ShowPage extends SymfonyPage implements ShowPageInterface
 
     public function hasItemWithData(
         string $name,
+        string $originalUnitPrice,
         string $unitPrice,
         int $quantity,
         string $taxTotal,
@@ -88,6 +89,7 @@ final class ShowPage extends SymfonyPage implements ShowPageInterface
     ): bool {
         $row = $this->tableAccessor->getRowsWithFields($this->getElement('table'), [
             'name' => $name,
+            'original_unit_price' => $originalUnitPrice,
             'unit_price' => $unitPrice,
             'quantity' => $quantity,
             'tax_total' => $taxTotal,
