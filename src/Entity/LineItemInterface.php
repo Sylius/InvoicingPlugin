@@ -29,6 +29,8 @@ interface LineItemInterface
 
     public function quantity(): int;
 
+    public function originalUnitNetPrice(): int;
+
     public function unitPrice(): int;
 
     public function subtotal(): int;

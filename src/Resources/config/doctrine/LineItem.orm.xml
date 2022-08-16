@@ -8,6 +8,7 @@
 
         <field name="name" />
         <field name="quantity" type="integer" />
+        <field name="originalUnitNetPrice" column="original_unit_net_price" type="integer" nullable="true" />
         <field name="unitPrice" column="unit_price" type="integer" />
         <field name="subtotal" type="integer" />
         <field name="taxTotal" column="tax_total" type="integer" />
