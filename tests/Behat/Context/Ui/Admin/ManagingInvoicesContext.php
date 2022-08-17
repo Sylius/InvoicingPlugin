@@ -298,36 +298,40 @@ final class ManagingInvoicesContext implements Context
     }
 
     /**
-     * @Then it should have :quantity :name shipment with original unit price :originalUnitPrice, unit price :unitPrice, net value :netValue, tax total :taxTotal and total :total in :currencyCode currency
+     * @Then it should have :quantity :name shipment with unit net price :unitNetPrice, discounted unit net price :discountedUnitNetPrice, net value :netValue, tax total :taxTotal and total :total in :currencyCode currency
      */
-    public function itShouldHaveShipmentWithOriginalUnitPriceUnitPriceNetValueTaxTotalAndTotalInCurrency(
+    public function itShouldHaveShipmentWithUnitNetPriceDiscountedUnitPriceNetValueTaxTotalAndTotalInCurrency(
         int $quantity,
         string $name,
-        string $originalUnitPrice,
-        string $unitPrice,
+        string $unitNetPrice,
+        string $discountedUnitNetPrice,
         string $netValue,
         string $taxTotal,
         string $total,
         string $currencyCode
     ): void {
-        Assert::true($this->showPage->hasItemWithData($name, $originalUnitPrice, $unitPrice, $quantity, $taxTotal, $total, $currencyCode, $netValue));
+        Assert::true($this->showPage->hasItemWithData(
+            $name, $unitNetPrice, $discountedUnitNetPrice, $quantity, $taxTotal, $total, $currencyCode, $netValue
+        ));
     }
 
     /**
-     * @Then it should have :quantity :name item with original unit price :originalUnitPrice, unit price :unitPrice, net value :netValue, tax total :taxTotal and total :total in :currencyCode currency
-     * @Then it should have :quantity :name items with original unit price :originalUnitPrice, unit price :unitPrice, net value :netValue, tax total :taxTotal and total :total in :currencyCode currency
+     * @Then it should have :quantity :name item with unit net price :unitNetPrice, discounted unit net price :discountedUnitNetPrice, net value :netValue, tax total :taxTotal and total :total in :currencyCode currency
+     * @Then it should have :quantity :name items with unit net price :unitNetPrice, discounted unit net price :discountedUnitNetPrice, net value :netValue, tax total :taxTotal and total :total in :currencyCode currency
      */
-    public function itShouldHaveItemsWithOriginalUnitPriceUnitPriceNetValueTaxTotalAndTotalInCurrency(
+    public function itShouldHaveItemsWithUnitNetPriceDiscountedUnitPriceNetValueTaxTotalAndTotalInCurrency(
         int $quantity,
         string $name,
-        string $originalUnitPrice,
-        string $unitPrice,
+        string $unitNetPrice,
+        string $discountedUnitNetPrice,
         string $netValue,
         string $taxTotal,
         string $total,
         string $currencyCode
     ): void {
-        Assert::true($this->showPage->hasItemWithData($name, $originalUnitPrice, $unitPrice, $quantity, $taxTotal, $total, $currencyCode, $netValue));
+        Assert::true($this->showPage->hasItemWithData(
+            $name, $unitNetPrice, $discountedUnitNetPrice, $quantity, $taxTotal, $total, $currencyCode, $netValue
+        ));
     }
 
     /**

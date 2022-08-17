@@ -31,8 +31,8 @@ interface ShowPageInterface extends SymfonyPageInterface
 
     public function hasItemWithData(
         string $name,
-        string $originalUnitPrice,
-        string $unitPrice,
+        string $unitNetPrice,
+        string $discountedUnitNetPrice,
         int $quantity,
         string $taxTotal,
         string $total,
