@@ -23,12 +23,16 @@ use Sylius\InvoicingPlugin\Converter\LineItemsConverterInterface;
 use Sylius\InvoicingPlugin\Entity\LineItemInterface;
 use Sylius\InvoicingPlugin\Factory\LineItemFactoryInterface;
 use Sylius\InvoicingPlugin\Provider\TaxRatePercentageProviderInterface;
+use Sylius\InvoicingPlugin\Provider\UnitNetPriceProviderInterface;
 
 final class OrderItemUnitsToLineItemsConverterSpec extends ObjectBehavior
 {
-    function let(TaxRatePercentageProviderInterface $taxRatePercentageProvider, LineItemFactoryInterface $lineItemFactory): void
-    {
-        $this->beConstructedWith($taxRatePercentageProvider, $lineItemFactory);
+    function let(
+        TaxRatePercentageProviderInterface $taxRatePercentageProvider,
+        LineItemFactoryInterface $lineItemFactory,
+        UnitNetPriceProviderInterface $unitNetPriceProvider
+    ): void {
+        $this->beConstructedWith($taxRatePercentageProvider, $lineItemFactory, $unitNetPriceProvider);
     }
 
     function it_implements_line_items_converter_interface(): void
@@ -39,6 +43,7 @@ final class OrderItemUnitsToLineItemsConverterSpec extends ObjectBehavior
     function it_extracts_line_items_from_order_item_units(
         TaxRatePercentageProviderInterface $taxRatePercentageProvider,
         LineItemFactoryInterface $lineItemFactory,
+        UnitNetPriceProviderInterface $unitNetPriceProvider,
         LineItemInterface $lineItem,
         OrderInterface $order,
         OrderItemInterface $orderItem,
@@ -52,8 +57,8 @@ final class OrderItemUnitsToLineItemsConverterSpec extends ObjectBehavior
         $orderItemUnit->getTaxTotal()->willReturn(500);
         $orderItemUnit->getTotal()->willReturn(5500);
         $orderItemUnit->getOrderItem()->willReturn($orderItem);
+        $unitNetPriceProvider->getUnitNetPrice($orderItemUnit)->willReturn(6000);
 
-        $orderItem->getUnitPrice()->willReturn(6000);
         $orderItem->getProductName()->willReturn('Mjolnir');
         $orderItem->getVariant()->willReturn($variant);
         $orderItem->getVariantName()->willReturn(null);
@@ -68,6 +73,7 @@ final class OrderItemUnitsToLineItemsConverterSpec extends ObjectBehavior
     function it_groups_the_same_line_items_during_extracting_order_item_units(
         TaxRatePercentageProviderInterface $taxRatePercentageProvider,
         LineItemFactoryInterface $lineItemFactory,
+        UnitNetPriceProviderInterface $unitNetPriceProvider,
         LineItemInterface $mjolnirLineItem,
         LineItemInterface $stormbreakerLineItem,
         OrderInterface $order,
@@ -97,24 +103,25 @@ final class OrderItemUnitsToLineItemsConverterSpec extends ObjectBehavior
         $firstOrderItemUnit->getTaxTotal()->willReturn(500);
         $firstOrderItemUnit->getTotal()->willReturn(5500);
         $firstOrderItemUnit->getOrderItem()->willReturn($firstOrderItem);
+        $unitNetPriceProvider->getUnitNetPrice($firstOrderItemUnit)->willReturn(5000);
 
         $secondOrderItemUnit->getTaxTotal()->willReturn(500);
         $secondOrderItemUnit->getTotal()->willReturn(5500);
         $secondOrderItemUnit->getOrderItem()->willReturn($firstOrderItem);
+        $unitNetPriceProvider->getUnitNetPrice($secondOrderItemUnit)->willReturn(5000);
 
         $thirdOrderItemUnit->getTaxTotal()->willReturn(1600);
         $thirdOrderItemUnit->getTotal()->willReturn(9600);
         $thirdOrderItemUnit->getOrderItem()->willReturn($secondOrderItem);
+        $unitNetPriceProvider->getUnitNetPrice($thirdOrderItemUnit)->willReturn(8000);
 
         $firstOrderItem->getProductName()->willReturn('Mjolnir');
         $firstOrderItem->getVariant()->willReturn($firstVariant);
         $firstOrderItem->getVariantName()->willReturn(null);
-        $firstOrderItem->getUnitPrice()->willReturn(5000);
 
         $secondOrderItem->getProductName()->willReturn('Stormbreaker');
         $secondOrderItem->getVariant()->willReturn($secondVariant);
         $secondOrderItem->getVariantName()->willReturn(null);
-        $secondOrderItem->getUnitPrice()->willReturn(8000);
 
         $firstVariant->getCode()->willReturn('MJOLNIR');
         $secondVariant->getCode()->willReturn('STORMBREAKER');

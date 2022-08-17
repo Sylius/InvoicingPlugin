@@ -19,20 +19,16 @@ use Sylius\Component\Core\Model\OrderItemUnitInterface;
 use Sylius\InvoicingPlugin\Entity\LineItemInterface;
 use Sylius\InvoicingPlugin\Factory\LineItemFactoryInterface;
 use Sylius\InvoicingPlugin\Provider\TaxRatePercentageProviderInterface;
+use Sylius\InvoicingPlugin\Provider\UnitNetPriceProviderInterface;
 use Webmozart\Assert\Assert;
 
 final class OrderItemUnitsToLineItemsConverter implements LineItemsConverterInterface
 {
-    private TaxRatePercentageProviderInterface $taxRatePercentageProvider;
-
-    private LineItemFactoryInterface $lineItemFactory;
-
     public function __construct(
-        TaxRatePercentageProviderInterface $taxRatePercentageProvider,
-        LineItemFactoryInterface $lineItemFactory
+        private TaxRatePercentageProviderInterface $taxRatePercentageProvider,
+        private LineItemFactoryInterface $lineItemFactory,
+        private UnitNetPriceProviderInterface $unitNetPriceProvider
     ) {
-        $this->taxRatePercentageProvider = $taxRatePercentageProvider;
-        $this->lineItemFactory = $lineItemFactory;
     }
 
     public function convert(OrderInterface $order): array
@@ -54,7 +50,7 @@ final class OrderItemUnitsToLineItemsConverter implements LineItemsConverterInte
 
         $grossValue = $unit->getTotal();
         $taxAmount = $unit->getTaxTotal();
-        $unitPrice = $unit->getOrderItem()->getUnitPrice();
+        $unitPrice = $this->unitNetPriceProvider->getUnitNetPrice($unit);
         $discountedUnitNetPrice = $grossValue - $taxAmount;
 
         /** @var string|null $productName */

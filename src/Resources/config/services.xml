@@ -51,5 +51,10 @@
             <argument type="service" id="Sylius\InvoicingPlugin\Manager\InvoiceFileManagerInterface" />
             <argument>%sylius_invoicing.invoice_save_path%</argument>
         </service>
+
+        <service
+            id="Sylius\InvoicingPlugin\Provider\UnitNetPriceProviderInterface"
+            class="Sylius\InvoicingPlugin\Provider\UnitNetPriceProvider"
+        />
     </services>
 </container>
