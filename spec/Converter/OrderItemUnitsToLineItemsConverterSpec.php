@@ -45,7 +45,7 @@ final class OrderItemUnitsToLineItemsConverterSpec extends ObjectBehavior
         OrderItemUnitInterface $orderItemUnit,
         ProductVariantInterface $variant
     ): void {
-        $lineItemFactory->createWithData('Mjolnir', 1, 5000, 5000, 500, 5500, null, 'CODE', '10%')->willReturn($lineItem);
+        $lineItemFactory->createWithData('Mjolnir', 1, 5000, 5000, 5000, 500, 5500, null, 'CODE', '10%')->willReturn($lineItem);
 
         $order->getItemUnits()->willReturn(new ArrayCollection([$orderItemUnit->getWrappedObject()]));
 
@@ -78,8 +78,8 @@ final class OrderItemUnitsToLineItemsConverterSpec extends ObjectBehavior
         ProductVariantInterface $firstVariant,
         ProductVariantInterface $secondVariant
     ): void {
-        $lineItemFactory->createWithData('Mjolnir', 1, 5000, 5000, 500, 5500, null, 'MJOLNIR', '10%')->willReturn($mjolnirLineItem);
-        $lineItemFactory->createWithData('Stormbreaker', 1, 8000, 8000, 1600, 9600, null, 'STORMBREAKER', '20%')->willReturn($stormbreakerLineItem);
+        $lineItemFactory->createWithData('Mjolnir', 1, 5000, 5000, 5000, 500, 5500, null, 'MJOLNIR', '10%')->willReturn($mjolnirLineItem);
+        $lineItemFactory->createWithData('Stormbreaker', 1, 8000, 8000, 8000, 1600, 9600, null, 'STORMBREAKER', '20%')->willReturn($stormbreakerLineItem);
 
         $mjolnirLineItem->compare($mjolnirLineItem)->willReturn(true);
         $mjolnirLineItem->compare($stormbreakerLineItem)->willReturn(false);

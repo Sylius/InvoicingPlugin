@@ -2,6 +2,7 @@ sylius_invoicing_plugin:
     ui:
         billing_data: 'Billing data'
         buyer: 'Buyer'
+        discounted_unit_net_price: 'Discounted unit net price'
         download_invoice: 'Download'
         gross_value: 'Gross value'
         invoice: 'Invoice'

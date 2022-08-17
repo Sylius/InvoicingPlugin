@@ -21,7 +21,8 @@ interface LineItemFactoryInterface extends FactoryInterface
     public function createWithData(
         string $name,
         int $quantity,
-        int $unitPrice,
+        int $unitNetPrice,
+        int $discountedUnitNetPrice,
         int $subtotal,
         int $taxTotal,
         int $total,

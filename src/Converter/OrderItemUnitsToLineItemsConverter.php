@@ -67,6 +67,7 @@ final class OrderItemUnitsToLineItemsConverter implements LineItemsConverterInte
             1,
             $netValue,
             $netValue,
+            $netValue,
             $taxAmount,
             $grossValue,
             $item->getVariantName(),

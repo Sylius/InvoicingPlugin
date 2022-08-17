@@ -41,7 +41,8 @@ final class LineItemFactory implements LineItemFactoryInterface
     public function createWithData(
         string $name,
         int $quantity,
-        int $unitPrice,
+        int $unitNetPrice,
+        int $discountedUnitNetPrice,
         int $subtotal,
         int $taxTotal,
         int $total,
@@ -52,7 +53,8 @@ final class LineItemFactory implements LineItemFactoryInterface
         return new $this->className(
             $name,
             $quantity,
-            $unitPrice,
+            $unitNetPrice,
+            $discountedUnitNetPrice,
             $subtotal,
             $taxTotal,
             $total,

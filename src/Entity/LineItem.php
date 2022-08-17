@@ -27,8 +27,8 @@ class LineItem implements LineItemInterface, ResourceInterface
     public function __construct(
         protected string $name,
         protected int $quantity,
-        protected int $originalUnitNetPrice,
-        protected int $unitPrice,
+        protected int $unitNetPrice,
+        protected int $discountedUnitNetPrice,
         protected int $subtotal,
         protected int $taxTotal,
         protected int $total,
@@ -78,13 +78,14 @@ class LineItem implements LineItemInterface, ResourceInterface
         return $this->quantity;
     }
 
-    public function originalUnitNetPrice(): int
-    {
-        return $this->unitPrice;
-    }
     public function unitPrice(): int
     {
-        return $this->unitPrice;
+        return $this->unitNetPrice;
+    }
+
+    public function discountedUnitNetPrice(): int
+    {
+        return $this->discountedUnitNetPrice;
     }
 
     public function subtotal(): int
@@ -124,7 +125,7 @@ class LineItem implements LineItemInterface, ResourceInterface
         return
             $this->name() === $lineItem->name() &&
             $this->variantCode() === $lineItem->variantCode() &&
-            $this->originalUnitNetPrice() === $lineItem->originalUnitNetPrice() &&
+            $this->discountedUnitNetPrice() === $lineItem->discountedUnitNetPrice() &&
             $this->unitPrice() === $lineItem->unitPrice() &&
             $this->taxRate() === $lineItem->taxRate()
         ;

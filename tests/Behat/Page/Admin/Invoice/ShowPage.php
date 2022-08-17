@@ -89,8 +89,8 @@ final class ShowPage extends SymfonyPage implements ShowPageInterface
     ): bool {
         $row = $this->tableAccessor->getRowsWithFields($this->getElement('table'), [
             'name' => $name,
-            'unit_net_price' => $unitNetPrice,
-            'discounted_unit_price' => $discountedUnitNetPrice,
+            'unit-net-price' => $unitNetPrice,
+            'discounted-unit-net-price' => $discountedUnitNetPrice,
             'quantity' => $quantity,
             'tax_total' => $taxTotal,
             'total' => $total,

@@ -31,8 +31,8 @@
                     <th class="one wide">{{ 'sylius_invoicing_plugin.ui.no'|trans }}</th>
                     <th class="four wide sylius-table-column-name">{{ 'sylius.ui.name'|trans }}</th>
                     <th class="sylius-table-column-quantity">{{ 'sylius.ui.quantity'|trans }}</th>
-                    <th class="sylius-table-column-original_unit_net_price">{{ 'sylius_invoicing_plugin.ui.original_unit_net_price'|trans }}</th>
-                    <th class="sylius-table-column-unit_price">{{ 'sylius_invoicing_plugin.ui.unit_net_price'|trans }}</th>
+                    <th class="sylius-table-column-unit-net-price">{{ 'sylius_invoicing_plugin.ui.unit_net_price'|trans }}</th>
+                    <th class="sylius-table-column-discounted-unit-net-price">{{ 'sylius_invoicing_plugin.ui.discounted_unit_net_price'|trans }}</th>
                     <th class="sylius-table-column-subtotal">{{ 'sylius_invoicing_plugin.ui.net_value'|trans }}</th>
                     <th class="sylius-table-column-tax-rate">{{ 'sylius_invoicing_plugin.ui.tax_rate'|trans }}</th>
                     <th class="sylius-table-column-tax_total">{{ 'sylius_invoicing_plugin.ui.tax_amount'|trans }}</th>
@@ -53,8 +53,7 @@
                             {{ item.quantity }}
                         </td>
                         <td class="right aligned line-item-original-unit-net-price">
-                            {{ dump(item) }}
-                            {{ '%0.2f'|format(item.originalUnitNetPrice) }}
+                            {{ '%0.2f'|format(item.unitPrice/100) }}
                         </td>
                         <td class="right aligned line-item-unit-price">
                             {{ '%0.2f'|format(item.unitPrice/100) }}

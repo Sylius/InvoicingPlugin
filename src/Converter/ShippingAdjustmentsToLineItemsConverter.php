@@ -66,6 +66,7 @@ final class ShippingAdjustmentsToLineItemsConverter implements LineItemsConverte
             1,
             $netValue,
             $netValue,
+            $netValue,
             $taxAmount,
             $grossValue,
             null,

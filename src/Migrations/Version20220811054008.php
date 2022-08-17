@@ -28,11 +28,11 @@ final class Version20220811054008 extends AbstractMigration
 
     public function up(Schema $schema): void
     {
-        $this->addSql('ALTER TABLE sylius_invoicing_plugin_line_item ADD original_unit_net_price INT DEFAULT NULL');
+        $this->addSql('ALTER TABLE sylius_invoicing_plugin_line_item ADD discounted_unit_net_price INT DEFAULT NULL');
     }
 
     public function down(Schema $schema): void
     {
-        $this->addSql('ALTER TABLE sylius_invoicing_plugin_line_item DROP original_unit_net_price');
+        $this->addSql('ALTER TABLE sylius_invoicing_plugin_line_item DROP discounted_unit_net_price');
     }
 }

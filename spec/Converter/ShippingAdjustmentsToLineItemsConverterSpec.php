@@ -44,7 +44,7 @@ final class ShippingAdjustmentsToLineItemsConverterSpec extends ObjectBehavior
         AdjustmentInterface $shippingTaxAdjustment,
         ShipmentInterface $shipment
     ): void {
-        $lineItemFactory->createWithData('UPS', 1, 1000, 1000, 200, 1200, null, null, '20%')->willReturn($lineItem);
+        $lineItemFactory->createWithData('UPS', 1, 1000, 1000, 1000, 200, 1200, null, null, '20%')->willReturn($lineItem);
 
         $order
             ->getAdjustments(AdjustmentInterface::SHIPPING_ADJUSTMENT)
