@@ -45,7 +45,7 @@ final class OrderItemUnitsToLineItemsConverterSpec extends ObjectBehavior
         OrderItemUnitInterface $orderItemUnit,
         ProductVariantInterface $variant
     ): void {
-        $lineItemFactory->createWithData('Mjolnir', 1, 5000, 5000, 5000, 500, 5500, null, 'CODE', '10%')->willReturn($lineItem);
+        $lineItemFactory->createWithData('Mjolnir', 1, 6000, 5000, 5000, 500, 5500, null, 'CODE', '10%')->willReturn($lineItem);
 
         $order->getItemUnits()->willReturn(new ArrayCollection([$orderItemUnit->getWrappedObject()]));
 
@@ -53,6 +53,7 @@ final class OrderItemUnitsToLineItemsConverterSpec extends ObjectBehavior
         $orderItemUnit->getTotal()->willReturn(5500);
         $orderItemUnit->getOrderItem()->willReturn($orderItem);
 
+        $orderItem->getUnitPrice()->willReturn(6000);
         $orderItem->getProductName()->willReturn('Mjolnir');
         $orderItem->getVariant()->willReturn($variant);
         $orderItem->getVariantName()->willReturn(null);
@@ -108,10 +109,12 @@ final class OrderItemUnitsToLineItemsConverterSpec extends ObjectBehavior
         $firstOrderItem->getProductName()->willReturn('Mjolnir');
         $firstOrderItem->getVariant()->willReturn($firstVariant);
         $firstOrderItem->getVariantName()->willReturn(null);
+        $firstOrderItem->getUnitPrice()->willReturn(5000);
 
         $secondOrderItem->getProductName()->willReturn('Stormbreaker');
         $secondOrderItem->getVariant()->willReturn($secondVariant);
         $secondOrderItem->getVariantName()->willReturn(null);
+        $secondOrderItem->getUnitPrice()->willReturn(8000);
 
         $firstVariant->getCode()->willReturn('MJOLNIR');
         $secondVariant->getCode()->willReturn('STORMBREAKER');

@@ -52,11 +52,11 @@
                         <td class="right aligned line-item-quantity">
                             {{ item.quantity }}
                         </td>
-                        <td class="right aligned line-item-original-unit-net-price">
+                        <td class="right aligned line-item-unit-net-price">
                             {{ '%0.2f'|format(item.unitPrice/100) }}
                         </td>
-                        <td class="right aligned line-item-unit-price">
-                            {{ '%0.2f'|format(item.unitPrice/100) }}
+                        <td class="right aligned line-item-discounted-unit-net-price">
+                            {{ '%0.2f'|format(item.discountedUnitNetPrice/100) }}
                         </td>
                         <td class="right aligned line-item-subtotal">
                             {{ '%0.2f'|format(item.subtotal/100) }}

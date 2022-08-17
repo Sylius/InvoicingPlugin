@@ -54,7 +54,8 @@ final class OrderItemUnitsToLineItemsConverter implements LineItemsConverterInte
 
         $grossValue = $unit->getTotal();
         $taxAmount = $unit->getTaxTotal();
-        $netValue = $grossValue - $taxAmount;
+        $unitPrice = $unit->getOrderItem()->getUnitPrice();
+        $discountedUnitNetPrice = $grossValue - $taxAmount;
 
         /** @var string|null $productName */
         $productName = $item->getProductName();
@@ -65,9 +66,9 @@ final class OrderItemUnitsToLineItemsConverter implements LineItemsConverterInte
         return $this->lineItemFactory->createWithData(
             $productName,
             1,
-            $netValue,
-            $netValue,
-            $netValue,
+            $unitPrice,
+            $discountedUnitNetPrice,
+            $discountedUnitNetPrice,
             $taxAmount,
             $grossValue,
             $item->getVariantName(),
