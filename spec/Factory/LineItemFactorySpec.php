@@ -45,10 +45,11 @@ class LineItemFactorySpec extends ObjectBehavior
     function it_creates_line_items_with_data(): void
     {
         $this
-            ->createWithData('Mjolnir', 2, 5000, 10000, 1000, 11000, null, 'MJOLNIR', '10%')
+            ->createWithData('Mjolnir', 2, 6000, 5000, 10000, 1000, 11000, null, 'MJOLNIR', '10%')
             ->shouldBeLike(new LineItem(
                 'Mjolnir',
                 2,
+                6000,
                 5000,
                 10000,
                 1000,
@@ -60,10 +61,11 @@ class LineItemFactorySpec extends ObjectBehavior
         ;
 
         $this
-            ->createWithData('UPS', 1, 1000, 1000, 200, 1200, null, null, '20%')
+            ->createWithData('UPS', 1, 1000, 1000, 1000, 200, 1200, null, null, '20%')
             ->shouldBeLike(new LineItem(
                 'UPS',
                 1,
+                1000,
                 1000,
                 1000,
                 200,

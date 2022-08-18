@@ -2,6 +2,7 @@ sylius_invoicing_plugin:
     ui:
         billing_data: 'Billing data'
         buyer: 'Buyer'
+        discounted_unit_net_price: 'Discounted unit net price'
         download_invoice: 'Download'
         gross_value: 'Gross value'
         invoice: 'Invoice'
@@ -26,4 +27,5 @@ sylius_invoicing_plugin:
         tax_id: 'Tax ID'
         tax_rate: 'Tax rate %'
         taxes_total: 'Taxes total'
+        original_unit_net_price: 'Original unit net price'
         unit_net_price: 'Unit net price'

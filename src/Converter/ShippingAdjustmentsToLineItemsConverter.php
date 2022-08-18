@@ -43,14 +43,16 @@ final class ShippingAdjustmentsToLineItemsConverter implements LineItemsConverte
 
         /** @var AdjustmentInterface $shippingAdjustment */
         foreach ($order->getAdjustments(AdjustmentInterface::SHIPPING_ADJUSTMENT) as $shippingAdjustment) {
-            $lineItems[] = $this->convertShippingAdjustmentToLineItem($shippingAdjustment);
+            $lineItems[] = $this->convertShippingAdjustmentToLineItem($shippingAdjustment, $order);
         }
 
         return $lineItems;
     }
 
-    private function convertShippingAdjustmentToLineItem(AdjustmentInterface $shippingAdjustment): LineItemInterface
-    {
+    private function convertShippingAdjustmentToLineItem(
+        AdjustmentInterface $shippingAdjustment,
+        OrderInterface $order
+    ): LineItemInterface {
         /** @var ShipmentInterface|null $shipment */
         $shipment = $shippingAdjustment->getShipment();
         Assert::notNull($shipment);
@@ -59,13 +61,15 @@ final class ShippingAdjustmentsToLineItemsConverter implements LineItemsConverte
         $grossValue = $shipment->getAdjustmentsTotal();
         $taxAdjustment = $this->getShipmentTaxAdjustment($shipment);
         $taxAmount = $taxAdjustment !== null ? $taxAdjustment->getAmount() : 0;
-        $netValue = $grossValue - $taxAmount;
+        $unitNetPrice = $grossValue - $taxAmount - $shipment->getAdjustmentsTotal(AdjustmentInterface::ORDER_SHIPPING_PROMOTION_ADJUSTMENT);
+        $discountedUnitNetPrice = $grossValue - $taxAmount;
 
         return $this->lineItemFactory->createWithData(
             $shippingAdjustment->getLabel(),
             1,
-            $netValue,
-            $netValue,
+            $unitNetPrice,
+            $discountedUnitNetPrice,
+            $discountedUnitNetPrice,
             $taxAmount,
             $grossValue,
             null,

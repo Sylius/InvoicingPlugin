@@ -27,6 +27,7 @@ final class LineItemSpec extends ObjectBehavior
             'Mjolnir',
             2,
             5000,
+            5000,
             10000,
             1000,
             11000,
@@ -51,6 +52,7 @@ final class LineItemSpec extends ObjectBehavior
         $this->name()->shouldReturn('Mjolnir');
         $this->quantity()->shouldReturn(2);
         $this->unitPrice()->shouldReturn(5000);
+        $this->discountedUnitNetPrice()->shouldReturn(5000);
         $this->subtotal()->shouldReturn(10000);
         $this->taxTotal()->shouldReturn(1000);
         $this->total()->shouldReturn(11000);
@@ -69,6 +71,7 @@ final class LineItemSpec extends ObjectBehavior
         $newLineItem->name()->willReturn('Mjolnir');
         $newLineItem->quantity()->willReturn(1);
         $newLineItem->unitPrice()->willReturn(5000);
+        $newLineItem->discountedUnitNetPrice()->willReturn(5000);
         $newLineItem->subtotal()->willReturn(5000);
         $newLineItem->total()->willReturn(5500);
         $newLineItem->taxTotal()->willReturn(500);
@@ -99,16 +102,19 @@ final class LineItemSpec extends ObjectBehavior
     ): void {
         $theSameLineItem->name()->willReturn('Mjolnir');
         $theSameLineItem->unitPrice()->willReturn(5000);
+        $theSameLineItem->discountedUnitNetPrice()->willReturn(5000);
         $theSameLineItem->taxRate()->willReturn('10%');
         $theSameLineItem->variantCode()->willReturn('7903c83a-4c5e-4bcf-81d8-9dc304c6a353');
 
         $differentLineItemName->name()->willReturn('Stormbreaker');
         $differentLineItemName->unitPrice()->willReturn(5000);
+        $differentLineItemName->discountedUnitNetPrice()->willReturn(5000);
         $differentLineItemName->taxRate()->willReturn('10%');
         $differentLineItemName->variantCode()->willReturn('7903c83a-4c5e-4bcf-81d8-9dc304c6a353');
 
         $differentLineItemCode->name()->willReturn('Mjolnir');
         $differentLineItemCode->unitPrice()->willReturn(5000);
+        $differentLineItemCode->discountedUnitNetPrice()->willReturn(5000);
         $differentLineItemCode->taxRate()->willReturn('10%');
         $differentLineItemCode->variantCode()->willReturn('7903c83a-4c5e-4bcf-81d8-9dc304c6a350');
 

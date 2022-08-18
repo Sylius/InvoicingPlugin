@@ -31,7 +31,8 @@
                     <th class="one wide">{{ 'sylius_invoicing_plugin.ui.no'|trans }}</th>
                     <th class="four wide sylius-table-column-name">{{ 'sylius.ui.name'|trans }}</th>
                     <th class="sylius-table-column-quantity">{{ 'sylius.ui.quantity'|trans }}</th>
-                    <th class="sylius-table-column-unit_price">{{ 'sylius_invoicing_plugin.ui.unit_net_price'|trans }}</th>
+                    <th class="sylius-table-column-unit-net-price">{{ 'sylius_invoicing_plugin.ui.unit_net_price'|trans }}</th>
+                    <th class="sylius-table-column-discounted-unit-net-price">{{ 'sylius_invoicing_plugin.ui.discounted_unit_net_price'|trans }}</th>
                     <th class="sylius-table-column-subtotal">{{ 'sylius_invoicing_plugin.ui.net_value'|trans }}</th>
                     <th class="sylius-table-column-tax-rate">{{ 'sylius_invoicing_plugin.ui.tax_rate'|trans }}</th>
                     <th class="sylius-table-column-tax_total">{{ 'sylius_invoicing_plugin.ui.tax_amount'|trans }}</th>
@@ -51,8 +52,11 @@
                         <td class="right aligned line-item-quantity">
                             {{ item.quantity }}
                         </td>
-                        <td class="right aligned line-item-unit-price">
+                        <td class="right aligned line-item-unit-net-price">
                             {{ '%0.2f'|format(item.unitPrice/100) }}
+                        </td>
+                        <td class="right aligned line-item-discounted-unit-net-price">
+                            {{ '%0.2f'|format(item.discountedUnitNetPrice/100) }}
                         </td>
                         <td class="right aligned line-item-subtotal">
                             {{ '%0.2f'|format(item.subtotal/100) }}
@@ -74,7 +78,7 @@
                 </tbody>
                 <tfoot>
                 <tr>
-                    <th colspan="7" class="right aligned">
+                    <th colspan="8" class="right aligned">
                         <strong>{{ 'sylius_invoicing_plugin.ui.net_total'|trans }}</strong>:
                     </th>
                     <th id="invoice-subtotal" class="right aligned" {{ sylius_test_html_attribute('invoice-net-total') }}>
@@ -85,7 +89,7 @@
                     </th>
                 </tr>
                 <tr>
-                    <th colspan="7" class="right aligned">
+                    <th colspan="8" class="right aligned">
                         <strong>{{ 'sylius_invoicing_plugin.ui.taxes_total'|trans([], 'messages', invoice.localeCode) }}</strong>:
                     </th>
                     <th id="invoice-tax-total" class="right aligned" {{ sylius_test_html_attribute('invoice-taxes-total') }}>
@@ -96,7 +100,7 @@
                     </th>
                 </tr>
                 <tr>
-                    <th colspan="7" class="right aligned">
+                    <th colspan="8" class="right aligned">
                         <strong>{{ 'sylius.ui.total'|trans }}</strong>:
                     </th>
                     <th id="invoice-total" class="right aligned" {{ sylius_test_html_attribute('invoice-total') }}>
@@ -109,7 +113,7 @@
 
                 {% if invoice.taxItems.count() > 0 %}
                 <tr>
-                    <th colspan="7" class="right aligned">
+                    <th colspan="8" class="right aligned">
                         <strong>{{ 'sylius_invoicing_plugin.ui.tax_rate'|trans }}</strong>
                     </th>
                     <th class="right aligned">
@@ -122,7 +126,7 @@
 
                 {% for item in invoice.taxItems %}
                 <tr class="tax-item" {{ sylius_test_html_attribute('invoice-tax-item') }}>
-                    <th colspan="7" class="right aligned">
+                    <th colspan="8" class="right aligned">
                         <strong {{ sylius_test_html_attribute('invoice-tax-item-label') }}>{{ item.label }}</strong>:
                     </th>
                     <th class="right aligned tax-item-amount" {{ sylius_test_html_attribute('invoice-tax-item-amount') }}>

@@ -35,7 +35,7 @@ final class ShippingAdjustmentsToLineItemsConverterSpec extends ObjectBehavior
         $this->shouldImplement(LineItemsConverterInterface::class);
     }
 
-    function it_extracts_line_items_from_orders_shipping_adjusments(
+    function it_extracts_line_items_from_orders_shipping_adjustments(
         TaxRatePercentageProviderInterface $taxRatePercentageProvider,
         LineItemFactoryInterface $lineItemFactory,
         LineItemInterface $lineItem,
@@ -44,7 +44,7 @@ final class ShippingAdjustmentsToLineItemsConverterSpec extends ObjectBehavior
         AdjustmentInterface $shippingTaxAdjustment,
         ShipmentInterface $shipment
     ): void {
-        $lineItemFactory->createWithData('UPS', 1, 1000, 1000, 200, 1200, null, null, '20%')->willReturn($lineItem);
+        $lineItemFactory->createWithData('UPS', 1, 800, 1000, 1000, 200, 1200, null, null, '20%')->willReturn($lineItem);
 
         $order
             ->getAdjustments(AdjustmentInterface::SHIPPING_ADJUSTMENT)
@@ -59,8 +59,9 @@ final class ShippingAdjustmentsToLineItemsConverterSpec extends ObjectBehavior
             ->getAdjustments(AdjustmentInterface::TAX_ADJUSTMENT)
             ->willReturn(new ArrayCollection([$shippingTaxAdjustment->getWrappedObject()]))
         ;
-
         $shippingTaxAdjustment->getAmount()->willReturn(200);
+
+        $shipment->getAdjustmentsTotal(AdjustmentInterface::ORDER_SHIPPING_PROMOTION_ADJUSTMENT)->willReturn(200);
 
         $taxRatePercentageProvider->provideFromAdjustable($shipment)->willReturn('20%');
 

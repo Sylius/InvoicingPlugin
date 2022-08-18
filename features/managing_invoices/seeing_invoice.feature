@@ -25,8 +25,8 @@ Feature: Seeing basic information about an invoice
         And it should have billing data as "Mazikeen Lilim", "Pacific Coast Hwy", "90806" "Los Angeles", "United States"
         And it should have shop billing data as "Ragnarok", "1100110011", "Pacific Coast Hwy", "90806" "Los Angeles", "United States"
         And it should have 2 items in the list
-        Then it should have 2 "Angel T-Shirt" shipment with unit price "60.00", net value "120.00", tax total "12.00" and total "132.00" in "USD" currency
-        And it should have 1 "UPS" shipment with unit price "10.00", net value "10.00", tax total "0.00" and total "10.00" in "USD" currency
+        Then it should have 2 "Angel T-Shirt" item with unit net price "60.00", discounted unit net price "60.00", net value "120.00", tax total "12.00" and total "132.00" in "USD" currency
+        And it should have 1 "UPS" shipment with unit net price "10.00", discounted unit net price "10.00", net value "10.00", tax total "0.00" and total "10.00" in "USD" currency
         And its total should be "142.00" in "USD" currency
         And it should be issued in "United States" channel
 

@@ -23,12 +23,16 @@ use Sylius\InvoicingPlugin\Converter\LineItemsConverterInterface;
 use Sylius\InvoicingPlugin\Entity\LineItemInterface;
 use Sylius\InvoicingPlugin\Factory\LineItemFactoryInterface;
 use Sylius\InvoicingPlugin\Provider\TaxRatePercentageProviderInterface;
+use Sylius\InvoicingPlugin\Provider\UnitNetPriceProviderInterface;
 
 final class OrderItemUnitsToLineItemsConverterSpec extends ObjectBehavior
 {
-    function let(TaxRatePercentageProviderInterface $taxRatePercentageProvider, LineItemFactoryInterface $lineItemFactory): void
-    {
-        $this->beConstructedWith($taxRatePercentageProvider, $lineItemFactory);
+    function let(
+        TaxRatePercentageProviderInterface $taxRatePercentageProvider,
+        LineItemFactoryInterface $lineItemFactory,
+        UnitNetPriceProviderInterface $unitNetPriceProvider
+    ): void {
+        $this->beConstructedWith($taxRatePercentageProvider, $lineItemFactory, $unitNetPriceProvider);
     }
 
     function it_implements_line_items_converter_interface(): void
@@ -39,19 +43,21 @@ final class OrderItemUnitsToLineItemsConverterSpec extends ObjectBehavior
     function it_extracts_line_items_from_order_item_units(
         TaxRatePercentageProviderInterface $taxRatePercentageProvider,
         LineItemFactoryInterface $lineItemFactory,
+        UnitNetPriceProviderInterface $unitNetPriceProvider,
         LineItemInterface $lineItem,
         OrderInterface $order,
         OrderItemInterface $orderItem,
         OrderItemUnitInterface $orderItemUnit,
         ProductVariantInterface $variant
     ): void {
-        $lineItemFactory->createWithData('Mjolnir', 1, 5000, 5000, 500, 5500, null, 'CODE', '10%')->willReturn($lineItem);
+        $lineItemFactory->createWithData('Mjolnir', 1, 6000, 5000, 5000, 500, 5500, null, 'CODE', '10%')->willReturn($lineItem);
 
         $order->getItemUnits()->willReturn(new ArrayCollection([$orderItemUnit->getWrappedObject()]));
 
         $orderItemUnit->getTaxTotal()->willReturn(500);
         $orderItemUnit->getTotal()->willReturn(5500);
         $orderItemUnit->getOrderItem()->willReturn($orderItem);
+        $unitNetPriceProvider->getUnitNetPrice($orderItemUnit)->willReturn(6000);
 
         $orderItem->getProductName()->willReturn('Mjolnir');
         $orderItem->getVariant()->willReturn($variant);
@@ -67,6 +73,7 @@ final class OrderItemUnitsToLineItemsConverterSpec extends ObjectBehavior
     function it_groups_the_same_line_items_during_extracting_order_item_units(
         TaxRatePercentageProviderInterface $taxRatePercentageProvider,
         LineItemFactoryInterface $lineItemFactory,
+        UnitNetPriceProviderInterface $unitNetPriceProvider,
         LineItemInterface $mjolnirLineItem,
         LineItemInterface $stormbreakerLineItem,
         OrderInterface $order,
@@ -78,8 +85,8 @@ final class OrderItemUnitsToLineItemsConverterSpec extends ObjectBehavior
         ProductVariantInterface $firstVariant,
         ProductVariantInterface $secondVariant
     ): void {
-        $lineItemFactory->createWithData('Mjolnir', 1, 5000, 5000, 500, 5500, null, 'MJOLNIR', '10%')->willReturn($mjolnirLineItem);
-        $lineItemFactory->createWithData('Stormbreaker', 1, 8000, 8000, 1600, 9600, null, 'STORMBREAKER', '20%')->willReturn($stormbreakerLineItem);
+        $lineItemFactory->createWithData('Mjolnir', 1, 5000, 5000, 5000, 500, 5500, null, 'MJOLNIR', '10%')->willReturn($mjolnirLineItem);
+        $lineItemFactory->createWithData('Stormbreaker', 1, 8000, 8000, 8000, 1600, 9600, null, 'STORMBREAKER', '20%')->willReturn($stormbreakerLineItem);
 
         $mjolnirLineItem->compare($mjolnirLineItem)->willReturn(true);
         $mjolnirLineItem->compare($stormbreakerLineItem)->willReturn(false);
@@ -96,14 +103,17 @@ final class OrderItemUnitsToLineItemsConverterSpec extends ObjectBehavior
         $firstOrderItemUnit->getTaxTotal()->willReturn(500);
         $firstOrderItemUnit->getTotal()->willReturn(5500);
         $firstOrderItemUnit->getOrderItem()->willReturn($firstOrderItem);
+        $unitNetPriceProvider->getUnitNetPrice($firstOrderItemUnit)->willReturn(5000);
 
         $secondOrderItemUnit->getTaxTotal()->willReturn(500);
         $secondOrderItemUnit->getTotal()->willReturn(5500);
         $secondOrderItemUnit->getOrderItem()->willReturn($firstOrderItem);
+        $unitNetPriceProvider->getUnitNetPrice($secondOrderItemUnit)->willReturn(5000);
 
         $thirdOrderItemUnit->getTaxTotal()->willReturn(1600);
         $thirdOrderItemUnit->getTotal()->willReturn(9600);
         $thirdOrderItemUnit->getOrderItem()->willReturn($secondOrderItem);
+        $unitNetPriceProvider->getUnitNetPrice($thirdOrderItemUnit)->willReturn(8000);
 
         $firstOrderItem->getProductName()->willReturn('Mjolnir');
         $firstOrderItem->getVariant()->willReturn($firstVariant);
