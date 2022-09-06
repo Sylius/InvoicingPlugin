@@ -7,7 +7,7 @@
         <service id="sylius_invoicing_plugin.cli.generate_invoices" class="Sylius\InvoicingPlugin\Cli\GenerateInvoicesCommand">
             <argument type="service" id="sylius_invoicing_plugin.creator.mass_invoices" />
             <argument type="service" id="sylius.repository.order" />
-            <tag name="console.command" command="sylius-invoicing:generate-invoices" />
+            <tag name="console.command" />
         </service>
     </services>
 </container>
