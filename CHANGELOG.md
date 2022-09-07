@@ -1,5 +1,15 @@
 # CHANGELOG
 
+### v0.23.0 (2022-09-07)
+
+- [#282](https://github.com/Sylius/InvoicingPlugin/issues/282) Fix translation on pdf template ([@Orkin](https://github.com/Orkin))
+- [#284](https://github.com/Sylius/InvoicingPlugin/issues/284) Add directory purger before fixtures run ([@AdamKasp](https://github.com/AdamKasp))
+- [#285](https://github.com/Sylius/InvoicingPlugin/issues/285) [Maintenance] Allow flex plugin during plugin installation ([@lchrusciel](https://github.com/lchrusciel))
+- [#286](https://github.com/Sylius/InvoicingPlugin/issues/286) [Maintenance] Fix multi-environment .env files in test application ([@NoResponseMate](https://github.com/NoResponseMate))
+- [#287](https://github.com/Sylius/InvoicingPlugin/issues/287) Unit net price and discounted unit net price on the invoice ([@Rafikooo](https://github.com/Rafikooo), [@Zales0123](https://github.com/Zales0123))
+- [#207](https://github.com/Sylius/InvoicingPlugin/issues/207) Update console command definition to SF 4.4 standards ([@GSadee](https://github.com/GSadee))
+- [#289](https://github.com/Sylius/InvoicingPlugin/issues/289) Fix down method of migration that changes indexes ([@GSadee](https://github.com/GSadee))
+
 ### v0.22.0 (2022-04-27)
 
 - [#274](https://github.com/Sylius/InvoicingPlugin/issues/274) [Maintenance] Support PHP 8.1 ([@GSadee](https://github.com/GSadee))
