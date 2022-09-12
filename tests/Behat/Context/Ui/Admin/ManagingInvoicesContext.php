@@ -198,7 +198,9 @@ final class ManagingInvoicesContext implements Context
         string $taxTotal,
         string $total
     ): void {
-        Assert::true($this->showPage->hasItemWithData(sprintf('%s (%s)', $name, $name), $unitPrice, $quantity, $taxTotal, $total));
+        Assert::true(
+            $this->showPage->hasItemWithData(sprintf('%s (%s)', $name, $name), $unitPrice, $unitPrice, $quantity, $taxTotal, $total)
+        );
     }
 
     /**
@@ -243,7 +245,7 @@ final class ManagingInvoicesContext implements Context
         string $taxTotal,
         string $total
     ): void {
-        Assert::true($this->showPage->hasItemWithData($name, $unitPrice, $quantity, $taxTotal, $total));
+        Assert::true($this->showPage->hasItemWithData($name, $unitPrice, $unitPrice, $quantity, $taxTotal, $total));
     }
 
     /**
