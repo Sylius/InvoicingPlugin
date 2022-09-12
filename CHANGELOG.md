@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### v0.23.1 (2022-09-12)
+
+- [#291](https://github.com/Sylius/InvoicingPlugin/issues/291) [Behat][Invoice] Fix usage of method checking line items after last changes ([@GSadee](https://github.com/GSadee))
+
 ### v0.23.0 (2022-09-07)
 
 - [#282](https://github.com/Sylius/InvoicingPlugin/issues/282) Fix translation on pdf template ([@Orkin](https://github.com/Orkin))
