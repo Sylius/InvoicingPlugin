@@ -10,7 +10,7 @@
         "ramsey/uuid": "^3.9",
         "sylius/grid-bundle": "^1.7",
         "sylius/resource-bundle": "^1.6",
-        "sylius/sylius": "^1.11",
+        "sylius/sylius": "^1.11 || v1.12.0-beta.1",
         "symfony/config": "^4.4 || ^5.4",
         "symfony/dependency-injection": "^4.4 || ^5.4",
         "symfony/form": "^4.4 || ^5.4",
@@ -49,8 +49,7 @@
         "symfony/debug-bundle": "^4.4 || ^5.4",
         "symfony/dotenv": "^4.4 || ^5.4",
         "symfony/intl": "^4.4 || ^5.4",
-        "symfony/web-profiler-bundle": "^4.4 || ^5.4",
-        "symfony/web-server-bundle": "^4.4 || ^5.4"
+        "symfony/web-profiler-bundle": "^4.4 || ^5.4"
     },
     "autoload": {
         "psr-4": {
