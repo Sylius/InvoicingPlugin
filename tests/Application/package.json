@@ -29,7 +29,7 @@
     "gulp-if": "^2.0.0",
     "gulp-livereload": "^4.0.1",
     "gulp-order": "^1.1.1",
-    "gulp-sass": "^4.0.1",
+    "gulp-sass": "^5.1.0",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-uglifycss": "^1.0.5",
     "merge-stream": "^1.0.0",

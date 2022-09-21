@@ -21,7 +21,7 @@ jobs:
             matrix:
                 php: ["8.0", "8.1"]
                 symfony: ["^4.4", "^5.4"]
-                sylius: ["~1.11.0"]
+                sylius: ["~1.11.0", "v1.12.0-beta.1"]
                 node: ["14.x"]
                 mysql: ["5.7", "8.0"]
                 pdf: [true]
@@ -34,6 +34,11 @@ jobs:
                         node: "14.x"
                         mysql: "8.0"
                         pdf: false
+
+                exclude:
+                    -
+                        symfony: "^4.4"
+                        sylius: "v1.12.0-beta.1"
 
         env:
             APP_ENV: test
@@ -123,6 +128,11 @@ jobs:
                         ${{ runner.os }}-node-${{ matrix.node }}-yarn-
 
             -
+                name: Install version-specific JS dependencies
+                run: (cd tests/Application && yarn add gulp-sass@^4.0.1)
+                if: matrix.sylius != 'v1.12.0-alpha.2'
+
+            -
                 name: Install JS dependencies
                 run: (cd tests/Application && yarn install)
 
@@ -153,6 +163,7 @@ jobs:
             -
                 name: Run analysis
                 run: composer analyse
+                if: matrix.sylius != 'v1.12.0-beta.1'
 
             -
                 name: Run PHPSpec
