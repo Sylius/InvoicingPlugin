@@ -41,7 +41,7 @@ final class RedirectToOrderShowAction
         $order = $this->orderRepository->findOneByNumber($number);
         Assert::notNull($order);
 
-        return RedirectResponse::create($this->router->generate(
+        return new RedirectResponse($this->router->generate(
             'sylius_admin_order_show',
             ['id' => $order->getId()]
         ));

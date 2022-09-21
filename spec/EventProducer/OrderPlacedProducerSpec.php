@@ -85,7 +85,7 @@ final class OrderPlacedProducerSpec extends ObjectBehavior
         MessageBusInterface $eventBus,
         LifecycleEventArgs $event
     ): void {
-        $event->getEntity()->willReturn('notAnOrder');
+        $event->getObject()->willReturn('notAnOrder');
 
         $eventBus->dispatch(Argument::any())->shouldNotBeCalled();
 
@@ -96,7 +96,7 @@ final class OrderPlacedProducerSpec extends ObjectBehavior
         MessageBusInterface $eventBus,
         LifecycleEventArgs $event
     ): void {
-        $event->getEntity()->willReturn('notAnOrder');
+        $event->getObject()->willReturn('notAnOrder');
 
         $eventBus->dispatch(Argument::any())->shouldNotBeCalled();
 
@@ -108,7 +108,7 @@ final class OrderPlacedProducerSpec extends ObjectBehavior
         LifecycleEventArgs $event,
         OrderInterface $order
     ): void {
-        $event->getEntity()->willReturn($order);
+        $event->getObject()->willReturn($order);
 
         $order->getCheckoutState()->willReturn(OrderCheckoutStates::STATE_CART);
 
@@ -123,9 +123,9 @@ final class OrderPlacedProducerSpec extends ObjectBehavior
         EntityManagerInterface $entityManager,
         OrderInterface $order
     ): void {
-        $event->getEntity()->willReturn($order);
+        $event->getObject()->willReturn($order);
 
-        $event->getEntityManager()->willReturn($entityManager);
+        $event->getObjectManager()->willReturn($entityManager);
 
         /** @var UnitOfWork|MockInterface $unitOfWork */
         $unitOfWork = Mockery::mock(UnitOfWork::class);
@@ -144,9 +144,9 @@ final class OrderPlacedProducerSpec extends ObjectBehavior
         EntityManagerInterface $entityManager,
         OrderInterface $order
     ): void {
-        $event->getEntity()->willReturn($order);
+        $event->getObject()->willReturn($order);
 
-        $event->getEntityManager()->willReturn($entityManager);
+        $event->getObjectManager()->willReturn($entityManager);
 
         /** @var UnitOfWork|MockInterface $unitOfWork */
         $unitOfWork = Mockery::mock(UnitOfWork::class);
