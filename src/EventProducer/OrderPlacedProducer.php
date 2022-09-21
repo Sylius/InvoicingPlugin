@@ -34,7 +34,7 @@ final class OrderPlacedProducer
 
     public function postPersist(LifecycleEventArgs $event): void
     {
-        $order = $event->getEntity();
+        $order = $event->getObject();
 
         if (
             !$order instanceof OrderInterface ||
@@ -48,13 +48,13 @@ final class OrderPlacedProducer
 
     public function postUpdate(LifecycleEventArgs $event): void
     {
-        $order = $event->getEntity();
+        $order = $event->getObject();
 
         if (!$order instanceof OrderInterface) {
             return;
         }
 
-        $entityManager = $event->getEntityManager();
+        $entityManager = $event->getObjectManager();
 
         $unitOfWork = $entityManager->getUnitOfWork();
         $changeSet = $unitOfWork->getEntityChangeSet($order);

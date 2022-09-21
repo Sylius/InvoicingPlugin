@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Sylius\InvoicingPlugin\Creator;
 
-use Doctrine\ORM\ORMException;
+use Doctrine\ORM\Exception\ORMException;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Repository\OrderRepositoryInterface;
 use Sylius\InvoicingPlugin\Doctrine\ORM\InvoiceRepositoryInterface;
@@ -60,7 +60,7 @@ final class InvoiceCreator implements InvoiceCreatorInterface
 
         try {
             $this->invoiceRepository->add($invoice);
-        } catch (ORMException $exception) {
+        } catch (ORMException) {
             $this->invoiceFileManager->remove($invoicePdf);
         }
     }
