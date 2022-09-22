@@ -82,7 +82,7 @@ final class Kernel extends BaseKernel
     {
         /** @var ContainerBuilder $container */
         Assert::isInstanceOf($container, ContainerBuilder::class);
-        $locator = new FileLocator($this, $this->getProjectDir() . '/src/Resources');
+        $locator = new FileLocator($this);
         $resolver = new LoaderResolver(array(
             new XmlFileLoader($container, $locator),
             new YamlFileLoader($container, $locator),
@@ -123,13 +123,6 @@ final class Kernel extends BaseKernel
     {
         $contents = require $bundlesFile;
 
-        if (SyliusKernel::MINOR_VERSION > 10) {
-            $contents = array_merge(
-                ['Sylius\Calendar\SyliusCalendarBundle' => ['all' => true]],
-                $contents
-            );
-        }
-
         foreach ($contents as $class => $envs) {
             if (isset($envs['all']) || isset($envs[$this->environment])) {
                 yield new $class();
@@ -157,7 +150,6 @@ final class Kernel extends BaseKernel
     {
         $directories = [
             $this->getProjectDir() . '/config',
-            $this->getProjectDir() . '/config/sylius/' . SyliusKernel::MAJOR_VERSION . '.' . SyliusKernel::MINOR_VERSION,
         ];
 
         return array_filter($directories, 'file_exists');
