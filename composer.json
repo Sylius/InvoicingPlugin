@@ -49,6 +49,7 @@
         "symfony/debug-bundle": "^4.4 || ^5.4",
         "symfony/dotenv": "^4.4 || ^5.4",
         "symfony/intl": "^4.4 || ^5.4",
+        "symfony/webpack-encore-bundle": "^1.15",
         "symfony/web-profiler-bundle": "^4.4 || ^5.4"
     },
     "autoload": {

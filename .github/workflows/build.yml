@@ -128,11 +128,6 @@ jobs:
                         ${{ runner.os }}-node-${{ matrix.node }}-yarn-
 
             -
-                name: Install version-specific JS dependencies
-                run: (cd tests/Application && yarn add gulp-sass@^4.0.1)
-                if: matrix.sylius != 'v1.12.0-alpha.2'
-
-            -
                 name: Install JS dependencies
                 run: (cd tests/Application && yarn install)
 
@@ -146,7 +141,7 @@ jobs:
                 name: Prepare test application assets
                 run: |
                     (cd tests/Application && bin/console assets:install public -vvv)
-                    (cd tests/Application && yarn build)
+                    (cd tests/Application && yarn build:prod)
 
             -
                 name: Prepare test application cache
