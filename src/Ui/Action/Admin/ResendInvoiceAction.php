@@ -20,35 +20,25 @@ use Sylius\InvoicingPlugin\Doctrine\ORM\InvoiceRepositoryInterface;
 use Sylius\InvoicingPlugin\Email\InvoiceEmailSenderInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Webmozart\Assert\Assert;
 
 final class ResendInvoiceAction
 {
-    private InvoiceRepositoryInterface $invoiceRepository;
-
-    private OrderRepositoryInterface $orderRepository;
-
-    private InvoiceEmailSenderInterface $invoiceEmailSender;
-
-    private UrlGeneratorInterface $urlGenerator;
-
-    private Session $session;
-
     public function __construct(
-        InvoiceRepositoryInterface $invoiceRepository,
-        InvoiceEmailSenderInterface $invoiceEmailSender,
-        OrderRepositoryInterface $orderRepository,
-        UrlGeneratorInterface $urlGenerator,
-        Session $session
+        private InvoiceRepositoryInterface $invoiceRepository,
+        private InvoiceEmailSenderInterface $invoiceEmailSender,
+        private OrderRepositoryInterface $orderRepository,
+        private UrlGeneratorInterface $urlGenerator,
+        private SessionInterface | RequestStack $requestStackOrSession,
     ) {
-        $this->invoiceRepository = $invoiceRepository;
-        $this->invoiceEmailSender = $invoiceEmailSender;
-        $this->orderRepository = $orderRepository;
-        $this->urlGenerator = $urlGenerator;
-        $this->session = $session;
+        if ($this->requestStackOrSession instanceof SessionInterface) {
+            trigger_deprecation('sylius/invoicing-plugin', '0.24', sprintf('Passing an instance of %s as constructor argument for %s is deprecated as of Sylius Invoicing Plugin 0.24 and will be removed in 1.0. Pass an instance of %s instead.', SessionInterface::class, self::class, RequestStack::class));
+        }
     }
 
     public function __invoke(string $id): Response
@@ -68,23 +58,26 @@ final class ResendInvoiceAction
         try {
             $this->invoiceEmailSender->sendInvoiceEmail($invoice, $customer->getEmail());
         } catch (\Exception $exception) {
-            $this->session->getFlashBag()->add(
-                'failure',
-                $exception->getMessage()
-            );
+            $this->getFlashBag()->add('failure', $exception->getMessage());
 
             return new RedirectResponse(
                 $this->urlGenerator->generate('sylius_admin_order_show', ['id' => $order->getId()])
             );
         }
 
-        $this->session->getFlashBag()->add(
-            'success',
-            'sylius_invoicing_plugin.invoice_resent_successfully'
-        );
+        $this->getFlashBag()->add('success', 'sylius_invoicing_plugin.invoice_resent_successfully');
 
         return new RedirectResponse(
             $this->urlGenerator->generate('sylius_admin_order_show', ['id' => $order->getId()])
         );
+    }
+
+    private function getFlashBag(): FlashBagInterface
+    {
+        if ($this->requestStackOrSession instanceof RequestStack) {
+            return $this->requestStackOrSession->getSession()->getBag('flashes');
+        }
+
+        return $this->requestStackOrSession->getBag('flashes');
     }
 }

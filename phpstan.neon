@@ -13,4 +13,5 @@ parameters:
     ignoreErrors:
         - '/Method Sylius\\InvoicingPlugin\\Entity\\\w+::id\(\) has no return typehint specified\./'
         - '/Method Sylius\\InvoicingPlugin\\Entity\\\w+::getId\(\) has no return typehint specified\./'
+        - '/Method Sylius\\InvoicingPlugin\\[a-zA-Z\\]+::getFlashBag\(\) should return Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface but returns Symfony\\Component\\HttpFoundation\\Session\\SessionBagInterface\./'
         - '/expects string, string\|null given\.$/'
