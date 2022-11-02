@@ -21,7 +21,7 @@ jobs:
             matrix:
                 php: ["8.0", "8.1"]
                 symfony: ["^5.4"]
-                sylius: ["~1.11.0"]
+                sylius: ["~1.11.0", "~1.12.0"]
                 node: ["14.x"]
                 mysql: ["5.7", "8.0"]
                 pdf: [true]
@@ -136,7 +136,7 @@ jobs:
                 name: Prepare test application assets
                 run: |
                     (cd tests/Application && bin/console assets:install public -vvv)
-                    (cd tests/Application && yarn build)
+                    (cd tests/Application && yarn build:prod)
 
             -
                 name: Prepare test application cache

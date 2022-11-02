@@ -7,10 +7,10 @@
     "require": {
         "php": "^8.0",
         "knplabs/knp-snappy-bundle": "^1.8",
-        "ramsey/uuid": "^3.9",
+        "ramsey/uuid": "^3.9 || ^4.0",
         "sylius/grid-bundle": "^1.7",
         "sylius/resource-bundle": "^1.6",
-        "sylius/sylius": "^1.11",
+        "sylius/sylius": "^1.11 || ^1.12",
         "symfony/config": "^5.4",
         "symfony/dependency-injection": "^5.4",
         "symfony/form": "^5.4",
@@ -49,6 +49,7 @@
         "symfony/debug-bundle": "^5.4",
         "symfony/dotenv": "^5.4",
         "symfony/intl": "^5.4",
+        "symfony/webpack-encore-bundle": "^1.15",
         "symfony/web-profiler-bundle": "^5.4"
     },
     "autoload": {

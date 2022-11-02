@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace spec\Sylius\InvoicingPlugin\Creator;
 
-use Doctrine\ORM\ORMException;
+use Doctrine\ORM\Exception\ORMException;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Sylius\Component\Core\Model\OrderInterface;
