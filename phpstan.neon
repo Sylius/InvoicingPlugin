@@ -1,6 +1,8 @@
 parameters:
+    level: max
     checkMissingIterableValueType: false
     checkGenericClassInNonGenericObjectType: false
+    reportUnmatchedIgnoredErrors: false
 
     excludes_analyse:
         # Makes PHPStan crash
@@ -14,4 +16,6 @@ parameters:
         - '/Method Sylius\\InvoicingPlugin\\Entity\\\w+::id\(\) has no return typehint specified\./'
         - '/Method Sylius\\InvoicingPlugin\\Entity\\\w+::getId\(\) has no return typehint specified\./'
         - '/Method Sylius\\InvoicingPlugin\\[a-zA-Z\\]+::getFlashBag\(\) should return Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface but returns Symfony\\Component\\HttpFoundation\\Session\\SessionBagInterface\./'
+        - '/Method Sylius\\InvoicingPlugin\\Security\\Voter\\InvoiceVoter::supports\(\) has parameter \$attribute with no typehint specified./'
+        - '/Method Sylius\\InvoicingPlugin\\Security\\Voter\\InvoiceVoter::supports\(\) has parameter \$subject with no typehint specified./'
         - '/expects string, string\|null given\.$/'
