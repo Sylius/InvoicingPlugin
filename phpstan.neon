@@ -4,6 +4,9 @@ parameters:
     checkGenericClassInNonGenericObjectType: false
     reportUnmatchedIgnoredErrors: false
 
+    paths:
+        - 'src/'
+
     excludes_analyse:
         # Makes PHPStan crash
         - 'src/DependencyInjection/Configuration.php'
