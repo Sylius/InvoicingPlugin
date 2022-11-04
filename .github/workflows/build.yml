@@ -157,7 +157,6 @@ jobs:
             -
                 name: Run analysis
                 run: composer analyse
-                if: matrix.sylius != '1.12.x-dev'
 
             -
                 name: Run PHPSpec
