@@ -22,7 +22,7 @@ jobs:
                 php: ["8.0", "8.1"]
                 symfony: ["^5.4", "^6.0"]
                 sylius: ["~1.11.0", "~1.12.0"]
-                node: ["14.x"]
+                node: ["16.x"]
                 mysql: ["5.7", "8.0"]
                 pdf: [true]
 
@@ -30,8 +30,8 @@ jobs:
                     -
                         php: "8.1"
                         symfony: "^6.0"
-                        sylius: "1.12.x-dev"
-                        node: "14.x"
+                        sylius: "~1.12.0"
+                        node: "16.x"
                         mysql: "8.0"
                         pdf: false
 
