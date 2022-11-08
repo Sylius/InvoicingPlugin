@@ -20,20 +20,24 @@ jobs:
             fail-fast: false
             matrix:
                 php: ["8.0", "8.1"]
-                symfony: ["^5.4"]
-                sylius: ["~1.11.0", "~1.12.0"]
-                node: ["14.x"]
+                symfony: ["^5.4", "^6.0"]
+                sylius: ["~1.11.10", "~1.12.0"]
+                node: ["16.x"]
                 mysql: ["5.7", "8.0"]
                 pdf: [true]
 
                 include:
                     -
                         php: "8.1"
-                        symfony: "^5.4"
-                        sylius: "~1.11.0"
-                        node: "14.x"
+                        symfony: "^6.0"
+                        sylius: "~1.12.0"
+                        node: "16.x"
                         mysql: "8.0"
                         pdf: false
+
+                exclude:
+                    -   symfony: "^6.0"
+                        sylius: "~1.11.10"
 
         env:
             APP_ENV: test
@@ -153,6 +157,7 @@ jobs:
             -
                 name: Run analysis
                 run: composer analyse
+                if: matrix.sylius != '~1.12.0'
 
             -
                 name: Run PHPSpec
