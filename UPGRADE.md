@@ -1,3 +1,11 @@
+### UPGRADE FROM 0.23.X TO 0.24.0
+
+1. Support for Sylius 1.12 has been added, it is now the recommended Sylius version to use with InvoicingPlugin.
+2. Support for Sylius 1.10 has been dropped, upgrade your application to [Sylius 1.11](https://github.com/Sylius/Sylius/blob/master/UPGRADE-1.11.md).
+   or to [Sylius 1.12](https://github.com/Sylius/Sylius/blob/master/UPGRADE-1.12.md).
+3. Support for Symfony 6 has been added.
+4. Support for Symfony 4.4 has been dropped.
+
 ### UPGRADE FROM 0.21.0 TO 0.22.0
 
 1. `Sylius\InvoicingPlugin\Generator\InvoicePdfFileGenerator` takes `Sylius\InvoicingPlugin\Generator\TwigToPdfGeneratorInterface` as the first argument in place of `Twig\Environment`, `Knp\Snappy\GeneratorInterface` and `Sylius\InvoicingPlugin\Generator\PdfOptionsGeneratorInterface`.
