@@ -1,5 +1,15 @@
 # CHANGELOG
 
+### v0.24.0 (2022-11-14)
+
+- [#290](https://github.com/Sylius/InvoicingPlugin/issues/290) Drop support for Sylius 1.10 ([@GSadee](https://github.com/GSadee))
+- [#291](https://github.com/Sylius/InvoicingPlugin/issues/291) [Behat][Invoice] Fix usage of method checking line items after last changes ([@GSadee](https://github.com/GSadee))
+- [#293](https://github.com/Sylius/InvoicingPlugin/issues/293) [Maintenance] Remove redundant configuration for not supported Sylius 1.10 ([@coldic3](https://github.com/coldic3))
+- [#295](https://github.com/Sylius/InvoicingPlugin/issues/295) [Maintenance] Drop support for Symfony 4.4 ([@coldic3](https://github.com/coldic3))
+- [#294](https://github.com/Sylius/InvoicingPlugin/issues/294) [Maintenance] Add support for Sylius 1.12 with Symfony 5.4 ([@coldic3](https://github.com/coldic3))
+- [#296](https://github.com/Sylius/InvoicingPlugin/issues/296) Add Symfony 6 support ([@coldic3](https://github.com/coldic3), [@GSadee](https://github.com/GSadee))
+- [#297](https://github.com/Sylius/InvoicingPlugin/issues/297) [Templates] Adjust to the new Sylius shop UI styles ([@coldic3](https://github.com/coldic3))
+
 ### v0.23.1 (2022-09-12)
 
 - [#291](https://github.com/Sylius/InvoicingPlugin/issues/291) [Behat][Invoice] Fix usage of method checking line items after last changes ([@GSadee](https://github.com/GSadee))
