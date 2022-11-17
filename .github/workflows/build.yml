@@ -74,10 +74,17 @@ jobs:
                     mysql root password: "root"
 
             -
+                name: Install wkthtmltopdf
+                if: matrix.pdf == true
+                run: |
+                    sudo apt-get install -y xfonts-base xfonts-75dpi
+                    wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox_0.12.6-1.focal_amd64.deb
+                    sudo dpkg -i wkhtmltox_0.12.6-1.focal_amd64.deb
+
+            -
                 name: Disable PDF generation
                 if: matrix.pdf == false
                 run: |
-                    rm tests/Application/etc/wkhtmltopdf
                     mv tests/Application/etc/sylius_invoicing_pdf_generation_disabled.yaml tests/Application/config/packages
                     sed -i 's/pdf_generation_disabled/pdf_generation_enabled/g' behat.yml.dist
 
