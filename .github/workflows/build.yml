@@ -14,7 +14,7 @@ jobs:
     tests:
         runs-on: ubuntu-latest
 
-        name: "Sylius ${{ matrix.sylius }}, PHP ${{ matrix.php }}, Symfony ${{ matrix.symfony }}, MySQL ${{ matrix.mysql }}, PDF: ${{ matrix.pdf }}"
+        name: "Sylius ${{ matrix.sylius }}, PHP ${{ matrix.php }}, Symfony ${{ matrix.symfony }}, MySQL ${{ matrix.mysql }}, wkhtmltopdf: ${{ matrix.wkhtmltopdf }}"
 
         strategy:
             fail-fast: false
@@ -24,7 +24,7 @@ jobs:
                 sylius: ["~1.11.10", "~1.12.0"]
                 node: ["16.x"]
                 mysql: ["5.7", "8.0"]
-                pdf: [true]
+                wkhtmltopdf: ["0.12.6-1"]
 
                 include:
                     -
@@ -33,7 +33,7 @@ jobs:
                         sylius: "~1.12.0"
                         node: "16.x"
                         mysql: "8.0"
-                        pdf: false
+                        wkhtmltopdf: false
 
                 exclude:
                     -   symfony: "^6.0"
@@ -74,10 +74,26 @@ jobs:
                     mysql root password: "root"
 
             -
-                name: Disable PDF generation
-                if: matrix.pdf == false
+                name: Setup cache for wkhtmltopdf
+                uses: actions/cache@v3
+                id: cache-wkhtmltopdf
+                if: matrix.wkhtmltopdf != false
+                with:
+                    path: /usr/local/bin/wkhtmltopdf
+                    key: wkhtmltopdf-${{ matrix.wkhtmltopdf }}
+
+            -
+                name: Install wkthtmltopdf
+                if: matrix.wkhtmltopdf != false && steps.cache-wkhtmltopdf.outputs.cache-hit != 'true'
                 run: |
-                    rm tests/Application/etc/wkhtmltopdf
+                    sudo apt-get install -y xfonts-base xfonts-75dpi
+                    wget https://github.com/wkhtmltopdf/packaging/releases/download/${{ matrix.wkhtmltopdf }}/wkhtmltox_${{ matrix.wkhtmltopdf }}.focal_amd64.deb
+                    sudo dpkg -i wkhtmltox_${{ matrix.wkhtmltopdf }}.focal_amd64.deb
+
+            -
+                name: Disable PDF generation
+                if: matrix.wkhtmltopdf == false
+                run: |
                     mv tests/Application/etc/sylius_invoicing_pdf_generation_disabled.yaml tests/Application/config/packages
                     sed -i 's/pdf_generation_disabled/pdf_generation_enabled/g' behat.yml.dist
 
