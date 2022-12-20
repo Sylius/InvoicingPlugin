@@ -16,6 +16,7 @@ namespace Sylius\InvoicingPlugin\Factory;
 use Sylius\Component\Resource\Exception\UnsupportedMethodException;
 use Sylius\InvoicingPlugin\Entity\LineItem;
 use Sylius\InvoicingPlugin\Entity\LineItemInterface;
+use Webmozart\Assert\Assert;
 
 final class LineItemFactory implements LineItemFactoryInterface
 {
@@ -50,7 +51,8 @@ final class LineItemFactory implements LineItemFactoryInterface
         ?string $variantCode = null,
         ?string $taxRate = null
     ): LineItemInterface {
-        return new $this->className(
+        /** @var LineItemInterface $lineItem */
+        $lineItem = new $this->className(
             $name,
             $quantity,
             $unitNetPrice,
@@ -62,5 +64,9 @@ final class LineItemFactory implements LineItemFactoryInterface
             $variantCode,
             $taxRate
         );
+
+        Assert::isInstanceOf($lineItem, LineItemInterface::class);
+
+        return $lineItem;
     }
 }

@@ -20,6 +20,7 @@ use Sylius\Component\Resource\Factory\FactoryInterface;
 use Sylius\InvoicingPlugin\Entity\BillingDataInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceShopBillingDataInterface;
+use Webmozart\Assert\Assert;
 
 final class InvoiceFactory implements InvoiceFactoryInterface
 {
@@ -55,7 +56,8 @@ final class InvoiceFactory implements InvoiceFactoryInterface
         string $paymentState,
         InvoiceShopBillingDataInterface $shopBillingData = null
     ): InvoiceInterface {
-        return new $this->className(
+        /** @var InvoiceInterface $invoice */
+        $invoice = new $this->className(
             $id,
             $number,
             $order,
@@ -70,5 +72,9 @@ final class InvoiceFactory implements InvoiceFactoryInterface
             $paymentState,
             $shopBillingData ?? $this->invoiceShopBillingDataFactory->createNew()
         );
+
+        Assert::isInstanceOf($invoice, InvoiceInterface::class);
+
+        return $invoice;
     }
 }

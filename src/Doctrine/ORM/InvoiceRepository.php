@@ -16,6 +16,7 @@ namespace Sylius\InvoicingPlugin\Doctrine\ORM;
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
+use Webmozart\Assert\Assert;
 
 class InvoiceRepository extends EntityRepository implements InvoiceRepositoryInterface
 {
@@ -29,7 +30,7 @@ class InvoiceRepository extends EntityRepository implements InvoiceRepositoryInt
 
     public function findByOrderNumber(string $orderNumber): array
     {
-        return $this
+        $invoices = $this
             ->createQueryBuilder('invoice')
             ->innerJoin('invoice.order', 'o')
             ->where('o.number = :orderNumber')
@@ -37,5 +38,9 @@ class InvoiceRepository extends EntityRepository implements InvoiceRepositoryInt
             ->getQuery()
             ->getResult()
         ;
+
+        Assert::isArray($invoices);
+
+        return $invoices;
     }
 }

@@ -35,10 +35,11 @@ final class RedirectToOrderShowAction
 
     public function __invoke(Request $request): Response
     {
-        $number = $request->attributes->get('number');
+        /** @var string $orderNumber */
+        $orderNumber = $request->attributes->get('number');
 
         /** @var OrderInterface|null $order */
-        $order = $this->orderRepository->findOneByNumber($number);
+        $order = $this->orderRepository->findOneByNumber($orderNumber);
         Assert::notNull($order);
 
         return new RedirectResponse($this->router->generate(

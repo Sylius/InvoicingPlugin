@@ -17,6 +17,7 @@ use Sylius\Component\Core\Model\AddressInterface;
 use Sylius\Component\Resource\Exception\UnsupportedMethodException;
 use Sylius\InvoicingPlugin\Entity\BillingData;
 use Sylius\InvoicingPlugin\Entity\BillingDataInterface;
+use Webmozart\Assert\Assert;
 
 final class BillingDataFactory implements BillingDataFactoryInterface
 {
@@ -41,7 +42,8 @@ final class BillingDataFactory implements BillingDataFactoryInterface
 
     public function createFromAddress(AddressInterface $address): BillingDataInterface
     {
-        return new $this->className(
+        /** @var BillingDataInterface $billingData */
+        $billingData = new $this->className(
             $address->getFirstName(),
             $address->getLastName(),
             $address->getCountryCode(),
@@ -52,5 +54,9 @@ final class BillingDataFactory implements BillingDataFactoryInterface
             $address->getProvinceName(),
             $address->getCompany()
         );
+
+        Assert::isInstanceOf($billingData, BillingDataInterface::class);
+
+        return $billingData;
     }
 }

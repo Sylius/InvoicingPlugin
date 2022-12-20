@@ -16,6 +16,7 @@ namespace Sylius\InvoicingPlugin\Factory;
 use Sylius\Component\Resource\Exception\UnsupportedMethodException;
 use Sylius\InvoicingPlugin\Entity\TaxItem;
 use Sylius\InvoicingPlugin\Entity\TaxItemInterface;
+use Webmozart\Assert\Assert;
 
 final class TaxItemFactory implements TaxItemFactoryInterface
 {
@@ -40,9 +41,11 @@ final class TaxItemFactory implements TaxItemFactoryInterface
 
     public function createWithData(string $label, int $amount): TaxItemInterface
     {
-        return new $this->className(
-            $label,
-            $amount
-        );
+        /** @var TaxItemInterface $taxItem */
+        $taxItem = new $this->className($label, $amount);
+
+        Assert::isInstanceOf($taxItem, TaxItemInterface::class);
+
+        return $taxItem;
     }
 }
