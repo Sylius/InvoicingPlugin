@@ -18,6 +18,6 @@ doctrine:
         mappings:
             App:
                 is_bundle: false
-                type: annotation
+                type: attribute
                 dir: '%kernel.project_dir%/src/Entity'
                 prefix: 'Tests\Sylius\InvoicingPlugin\Application\Entity'
