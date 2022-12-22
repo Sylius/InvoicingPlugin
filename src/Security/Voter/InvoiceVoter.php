@@ -36,7 +36,7 @@ final class InvoiceVoter extends Voter
         $this->orderRepository = $orderRepository;
     }
 
-    protected function supports($attribute, $subject): bool
+    protected function supports(string $attribute, mixed $subject): bool
     {
         if (!in_array($attribute, self::ATTRIBUTES, true)) {
             return false;
@@ -49,11 +49,7 @@ final class InvoiceVoter extends Voter
         return true;
     }
 
-    /**
-     * @param mixed $attribute
-     * @param mixed $subject
-     */
-    protected function voteOnAttribute($attribute, $subject, TokenInterface $token): bool
+    protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
     {
         Assert::isInstanceOf($subject, InvoiceInterface::class);
 

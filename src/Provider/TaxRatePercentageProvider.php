@@ -26,15 +26,18 @@ final class TaxRatePercentageProvider implements TaxRatePercentageProviderInterf
         /** @var Collection|AdjustmentInterface[] $taxAdjustments */
         $taxAdjustments = $adjustable->getAdjustments(AdjustmentInterface::TAX_ADJUSTMENT);
 
-        if (count($taxAdjustments) > 1) {
+        if ($taxAdjustments->count() > 1) {
             throw MoreThanOneTaxAdjustment::occur();
         }
 
-        if ($taxAdjustments->isEmpty()) {
+        /** @var AdjustmentInterface|false $adjustment */
+        $adjustment = $taxAdjustments->first();
+
+        if (false === $adjustment) {
             return null;
         }
 
-        return $this->provideFromAdjustment($taxAdjustments->first());
+        return $this->provideFromAdjustment($adjustment);
     }
 
     public function provideFromAdjustment(AdjustmentInterface $adjustment): ?string

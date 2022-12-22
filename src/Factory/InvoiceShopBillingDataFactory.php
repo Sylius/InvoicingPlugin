@@ -16,6 +16,7 @@ namespace Sylius\InvoicingPlugin\Factory;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\ShopBillingDataInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceShopBillingDataInterface;
+use Webmozart\Assert\Assert;
 
 final class InvoiceShopBillingDataFactory implements InvoiceShopBillingDataFactoryInterface
 {
@@ -35,7 +36,12 @@ final class InvoiceShopBillingDataFactory implements InvoiceShopBillingDataFacto
 
     public function createNew(): InvoiceShopBillingDataInterface
     {
-        return new $this->className();
+        /** @var InvoiceShopBillingDataInterface $invoiceShopBillingData */
+        $invoiceShopBillingData = new $this->className();
+
+        Assert::isInstanceOf($invoiceShopBillingData, InvoiceShopBillingDataInterface::class);
+
+        return $invoiceShopBillingData;
     }
 
     public function createFromChannel(ChannelInterface $channel): InvoiceShopBillingDataInterface
