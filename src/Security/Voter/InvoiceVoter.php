@@ -15,8 +15,8 @@ namespace Sylius\InvoicingPlugin\Security\Voter;
 
 use Sylius\Component\Core\Model\AdminUserInterface;
 use Sylius\Component\Core\Model\CustomerInterface;
-use Sylius\Component\Core\Model\ShopUserInterface;
 use Sylius\Component\Core\Repository\OrderRepositoryInterface;
+use Sylius\Component\Customer\Model\CustomerAwareInterface;
 use Sylius\Component\User\Model\UserInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -73,7 +73,7 @@ final class InvoiceVoter extends Voter
             return true;
         }
 
-        if ($user instanceof ShopUserInterface) {
+        if ($user instanceof CustomerAwareInterface) {
             $customer = $user->getCustomer();
 
             Assert::isInstanceOf($customer, CustomerInterface::class);
