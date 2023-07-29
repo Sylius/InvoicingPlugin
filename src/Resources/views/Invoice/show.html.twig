@@ -90,7 +90,7 @@
                 </tr>
                 <tr>
                     <th colspan="8" class="right aligned">
-                        <strong>{{ 'sylius_invoicing_plugin.ui.taxes_total'|trans([], 'messages', invoice.localeCode) }}</strong>:
+                        <strong>{{ 'sylius_invoicing_plugin.ui.taxes_total'|trans }}</strong>:
                     </th>
                     <th id="invoice-tax-total" class="right aligned" {{ sylius_test_html_attribute('invoice-taxes-total') }}>
                         {{ '%0.2f'|format(invoice.taxesTotal/100) }}
