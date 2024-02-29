@@ -12,7 +12,7 @@ Feature: Seeing included in price taxes and promotions applied on an invoice
         And the store has "UPS" shipping method with "$10.00" fee
         And the store allows paying with "Cash on Delivery"
         And there is a promotion "Anatomy Park Promotion"
-        And this promotion gives "$10" off on every product with minimum price at "$5.00"
+        And this promotion gives "$10.00" off on every product with minimum price at "$5.00"
         And there is a customer "lucy@teamlucifer.com" that placed an order "#00000666"
         And the customer bought 2 "PHP T-Shirt" products
         And the customer "Lucifer Morningstar" addressed it to "Seaside Fwy", "90802" "Los Angeles" in the "United States"

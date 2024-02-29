@@ -12,7 +12,7 @@ Feature: Filtering invoices
         And the store has a zone "Germany + France" with code "DE + FR"
         And this zone has the "Germany" country member
         And this zone has the "France" country member
-        And the store has a product "PHP T-Shirt" priced at "€10" available in channel "WEB-DE" and channel "WEB-FR"
+        And the store has a product "PHP T-Shirt" priced at "€10.00" available in channel "WEB-DE" and channel "WEB-FR"
         And the store ships everywhere for free for all channels
         And the store allows paying offline for all channels
         And there is a customer "john.doe@gmail.com" that placed an order "#00000022"

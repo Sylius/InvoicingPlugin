@@ -10,7 +10,7 @@ Feature: Seeing an invoice with items and shipment having promotion applied
         And the store has "Galaxy Post" shipping method with "$20.00" fee
         And the store allows paying with "Space money"
         And there is a promotion "Anatomy Park Promotion"
-        And this promotion gives "$10" discount to every order with items total at least "$15.00"
+        And this promotion gives "$10.00" discount to every order with items total at least "$15.00"
         And there is a customer "rick.sanchez@wubba-lubba-dub-dub.com" that placed an order "#00000666"
         And the customer "Lucifer Morningstar" addressed it to "Seaside Fwy", "90802" "Los Angeles" in the "United States"
         And for the billing address of "Mazikeen Lilim" in the "Pacific Coast Hwy", "90806" "Los Angeles", "United States"

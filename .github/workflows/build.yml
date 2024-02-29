@@ -31,7 +31,7 @@ jobs:
                     -
                         php: "8.1"
                         symfony: "^6.0"
-                        sylius: "~1.12.0"
+                        sylius: "^1.12.13"
                         node: "16.x"
                         mysql: "8.0"
                         wkhtmltopdf: false
