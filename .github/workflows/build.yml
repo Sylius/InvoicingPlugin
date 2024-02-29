@@ -36,6 +36,9 @@ jobs:
                         wkhtmltopdf: false
 
                 exclude:
+                    -   php: "8.0"
+                        symfony: "^6.0"
+
                     -   symfony: "^6.0"
                         sylius: "~1.11.10"
 

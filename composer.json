@@ -73,6 +73,9 @@
             "vendor/bin/ecs check --fix src/ spec/"
         ]
     },
+    "conflict": {
+        "behat/mink-selenium2-driver": ">=1.7.0"
+    },
     "config": {
         "sort-packages": true,
         "allow-plugins": {
