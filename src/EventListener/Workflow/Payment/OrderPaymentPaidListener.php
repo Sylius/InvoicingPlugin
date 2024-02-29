@@ -19,6 +19,6 @@ final class OrderPaymentPaidListener
         $payment = $event->getSubject();
         Assert::isInstanceOf($payment, PaymentInterface::class);
 
-        $this->orderPaymentPaidProducer($payment);
+        $this->orderPaymentPaidProducer->__invoke($payment);
     }
 }
