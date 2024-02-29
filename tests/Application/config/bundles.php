@@ -58,3 +58,8 @@ return [
     SyliusLabs\Polyfill\Symfony\Security\Bundle\SyliusLabsPolyfillSymfonySecurityBundle::class => ['all' => true],
     Symfony\WebpackEncoreBundle\WebpackEncoreBundle::class => ['all' => true],
 ];
+
+
+if (SyliusKernel::MINOR_VERSION == 13) {
+    $bundles[Sylius\Abstraction\StateMachine\SyliusStateMachineAbstractionBundle::class] = ['all' => true];
+}
