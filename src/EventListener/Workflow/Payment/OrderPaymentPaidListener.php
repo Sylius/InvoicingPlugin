@@ -14,8 +14,10 @@ final class OrderPaymentPaidListener
     ) {
     }
 
-    public function __invoke(CompletedEvent $event)
+    /** @phpstan-ignore-next-line  */
+    public function __invoke(CompletedEvent $event): void
     {
+        /** @phpstan-ignore-next-line  */
         $payment = $event->getSubject();
         Assert::isInstanceOf($payment, PaymentInterface::class);
 
