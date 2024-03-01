@@ -1,7 +1,5 @@
 <?php
 
-use Sylius\Bundle\CoreBundle\Application\Kernel as SyliusKernel;
-
 $bundles = [
     Symfony\Bundle\FrameworkBundle\FrameworkBundle::class => ['all' => true],
     Symfony\Bundle\MonologBundle\MonologBundle::class => ['all' => true],
@@ -61,8 +59,7 @@ $bundles = [
     Symfony\WebpackEncoreBundle\WebpackEncoreBundle::class => ['all' => true],
 ];
 
-
-if (SyliusKernel::MINOR_VERSION == 13) {
+if (Sylius\Bundle\CoreBundle\SyliusCoreBundle::VERSION_ID >= 11300) {
     $bundles[Sylius\Abstraction\StateMachine\SyliusStateMachineAbstractionBundle::class] = ['all' => true];
 }
 
