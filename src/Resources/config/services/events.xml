@@ -27,8 +27,8 @@
             <tag name="messenger.message_handler" bus="sylius.event_bus" />
         </service>
 
-        <service class="Sylius\InvoicingPlugin\EventListener\Workflow\Payment\OrderPaymentPaidListener"
-                 id="sylius.invoicing_plugin.event_listener.workflow.payment.order_payment_paid_listener">
+        <service id="sylius_invoicing_plugin.event_listener.workflow.payment.produce_order_payment_paid"
+                class="Sylius\InvoicingPlugin\EventListener\Workflow\Payment\ProduceOrderPaymentPaidListener">
             <argument type="service" id="sylius_invoicing_plugin.event_producer.order_payment_paid" />
 
             <tag name="kernel.event_listener" event="workflow.sylius_payment.completed.complete" priority="100" />
