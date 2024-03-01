@@ -73,10 +73,9 @@ Symfony Flex, it's much quicker! :)
 
 ## Extension points
 
-Majority of actions contained in SyliusInvoicingPlugin is executed once an event after changing the state of
-the Order on `winzou_state_machine` is dispatched.
+Majority of actions contained in SyliusInvoicingPlugin is executed once an event after changing the state of the Order.
 
-Here is the example:
+Here is the example for `winzou_state_machine`:
 
 ```yaml
 winzou_state_machine:
@@ -91,6 +90,17 @@ winzou_state_machine:
 
 Code placed above is a part of configuration placed in `config.yml` file.
 You can customize this file by adding new state machine events listeners or editing existing ones.
+
+Here is the example for Symfony's `workflow`:
+
+```xml
+<service id="sylius_invoicing_plugin.event_listener.workflow.payment.produce_order_payment_paid"
+       class="Sylius\InvoicingPlugin\EventListener\Workflow\Payment\ProduceOrderPaymentPaidListener">
+   <argument type="service" id="sylius_invoicing_plugin.event_producer.order_payment_paid" />
+
+   <tag name="kernel.event_listener" event="workflow.sylius_payment.completed.complete" priority="100" />
+</service>
+```
 
 Apart from that an Invoice model is treated as a Resource.
 
