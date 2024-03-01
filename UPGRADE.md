@@ -1,4 +1,12 @@
-### UPGRADE FROM 0.23.X TO 0.24.0
+### UPGRADE FROM 0.24.X TO 0.25.0
+
+1. Support for Sylius 1.13 has been added, it is now the recommended Sylius version to use with InvoicingPlugin.
+2. Support for Sylius 1.11 has been dropped, upgrade your application to [Sylius 1.12](https://github.com/Sylius/Sylius/blob/master/UPGRADE-1.12.md).
+   or to [Sylius 1.13](https://github.com/Sylius/Sylius/blob/master/UPGRADE-1.13.md).
+3. Support for PHP 8.1 and 8.2 has been added.
+4. Support for PHP 8.0 has been dropped.
+
+### UPGRADE FROM 0.23.1 TO 0.24.0
 
 1. Support for Sylius 1.12 has been added, it is now the recommended Sylius version to use with InvoicingPlugin.
 2. Support for Sylius 1.10 has been dropped, upgrade your application to [Sylius 1.11](https://github.com/Sylius/Sylius/blob/master/UPGRADE-1.11.md).
