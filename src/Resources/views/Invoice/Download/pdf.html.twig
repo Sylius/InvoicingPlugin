@@ -93,12 +93,12 @@
         </tr>
         <tr>
             <td class="border-0" colspan="6"></td>
-            <td class="text-right bg-gray" colspan="2">{{ 'sylius_invoicing_plugin.ui.payment.paid'|trans }}:</td>
+            <td class="text-right bg-gray" colspan="2">{{ 'sylius_invoicing_plugin.ui.payment.paid'|trans([], 'messages', invoice.localeCode) }}:</td>
             <td class="text-right bg-gray" colspan="2">
                 {% if invoice.paymentState() is constant('Sylius\\InvoicingPlugin\\Entity\\InvoiceInterface::PAYMENT_STATE_COMPLETED') %}
-                    {{ 'sylius_invoicing_plugin.ui.payment.yes'|trans }}
+                    {{ 'sylius_invoicing_plugin.ui.payment.yes'|trans([], 'messages', invoice.localeCode) }}
                 {% else %}
-                    {{ 'sylius_invoicing_plugin.ui.payment.no'|trans }}
+                    {{ 'sylius_invoicing_plugin.ui.payment.no'|trans([], 'messages', invoice.localeCode) }}
                 {% endif %}
             </td>
         </tr>
