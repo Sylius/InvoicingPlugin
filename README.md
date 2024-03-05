@@ -75,7 +75,7 @@ Symfony Flex, it's much quicker! :)
 
 Majority of actions contained in SyliusInvoicingPlugin is executed once an event after changing the state of the Order.
 
-Here is the example for `winzou_state_machine`:
+Here is the example for `Winzou State Machine`:
 
 ```yaml
 winzou_state_machine:
