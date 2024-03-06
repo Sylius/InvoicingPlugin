@@ -2,7 +2,7 @@
 
 <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
-        <defaults autoconfigure="true" autowire="true" public="true" />
+        <defaults public="true" />
 
         <service id="sylius_invoicing_plugin.converter.order_item_units_to_line_items" class="Sylius\InvoicingPlugin\Converter\OrderItemUnitsToLineItemsConverter">
             <argument type="service" id="sylius_invoicing_plugin.provider.tax_rate_percentage" />

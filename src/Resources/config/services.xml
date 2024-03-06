@@ -2,7 +2,7 @@
 
 <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <imports>
-        <import resource="services/*.xml" />
+        <import resource="services/**.xml" />
     </imports>
 
     <parameters>
@@ -11,7 +11,7 @@
     </parameters>
 
     <services>
-        <defaults autoconfigure="true" autowire="true" public="true" />
+        <defaults public="true" />
 
         <service id="sylius_invoicing_plugin.date_time_provider" class="Sylius\InvoicingPlugin\SystemDateTimeProvider" />
 

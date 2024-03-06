@@ -12,7 +12,7 @@ Feature: Seeing an invoice with items having promotion applied
         And there is a promotion "50% shipping discount"
         And it gives "50%" discount on shipping to every order
         And there is a promotion "Anatomy Park Promotion"
-        And this promotion gives "$1" off on every product with minimum price at "$5.00"
+        And this promotion gives "$1.00" off on every product with minimum price at "$5.00"
         And there is a customer "rick.sanchez@wubba-lubba-dub-dub.com" that placed an order "#00000666"
         And the customer "Lucifer Morningstar" addressed it to "Seaside Fwy", "90802" "Los Angeles" in the "United States"
         And for the billing address of "Mazikeen Lilim" in the "Pacific Coast Hwy", "90806" "Los Angeles", "United States"
