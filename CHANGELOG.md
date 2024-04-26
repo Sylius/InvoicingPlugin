@@ -1,5 +1,21 @@
 # CHANGELOG
 
+### v0.25.0 (2024-04-26)
+
+- [#300](https://github.com/Sylius/InvoicingPlugin/issues/300) [Maintenance] Remove wkhtmltopdf binary ([@coldic3](https://github.com/coldic3))
+- [#303](https://github.com/Sylius/InvoicingPlugin/issues/303) [Maintenance] PHP Attributes introduced ([@Rafikooo](https://github.com/Rafikooo))
+- [#304](https://github.com/Sylius/InvoicingPlugin/issues/304) [Maintenance] phpstan upgrade ([@Rafikooo](https://github.com/Rafikooo))
+- [#305](https://github.com/Sylius/InvoicingPlugin/issues/305) [Maintenance] Adjust Messenger env variables ([@GSadee](https://github.com/GSadee))
+- [#299](https://github.com/Sylius/InvoicingPlugin/issues/299) Loosen type check for user, to handle more types of users ([@j92](https://github.com/j92))
+- [#310](https://github.com/Sylius/InvoicingPlugin/issues/310) [Translation] Add missing German translations and update existing ones ([@shochdoerfer](https://github.com/shochdoerfer))
+- [#313](https://github.com/Sylius/InvoicingPlugin/issues/313) [Maintenance] Update copyrights ([@Wojdylak](https://github.com/Wojdylak))
+- [#312](https://github.com/Sylius/InvoicingPlugin/issues/312) Sylius 1.13 update ([@BartoszWojdalowicz](https://github.com/BartoszWojdalowicz))
+- [#314](https://github.com/Sylius/InvoicingPlugin/issues/314) [Maintenance] Enable symfony workflow tests ([@Wojdylak](https://github.com/Wojdylak))
+- [#308](https://github.com/Sylius/InvoicingPlugin/issues/308) [Admin][Translation] fix : use admin locale instead of invoice ([@BastienGoze](https://github.com/BastienGoze))
+- [#307](https://github.com/Sylius/InvoicingPlugin/issues/307) [Translation] fix french translation ([@BastienGoze](https://github.com/BastienGoze))
+- [#309](https://github.com/Sylius/InvoicingPlugin/issues/309) [PDF Template][Translation] Fix translation on pdf template ([@BastienGoze](https://github.com/BastienGoze))
+- [#316](https://github.com/Sylius/InvoicingPlugin/issues/316) Bump Sylius 1.13 to stable v1.13.0 version ([@GSadee](https://github.com/GSadee))
+
 ### v0.24.0 (2022-11-14)
 
 - [#290](https://github.com/Sylius/InvoicingPlugin/issues/290) Drop support for Sylius 1.10 ([@GSadee](https://github.com/GSadee))
