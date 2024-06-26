@@ -1,8 +1,8 @@
 {% import '@SyliusUi/Macro/buttons.html.twig' as buttons %}
 
-<div class="ui segment" id="order-invoices">
+<div class="ui segment" id="order-invoices" style="overflow-x: auto;">
     <h3 class="ui dividing header" id="shipping-state">{{ 'sylius_invoicing_plugin.ui.invoices'|trans }}</h3>
-    <table class="ui celled compact small table fixed">
+    <table class="ui celled compact table">
         <thead>
         <tr>
             <th>{{ 'sylius.ui.number'|trans }}</th>
