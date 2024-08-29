@@ -24,16 +24,26 @@ final class Version20180826064735 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
+        $databasePlatform = $this->connection->getDatabasePlatform()->getName();
+        $this->abortIf($databasePlatform !== 'mysql' && $databasePlatform !== 'postgresql', 'Migration can only be executed safely on \'mysql\' or \'postgres\'.');
 
-        $this->addSql('ALTER TABLE sylius_invoicing_plugin_invoice ADD channel_code VARCHAR(255), ADD channel_name VARCHAR(255)');
+        if ($databasePlatform === 'mysql') {
+            $this->addSql('ALTER TABLE sylius_invoicing_plugin_invoice ADD channel_code VARCHAR(255), ADD channel_name VARCHAR(255)');
+        } elseif ($databasePlatform === 'postgresql') {
+            $this->addSql('ALTER TABLE sylius_invoicing_plugin_invoice ADD COLUMN channel_code VARCHAR(255), ADD COLUMN channel_name VARCHAR(255)');
+        }
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
+        $databasePlatform = $this->connection->getDatabasePlatform()->getName();
+        $this->abortIf($databasePlatform !== 'mysql' && $databasePlatform !== 'postgresql', 'Migration can only be executed safely on \'mysql\' or \'postgres\'.');
 
-        $this->addSql('ALTER TABLE sylius_invoicing_plugin_invoice DROP channel_code, DROP channel_name');
+        if ($databasePlatform === 'mysql') {
+            $this->addSql('ALTER TABLE sylius_invoicing_plugin_invoice DROP channel_code, DROP channel_name');
+        } elseif ($databasePlatform === 'postgresql') {
+            $this->addSql('ALTER TABLE sylius_invoicing_plugin_invoice DROP COLUMN channel_code, DROP COLUMN channel_name');
+        }
     }
 }
