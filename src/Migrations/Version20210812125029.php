@@ -29,12 +29,26 @@ final class Version20210812125029 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE sylius_invoicing_plugin_invoice ADD payment_state VARCHAR(255) NOT NULL');
+        $databasePlatform = $this->connection->getDatabasePlatform()->getName();
+        $this->abortIf($databasePlatform !== 'mysql' && $databasePlatform !== 'postgresql', 'Migration can only be executed safely on \'mysql\' or \'postgres\'.');
+
+        if ($databasePlatform === 'mysql') {
+            $this->addSql('ALTER TABLE sylius_invoicing_plugin_invoice ADD payment_state VARCHAR(255) NOT NULL');
+        } elseif ($databasePlatform === 'postgresql') {
+            $this->addSql('ALTER TABLE sylius_invoicing_plugin_invoice ADD COLUMN payment_state VARCHAR(255) NOT NULL');
+        }
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE sylius_invoicing_plugin_invoice DROP payment_state');
+        $databasePlatform = $this->connection->getDatabasePlatform()->getName();
+        $this->abortIf($databasePlatform !== 'mysql' && $databasePlatform !== 'postgresql', 'Migration can only be executed safely on \'mysql\' or \'postgres\'.');
+
+        if ($databasePlatform === 'mysql') {
+            $this->addSql('ALTER TABLE sylius_invoicing_plugin_invoice DROP payment_state');
+        } elseif ($databasePlatform === 'postgresql') {
+            $this->addSql('ALTER TABLE sylius_invoicing_plugin_invoice DROP COLUMN payment_state');
+        }
     }
 }

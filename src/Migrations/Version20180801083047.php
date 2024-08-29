@@ -24,16 +24,26 @@ final class Version20180801083047 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
+        $databasePlatform = $this->connection->getDatabasePlatform()->getName();
+        $this->abortIf($databasePlatform !== 'mysql' && $databasePlatform !== 'postgresql', 'Migration can only be executed safely on \'mysql\' or \'postgres\'.');
 
-        $this->addSql('ALTER TABLE sylius_invoicing_plugin_invoice ADD locale_code VARCHAR(255) NOT NULL');
+        if ($databasePlatform === 'mysql') {
+            $this->addSql('ALTER TABLE sylius_invoicing_plugin_invoice ADD locale_code VARCHAR(255) NOT NULL');
+        } elseif ($databasePlatform === 'postgresql') {
+            $this->addSql('ALTER TABLE sylius_invoicing_plugin_invoice ADD COLUMN locale_code VARCHAR(255) NOT NULL');
+        }
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
+        $databasePlatform = $this->connection->getDatabasePlatform()->getName();
+        $this->abortIf($databasePlatform !== 'mysql' && $databasePlatform !== 'postgresql', 'Migration can only be executed safely on \'mysql\' or \'postgres\'.');
 
-        $this->addSql('ALTER TABLE sylius_invoicing_plugin_invoice DROP locale_code');
+        if ($databasePlatform === 'mysql') {
+            $this->addSql('ALTER TABLE sylius_invoicing_plugin_invoice DROP locale_code');
+        } elseif ($databasePlatform === 'postgresql') {
+            $this->addSql('ALTER TABLE sylius_invoicing_plugin_invoice DROP COLUMN locale_code');
+        }
     }
 }
