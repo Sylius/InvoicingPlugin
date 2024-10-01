@@ -8,7 +8,7 @@
                  class="Sylius\InvoicingPlugin\EventListener\Workflow\Payment\ProduceOrderPaymentPaidListener">
             <argument type="service" id="sylius_invoicing_plugin.event_producer.order_payment_paid" />
 
-            <tag name="kernel.event_listener" event="workflow.sylius_payment.completed.complete" priority="100" />
+            <tag name="kernel.event_listener" event="workflow.sylius_payment.completed.complete" priority="50" />
         </service>
     </services>
 </container>
