@@ -16,7 +16,7 @@ final class ShowPage extends SymfonyPage implements ShowPageInterface
 
     public function countRelatedInvoices(): int
     {
-        return count($this->getInvoicesList()) -1;
+        return count($this->getInvoicesList());
     }
 
     public function clickOnFirstInvoiceId(): void
@@ -30,7 +30,7 @@ final class ShowPage extends SymfonyPage implements ShowPageInterface
     public function downloadFirstInvoice(): void
     {
         $invoice = $this->getFirstInvoice();
-        $invoice->clickLink('Download');
+        $invoice->find('css', '[data-test-download-button]')->click();
     }
 
     public function resendFirstInvoice(): void
@@ -60,13 +60,13 @@ final class ShowPage extends SymfonyPage implements ShowPageInterface
     protected function getDefinedElements(): array
     {
         return array_merge(parent::getDefinedElements(), [
-            'invoices' => '#order-invoices',
+            'invoices' => '[data-test-invoices]',
         ]);
     }
 
     private function getFirstInvoice(): NodeElement
     {
-        return $this->getInvoicesList()[1];
+        return $this->getInvoicesList()[0];
     }
 
     private function getInvoicesList(): array
