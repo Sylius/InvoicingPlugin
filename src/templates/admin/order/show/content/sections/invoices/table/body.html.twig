@@ -1,0 +1,7 @@
+<tbody {{ sylius_test_html_attribute('invoices') }}>
+    {% for invoice in hookable_metadata.context.invoices %}
+        <tr>
+            {% hook 'body' with { invoice } %}
+        </tr>
+    {% endfor %}
+</tbody>
