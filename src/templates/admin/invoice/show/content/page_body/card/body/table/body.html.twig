@@ -1,0 +1,7 @@
+<tbody>
+    {% for item in hookable_metadata.context.resource.lineItems %}
+        <tr>
+            {% hook 'body' with { item, loop } %}
+        </tr>
+    {% endfor %}
+</tbody>

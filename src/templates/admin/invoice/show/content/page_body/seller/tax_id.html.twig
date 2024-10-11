@@ -1,0 +1,3 @@
+{% set shopBillingData = hookable_metadata.context.resource.shopBillingData %}
+
+{% if shopBillingData.taxId %}{{ shopBillingData.taxId }}<br/>{% endif %}
