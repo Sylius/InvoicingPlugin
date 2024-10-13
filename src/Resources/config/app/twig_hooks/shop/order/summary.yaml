@@ -53,4 +53,5 @@ sylius_twig_hooks:
                 priority: 100
             download:
                 template: '@SyliusInvoicingPlugin/shop/order/show/summary/invoices/card/body/table/body/download.html.twig'
+                enabled: '%sylius_invoicing.pdf_generator.enabled%'
                 priority: 0

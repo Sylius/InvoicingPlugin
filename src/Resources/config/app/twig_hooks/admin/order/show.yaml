@@ -51,6 +51,7 @@ sylius_twig_hooks:
         'sylius_admin.order.show.content.sections.invoices.table.body.actions':
             download:
                 template: '@SyliusInvoicingPlugin/admin/shared/action/download.html.twig'
+                enabled: '%sylius_invoicing.pdf_generator.enabled%'
                 priority: 100
             resend:
                 template: '@SyliusInvoicingPlugin/admin/shared/action/resend.html.twig'
