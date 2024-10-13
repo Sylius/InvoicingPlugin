@@ -45,7 +45,3 @@ default:
         FriendsOfBehat\SuiteSettingsExtension:
             paths:
                 - features
-
-        FriendsOfBehat\ExcludeSpecificationsExtension:
-            features:
-                - features/managing_invoices/pdf_generation_disabled

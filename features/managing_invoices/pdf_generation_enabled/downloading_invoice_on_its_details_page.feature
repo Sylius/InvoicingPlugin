@@ -17,7 +17,7 @@ Feature: Downloading an invoice from its details page
         And for the billing address of "Mazikeen Lilim" in the "Pacific Coast Hwy", "90806" "Los Angeles", "United States"
         And the customer chose "UPS" shipping method with "Cash on Delivery" payment
 
-    @ui
+    @ui @pdf_enabled
     Scenario: Downloading an invoice
         Given I view the summary of the invoice for order "#00000666"
         When I download the invoice

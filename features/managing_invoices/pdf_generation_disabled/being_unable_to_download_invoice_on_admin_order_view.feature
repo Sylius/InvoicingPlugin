@@ -14,7 +14,7 @@ Feature: Being unable to download an invoice on a single order view
         And the customer chose "Free" shipping method to "United States" with "Cash on Delivery" payment
         And I am logged in as an administrator
 
-    @ui
+    @ui @pdf_disabled
     Scenario: Being unable to download an invoice on a single order view
         When I view the summary of the order "#00000022"
         Then I should not be able to download the first invoice

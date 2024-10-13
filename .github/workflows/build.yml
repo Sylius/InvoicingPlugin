@@ -193,7 +193,7 @@ jobs:
                 name: Run Behat
                 run: |
                     if [ "${{ matrix.wkhtmltopdf }}" != "false" ]; then
-                        vendor/bin/behat --colors --strict -vvv --no-interaction -f progress --tags="~@pdf_edisabled" || vendor/bin/behat --colors --strict -vvv --no-interaction -f progress --rerun;
+                        vendor/bin/behat --colors --strict -vvv --no-interaction -f progress --tags="~@pdf_disabled" || vendor/bin/behat --colors --strict -vvv --no-interaction -f progress --rerun;
                     else
                         vendor/bin/behat --colors --strict -vvv --no-interaction -f progress --tags="~@pdf_enabled" || vendor/bin/behat --colors --strict -vvv --no-interaction -f progress --rerun;
                     fi

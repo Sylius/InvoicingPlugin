@@ -16,7 +16,7 @@ Feature: Being unable to download an invoice on a single order view
         And for the billing address of "Mazikeen Lilim" in the "Pacific Coast Hwy", "90806" "Los Angeles", "United States"
         And I chose "Free" shipping method with "Cash on Delivery" payment
 
-    @ui
+    @ui @pdf_disabled
     Scenario: Being unable to download an invoice on a single order view
         When I view the summary of the order "#00000666"
         Then I should not be able to download the first invoice
