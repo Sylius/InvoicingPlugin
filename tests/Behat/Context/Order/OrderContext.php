@@ -6,20 +6,14 @@ namespace Tests\Sylius\InvoicingPlugin\Behat\Context\Order;
 
 use Behat\Behat\Context\Context;
 use Doctrine\Persistence\ObjectManager;
-use SM\Factory\FactoryInterface as StateMachineFactoryInterface;
+use Sylius\Abstraction\StateMachine\StateMachineInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Payment\PaymentTransitions;
 
 final class OrderContext implements Context
 {
-    private ObjectManager $objectManager;
-
-    private StateMachineFactoryInterface $stateMachineFactory;
-
-    public function __construct(ObjectManager $objectManager, StateMachineFactoryInterface $stateMachineFactory)
+    public function __construct(private ObjectManager $objectManager, private StateMachineInterface $stateMachine)
     {
-        $this->objectManager = $objectManager;
-        $this->stateMachineFactory = $stateMachineFactory;
     }
 
     /**
@@ -35,7 +29,7 @@ final class OrderContext implements Context
     private function applyPaymentTransitionOnOrder(OrderInterface $order, $transition): void
     {
         foreach ($order->getPayments() as $payment) {
-            $this->stateMachineFactory->get($payment, PaymentTransitions::GRAPH)->apply($transition);
+            $this->stateMachine->apply($payment, PaymentTransitions::GRAPH, $transition);
         }
     }
 }

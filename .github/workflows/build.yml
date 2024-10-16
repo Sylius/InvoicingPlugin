@@ -25,7 +25,25 @@ jobs:
                 node: ["20.x"]
                 mysql: ["8.4"]
                 wkhtmltopdf: ["0.12.6-1", false]
-                state_machine_adapter: [ "winzou_state_machine", "symfony_workflow" ]
+                state_machine_adapter: [ "symfony_workflow" ]
+
+                include:
+                    -
+                        php: "8.3"
+                        symfony: "^7.1"
+                        sylius: "2.0.x-dev"
+                        node: "20.x"
+                        mysql: "8.4"
+                        wkhtmltopdf: "0.12.6-1"
+                        state_machine_adapter: "winzou_state_machine"
+                    -
+                        php: "8.3"
+                        symfony: "^7.1"
+                        sylius: "2.0.x-dev"
+                        node: "20.x"
+                        mysql: "8.4"
+                        wkhtmltopdf: false
+                        state_machine_adapter: "winzou_state_machine"
 
         env:
             APP_ENV: test
@@ -84,7 +102,6 @@ jobs:
                 if: matrix.wkhtmltopdf == false
                 run: |
                     mv tests/Application/etc/sylius_invoicing_pdf_generation_disabled.yaml tests/Application/config/packages
-                    sed -i 's/pdf_generation_disabled/pdf_generation_enabled/g' behat.yml.dist
 
             -
                 name: Get Composer cache directory
@@ -112,6 +129,13 @@ jobs:
                 name: Restrict Sylius version
                 if: matrix.sylius != ''
                 run: composer require "sylius/sylius:${{ matrix.sylius }}" --no-update --no-scripts --no-interaction
+
+            -
+                name: Require Winzou State Machine
+                if: "${{ matrix.state_machine_adapter == 'winzou_state_machine' }}"
+                run: |
+                  composer require winzou/state-machine:^0.4 --no-update   
+                  composer require winzou/state-machine-bundle:^0.6 --no-update   
 
             -
                 name: Install PHP dependencies
