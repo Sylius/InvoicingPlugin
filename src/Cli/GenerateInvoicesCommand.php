@@ -55,6 +55,7 @@ final class GenerateInvoicesCommand extends Command
 
     protected function configure(): void
     {
+        $this->setName(self::$defaultName);
         $this->setDescription('Generates invoices for orders placed before InvoicingPlugin installation');
     }
 }
