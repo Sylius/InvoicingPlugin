@@ -1,5 +1,0 @@
-{% set shopBillingData = hookable_metadata.context.resource.shopBillingData %}
-
-{% if shopBillingData.countryCode and shopBillingData.postcode %}
-    {{ shopBillingData.countryCode|sylius_country_name|upper }} {{ shopBillingData.postcode }}
-{% endif %}

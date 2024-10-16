@@ -1,0 +1,3 @@
+{% set billing_data = hookable_metadata.context.resource.billingData %}
+
+{{ billing_data.countryCode|sylius_country_name|upper }} {{ billing_data.postcode }}

@@ -1,5 +1,0 @@
-{% set shopBillingData = hookable_metadata.context.resource.shopBillingData %}
-
-{% if shopBillingData.countryCode %}
-    <span class="flag flag-sm flag-country-{{ shopBillingData.countryCode|lower }} me-2"></span>
-{% endif %}

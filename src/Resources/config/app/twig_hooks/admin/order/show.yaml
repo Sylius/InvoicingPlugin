@@ -56,4 +56,3 @@ sylius_twig_hooks:
             resend:
                 template: '@SyliusInvoicingPlugin/admin/shared/action/resend.html.twig'
                 priority: 0
-

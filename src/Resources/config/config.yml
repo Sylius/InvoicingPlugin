@@ -14,7 +14,7 @@ sylius_mailer:
     emails:
         invoice_generated:
             subject: sylius.emails.invoice_generated.subject
-            template: "@SyliusInvoicingPlugin/admin/invoice/email/invoiceGenerated.html.twig"
+            template: "@SyliusInvoicingPlugin/admin/invoice/email/invoice_generated.html.twig"
 
 knp_snappy:
     pdf:

@@ -1,3 +1,0 @@
-{% set billingData = hookable_metadata.context.resource.billingData %}
-
-{{ billingData.countryCode|sylius_country_name|upper }} {{ billingData.postcode }}

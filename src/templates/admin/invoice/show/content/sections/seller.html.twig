@@ -1,7 +1,6 @@
-{% set invoice = hookable_metadata.context.resource %}
-{% set shopBillingData = invoice.shopBillingData %}
+{% set shop_billing_data = hookable_metadata.context.resource.shopBillingData %}
 
-{% if shopBillingData %}
+{% if shop_billing_data %}
     <div class="col">
         <div class="card mb-3">
             <div class="card-header">

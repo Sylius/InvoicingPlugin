@@ -1,0 +1,5 @@
+{% set shop_billing_data = hookable_metadata.context.resource.shopBillingData %}
+
+{% if shop_billing_data.countryCode and shop_billing_data.postcode %}
+    {{ shop_billing_data.countryCode|sylius_country_name|upper }} {{ shop_billing_data.postcode }}
+{% endif %}
