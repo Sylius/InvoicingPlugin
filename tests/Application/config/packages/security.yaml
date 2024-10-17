@@ -44,7 +44,7 @@ security:
             stateless: true
             entry_point: jwt
             json_login:
-                check_path: "%sylius.security.new_api_admin_route%/authentication-token"
+                check_path: "%sylius.security.new_api_admin_route%/administrators/token"
                 username_path: email
                 password_path: password
                 success_handler: lexik_jwt_authentication.handler.authentication_success
@@ -57,7 +57,7 @@ security:
             stateless: true
             entry_point: jwt
             json_login:
-                check_path: "%sylius.security.new_api_shop_route%/authentication-token"
+                check_path: "%sylius.security.new_api_shop_route%/customers/token"
                 username_path: email
                 password_path: password
                 success_handler: lexik_jwt_authentication.handler.authentication_success
@@ -82,6 +82,12 @@ security:
                 enable_csrf: true
                 csrf_parameter: _csrf_shop_security_token
                 csrf_token_id: shop_authenticate
+            json_login:
+                check_path: sylius_shop_json_login_check
+                username_path: _username
+                password_path: _password
+                success_handler: sylius.authentication.success_handler
+                failure_handler: sylius.authentication.failure_handler
             remember_me:
                 secret: "%env(APP_SECRET)%"
                 name: APP_SHOP_REMEMBER_ME
@@ -91,6 +97,10 @@ security:
                 path: sylius_shop_logout
                 target: sylius_shop_homepage
                 invalidate_session: false
+
+        image_resolver:
+            pattern: ^/media/cache/resolve
+            security: false
 
         dev:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
@@ -108,6 +118,7 @@ security:
         - { path: "%sylius.security.admin_regex%", role: ROLE_ADMINISTRATION_ACCESS }
         - { path: "%sylius.security.shop_regex%/account", role: ROLE_USER }
 
+        - { path: "%sylius.security.new_api_admin_route%/administrators/reset-password", role: PUBLIC_ACCESS }
         - { path: "%sylius.security.new_api_admin_regex%/.*", role: ROLE_API_ACCESS }
         - { path: "%sylius.security.new_api_admin_route%/administrators/token", role: PUBLIC_ACCESS }
         - { path: "%sylius.security.new_api_user_account_regex%/.*", role: ROLE_USER }
