@@ -1,3 +1,10 @@
+### UPGRADE FROM 0.24.X TO 1.0.0
+
+1. Support for Sylius 2.0 has been added, it is now the recommended Sylius version to use with InvoicingPlugin.
+2. Support for Sylius 1.13 and 1.12 has been dropped, upgrade your application to [Sylius 2.0](https://github.com/Sylius/Sylius/blob/2.0/UPGRADE-2.0.md).
+3. Support for PHP has been increased to 8.2
+4. The `sylius_invoicing_plugin_admin_order_invoices_partial` and `sylius_invoicing_plugin_shop_order_invoices_partial` partials have been replaced by `Sylius\InvoicingPlugin\Twig\Component\Invoice\ListComponent` twig component.
+
 ### UPGRADE FROM 0.24.X TO 0.25.0
 
 1. Support for Sylius 1.13 has been added, it is now the recommended Sylius version to use with InvoicingPlugin.

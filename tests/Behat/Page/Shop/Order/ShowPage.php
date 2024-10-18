@@ -17,7 +17,7 @@ final class ShowPage extends SymfonyPage implements ShowPageInterface
     public function downloadFirstInvoice(): void
     {
         $invoice = $this->getFirstInvoice();
-        $invoice->clickLink('Download');
+        $invoice->find('css', '[data-test-download-button]')->click();
     }
 
     public function isPdfFileDownloaded(): bool
@@ -41,7 +41,7 @@ final class ShowPage extends SymfonyPage implements ShowPageInterface
     protected function getDefinedElements(): array
     {
         return array_merge(parent::getDefinedElements(), [
-            'invoices' => '#order-invoices',
+            'invoices' => '[data-test-invoices]',
         ]);
     }
 

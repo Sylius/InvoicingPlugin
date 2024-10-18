@@ -1,0 +1,7 @@
+<tbody>
+    <tr>
+        {% for invoice in hookable_metadata.context.invoices %}
+            {% hook 'body' with { invoice } %}
+        {% endfor %}
+    </tr>
+</tbody>

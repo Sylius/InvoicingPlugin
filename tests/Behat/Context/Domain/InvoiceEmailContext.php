@@ -5,13 +5,8 @@ declare(strict_types=1);
 namespace Tests\Sylius\InvoicingPlugin\Behat\Context\Domain;
 
 use Behat\Behat\Context\Context;
-use Sylius\Bundle\CoreBundle\Application\Kernel as SyliusKernel;
 use Sylius\Behat\Service\Checker\EmailCheckerInterface;
 use Webmozart\Assert\Assert;
-
-if (SyliusKernel::MINOR_VERSION <= 11) {
-    class_alias('Sylius\Component\Core\Test\Services\EmailCheckerInterface', 'Sylius\Behat\Service\Checker\EmailCheckerInterface');
-}
 
 final class InvoiceEmailContext implements Context
 {

@@ -140,9 +140,7 @@ final class ShowPage extends SymfonyPage implements ShowPageInterface
 
     public function getChannel(): string
     {
-        $items = $this->getDocument()->findAll('css', '.channel > .channel__item');
-
-        return $items[1]->getText();
+        return $this->getElement('channel')->getText();
     }
 
     public function download(): void
@@ -173,17 +171,18 @@ final class ShowPage extends SymfonyPage implements ShowPageInterface
     protected function getDefinedElements(): array
     {
         return array_merge(parent::getDefinedElements(), [
-            'back' => '#back',
-            'billing_address' => '#billing-data',
+            'back' => '[data-test-back]',
+            'billing_address' => '[data-test-billing-data]',
+            'channel' => '[data-test-channel]',
             'invoice_net_total' => '[data-test-invoice-net-total]',
             'invoice_net_total_currency_code' => '[data-test-invoice-net-total-currency-code]',
             'invoice_taxes_total' => '[data-test-invoice-taxes-total]',
             'invoice_taxes_total_currency_code' => '[data-test-invoice-taxes-total-currency-code]',
             'invoice_total' => '[data-test-invoice-total]',
             'invoice_total_currency_code' => '[data-test-invoice-total-currency-code]',
-            'issued_at' => '#invoice-issued-at',
+            'issued_at' => '[data-test-issued-at]',
             'paid' => '[data-test-invoice-is-paid]',
-            'shop_billing_data' => '#shop-billing-data',
+            'shop_billing_data' => '[data-test-shop-billing-data]',
             'table' => '.table',
         ]);
     }

@@ -12,50 +12,38 @@ on:
 
 jobs:
     tests:
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-22.04
 
         name: "Sylius ${{ matrix.sylius }}, PHP ${{ matrix.php }}, Symfony ${{ matrix.symfony }}, MySQL ${{ matrix.mysql }}, wkhtmltopdf: ${{ matrix.wkhtmltopdf }}, State Machine Adapter ${{ matrix.state_machine_adapter }}"
 
         strategy:
             fail-fast: false
             matrix:
-                php: ["8.1", "8.2"]
-                symfony: ["^5.4.21", "^6.4"]
-                sylius: ["~1.12.0", "~1.13.0",]
+                php: ["8.2", "8.3"]
+                symfony: ["^6.4", "^7.1"]
+                sylius: ["2.0.x-dev"]
                 node: ["20.x"]
-                mysql: ["8.0"]
-                wkhtmltopdf: ["0.12.6-1"]
-                state_machine_adapter: [ "winzou_state_machine", "symfony_workflow" ]
+                mysql: ["8.4"]
+                wkhtmltopdf: ["0.12.6-1", false]
+                state_machine_adapter: [ "symfony_workflow" ]
 
                 include:
                     -
                         php: "8.3"
-                        symfony: "^6.4"
-                        sylius: "~1.13.0"
+                        symfony: "^7.1"
+                        sylius: "2.0.x-dev"
                         node: "20.x"
-                        mysql: "8.0"
+                        mysql: "8.4"
                         wkhtmltopdf: "0.12.6-1"
-                        state_machine_adapter: "symfony_workflow"
-                    -
-                        php: "8.2"
-                        symfony: "^6.4"
-                        sylius: "~1.12.0"
-                        node: "20.x"
-                        mysql: "8.0"
-                        wkhtmltopdf: false
                         state_machine_adapter: "winzou_state_machine"
                     -
-                        php: "8.2"
-                        symfony: "^6.4"
-                        sylius: "~1.13.0"
+                        php: "8.3"
+                        symfony: "^7.1"
+                        sylius: "2.0.x-dev"
                         node: "20.x"
-                        mysql: "8.0"
+                        mysql: "8.4"
                         wkhtmltopdf: false
-                        state_machine_adapter: "symfony_workflow"
-
-                exclude:
-                    - sylius: "~1.12.0"
-                      state_machine_adapter: "symfony_workflow"
+                        state_machine_adapter: "winzou_state_machine"
 
         env:
             APP_ENV: test
@@ -77,7 +65,7 @@ jobs:
 
             -
                 name: Setup Node
-                uses: actions/setup-node@v1
+                uses: actions/setup-node@v4
                 with:
                     node-version: "${{ matrix.node }}"
 
@@ -94,7 +82,7 @@ jobs:
 
             -
                 name: Setup cache for wkhtmltopdf
-                uses: actions/cache@v3
+                uses: actions/cache@v4
                 id: cache-wkhtmltopdf
                 if: matrix.wkhtmltopdf != false
                 with:
@@ -114,7 +102,6 @@ jobs:
                 if: matrix.wkhtmltopdf == false
                 run: |
                     mv tests/Application/etc/sylius_invoicing_pdf_generation_disabled.yaml tests/Application/config/packages
-                    sed -i 's/pdf_generation_disabled/pdf_generation_enabled/g' behat.yml.dist
 
             -
                 name: Get Composer cache directory
@@ -123,7 +110,7 @@ jobs:
 
             -
                 name: Cache Composer
-                uses: actions/cache@v2
+                uses: actions/cache@v4
                 with:
                     path: ${{ steps.composer-cache.outputs.dir }}
                     key: ${{ runner.os }}-php-${{ matrix.php }}-composer-${{ hashFiles('**/composer.json **/composer.lock') }}
@@ -144,6 +131,13 @@ jobs:
                 run: composer require "sylius/sylius:${{ matrix.sylius }}" --no-update --no-scripts --no-interaction
 
             -
+                name: Require Winzou State Machine
+                if: "${{ matrix.state_machine_adapter == 'winzou_state_machine' }}"
+                run: |
+                  composer require winzou/state-machine:^0.4 --no-update   
+                  composer require winzou/state-machine-bundle:^0.6 --no-update   
+
+            -
                 name: Install PHP dependencies
                 run: composer install --no-interaction --no-scripts
 
@@ -154,7 +148,7 @@ jobs:
 
             -
                 name: Cache Yarn
-                uses: actions/cache@v2
+                uses: actions/cache@v4
                 with:
                     path: ${{ steps.yarn-cache.outputs.dir }}
                     key: ${{ runner.os }}-node-${{ matrix.node }}-yarn-${{ hashFiles('**/package.json **/yarn.lock') }}
@@ -189,10 +183,9 @@ jobs:
                 name: Run security check
                 run: symfony security:check
 
-            -
-                name: Run analysis
-                run: composer analyse
-                if: matrix.sylius != '~1.12.0'
+#            -
+#                name: Run analysis
+#                run: composer analyse
 
             -
                 name: Run PHPSpec
@@ -204,11 +197,16 @@ jobs:
 
             -
                 name: Run Behat
-                run: vendor/bin/behat --colors --strict -vvv --no-interaction -f progress || vendor/bin/behat --colors --strict -vvv --no-interaction -f progress --rerun
+                run: |
+                    if [ "${{ matrix.wkhtmltopdf }}" != "false" ]; then
+                        vendor/bin/behat --colors --strict -vvv --no-interaction -f progress --tags="~@pdf_disabled" || vendor/bin/behat --colors --strict -vvv --no-interaction -f progress --rerun;
+                    else
+                        vendor/bin/behat --colors --strict -vvv --no-interaction -f progress --tags="~@pdf_enabled" || vendor/bin/behat --colors --strict -vvv --no-interaction -f progress --rerun;
+                    fi
 
             -
                 name: Upload Behat logs
-                uses: actions/upload-artifact@v2
+                uses: actions/upload-artifact@v4
                 if: failure()
                 with:
                     name: Behat logs

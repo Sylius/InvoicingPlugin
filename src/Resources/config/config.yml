@@ -1,3 +1,7 @@
+imports:
+    - { resource: "@SyliusInvoicingPlugin/Resources/config/app/winzou_state_machine.php" }
+    - { resource: 'app/twig_hooks/**/*.yaml' }
+
 parameters:
     sylius_invoicing.invoice_save_path: "%kernel.project_dir%/private/invoices/"
     sylius_invoicing.filesystem_adapter.invoice: "sylius_invoicing_invoice"
@@ -11,25 +15,18 @@ sylius_mailer:
     emails:
         invoice_generated:
             subject: sylius.emails.invoice_generated.subject
-            template: "@SyliusInvoicingPlugin/Invoice/Email/invoiceGenerated.html.twig"
+            template: "@SyliusInvoicingPlugin/admin/invoice/email/invoice_generated.html.twig"
 
 knp_snappy:
     pdf:
         enabled: true
 
-winzou_state_machine:
-    sylius_payment:
-        callbacks:
-            after:
-                sylius_invoicing_plugin_payment_complete_producer:
-                    on: ['complete']
-                    do: ['@sylius_invoicing_plugin.event_producer.order_payment_paid', '__invoke']
-                    args: ['object']
-
 sylius_grid:
     templates:
         filter:
-            invoice_channel: '@SyliusInvoicingPlugin/Grid/Filter/channel.html.twig'
+            invoice_channel: '@SyliusInvoicingPlugin/admin/invoice/index/grid/filter/channel.html.twig'
+        action:
+            download: '@SyliusInvoicingPlugin/admin/shared/action/download.html.twig'
     grids:
         sylius_invoicing_plugin_invoice:
             driver:
@@ -47,20 +44,20 @@ sylius_grid:
                     type: twig
                     label: sylius.ui.order
                     options:
-                        template: '@SyliusInvoicingPlugin/Invoice/Grid/Field/orderNumber.html.twig'
+                        template: '@SyliusInvoicingPlugin/admin/invoice/index/grid/field/order_number.html.twig'
                     sortable: order.number
                 channel:
                     type: twig
                     label: sylius.ui.channel
                     options:
-                        template: "@SyliusInvoicingPlugin/Invoice/Grid/Field/channel.html.twig"
+                        template: "@SyliusAdmin/shared/grid/field/channel.html.twig"
                 total:
                     type: twig
                     label: sylius.ui.total
                     path: .
                     sortable: total
                     options:
-                        template: "@SyliusAdmin/Order/Grid/Field/total.html.twig"
+                        template: "@SyliusAdmin/order/grid/field/order_total.html.twig"
                 issuedAt:
                     type: datetime
                     label: sylius_invoicing_plugin.ui.issued_at
@@ -87,10 +84,8 @@ sylius_grid:
                     show:
                         type: show
                     download:
-                        type: default
-                        label: sylius_invoicing_plugin.ui.download_invoice
+                        type: download
                         enabled: '%sylius_invoicing.pdf_generator.enabled%'
-                        icon: download
                         options:
                             link:
                                 route: sylius_invoicing_plugin_admin_invoice_download
@@ -105,50 +100,6 @@ sylius_grid:
                                 route: sylius_invoicing_plugin_admin_invoice_resend
                                 parameters:
                                     id: resource.id
-
-sylius_ui:
-    events:
-        sylius.admin.order.show.summary:
-            blocks:
-                sylius_invoicing_plugin:
-                    template: '@SyliusInvoicingPlugin/Order/Admin/fetchInvoices.html.twig'
-                    priority: 15
-
-        sylius.shop.account.order.show.subcontent:
-            blocks:
-                sylius_invoicing_plugin:
-                    template: '@SyliusInvoicingPlugin/Order/Shop/fetchInvoices.html.twig'
-                    priority: 15
-
-        sylius_invoicing.admin.invoice.buttons:
-            blocks:
-                back_button:
-                    template: '@SyliusInvoicingPlugin/Invoice/Show/_backButton.html.twig'
-                    priority: 30
-                download_button:
-                    template: '@SyliusInvoicingPlugin/Invoice/Admin/_downloadButton.html.twig'
-                    enabled: '%sylius_invoicing.pdf_generator.enabled%'
-                    priority: 20
-                resend_button:
-                    template: '@SyliusInvoicingPlugin/Invoice/Admin/_resendButton.html.twig'
-                    priority: 10
-
-        sylius_invoicing.admin.order.invoices.list.actions.buttons:
-            blocks:
-                download_button:
-                    template: '@SyliusInvoicingPlugin/Invoice/Admin/_downloadButton.html.twig'
-                    enabled: '%sylius_invoicing.pdf_generator.enabled%'
-                    priority: 20
-                resend_button:
-                    template: '@SyliusInvoicingPlugin/Invoice/Admin/_resendButton.html.twig'
-                    priority: 10
-
-        sylius_invoicing.shop.order.invoices.list.actions:
-            blocks:
-                download_button:
-                    template: '@SyliusInvoicingPlugin/Order/Shop/_downloadButton.html.twig'
-                    enabled: '%sylius_invoicing.pdf_generator.enabled%'
-                    priority: 10
 
 framework:
     messenger:

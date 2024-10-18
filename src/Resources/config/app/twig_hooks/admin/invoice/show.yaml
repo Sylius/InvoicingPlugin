@@ -1,0 +1,198 @@
+sylius_twig_hooks:
+    hooks:
+        'sylius_admin.invoice.show.content':
+            sections:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections.html.twig'
+                priority: 0
+
+        'sylius_admin.invoice.show.content.header.title_block':
+            title:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/header/title_block/title.html.twig'
+                priority: 100
+            actions:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/header/title_block/actions.html.twig'
+                priority: 0
+
+        'sylius_admin.invoice.show.content.header.title_block.title':
+            number:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/header/title_block/title/number.html.twig'
+                priority: 100
+            subtitle:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/header/title_block/title/subtitle.html.twig'
+                priority: 0
+
+        'sylius_admin.invoice.show.content.header.title_block.actions':
+            back_to_index:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/header/title_block/actions/back_to_index.html.twig'
+                priority: 200
+            download:
+                template: '@SyliusInvoicingPlugin/admin/shared/action/download.html.twig'
+                enabled: '%sylius_invoicing.pdf_generator.enabled%'
+                priority: 100
+            resend:
+                template: '@SyliusInvoicingPlugin/admin/shared/action/resend.html.twig'
+                priority: 0
+
+        'sylius_admin.invoice.show.content.sections':
+            buyer:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/buyer.html.twig'
+                priority: 200
+            seller:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/seller.html.twig'
+                priority: 100
+            card:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/card.html.twig'
+                priority: 0
+
+        'sylius_admin.invoice.show.content.sections.buyer':
+            first_name:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/buyer/first_name.html.twig'
+                priority: 500
+            company:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/buyer/company.html.twig'
+                priority: 400
+            street:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/buyer/street.html.twig'
+                priority: 300
+            city:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/buyer/city.html.twig'
+                priority: 200
+            country_code:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/buyer/country_code.html.twig'
+                priority: 100
+            postcode:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/buyer/postcode.html.twig'
+                priority: 0
+
+        'sylius_admin.invoice.show.content.sections.seller':
+            company:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/seller/company.html.twig'
+                priority: 600
+            representative:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/seller/representative.html.twig'
+                priority: 500
+            street:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/seller/street.html.twig'
+                priority: 400
+            city:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/seller/city.html.twig'
+                priority: 300
+            tax_id:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/seller/tax_id.html.twig'
+                priority: 200
+            country_code:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/seller/country_code.html.twig'
+                priority: 100
+            postcode:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/seller/postcode.html.twig'
+                priority: 0
+
+        'sylius_admin.invoice.show.content.sections.card':
+            body:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/card/body.html.twig'
+                priority: 100
+            footer:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/card/footer.html.twig'
+                priority: 0
+
+        'sylius_admin.invoice.show.content.sections.card.body':
+            table:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/card/body/table.html.twig'
+                priority: 0
+
+        'sylius_admin.invoice.show.content.sections.card.body.table':
+            header:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/card/body/table/header.html.twig'
+                priority: 200
+            body:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/card/body/table/body.html.twig'
+                priority: 100
+            footer:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/card/body/table/footer.html.twig'
+                priority: 0
+
+        'sylius_admin.invoice.show.content.sections.card.body.table.header':
+            no:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/card/body/table/header/no.html.twig'
+                priority: 900
+            name:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/card/body/table/header/name.html.twig'
+                priority: 800
+            quantity:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/card/body/table/header/quantity.html.twig'
+                priority: 700
+            unit_net_price:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/card/body/table/header/unit_net_price.html.twig'
+                priority: 600
+            discounted_unit_net_price:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/card/body/table/header/discounted_unit_net_price.html.twig'
+                priority: 500
+            net_value:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/card/body/table/header/net_value.html.twig'
+                priority: 400
+            tax_rate:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/card/body/table/header/tax_rate.html.twig'
+                priority: 300
+            tax_amount:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/card/body/table/header/tax_amount.html.twig'
+                priority: 200
+            gross_value:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/card/body/table/header/gross_value.html.twig'
+                priority: 100
+            currency:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/card/body/table/header/currency.html.twig'
+                priority: 0
+
+        'sylius_admin.invoice.show.content.sections.card.body.table.body':
+            no:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/card/body/table/body/no.html.twig'
+                priority: 900
+            name:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/card/body/table/body/name.html.twig'
+                priority: 800
+            quantity:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/card/body/table/body/quantity.html.twig'
+                priority: 700
+            unit_net_price:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/card/body/table/body/unit_net_price.html.twig'
+                priority: 600
+            discounted_unit_net_price:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/card/body/table/body/discounted_unit_net_price.html.twig'
+                priority: 500
+            net_value:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/card/body/table/body/net_value.html.twig'
+                priority: 400
+            tax_rate:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/card/body/table/body/tax_rate.html.twig'
+                priority: 300
+            tax_amount:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/card/body/table/body/tax_amount.html.twig'
+                priority: 200
+            gross_value:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/card/body/table/body/gross_value.html.twig'
+                priority: 100
+            currency:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/card/body/table/body/currency.html.twig'
+                priority: 0
+
+        'sylius_admin.invoice.show.content.sections.card.body.table.footer':
+            net_total:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/card/body/table/footer/net_total.html.twig'
+                priority: 300
+            taxes_total:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/card/body/table/footer/taxes_total.html.twig'
+                priority: 200
+            total:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/card/body/table/footer/total.html.twig'
+                priority: 100
+            tax_items:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/card/body/table/footer/tax_items.html.twig'
+                priority: 0
+
+        'sylius_admin.invoice.show.content.sections.card.body.table.footer.tax_items':
+            tax_rate:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/card/body/table/footer/tax_items/tax_rate.html.twig'
+                priority: 100
+            tax_item:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/card/body/table/footer/tax_items/tax_item.html.twig'
+                priority: 0
