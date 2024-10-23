@@ -83,7 +83,8 @@
             "symfony/flex": true,
             "dealerdirect/phpcodesniffer-composer-installer": false,
             "phpstan/extension-installer": true,
-            "symfony/thanks": false
+            "symfony/thanks": false,
+            "php-http/discovery": false
         }
     },
     "extra": {
