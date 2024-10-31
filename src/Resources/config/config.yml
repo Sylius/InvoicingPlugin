@@ -94,7 +94,7 @@ sylius_grid:
                     resend:
                         type: default
                         label: sylius_invoicing_plugin.ui.resend_invoice
-                        icon: send
+                        icon: "tabler:send"
                         options:
                             link:
                                 route: sylius_invoicing_plugin_admin_invoice_resend
