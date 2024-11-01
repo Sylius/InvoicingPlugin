@@ -1,0 +1,14 @@
+sylius_admin_order_creation:
+    channel:
+        company:
+            not_blank: 'Das Feld für die Firma darf nicht leer sein.'
+        taxId:
+            not_blank: 'Das Feld für die Steuer-ID darf nicht leer sein.'
+        street:
+            not_blank: 'Das Feld für die Straße darf nicht leer sein.'
+        city:
+            not_blank: 'Das Feld für die Stadt darf nicht leer sein.'
+        postcode:
+            not_blank: 'Das Feld für die Postleitzahl darf nicht leer sein.'
+        countryCode:
+            not_blank: 'Das Feld für das Land darf nicht leer sein.'

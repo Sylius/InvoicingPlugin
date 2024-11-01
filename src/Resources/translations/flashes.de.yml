@@ -1,0 +1,2 @@
+sylius_invoicing_plugin:
+    invoice_resent_successfully: 'Die Rechnung wurde erneut erfolgreich an den Kunden gesendet.'
