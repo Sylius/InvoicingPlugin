@@ -19,11 +19,11 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                php: ["8.1", "8.2"]
+                php: ["8.3"]
                 symfony: ["^5.4.21", "^6.4"]
-                sylius: ["~1.12.0", "~1.13.0",]
+                sylius: ["~1.14.0"]
                 node: ["20.x"]
-                mysql: ["8.0"]
+                mysql: ["8.4"]
                 wkhtmltopdf: ["0.12.6-1"]
                 state_machine_adapter: [ "winzou_state_machine", "symfony_workflow" ]
 
@@ -31,31 +31,11 @@ jobs:
                     -
                         php: "8.3"
                         symfony: "^6.4"
-                        sylius: "~1.13.0"
+                        sylius: "~1.14.0"
                         node: "20.x"
-                        mysql: "8.0"
-                        wkhtmltopdf: "0.12.6-1"
-                        state_machine_adapter: "symfony_workflow"
-                    -
-                        php: "8.2"
-                        symfony: "^6.4"
-                        sylius: "~1.12.0"
-                        node: "20.x"
-                        mysql: "8.0"
-                        wkhtmltopdf: false
-                        state_machine_adapter: "winzou_state_machine"
-                    -
-                        php: "8.2"
-                        symfony: "^6.4"
-                        sylius: "~1.13.0"
-                        node: "20.x"
-                        mysql: "8.0"
+                        mysql: "8.4"
                         wkhtmltopdf: false
                         state_machine_adapter: "symfony_workflow"
-
-                exclude:
-                    - sylius: "~1.12.0"
-                      state_machine_adapter: "symfony_workflow"
 
         env:
             APP_ENV: test
