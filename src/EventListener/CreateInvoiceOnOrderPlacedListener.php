@@ -19,18 +19,15 @@ use Sylius\InvoicingPlugin\Exception\InvoiceAlreadyGenerated;
 
 final class CreateInvoiceOnOrderPlacedListener
 {
-    private InvoiceCreatorInterface $invoiceCreator;
-
-    public function __construct(InvoiceCreatorInterface $invoiceCreator)
+    public function __construct(private readonly InvoiceCreatorInterface $invoiceCreator)
     {
-        $this->invoiceCreator = $invoiceCreator;
     }
 
     public function __invoke(OrderPlaced $event): void
     {
         try {
             $this->invoiceCreator->__invoke($event->orderNumber(), $event->date());
-        } catch (InvoiceAlreadyGenerated $exception) {
+        } catch (InvoiceAlreadyGenerated) {
             return;
         }
     }

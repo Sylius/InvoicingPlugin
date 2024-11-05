@@ -20,9 +20,7 @@ use Webmozart\Assert\Assert;
 
 final class LineItemFactory implements LineItemFactoryInterface
 {
-    private string $className;
-
-    public function __construct(string $className)
+    public function __construct(private readonly string $className)
     {
         if (!is_a($className, LineItem::class, true)) {
             throw new \DomainException(sprintf(
@@ -30,8 +28,6 @@ final class LineItemFactory implements LineItemFactoryInterface
                 LineItem::class
             ));
         }
-
-        $this->className = $className;
     }
 
     public function createNew()

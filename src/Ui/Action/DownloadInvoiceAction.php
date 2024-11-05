@@ -25,10 +25,10 @@ use Webmozart\Assert\Assert;
 final class DownloadInvoiceAction
 {
     public function __construct(
-        private InvoiceRepositoryInterface $invoiceRepository,
-        private AuthorizationCheckerInterface $authorizationChecker,
-        private InvoiceFileProviderInterface $invoiceFilePathProvider,
-        private bool $hasEnabledPdfFileGenerator = true
+        private readonly InvoiceRepositoryInterface $invoiceRepository,
+        private readonly AuthorizationCheckerInterface $authorizationChecker,
+        private readonly InvoiceFileProviderInterface $invoiceFilePathProvider,
+        private readonly bool $hasEnabledPdfFileGenerator = true,
     ) {
     }
 

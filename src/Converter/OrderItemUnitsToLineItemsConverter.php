@@ -25,9 +25,9 @@ use Webmozart\Assert\Assert;
 final class OrderItemUnitsToLineItemsConverter implements LineItemsConverterInterface
 {
     public function __construct(
-        private TaxRatePercentageProviderInterface $taxRatePercentageProvider,
-        private LineItemFactoryInterface $lineItemFactory,
-        private UnitNetPriceProviderInterface $unitNetPriceProvider
+        private readonly TaxRatePercentageProviderInterface $taxRatePercentageProvider,
+        private readonly LineItemFactoryInterface $lineItemFactory,
+        private readonly UnitNetPriceProviderInterface $unitNetPriceProvider,
     ) {
     }
 

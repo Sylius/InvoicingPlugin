@@ -20,9 +20,7 @@ use Webmozart\Assert\Assert;
 
 final class TaxItemFactory implements TaxItemFactoryInterface
 {
-    private string $className;
-
-    public function __construct(string $className)
+    public function __construct(private readonly string $className)
     {
         if (!is_a($className, TaxItem::class, true)) {
             throw new \DomainException(sprintf(
@@ -30,8 +28,6 @@ final class TaxItemFactory implements TaxItemFactoryInterface
                 TaxItem::class
             ));
         }
-
-        $this->className = $className;
     }
 
     public function createNew()

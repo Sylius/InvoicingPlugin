@@ -21,9 +21,7 @@ use Webmozart\Assert\Assert;
 
 final class BillingDataFactory implements BillingDataFactoryInterface
 {
-    private string $className;
-
-    public function __construct(string $className)
+    public function __construct(private readonly string $className)
     {
         if (!is_a($className, BillingData::class, true)) {
             throw new \DomainException(sprintf(
@@ -31,8 +29,6 @@ final class BillingDataFactory implements BillingDataFactoryInterface
                 BillingData::class
             ));
         }
-
-        $this->className = $className;
     }
 
     public function createNew()

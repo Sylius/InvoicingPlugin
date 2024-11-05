@@ -24,17 +24,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class ShopBillingDataExampleFactory extends AbstractExampleFactory implements ExampleFactoryInterface
 {
-    private ChannelRepositoryInterface $channelRepository;
+    private readonly OptionsResolver $optionsResolver;
 
-    private FactoryInterface $factory;
-
-    private OptionsResolver $optionsResolver;
-
-    public function __construct(ChannelRepositoryInterface $channelRepository, FactoryInterface $factory)
-    {
-        $this->channelRepository = $channelRepository;
-        $this->factory = $factory;
-
+    public function __construct(
+        private readonly ChannelRepositoryInterface $channelRepository,
+        private readonly FactoryInterface $factory,
+    ) {
         $this->optionsResolver = new OptionsResolver();
 
         $this->configureOptions($this->optionsResolver);

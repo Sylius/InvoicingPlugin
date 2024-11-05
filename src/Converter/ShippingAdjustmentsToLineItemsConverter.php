@@ -25,16 +25,10 @@ use Webmozart\Assert\Assert;
 
 final class ShippingAdjustmentsToLineItemsConverter implements LineItemsConverterInterface
 {
-    private TaxRatePercentageProviderInterface $taxRatePercentageProvider;
-
-    private LineItemFactoryInterface $lineItemFactory;
-
     public function __construct(
-        TaxRatePercentageProviderInterface $taxRatePercentageProvider,
-        LineItemFactoryInterface $lineItemFactory
+        private readonly TaxRatePercentageProviderInterface $taxRatePercentageProvider,
+        private readonly LineItemFactoryInterface $lineItemFactory,
     ) {
-        $this->taxRatePercentageProvider = $taxRatePercentageProvider;
-        $this->lineItemFactory = $lineItemFactory;
     }
 
     public function convert(OrderInterface $order): array

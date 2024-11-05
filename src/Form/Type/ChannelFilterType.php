@@ -21,11 +21,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 final class ChannelFilterType extends AbstractType
 {
-    private ChannelRepositoryInterface $channelRepository;
-
-    public function __construct(ChannelRepositoryInterface $channelRepository)
+    public function __construct(private readonly ChannelRepositoryInterface $channelRepository)
     {
-        $this->channelRepository = $channelRepository;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
