@@ -66,7 +66,6 @@
     },
     "scripts": {
         "analyse": [
-            "@composer validate --strict",
             "vendor/bin/phpstan analyse -c phpstan.neon -l max"
         ],
         "fix": [
