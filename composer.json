@@ -65,6 +65,13 @@
         }
     },
     "scripts": {
+        "analyse": [
+            "@composer validate --strict",
+            "vendor/bin/phpstan analyse -c phpstan.neon -l max"
+        ],
+        "fix": [
+            "vendor/bin/ecs check --fix src/ spec/"
+        ],
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
