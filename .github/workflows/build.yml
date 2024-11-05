@@ -166,13 +166,18 @@ jobs:
                 run: (cd tests/Application && bin/console sylius:fixtures:load -n)
 
             -
+                name: Validate composer.json
+                run: composer validate --ansi --strict --no-check-all
+#               Restore before InvoicingPlugin 1.0 release
+#               run: composer validate --ansi --strict --no-check-publish
+
+            -
                 name: Run security check
                 run: symfony security:check
 
             -
-                name: Run analysis
-                run: composer analyse
-                if: matrix.sylius != '~1.12.0'
+                name: Run PHPStan
+                run: vendor/bin/phpstan analyse -c phpstan.neon -l max src/
 
             -
                 name: Run PHPSpec

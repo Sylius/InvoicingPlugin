@@ -43,7 +43,6 @@
         "phpstan/phpstan-webmozart-assert": "^1.2",
         "phpunit/phpunit": "^9.5",
         "polishsymfonycommunity/symfony-mocker-container": "^1.0",
-        "rector/rector": "^1.2",
         "sylius-labs/coding-standard": "~4.0.0",
         "symfony/browser-kit": "^5.4.21 || ^6.4",
         "symfony/debug-bundle": "^5.4.21 || ^6.4",
@@ -65,12 +64,6 @@
         }
     },
     "scripts": {
-        "analyse": [
-            "vendor/bin/phpstan analyse -c phpstan.neon -l max"
-        ],
-        "fix": [
-            "vendor/bin/ecs check --fix src/ spec/"
-        ],
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd"

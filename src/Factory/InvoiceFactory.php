@@ -25,7 +25,7 @@ use Webmozart\Assert\Assert;
 final class InvoiceFactory implements InvoiceFactoryInterface
 {
     /**
-     * @psalm-param class-string $className
+     * @param class-string $className
      */
     public function __construct(
         private readonly string $className,

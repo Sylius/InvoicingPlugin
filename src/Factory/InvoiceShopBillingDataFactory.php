@@ -21,7 +21,7 @@ use Webmozart\Assert\Assert;
 final class InvoiceShopBillingDataFactory implements InvoiceShopBillingDataFactoryInterface
 {
     /**
-     * @psalm-param class-string $className
+     * @param class-string $className
      */
     public function __construct(
         private readonly string $className
