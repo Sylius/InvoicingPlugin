@@ -40,7 +40,7 @@ final class PdfOptionsGenerator implements PdfOptionsGeneratorInterface
 
         $options['allow'] = array_merge(
             $options['allow'],
-            array_map(fn ($file) => $this->fileLocator->locate($file), $this->allowedFiles)
+            array_map(fn ($file) => $this->fileLocator->locate($file), $this->allowedFiles),
         );
 
         return $options;

@@ -29,7 +29,7 @@ final class TwigToPdfGenerator implements TwigToPdfGeneratorInterface
     {
         return $this->pdfGenerator->getOutputFromHtml(
             $this->twig->render($templateName, $templateParams),
-            $this->pdfOptionsGenerator->generate()
+            $this->pdfOptionsGenerator->generate(),
         );
     }
 }

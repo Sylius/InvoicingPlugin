@@ -39,7 +39,7 @@ final class TaxItemsConverterSpec extends ObjectBehavior
         TaxItemInterface $taxItem,
         TaxRatePercentageProviderInterface $taxRatePercentageProvider,
         OrderInterface $order,
-        AdjustmentInterface $taxAdjustment
+        AdjustmentInterface $taxAdjustment,
     ): void {
         $taxItemFactory->createWithData('10%', 500)->willReturn($taxItem);
 

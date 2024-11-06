@@ -25,7 +25,7 @@ final class LineItemFactory implements LineItemFactoryInterface
         if (!is_a($className, LineItem::class, true)) {
             throw new \DomainException(sprintf(
                 'This factory requires %s or its descend to be used as line item resource',
-                LineItem::class
+                LineItem::class,
             ));
         }
     }
@@ -45,7 +45,7 @@ final class LineItemFactory implements LineItemFactoryInterface
         int $total,
         ?string $variantName = null,
         ?string $variantCode = null,
-        ?string $taxRate = null
+        ?string $taxRate = null,
     ): LineItemInterface {
         /** @var LineItemInterface $lineItem */
         $lineItem = new $this->className(
@@ -58,7 +58,7 @@ final class LineItemFactory implements LineItemFactoryInterface
             $total,
             $variantName,
             $variantCode,
-            $taxRate
+            $taxRate,
         );
 
         Assert::isInstanceOf($lineItem, LineItemInterface::class);

@@ -61,12 +61,12 @@ final class InvoiceGenerator implements InvoiceGeneratorInterface
             $order->getTotal(),
             new ArrayCollection(array_merge(
                 $this->orderItemUnitsToLineItemsConverter->convert($order),
-                $this->shippingAdjustmentsToLineItemsConverter->convert($order)
+                $this->shippingAdjustmentsToLineItemsConverter->convert($order),
             )),
             $this->taxItemsConverter->convert($order),
             $channel,
             $paymentState,
-            $this->invoiceShopBillingFactory->createFromChannel($channel)
+            $this->invoiceShopBillingFactory->createFromChannel($channel),
         );
     }
 }

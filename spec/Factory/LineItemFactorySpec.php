@@ -56,7 +56,7 @@ class LineItemFactorySpec extends ObjectBehavior
                 11000,
                 null,
                 'MJOLNIR',
-                '10%'
+                '10%',
             ))
         ;
 
@@ -72,7 +72,7 @@ class LineItemFactorySpec extends ObjectBehavior
                 1200,
                 null,
                 null,
-                '20%'
+                '20%',
             ))
         ;
     }

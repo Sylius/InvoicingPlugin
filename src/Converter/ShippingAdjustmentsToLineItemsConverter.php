@@ -45,7 +45,7 @@ final class ShippingAdjustmentsToLineItemsConverter implements LineItemsConverte
 
     private function convertShippingAdjustmentToLineItem(
         AdjustmentInterface $shippingAdjustment,
-        OrderInterface $order
+        OrderInterface $order,
     ): LineItemInterface {
         /** @var ShipmentInterface|null $shipment */
         $shipment = $shippingAdjustment->getShipment();
@@ -68,7 +68,7 @@ final class ShippingAdjustmentsToLineItemsConverter implements LineItemsConverte
             $grossValue,
             null,
             null,
-            $this->taxRatePercentageProvider->provideFromAdjustable($shipment)
+            $this->taxRatePercentageProvider->provideFromAdjustable($shipment),
         );
     }
 

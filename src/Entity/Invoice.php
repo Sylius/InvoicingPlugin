@@ -35,7 +35,7 @@ class Invoice implements InvoiceInterface
         protected Collection $taxItems,
         protected ChannelInterface $channel,
         protected string $paymentState,
-        protected InvoiceShopBillingDataInterface $shopBillingData
+        protected InvoiceShopBillingDataInterface $shopBillingData,
     ) {
         $this->issuedAt = clone $issuedAt;
 

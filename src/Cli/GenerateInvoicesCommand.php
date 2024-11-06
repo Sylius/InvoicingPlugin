@@ -25,7 +25,7 @@ final class GenerateInvoicesCommand extends Command
 
     public function __construct(
         private readonly MassInvoicesCreatorInterface $massInvoicesCreator,
-        private readonly OrderRepositoryInterface $orderRepository
+        private readonly OrderRepositoryInterface $orderRepository,
     ) {
         parent::__construct();
     }

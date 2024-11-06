@@ -31,7 +31,7 @@ final class InvoiceCreator implements InvoiceCreatorInterface
         private readonly InvoiceGeneratorInterface $invoiceGenerator,
         private readonly InvoicePdfFileGeneratorInterface $invoicePdfFileGenerator,
         private readonly InvoiceFileManagerInterface $invoiceFileManager,
-        private readonly bool $hasEnabledPdfFileGenerator = true
+        private readonly bool $hasEnabledPdfFileGenerator = true,
     ) {
     }
 

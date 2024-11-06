@@ -57,14 +57,14 @@ final class ResendInvoiceAction
             $this->getFlashBag()->add('failure', $exception->getMessage());
 
             return new RedirectResponse(
-                $this->urlGenerator->generate('sylius_admin_order_show', ['id' => $order->getId()])
+                $this->urlGenerator->generate('sylius_admin_order_show', ['id' => $order->getId()]),
             );
         }
 
         $this->getFlashBag()->add('success', 'sylius_invoicing_plugin.invoice_resent_successfully');
 
         return new RedirectResponse(
-            $this->urlGenerator->generate('sylius_admin_order_show', ['id' => $order->getId()])
+            $this->urlGenerator->generate('sylius_admin_order_show', ['id' => $order->getId()]),
         );
     }
 

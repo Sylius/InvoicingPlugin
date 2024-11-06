@@ -172,6 +172,10 @@ jobs:
 #               run: composer validate --ansi --strict --no-check-publish
 
             -
+                name: Run ECS
+                run: vendor/bin/ecs check src/ spec/
+
+            -
                 name: Run security check
                 run: symfony security:check
 

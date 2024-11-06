@@ -22,7 +22,7 @@ final class InvoicesPurgerListener extends AbstractListener implements BeforeSui
 {
     public function __construct(
         private readonly Filesystem $filesystem,
-        private readonly string $invoicesPath
+        private readonly string $invoicesPath,
     ) {
     }
 

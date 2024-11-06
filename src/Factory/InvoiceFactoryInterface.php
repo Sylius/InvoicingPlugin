@@ -35,6 +35,6 @@ interface InvoiceFactoryInterface
         Collection $taxItems,
         ChannelInterface $channel,
         string $paymentState,
-        InvoiceShopBillingDataInterface $shopBillingData = null
+        ?InvoiceShopBillingDataInterface $shopBillingData = null,
     ): InvoiceInterface;
 }

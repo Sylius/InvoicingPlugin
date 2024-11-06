@@ -24,12 +24,12 @@ final class TwigToPdfGeneratorSpec extends ObjectBehavior
     function let(
         Environment $twig,
         GeneratorInterface $pdfGenerator,
-        PdfOptionsGeneratorInterface $pdfOptionsGenerator
+        PdfOptionsGeneratorInterface $pdfOptionsGenerator,
     ): void {
         $this->beConstructedWith(
             $twig,
             $pdfGenerator,
-            $pdfOptionsGenerator
+            $pdfOptionsGenerator,
         );
     }
 
@@ -41,7 +41,7 @@ final class TwigToPdfGeneratorSpec extends ObjectBehavior
     function it_generates_pdf_from_twig_template(
         Environment $twig,
         GeneratorInterface $pdfGenerator,
-        PdfOptionsGeneratorInterface $pdfOptionsGenerator
+        PdfOptionsGeneratorInterface $pdfOptionsGenerator,
     ): void {
         $twig
             ->render('template.html.twig', ['figcaption' => 'Swans', 'imgPath' => 'located-path/swans.png'])
@@ -56,7 +56,7 @@ final class TwigToPdfGeneratorSpec extends ObjectBehavior
         $pdfGenerator
             ->getOutputFromHtml(
                 '<html>I am a pdf file generated from twig template</html>',
-                ['allow' => ['allowed_file_in_knp_snappy_config.png', 'located-path/swans.png']]
+                ['allow' => ['allowed_file_in_knp_snappy_config.png', 'located-path/swans.png']],
             )
             ->willReturn('PDF FILE')
         ;

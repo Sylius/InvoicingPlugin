@@ -36,7 +36,7 @@ final class ShopBillingDataExampleFactory extends AbstractExampleFactory impleme
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function create(array $options = []): ChannelInterface
     {
@@ -63,7 +63,7 @@ final class ShopBillingDataExampleFactory extends AbstractExampleFactory impleme
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected function configureOptions(OptionsResolver $resolver): void
     {

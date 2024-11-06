@@ -31,7 +31,7 @@ class InvoiceFactorySpec extends ObjectBehavior
     {
         $this->beConstructedWith(
             Invoice::class,
-            $invoiceShopBillingDataFactory
+            $invoiceShopBillingDataFactory,
         );
     }
 
@@ -44,7 +44,7 @@ class InvoiceFactorySpec extends ObjectBehavior
         BillingDataInterface $billingData,
         ChannelInterface $channel,
         InvoiceShopBillingDataInterface $invoiceShopBillingData,
-        OrderInterface $order
+        OrderInterface $order,
     ): void {
         $date = new \DateTimeImmutable('2019-03-06');
 
@@ -61,7 +61,7 @@ class InvoiceFactorySpec extends ObjectBehavior
             new ArrayCollection(),
             $channel,
             InvoiceInterface::PAYMENT_STATE_COMPLETED,
-            $invoiceShopBillingData
+            $invoiceShopBillingData,
         )->shouldReturnAnInstanceOf(InvoiceInterface::class);
     }
 
@@ -69,7 +69,7 @@ class InvoiceFactorySpec extends ObjectBehavior
         FactoryInterface $invoiceShopBillingDataFactory,
         OrderInterface $order,
         BillingDataInterface $billingData,
-        ChannelInterface $channel
+        ChannelInterface $channel,
     ): void {
         $date = new \DateTimeImmutable('2019-03-06');
 
@@ -88,7 +88,7 @@ class InvoiceFactorySpec extends ObjectBehavior
             new ArrayCollection(),
             $channel,
             InvoiceInterface::PAYMENT_STATE_COMPLETED,
-            null
+            null,
         )->shouldReturnAnInstanceOf(InvoiceInterface::class);
     }
 }

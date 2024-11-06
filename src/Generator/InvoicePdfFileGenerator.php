@@ -24,7 +24,7 @@ final class InvoicePdfFileGenerator implements InvoicePdfFileGeneratorInterface
         private readonly FileLocatorInterface $fileLocator,
         private readonly InvoiceFileNameGeneratorInterface $invoiceFileNameGenerator,
         private readonly string $template,
-        private readonly string $invoiceLogoPath
+        private readonly string $invoiceLogoPath,
     ) {
     }
 

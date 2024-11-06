@@ -64,7 +64,7 @@ class BillingDataFactorySpec extends ObjectBehavior
             '000001',
             'sample_province_code',
             'sample_province_name',
-            'Shelby Company Limited'
+            'Shelby Company Limited',
         ));
     }
 }

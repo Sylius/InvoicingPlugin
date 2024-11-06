@@ -28,6 +28,6 @@ interface LineItemFactoryInterface extends FactoryInterface
         int $total,
         ?string $variantName = null,
         ?string $variantCode = null,
-        ?string $taxRate = null
+        ?string $taxRate = null,
     ): LineItemInterface;
 }

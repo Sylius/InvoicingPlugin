@@ -27,14 +27,14 @@ final class InvoicePdfFileGeneratorSpec extends ObjectBehavior
     function let(
         TwigToPdfGeneratorInterface $twigToPdfGenerator,
         FileLocatorInterface $fileLocator,
-        InvoiceFileNameGeneratorInterface $invoiceFileNameGenerator
+        InvoiceFileNameGeneratorInterface $invoiceFileNameGenerator,
     ): void {
         $this->beConstructedWith(
             $twigToPdfGenerator,
             $fileLocator,
             $invoiceFileNameGenerator,
             'invoiceTemplate.html.twig',
-            '@SyliusInvoicingPlugin/Resources/assets/sylius-logo.png'
+            '@SyliusInvoicingPlugin/Resources/assets/sylius-logo.png',
         );
     }
 
@@ -48,7 +48,7 @@ final class InvoicePdfFileGeneratorSpec extends ObjectBehavior
         FileLocatorInterface $fileLocator,
         InvoiceFileNameGeneratorInterface $invoiceFileNameGenerator,
         InvoiceInterface $invoice,
-        ChannelInterface $channel
+        ChannelInterface $channel,
     ): void {
         $invoiceFileNameGenerator->generateForPdf($invoice)->willReturn('2015_05_00004444.pdf');
         $invoice->channel()->willReturn($channel);

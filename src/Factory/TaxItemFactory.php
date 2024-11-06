@@ -25,7 +25,7 @@ final class TaxItemFactory implements TaxItemFactoryInterface
         if (!is_a($className, TaxItem::class, true)) {
             throw new \DomainException(sprintf(
                 'This factory requires %s or its descend to be used as tax item resource',
-                TaxItem::class
+                TaxItem::class,
             ));
         }
     }

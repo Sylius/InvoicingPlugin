@@ -58,7 +58,7 @@ final class OrderPlacedProducerSpec extends ObjectBehavior
         MessageBusInterface $eventBus,
         DateTimeProvider $dateTimeProvider,
         EntityManagerInterface $entityManager,
-        OrderInterface $order
+        OrderInterface $order,
     ): void {
         $dateTime = new \DateTime('2018-12-14');
         $dateTimeProvider->__invoke()->willReturn($dateTime);
@@ -83,7 +83,7 @@ final class OrderPlacedProducerSpec extends ObjectBehavior
 
     function it_does_nothing_after_persisting_if_event_entity_is_not_order(
         MessageBusInterface $eventBus,
-        LifecycleEventArgs $event
+        LifecycleEventArgs $event,
     ): void {
         $event->getObject()->willReturn('notAnOrder');
 
@@ -94,7 +94,7 @@ final class OrderPlacedProducerSpec extends ObjectBehavior
 
     function it_does_nothing_after_update_if_event_entity_is_not_order(
         MessageBusInterface $eventBus,
-        LifecycleEventArgs $event
+        LifecycleEventArgs $event,
     ): void {
         $event->getObject()->willReturn('notAnOrder');
 
@@ -106,7 +106,7 @@ final class OrderPlacedProducerSpec extends ObjectBehavior
     function it_does_nothing_after_persisting_if_order_is_not_completed(
         MessageBusInterface $eventBus,
         LifecycleEventArgs $event,
-        OrderInterface $order
+        OrderInterface $order,
     ): void {
         $event->getObject()->willReturn($order);
 
@@ -121,7 +121,7 @@ final class OrderPlacedProducerSpec extends ObjectBehavior
         MessageBusInterface $eventBus,
         LifecycleEventArgs $event,
         EntityManagerInterface $entityManager,
-        OrderInterface $order
+        OrderInterface $order,
     ): void {
         $event->getObject()->willReturn($order);
 
@@ -142,7 +142,7 @@ final class OrderPlacedProducerSpec extends ObjectBehavior
         MessageBusInterface $eventBus,
         LifecycleEventArgs $event,
         EntityManagerInterface $entityManager,
-        OrderInterface $order
+        OrderInterface $order,
     ): void {
         $event->getObject()->willReturn($order);
 

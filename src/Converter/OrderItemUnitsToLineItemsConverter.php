@@ -69,7 +69,7 @@ final class OrderItemUnitsToLineItemsConverter implements LineItemsConverterInte
             $grossValue,
             $item->getVariantName(),
             $variant !== null ? $variant->getCode() : null,
-            $this->taxRatePercentageProvider->provideFromAdjustable($unit)
+            $this->taxRatePercentageProvider->provideFromAdjustable($unit),
         );
     }
 

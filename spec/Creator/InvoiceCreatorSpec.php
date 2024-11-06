@@ -34,14 +34,14 @@ final class InvoiceCreatorSpec extends ObjectBehavior
         OrderRepositoryInterface $orderRepository,
         InvoiceGeneratorInterface $invoiceGenerator,
         InvoicePdfFileGeneratorInterface $invoicePdfFileGenerator,
-        InvoiceFileManagerInterface $invoiceFileManager
+        InvoiceFileManagerInterface $invoiceFileManager,
     ): void {
         $this->beConstructedWith(
             $invoiceRepository,
             $orderRepository,
             $invoiceGenerator,
             $invoicePdfFileGenerator,
-            $invoiceFileManager
+            $invoiceFileManager,
         );
     }
 
@@ -57,7 +57,7 @@ final class InvoiceCreatorSpec extends ObjectBehavior
         InvoicePdfFileGeneratorInterface $invoicePdfFileGenerator,
         InvoiceFileManagerInterface $invoiceFileManager,
         OrderInterface $order,
-        InvoiceInterface $invoice
+        InvoiceInterface $invoice,
     ): void {
         $invoicePdf = new InvoicePdf('invoice.pdf', 'CONTENT');
 
@@ -83,7 +83,7 @@ final class InvoiceCreatorSpec extends ObjectBehavior
         InvoicePdfFileGeneratorInterface $invoicePdfFileGenerator,
         InvoiceFileManagerInterface $invoiceFileManager,
         OrderInterface $order,
-        InvoiceInterface $invoice
+        InvoiceInterface $invoice,
     ): void {
         $this->beConstructedWith(
             $invoiceRepository,
@@ -91,7 +91,7 @@ final class InvoiceCreatorSpec extends ObjectBehavior
             $invoiceGenerator,
             $invoicePdfFileGenerator,
             $invoiceFileManager,
-            false
+            false,
         );
 
         $orderRepository->findOneByNumber('0000001')->willReturn($order);
@@ -117,7 +117,7 @@ final class InvoiceCreatorSpec extends ObjectBehavior
         InvoicePdfFileGeneratorInterface $invoicePdfFileGenerator,
         InvoiceFileManagerInterface $invoiceFileManager,
         OrderInterface $order,
-        InvoiceInterface $invoice
+        InvoiceInterface $invoice,
     ): void {
         $invoicePdf = new InvoicePdf('invoice.pdf', 'CONTENT');
 
@@ -142,7 +142,7 @@ final class InvoiceCreatorSpec extends ObjectBehavior
         OrderRepositoryInterface $orderRepository,
         InvoiceGeneratorInterface $invoiceGenerator,
         OrderInterface $order,
-        InvoiceInterface $invoice
+        InvoiceInterface $invoice,
     ): void {
         $orderRepository->findOneByNumber('0000001')->willReturn($order);
         $invoiceRepository->findOneByOrder($order)->willReturn($invoice);

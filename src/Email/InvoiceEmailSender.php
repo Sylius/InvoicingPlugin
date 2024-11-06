@@ -23,13 +23,13 @@ final class InvoiceEmailSender implements InvoiceEmailSenderInterface
     public function __construct(
         private readonly SenderInterface $emailSender,
         private readonly InvoiceFileProviderInterface $invoiceFileProvider,
-        private readonly bool $hasEnabledPdfFileGenerator = true
+        private readonly bool $hasEnabledPdfFileGenerator = true,
     ) {
     }
 
     public function sendInvoiceEmail(
         InvoiceInterface $invoice,
-        string $customerEmail
+        string $customerEmail,
     ): void {
         if (!$this->hasEnabledPdfFileGenerator) {
             $this->emailSender->send(Emails::INVOICE_GENERATED, [$customerEmail], ['invoice' => $invoice]);

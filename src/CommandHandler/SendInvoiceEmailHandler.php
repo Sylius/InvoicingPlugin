@@ -25,7 +25,7 @@ final class SendInvoiceEmailHandler
     public function __construct(
         private readonly InvoiceRepositoryInterface $invoiceRepository,
         private readonly OrderRepositoryInterface $orderRepository,
-        private readonly InvoiceEmailSenderInterface $emailSender
+        private readonly InvoiceEmailSenderInterface $emailSender,
     ) {
     }
 

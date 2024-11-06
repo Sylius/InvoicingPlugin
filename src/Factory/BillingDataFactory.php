@@ -26,7 +26,7 @@ final class BillingDataFactory implements BillingDataFactoryInterface
         if (!is_a($className, BillingData::class, true)) {
             throw new \DomainException(sprintf(
                 'This factory requires %s or its descend to be used as billing data resource',
-                BillingData::class
+                BillingData::class,
             ));
         }
     }
@@ -48,7 +48,7 @@ final class BillingDataFactory implements BillingDataFactoryInterface
             $address->getPostcode(),
             $address->getProvinceCode(),
             $address->getProvinceName(),
-            $address->getCompany()
+            $address->getCompany(),
         );
 
         Assert::isInstanceOf($billingData, BillingDataInterface::class);

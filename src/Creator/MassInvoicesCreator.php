@@ -21,7 +21,7 @@ final class MassInvoicesCreator implements MassInvoicesCreatorInterface
 {
     public function __construct(
         private readonly InvoiceCreatorInterface $invoiceCreator,
-        private readonly DateTimeProvider $dateTimeProvider
+        private readonly DateTimeProvider $dateTimeProvider,
     ) {
     }
 

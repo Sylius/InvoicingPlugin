@@ -30,7 +30,7 @@ final class OrderItemUnitsToLineItemsConverterSpec extends ObjectBehavior
     function let(
         TaxRatePercentageProviderInterface $taxRatePercentageProvider,
         LineItemFactoryInterface $lineItemFactory,
-        UnitNetPriceProviderInterface $unitNetPriceProvider
+        UnitNetPriceProviderInterface $unitNetPriceProvider,
     ): void {
         $this->beConstructedWith($taxRatePercentageProvider, $lineItemFactory, $unitNetPriceProvider);
     }
@@ -48,7 +48,7 @@ final class OrderItemUnitsToLineItemsConverterSpec extends ObjectBehavior
         OrderInterface $order,
         OrderItemInterface $orderItem,
         OrderItemUnitInterface $orderItemUnit,
-        ProductVariantInterface $variant
+        ProductVariantInterface $variant,
     ): void {
         $lineItemFactory->createWithData('Mjolnir', 1, 6000, 5000, 5000, 500, 5500, null, 'CODE', '10%')->willReturn($lineItem);
 
@@ -83,7 +83,7 @@ final class OrderItemUnitsToLineItemsConverterSpec extends ObjectBehavior
         OrderItemUnitInterface $secondOrderItemUnit,
         OrderItemUnitInterface $thirdOrderItemUnit,
         ProductVariantInterface $firstVariant,
-        ProductVariantInterface $secondVariant
+        ProductVariantInterface $secondVariant,
     ): void {
         $lineItemFactory->createWithData('Mjolnir', 1, 5000, 5000, 5000, 500, 5500, null, 'MJOLNIR', '10%')->willReturn($mjolnirLineItem);
         $lineItemFactory->createWithData('Stormbreaker', 1, 8000, 8000, 8000, 1600, 9600, null, 'STORMBREAKER', '20%')->willReturn($stormbreakerLineItem);

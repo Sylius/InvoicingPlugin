@@ -25,7 +25,7 @@ final class InvoiceEmailSenderSpec extends ObjectBehavior
 {
     function let(
         SenderInterface $sender,
-        InvoiceFileProviderInterface $invoiceFileProvider
+        InvoiceFileProviderInterface $invoiceFileProvider,
     ): void {
         $this->beConstructedWith($sender, $invoiceFileProvider);
     }
@@ -38,7 +38,7 @@ final class InvoiceEmailSenderSpec extends ObjectBehavior
     function it_sends_an_invoice_to_a_given_email_address(
         InvoiceInterface $invoice,
         SenderInterface $sender,
-        InvoiceFileProviderInterface $invoiceFileProvider
+        InvoiceFileProviderInterface $invoiceFileProvider,
     ): void {
         $invoicePdf = new InvoicePdf('invoice.pdf', 'CONTENT');
         $invoicePdf->setFullPath('/path/to/invoices/invoice.pdf');
@@ -49,7 +49,7 @@ final class InvoiceEmailSenderSpec extends ObjectBehavior
             Emails::INVOICE_GENERATED,
             ['sylius@example.com'],
             ['invoice' => $invoice],
-            ['/path/to/invoices/invoice.pdf']
+            ['/path/to/invoices/invoice.pdf'],
         )->shouldBeCalled();
 
         $this->sendInvoiceEmail($invoice, 'sylius@example.com');
@@ -58,7 +58,7 @@ final class InvoiceEmailSenderSpec extends ObjectBehavior
     function it_sends_an_invoice_without_attachment_to_a_given_email_address(
         InvoiceInterface $invoice,
         SenderInterface $sender,
-        InvoiceFileProviderInterface $invoiceFileProvider
+        InvoiceFileProviderInterface $invoiceFileProvider,
     ): void {
         $this->beConstructedWith($sender, $invoiceFileProvider, false);
 

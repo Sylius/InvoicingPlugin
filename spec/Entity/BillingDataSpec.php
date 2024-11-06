@@ -30,7 +30,7 @@ final class BillingDataSpec extends ObjectBehavior
             '24154',
             'IE',
             'Utah',
-            'Company Ltd.'
+            'Company Ltd.',
         );
     }
 

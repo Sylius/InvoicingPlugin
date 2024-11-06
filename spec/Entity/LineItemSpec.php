@@ -33,7 +33,7 @@ final class LineItemSpec extends ObjectBehavior
             11000,
             'Blue',
             '7903c83a-4c5e-4bcf-81d8-9dc304c6a353',
-            '10%'
+            '10%',
         );
     }
 
@@ -98,7 +98,7 @@ final class LineItemSpec extends ObjectBehavior
     public function it_compares_with_another_line_item(
         LineItemInterface $theSameLineItem,
         LineItemInterface $differentLineItemName,
-        LineItemInterface $differentLineItemCode
+        LineItemInterface $differentLineItemCode,
     ): void {
         $theSameLineItem->name()->willReturn('Mjolnir');
         $theSameLineItem->unitPrice()->willReturn(5000);

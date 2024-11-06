@@ -29,7 +29,7 @@ final class OrderPaymentPaidProducerSpec extends ObjectBehavior
     function let(
         MessageBusInterface $eventBus,
         DateTimeProvider $dateTimeProvider,
-        InvoiceRepositoryInterface $invoiceRepository
+        InvoiceRepositoryInterface $invoiceRepository,
     ): void {
         $this->beConstructedWith($eventBus, $dateTimeProvider, $invoiceRepository);
     }
@@ -40,7 +40,7 @@ final class OrderPaymentPaidProducerSpec extends ObjectBehavior
         PaymentInterface $payment,
         OrderInterface $order,
         InvoiceRepositoryInterface $invoiceRepository,
-        InvoiceInterface $invoice
+        InvoiceInterface $invoice,
     ): void {
         $payment->getOrder()->willReturn($order);
         $order->getNumber()->willReturn('0000001');
@@ -60,7 +60,7 @@ final class OrderPaymentPaidProducerSpec extends ObjectBehavior
     function it_does_not_dispatch_event_when_payment_is_not_related_to_order(
         MessageBusInterface $eventBus,
         DateTimeProvider $dateTimeProvider,
-        PaymentInterface $payment
+        PaymentInterface $payment,
     ): void {
         $payment->getOrder()->willReturn(null);
 
@@ -76,7 +76,7 @@ final class OrderPaymentPaidProducerSpec extends ObjectBehavior
         DateTimeProvider $dateTimeProvider,
         PaymentInterface $payment,
         OrderInterface $order,
-        InvoiceRepositoryInterface $invoiceRepository
+        InvoiceRepositoryInterface $invoiceRepository,
     ): void {
         $payment->getOrder()->willReturn($order);
         $order->getNumber()->willReturn('0000001');

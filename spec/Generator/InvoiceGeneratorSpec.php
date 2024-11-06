@@ -43,7 +43,7 @@ final class InvoiceGeneratorSpec extends ObjectBehavior
         InvoiceShopBillingDataFactoryInterface $invoiceShopBillingDataFactory,
         LineItemsConverterInterface $orderItemUnitsToLineItemsConverter,
         LineItemsConverterInterface $shippingAdjustmentsToLineItemsConverter,
-        TaxItemsConverterInterface $taxItemsConverter
+        TaxItemsConverterInterface $taxItemsConverter,
     ): void {
         $this->beConstructedWith(
             $uuidInvoiceIdentifierGenerator,
@@ -53,7 +53,7 @@ final class InvoiceGeneratorSpec extends ObjectBehavior
             $invoiceShopBillingDataFactory,
             $orderItemUnitsToLineItemsConverter,
             $shippingAdjustmentsToLineItemsConverter,
-            $taxItemsConverter
+            $taxItemsConverter,
         );
     }
 
@@ -79,7 +79,7 @@ final class InvoiceGeneratorSpec extends ObjectBehavior
         InvoiceInterface $invoice,
         LineItemInterface $unitLineItem,
         LineItemInterface $shippingLineItem,
-        TaxItemInterface $taxItem
+        TaxItemInterface $taxItem,
     ): void {
         $date = new \DateTimeImmutable('2019-03-06');
 
@@ -113,7 +113,7 @@ final class InvoiceGeneratorSpec extends ObjectBehavior
             new ArrayCollection([$taxItem->getWrappedObject()]),
             $channel,
             InvoiceInterface::PAYMENT_STATE_COMPLETED,
-            $invoiceShopBillingData
+            $invoiceShopBillingData,
         )->willReturn($invoice);
 
         $this->generateForOrder($order, $date)->shouldBeLike($invoice);
