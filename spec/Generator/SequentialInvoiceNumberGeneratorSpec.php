@@ -28,7 +28,7 @@ final class SequentialInvoiceNumberGeneratorSpec extends ObjectBehavior
         RepositoryInterface $sequenceRepository,
         FactoryInterface $sequenceFactory,
         EntityManagerInterface $sequenceManager,
-        DateTimeProvider $dateTimeProvider
+        DateTimeProvider $dateTimeProvider,
     ): void {
         $this->beConstructedWith(
             $sequenceRepository,
@@ -36,7 +36,7 @@ final class SequentialInvoiceNumberGeneratorSpec extends ObjectBehavior
             $sequenceManager,
             $dateTimeProvider,
             1,
-            9
+            9,
         );
     }
 
@@ -49,7 +49,7 @@ final class SequentialInvoiceNumberGeneratorSpec extends ObjectBehavior
         RepositoryInterface $sequenceRepository,
         EntityManagerInterface $sequenceManager,
         DateTimeProvider $dateTimeProvider,
-        InvoiceSequenceInterface $sequence
+        InvoiceSequenceInterface $sequence,
     ): void {
         $dateTime = new \DateTime('now');
 
@@ -72,7 +72,7 @@ final class SequentialInvoiceNumberGeneratorSpec extends ObjectBehavior
         FactoryInterface $sequenceFactory,
         EntityManagerInterface $sequenceManager,
         DateTimeProvider $dateTimeProvider,
-        InvoiceSequenceInterface $sequence
+        InvoiceSequenceInterface $sequence,
     ): void {
         $dateTime = new \DateTime('now');
 

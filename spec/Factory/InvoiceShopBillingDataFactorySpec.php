@@ -42,7 +42,7 @@ class InvoiceShopBillingDataFactorySpec extends ObjectBehavior
 
     function it_creates_invoice_shop_billing_data_from_channel_with_shop_billing_data(
         ChannelInterface $channel,
-        ShopBillingDataInterface $shopBillingData
+        ShopBillingDataInterface $shopBillingData,
     ): void {
         $channel->getShopBillingData()->willReturn($shopBillingData);
 

@@ -21,15 +21,15 @@ use Webmozart\Assert\Assert;
 final class InvoiceEmailSender implements InvoiceEmailSenderInterface
 {
     public function __construct(
-        private SenderInterface $emailSender,
-        private InvoiceFileProviderInterface $invoiceFileProvider,
-        private bool $hasEnabledPdfFileGenerator = true
+        private readonly SenderInterface $emailSender,
+        private readonly InvoiceFileProviderInterface $invoiceFileProvider,
+        private readonly bool $hasEnabledPdfFileGenerator = true,
     ) {
     }
 
     public function sendInvoiceEmail(
         InvoiceInterface $invoice,
-        string $customerEmail
+        string $customerEmail,
     ): void {
         if (!$this->hasEnabledPdfFileGenerator) {
             $this->emailSender->send(Emails::INVOICE_GENERATED, [$customerEmail], ['invoice' => $invoice]);

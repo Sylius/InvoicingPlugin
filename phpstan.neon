@@ -1,7 +1,5 @@
 parameters:
     level: max
-    checkMissingIterableValueType: false
-    checkGenericClassInNonGenericObjectType: false
     reportUnmatchedIgnoredErrors: false
 
     paths:
@@ -16,6 +14,8 @@ parameters:
         - 'tests/Application/src/**.php'
 
     ignoreErrors:
+        - identifier: missingType.generics
+        - identifier: missingType.iterableValue
         - '/Method Sylius\\InvoicingPlugin\\Entity\\\w+::id\(\) has no return type specified\./'
         - '/Method Sylius\\InvoicingPlugin\\Entity\\\w+::getId\(\) has no return type specified\./'
         - '/Method Sylius\\InvoicingPlugin\\[a-zA-Z\\]+::getFlashBag\(\) should return Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface but returns Symfony\\Component\\HttpFoundation\\Session\\SessionBagInterface\./'

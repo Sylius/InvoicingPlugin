@@ -19,11 +19,8 @@ use Symfony\Component\Messenger\MessageBusInterface;
 
 final class OrderPaymentPaidListener
 {
-    private MessageBusInterface $commandBus;
-
-    public function __construct(MessageBusInterface $commandBus)
+    public function __construct(private readonly MessageBusInterface $commandBus)
     {
-        $this->commandBus = $commandBus;
     }
 
     public function __invoke(OrderPaymentPaid $event): void

@@ -20,11 +20,11 @@ use Symfony\Component\Config\FileLocatorInterface;
 final class InvoicePdfFileGenerator implements InvoicePdfFileGeneratorInterface
 {
     public function __construct(
-        private TwigToPdfGeneratorInterface $twigToPdfGenerator,
-        private FileLocatorInterface $fileLocator,
-        private InvoiceFileNameGeneratorInterface $invoiceFileNameGenerator,
-        private string $template,
-        private string $invoiceLogoPath
+        private readonly TwigToPdfGeneratorInterface $twigToPdfGenerator,
+        private readonly FileLocatorInterface $fileLocator,
+        private readonly InvoiceFileNameGeneratorInterface $invoiceFileNameGenerator,
+        private readonly string $template,
+        private readonly string $invoiceLogoPath,
     ) {
     }
 

@@ -30,14 +30,14 @@ final class InvoiceFileProviderSpec extends ObjectBehavior
         InvoiceFileNameGeneratorInterface $invoiceFileNameGenerator,
         FilesystemInterface $filesystem,
         InvoicePdfFileGeneratorInterface $invoicePdfFileGenerator,
-        InvoiceFileManagerInterface $invoiceFileManager
+        InvoiceFileManagerInterface $invoiceFileManager,
     ): void {
         $this->beConstructedWith(
             $invoiceFileNameGenerator,
             $filesystem,
             $invoicePdfFileGenerator,
             $invoiceFileManager,
-            '/path/to/invoices'
+            '/path/to/invoices',
         );
     }
 
@@ -50,7 +50,7 @@ final class InvoiceFileProviderSpec extends ObjectBehavior
         InvoiceFileNameGeneratorInterface $invoiceFileNameGenerator,
         FilesystemInterface $filesystem,
         InvoiceInterface $invoice,
-        File $invoiceFile
+        File $invoiceFile,
     ): void {
         $invoiceFileNameGenerator->generateForPdf($invoice)->willReturn('invoice.pdf');
         $filesystem->get('invoice.pdf')->willReturn($invoiceFile);
@@ -69,7 +69,7 @@ final class InvoiceFileProviderSpec extends ObjectBehavior
         InvoicePdfFileGeneratorInterface $invoicePdfFileGenerator,
         InvoiceFileManagerInterface $invoiceFileManager,
         InvoiceInterface $invoice,
-        File $invoiceFile
+        File $invoiceFile,
     ): void {
         $invoiceFileNameGenerator->generateForPdf($invoice)->willReturn('invoice.pdf');
 

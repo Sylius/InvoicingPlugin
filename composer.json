@@ -7,11 +7,11 @@
     "require": {
         "php": "^8.1",
         "knplabs/knp-snappy-bundle": "^1.8",
-        "ramsey/uuid": "^3.9 || ^4.0",
+        "ramsey/uuid": "^4.0",
         "sylius/grid-bundle": "^1.9",
         "sylius/resource-bundle": "^1.9",
-        "sylius/sylius": "~1.12.0 || ~1.13.0",
-        "symfony/config": "^5.4 || ^6.4",
+        "sylius/sylius": "~1.13.0 || ~1.14.x-dev",
+        "symfony/config": "^5.4.21 || ^6.4",
         "symfony/dependency-injection": "^5.4.21 || ^6.4",
         "symfony/form": "^5.4.21 || ^6.4",
         "symfony/framework-bundle": "^5.4.21  || ^6.4",
@@ -43,13 +43,13 @@
         "phpstan/phpstan-webmozart-assert": "^1.2",
         "phpunit/phpunit": "^9.5",
         "polishsymfonycommunity/symfony-mocker-container": "^1.0",
-        "sylius-labs/coding-standard": "~4.0.0",
+        "sylius-labs/coding-standard": "^4.4",
         "symfony/browser-kit": "^5.4.21 || ^6.4",
         "symfony/debug-bundle": "^5.4.21 || ^6.4",
         "symfony/dotenv": "^5.4.21 || ^6.4",
-        "symfony/intl": "^5.4 || ^6.0",
-        "symfony/webpack-encore-bundle": "^1.15",
-        "symfony/web-profiler-bundle": "^5.4.21 || ^6.4"
+        "symfony/intl": "^5.4.21 || ^6.0",
+        "symfony/web-profiler-bundle": "^5.4.21 || ^6.4",
+        "symfony/webpack-encore-bundle": "^1.15"
     },
     "autoload": {
         "psr-4": {
@@ -64,14 +64,10 @@
         }
     },
     "scripts": {
-        "analyse": [
-            "@composer validate --strict",
-            "vendor/bin/phpstan analyse -c phpstan.neon -l max",
-            "vendor/bin/ecs check src/ spec/"
-        ],
-        "fix": [
-            "vendor/bin/ecs check --fix src/ spec/"
-        ]
+        "auto-scripts": {
+            "cache:clear": "symfony-cmd",
+            "assets:install %PUBLIC_DIR%": "symfony-cmd"
+        }
     },
     "conflict": {
         "behat/mink-selenium2-driver": ">=1.7.0"
@@ -79,9 +75,10 @@
     "config": {
         "sort-packages": true,
         "allow-plugins": {
-            "symfony/flex": true,
             "dealerdirect/phpcodesniffer-composer-installer": false,
+            "php-http/discovery": true,
             "phpstan/extension-installer": true,
+            "symfony/flex": true,
             "symfony/thanks": false
         }
     },

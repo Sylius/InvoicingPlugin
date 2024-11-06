@@ -34,7 +34,7 @@ class LineItem implements LineItemInterface, ResourceInterface
         protected int $total,
         protected ?string $variantName = null,
         protected ?string $variantCode = null,
-        protected ?string $taxRate = null
+        protected ?string $taxRate = null,
     ) {
     }
 

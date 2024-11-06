@@ -18,9 +18,9 @@ use Symfony\Component\Config\FileLocatorInterface;
 final class PdfOptionsGenerator implements PdfOptionsGeneratorInterface
 {
     public function __construct(
-        private FileLocatorInterface $fileLocator,
-        private array $knpSnappyOptions,
-        private array $allowedFiles
+        private readonly FileLocatorInterface $fileLocator,
+        private readonly array $knpSnappyOptions,
+        private readonly array $allowedFiles,
     ) {
     }
 
@@ -40,7 +40,7 @@ final class PdfOptionsGenerator implements PdfOptionsGeneratorInterface
 
         $options['allow'] = array_merge(
             $options['allow'],
-            array_map(fn ($file) => $this->fileLocator->locate($file), $this->allowedFiles)
+            array_map(fn ($file) => $this->fileLocator->locate($file), $this->allowedFiles),
         );
 
         return $options;

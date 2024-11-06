@@ -15,13 +15,12 @@ namespace Sylius\InvoicingPlugin\Event;
 
 final class OrderPaymentPaid
 {
-    private string $orderNumber;
+    private readonly \DateTimeInterface $date;
 
-    private \DateTimeInterface $date;
-
-    public function __construct(string $orderNumber, \DateTimeInterface $date)
-    {
-        $this->orderNumber = $orderNumber;
+    public function __construct(
+        private readonly string $orderNumber,
+        \DateTimeInterface $date,
+    ) {
         $this->date = clone $date;
     }
 

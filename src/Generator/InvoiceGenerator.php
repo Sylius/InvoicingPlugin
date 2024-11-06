@@ -27,40 +27,16 @@ use Sylius\InvoicingPlugin\Factory\InvoiceShopBillingDataFactoryInterface;
 
 final class InvoiceGenerator implements InvoiceGeneratorInterface
 {
-    private InvoiceIdentifierGenerator $uuidInvoiceIdentifierGenerator;
-
-    private InvoiceNumberGenerator $sequentialInvoiceNumberGenerator;
-
-    private InvoiceFactoryInterface $invoiceFactory;
-
-    private BillingDataFactoryInterface $billingDataFactory;
-
-    private InvoiceShopBillingDataFactoryInterface $invoiceShopBillingFactory;
-
-    private LineItemsConverterInterface $orderItemUnitsToLineItemsConverter;
-
-    private LineItemsConverterInterface $shippingAdjustmentsToLineItemsConverter;
-
-    private TaxItemsConverterInterface $taxItemsConverter;
-
     public function __construct(
-        InvoiceIdentifierGenerator $uuidInvoiceIdentifierGenerator,
-        InvoiceNumberGenerator $sequentialInvoiceNumberGenerator,
-        InvoiceFactoryInterface $invoiceFactory,
-        BillingDataFactoryInterface $billingDataFactory,
-        InvoiceShopBillingDataFactoryInterface $invoiceShopBillingFactory,
-        LineItemsConverterInterface $orderItemUnitsToLineItemsConverter,
-        LineItemsConverterInterface $shippingAdjustmentsToLineItemsConverter,
-        TaxItemsConverterInterface $taxItemsConverter
+        private readonly InvoiceIdentifierGenerator $uuidInvoiceIdentifierGenerator,
+        private readonly InvoiceNumberGenerator $sequentialInvoiceNumberGenerator,
+        private readonly InvoiceFactoryInterface $invoiceFactory,
+        private readonly BillingDataFactoryInterface $billingDataFactory,
+        private readonly InvoiceShopBillingDataFactoryInterface $invoiceShopBillingFactory,
+        private readonly LineItemsConverterInterface $orderItemUnitsToLineItemsConverter,
+        private readonly LineItemsConverterInterface $shippingAdjustmentsToLineItemsConverter,
+        private readonly TaxItemsConverterInterface $taxItemsConverter,
     ) {
-        $this->uuidInvoiceIdentifierGenerator = $uuidInvoiceIdentifierGenerator;
-        $this->sequentialInvoiceNumberGenerator = $sequentialInvoiceNumberGenerator;
-        $this->invoiceFactory = $invoiceFactory;
-        $this->billingDataFactory = $billingDataFactory;
-        $this->invoiceShopBillingFactory = $invoiceShopBillingFactory;
-        $this->orderItemUnitsToLineItemsConverter = $orderItemUnitsToLineItemsConverter;
-        $this->shippingAdjustmentsToLineItemsConverter = $shippingAdjustmentsToLineItemsConverter;
-        $this->taxItemsConverter = $taxItemsConverter;
     }
 
     public function generateForOrder(OrderInterface $order, \DateTimeInterface $date): InvoiceInterface
@@ -85,12 +61,12 @@ final class InvoiceGenerator implements InvoiceGeneratorInterface
             $order->getTotal(),
             new ArrayCollection(array_merge(
                 $this->orderItemUnitsToLineItemsConverter->convert($order),
-                $this->shippingAdjustmentsToLineItemsConverter->convert($order)
+                $this->shippingAdjustmentsToLineItemsConverter->convert($order),
             )),
             $this->taxItemsConverter->convert($order),
             $channel,
             $paymentState,
-            $this->invoiceShopBillingFactory->createFromChannel($channel)
+            $this->invoiceShopBillingFactory->createFromChannel($channel),
         );
     }
 }

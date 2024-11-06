@@ -23,22 +23,18 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Webmozart\Assert\Assert;
 
 final class ResendInvoiceAction
 {
     public function __construct(
-        private InvoiceRepositoryInterface $invoiceRepository,
-        private InvoiceEmailSenderInterface $invoiceEmailSender,
-        private OrderRepositoryInterface $orderRepository,
-        private UrlGeneratorInterface $urlGenerator,
-        private SessionInterface | RequestStack $requestStackOrSession,
+        private readonly InvoiceRepositoryInterface $invoiceRepository,
+        private readonly InvoiceEmailSenderInterface $invoiceEmailSender,
+        private readonly OrderRepositoryInterface $orderRepository,
+        private readonly UrlGeneratorInterface $urlGenerator,
+        private readonly RequestStack $requestStack,
     ) {
-        if ($this->requestStackOrSession instanceof SessionInterface) {
-            trigger_deprecation('sylius/invoicing-plugin', '0.24', sprintf('Passing an instance of %s as constructor argument for %s is deprecated as of Sylius Invoicing Plugin 0.24 and will be removed in 1.0. Pass an instance of %s instead.', SessionInterface::class, self::class, RequestStack::class));
-        }
     }
 
     public function __invoke(string $id): Response
@@ -61,23 +57,22 @@ final class ResendInvoiceAction
             $this->getFlashBag()->add('failure', $exception->getMessage());
 
             return new RedirectResponse(
-                $this->urlGenerator->generate('sylius_admin_order_show', ['id' => $order->getId()])
+                $this->urlGenerator->generate('sylius_admin_order_show', ['id' => $order->getId()]),
             );
         }
 
         $this->getFlashBag()->add('success', 'sylius_invoicing_plugin.invoice_resent_successfully');
 
         return new RedirectResponse(
-            $this->urlGenerator->generate('sylius_admin_order_show', ['id' => $order->getId()])
+            $this->urlGenerator->generate('sylius_admin_order_show', ['id' => $order->getId()]),
         );
     }
 
     private function getFlashBag(): FlashBagInterface
     {
-        if ($this->requestStackOrSession instanceof RequestStack) {
-            return $this->requestStackOrSession->getSession()->getBag('flashes');
-        }
+        /** @var FlashBagInterface $flashBag */
+        $flashBag = $this->requestStack->getSession()->getBag('flashes');
 
-        return $this->requestStackOrSession->getBag('flashes');
+        return $flashBag;
     }
 }

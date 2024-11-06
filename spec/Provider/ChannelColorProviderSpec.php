@@ -32,7 +32,7 @@ final class ChannelColorProviderSpec extends ObjectBehavior
 
     function it_returns_channel_color(
         ChannelRepositoryInterface $channelRepository,
-        ChannelInterface $channel
+        ChannelInterface $channel,
     ): void {
         $channel->getColor()->willReturn('black');
         $channelRepository->findOneByCode('en_US')->willReturn($channel);
@@ -42,7 +42,7 @@ final class ChannelColorProviderSpec extends ObjectBehavior
 
     function it_returns_default_channel_color_if_channel_does_not_provide_one(
         ChannelRepositoryInterface $channelRepository,
-        ChannelInterface $channel
+        ChannelInterface $channel,
     ): void {
         $channel->getColor()->willReturn(null);
         $channelRepository->findOneByCode('en_US')->willReturn($channel);

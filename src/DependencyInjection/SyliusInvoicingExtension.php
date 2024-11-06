@@ -25,7 +25,7 @@ final class SyliusInvoicingExtension extends AbstractResourceExtension implement
 {
     use PrependDoctrineMigrationsTrait;
 
-    public function load(array $config, ContainerBuilder $container): void
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.xml');
@@ -33,7 +33,7 @@ final class SyliusInvoicingExtension extends AbstractResourceExtension implement
         /** @var ConfigurationInterface $configuration */
         $configuration = $this->getConfiguration([], $container);
 
-        $config = $this->processConfiguration($configuration, $config);
+        $config = $this->processConfiguration($configuration, $configs);
         $container->setParameter('sylius_invoicing.pdf_generator.allowed_files', $config['pdf_generator']['allowed_files']);
     }
 

@@ -47,7 +47,7 @@ final class TaxRatePercentageProvider implements TaxRatePercentageProviderInterf
         Assert::keyExists(
             $details,
             'taxRateAmount',
-            'There is no tax rate amount in details of this adjustment'
+            'There is no tax rate amount in details of this adjustment',
         );
 
         return $details['taxRateAmount'] * 100 . '%';

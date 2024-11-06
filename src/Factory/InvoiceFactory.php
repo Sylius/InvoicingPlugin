@@ -25,20 +25,12 @@ use Webmozart\Assert\Assert;
 final class InvoiceFactory implements InvoiceFactoryInterface
 {
     /**
-     * @var string
-     * @psalm-var class-string
+     * @param class-string $className
      */
-    private $className;
-
-    private FactoryInterface $invoiceShopBillingDataFactory;
-
-    /**
-     * @psalm-param class-string $className
-     */
-    public function __construct(string $className, FactoryInterface $invoiceShopBillingDataFactory)
-    {
-        $this->className = $className;
-        $this->invoiceShopBillingDataFactory = $invoiceShopBillingDataFactory;
+    public function __construct(
+        private readonly string $className,
+        private readonly FactoryInterface $invoiceShopBillingDataFactory,
+    ) {
     }
 
     public function createForData(
@@ -54,7 +46,7 @@ final class InvoiceFactory implements InvoiceFactoryInterface
         Collection $taxItems,
         ChannelInterface $channel,
         string $paymentState,
-        InvoiceShopBillingDataInterface $shopBillingData = null
+        ?InvoiceShopBillingDataInterface $shopBillingData = null,
     ): InvoiceInterface {
         /** @var InvoiceInterface $invoice */
         $invoice = new $this->className(
@@ -70,7 +62,7 @@ final class InvoiceFactory implements InvoiceFactoryInterface
             $taxItems,
             $channel,
             $paymentState,
-            $shopBillingData ?? $this->invoiceShopBillingDataFactory->createNew()
+            $shopBillingData ?? $this->invoiceShopBillingDataFactory->createNew(),
         );
 
         Assert::isInstanceOf($invoice, InvoiceInterface::class);

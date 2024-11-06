@@ -29,7 +29,7 @@ final class TaxRatePercentageProviderSpec extends ObjectBehavior
 
     public function it_provides_a_tax_rate_from_adjustable_entity(
         OrderItemUnitInterface $orderItemUnit,
-        AdjustmentInterface $taxAdjustment
+        AdjustmentInterface $taxAdjustment,
     ): void {
         $orderItemUnit
             ->getAdjustments(AdjustmentInterface::TAX_ADJUSTMENT)
@@ -53,7 +53,7 @@ final class TaxRatePercentageProviderSpec extends ObjectBehavior
 
     public function it_throws_an_exception_if_there_is_no_tax_rate_amount_in_details_of_adjustment(
         OrderItemUnitInterface $orderItemUnit,
-        AdjustmentInterface $taxAdjustment
+        AdjustmentInterface $taxAdjustment,
     ): void {
         $orderItemUnit
             ->getAdjustments(AdjustmentInterface::TAX_ADJUSTMENT)
@@ -68,7 +68,7 @@ final class TaxRatePercentageProviderSpec extends ObjectBehavior
     public function it_throws_an_exception_if_order_item_unit_has_more_adjustments_than_one(
         OrderItemUnitInterface $orderItemUnit,
         AdjustmentInterface $firstTaxAdjustment,
-        AdjustmentInterface $secondTaxAdjustment
+        AdjustmentInterface $secondTaxAdjustment,
     ): void {
         $orderItemUnit
             ->getAdjustments(AdjustmentInterface::TAX_ADJUSTMENT)
@@ -79,7 +79,7 @@ final class TaxRatePercentageProviderSpec extends ObjectBehavior
     }
 
     public function it_provides_a_tax_rate_from_adjustment(
-        AdjustmentInterface $taxAdjustment
+        AdjustmentInterface $taxAdjustment,
     ): void {
         $taxAdjustment->getDetails()->willReturn(['taxRateAmount' => 0.2]);
 

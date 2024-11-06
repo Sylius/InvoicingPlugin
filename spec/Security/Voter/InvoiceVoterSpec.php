@@ -54,7 +54,7 @@ class InvoiceVoterSpec extends ObjectBehavior
     function it_allows_accesings_an_invoice_if_user_is_logged_as_admin(
         TokenInterface $token,
         InvoiceInterface $invoice,
-        AdminUserInterface $adminUser
+        AdminUserInterface $adminUser,
     ): void {
         $token->getUser()->willReturn($adminUser);
 
@@ -66,7 +66,7 @@ class InvoiceVoterSpec extends ObjectBehavior
         TokenInterface $token,
         InvoiceInterface $invoice,
         ShopUserInterface $shopUser,
-        CustomerInterface $customer
+        CustomerInterface $customer,
     ): void {
         $invoice->orderNumber()->willReturn('1337');
 
@@ -85,7 +85,7 @@ class InvoiceVoterSpec extends ObjectBehavior
         InvoiceInterface $invoice,
         ShopUserInterface $shopUser,
         CustomerInterface $customer,
-        OrderInterface $order
+        OrderInterface $order,
     ): void {
         $invoice->orderNumber()->willReturn('1337');
 

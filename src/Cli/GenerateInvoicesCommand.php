@@ -23,17 +23,10 @@ final class GenerateInvoicesCommand extends Command
 {
     protected static $defaultName = 'sylius-invoicing:generate-invoices';
 
-    private MassInvoicesCreatorInterface $massInvoicesCreator;
-
-    private OrderRepositoryInterface $orderRepository;
-
     public function __construct(
-        MassInvoicesCreatorInterface $massInvoicesCreator,
-        OrderRepositoryInterface $orderRepository
+        private readonly MassInvoicesCreatorInterface $massInvoicesCreator,
+        private readonly OrderRepositoryInterface $orderRepository,
     ) {
-        $this->massInvoicesCreator = $massInvoicesCreator;
-        $this->orderRepository = $orderRepository;
-
         parent::__construct();
     }
 

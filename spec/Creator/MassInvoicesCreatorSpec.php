@@ -22,7 +22,7 @@ final class MassInvoicesCreatorSpec extends ObjectBehavior
 {
     function let(
         InvoiceCreatorInterface $invoiceCreator,
-        DateTimeProvider $dateTimeProvider
+        DateTimeProvider $dateTimeProvider,
     ): void {
         $this->beConstructedWith($invoiceCreator, $dateTimeProvider);
     }
@@ -32,7 +32,7 @@ final class MassInvoicesCreatorSpec extends ObjectBehavior
         DateTimeProvider $dateTimeProvider,
         OrderInterface $firstOrder,
         OrderInterface $secondOrder,
-        OrderInterface $thirdOrder
+        OrderInterface $thirdOrder,
     ): void {
         $firstOrder->getNumber()->willReturn('0000001');
         $secondOrder->getNumber()->willReturn('0000002');

@@ -19,9 +19,9 @@ use Twig\Environment;
 final class TwigToPdfGenerator implements TwigToPdfGeneratorInterface
 {
     public function __construct(
-        private Environment $twig,
-        private GeneratorInterface $pdfGenerator,
-        private PdfOptionsGeneratorInterface $pdfOptionsGenerator
+        private readonly Environment $twig,
+        private readonly GeneratorInterface $pdfGenerator,
+        private readonly PdfOptionsGeneratorInterface $pdfOptionsGenerator,
     ) {
     }
 
@@ -29,7 +29,7 @@ final class TwigToPdfGenerator implements TwigToPdfGeneratorInterface
     {
         return $this->pdfGenerator->getOutputFromHtml(
             $this->twig->render($templateName, $templateParams),
-            $this->pdfOptionsGenerator->generate()
+            $this->pdfOptionsGenerator->generate(),
         );
     }
 }

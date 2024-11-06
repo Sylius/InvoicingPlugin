@@ -15,11 +15,8 @@ namespace Sylius\InvoicingPlugin\Command;
 
 final class SendInvoiceEmail
 {
-    private string $orderNumber;
-
-    public function __construct(string $orderNumber)
+    public function __construct(private readonly string $orderNumber)
     {
-        $this->orderNumber = $orderNumber;
     }
 
     public function orderNumber(): string

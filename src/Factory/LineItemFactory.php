@@ -20,18 +20,14 @@ use Webmozart\Assert\Assert;
 
 final class LineItemFactory implements LineItemFactoryInterface
 {
-    private string $className;
-
-    public function __construct(string $className)
+    public function __construct(private readonly string $className)
     {
         if (!is_a($className, LineItem::class, true)) {
             throw new \DomainException(sprintf(
                 'This factory requires %s or its descend to be used as line item resource',
-                LineItem::class
+                LineItem::class,
             ));
         }
-
-        $this->className = $className;
     }
 
     public function createNew()
@@ -49,7 +45,7 @@ final class LineItemFactory implements LineItemFactoryInterface
         int $total,
         ?string $variantName = null,
         ?string $variantCode = null,
-        ?string $taxRate = null
+        ?string $taxRate = null,
     ): LineItemInterface {
         /** @var LineItemInterface $lineItem */
         $lineItem = new $this->className(
@@ -62,7 +58,7 @@ final class LineItemFactory implements LineItemFactoryInterface
             $total,
             $variantName,
             $variantCode,
-            $taxRate
+            $taxRate,
         );
 
         Assert::isInstanceOf($lineItem, LineItemInterface::class);

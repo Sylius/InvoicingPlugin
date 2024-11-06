@@ -20,18 +20,14 @@ use Webmozart\Assert\Assert;
 
 final class TaxItemFactory implements TaxItemFactoryInterface
 {
-    private string $className;
-
-    public function __construct(string $className)
+    public function __construct(private readonly string $className)
     {
         if (!is_a($className, TaxItem::class, true)) {
             throw new \DomainException(sprintf(
                 'This factory requires %s or its descend to be used as tax item resource',
-                TaxItem::class
+                TaxItem::class,
             ));
         }
-
-        $this->className = $className;
     }
 
     public function createNew()

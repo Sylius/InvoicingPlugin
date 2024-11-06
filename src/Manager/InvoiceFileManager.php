@@ -18,11 +18,8 @@ use Sylius\InvoicingPlugin\Model\InvoicePdf;
 
 final class InvoiceFileManager implements InvoiceFileManagerInterface
 {
-    private FilesystemInterface $filesystem;
-
-    public function __construct(FilesystemInterface $filesystem)
+    public function __construct(private readonly FilesystemInterface $filesystem)
     {
-        $this->filesystem = $filesystem;
     }
 
     public function save(InvoicePdf $file): void

@@ -20,44 +20,17 @@ class BillingData implements BillingDataInterface, ResourceInterface
 {
     protected int $id;
 
-    protected string $firstName;
-
-    protected string $lastName;
-
-    protected ?string $company;
-
-    protected string $countryCode;
-
-    protected ?string $provinceCode;
-
-    protected ?string $provinceName;
-
-    protected string $street;
-
-    protected string $city;
-
-    protected string $postcode;
-
     public function __construct(
-        string $firstName,
-        string $lastName,
-        string $countryCode,
-        string $street,
-        string $city,
-        string $postcode,
-        ?string $provinceCode = null,
-        ?string $provinceName = null,
-        ?string $company = null
+        protected string $firstName,
+        protected string $lastName,
+        protected string $countryCode,
+        protected string $street,
+        protected string $city,
+        protected string $postcode,
+        protected ?string $provinceCode = null,
+        protected ?string $provinceName = null,
+        protected ?string $company = null,
     ) {
-        $this->firstName = $firstName;
-        $this->lastName = $lastName;
-        $this->countryCode = $countryCode;
-        $this->street = $street;
-        $this->city = $city;
-        $this->postcode = $postcode;
-        $this->provinceCode = $provinceCode;
-        $this->provinceName = $provinceName;
-        $this->company = $company;
     }
 
     public function getId(): int

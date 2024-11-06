@@ -20,70 +20,32 @@ use Sylius\Component\Core\Model\OrderInterface;
 /** @final */
 class Invoice implements InvoiceInterface
 {
-    protected string $id;
-
-    protected string $number;
-
-    protected OrderInterface $order;
-
-    protected \DateTimeInterface $issuedAt;
-
-    protected BillingDataInterface $billingData;
-
-    protected string $currencyCode;
-
-    protected string $localeCode;
-
-    protected int $total;
-
-    /** @var Collection|LineItemInterface[] */
-    protected Collection $lineItems;
-
-    /** @var Collection|TaxItemInterface[] */
-    protected Collection $taxItems;
-
-    protected ChannelInterface $channel;
-
-    protected string $paymentState;
-
-    protected InvoiceShopBillingDataInterface $shopBillingData;
-
     public function __construct(
-        string $id,
-        string $number,
-        OrderInterface $order,
-        \DateTimeInterface $issuedAt,
-        BillingDataInterface $billingData,
-        string $currencyCode,
-        string $localeCode,
-        int $total,
-        Collection $lineItems,
-        Collection $taxItems,
-        ChannelInterface $channel,
-        string $paymentState,
-        InvoiceShopBillingDataInterface $shopBillingData
+        protected string $id,
+        protected string $number,
+        protected OrderInterface $order,
+        protected \DateTimeInterface $issuedAt,
+        protected BillingDataInterface $billingData,
+        protected string $currencyCode,
+        protected string $localeCode,
+        protected int $total,
+        /** @var Collection|LineItemInterface[] */
+        protected Collection $lineItems,
+        /** @var Collection|TaxItemInterface[] */
+        protected Collection $taxItems,
+        protected ChannelInterface $channel,
+        protected string $paymentState,
+        protected InvoiceShopBillingDataInterface $shopBillingData,
     ) {
-        $this->id = $id;
-        $this->number = $number;
-        $this->order = $order;
         $this->issuedAt = clone $issuedAt;
-        $this->billingData = $billingData;
-        $this->currencyCode = $currencyCode;
-        $this->localeCode = $localeCode;
-        $this->total = $total;
-        $this->lineItems = $lineItems;
-        $this->taxItems = $taxItems;
-        $this->channel = $channel;
-        $this->paymentState = $paymentState;
-        $this->shopBillingData = $shopBillingData;
 
         /** @var LineItemInterface $lineItem */
-        foreach ($lineItems as $lineItem) {
+        foreach ($this->lineItems as $lineItem) {
             $lineItem->setInvoice($this);
         }
 
         /** @var TaxItemInterface $taxItem */
-        foreach ($taxItems as $taxItem) {
+        foreach ($this->taxItems as $taxItem) {
             $taxItem->setInvoice($this);
         }
     }

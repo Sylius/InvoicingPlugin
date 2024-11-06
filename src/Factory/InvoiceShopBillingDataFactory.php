@@ -21,17 +21,11 @@ use Webmozart\Assert\Assert;
 final class InvoiceShopBillingDataFactory implements InvoiceShopBillingDataFactoryInterface
 {
     /**
-     * @var string
-     * @psalm-var class-string
+     * @param class-string $className
      */
-    private $className;
-
-    /**
-     * @psalm-param class-string $className
-     */
-    public function __construct(string $className)
-    {
-        $this->className = $className;
+    public function __construct(
+        private readonly string $className,
+    ) {
     }
 
     public function createNew(): InvoiceShopBillingDataInterface

@@ -20,8 +20,10 @@ use Symfony\Component\Filesystem\Filesystem;
 
 final class InvoicesPurgerListener extends AbstractListener implements BeforeSuiteListenerInterface
 {
-    public function __construct(private Filesystem $filesystem, private string $invoicesPath)
-    {
+    public function __construct(
+        private readonly Filesystem $filesystem,
+        private readonly string $invoicesPath,
+    ) {
     }
 
     public function beforeSuite(SuiteEvent $suiteEvent, array $options): void

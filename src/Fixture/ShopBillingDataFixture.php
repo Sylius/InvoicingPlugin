@@ -19,7 +19,7 @@ use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 final class ShopBillingDataFixture extends AbstractResourceFixture
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getName(): string
     {
@@ -27,7 +27,7 @@ final class ShopBillingDataFixture extends AbstractResourceFixture
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected function configureResourceNode(ArrayNodeDefinition $resourceNode): void
     {

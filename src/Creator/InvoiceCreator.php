@@ -26,12 +26,12 @@ use Sylius\InvoicingPlugin\Manager\InvoiceFileManagerInterface;
 final class InvoiceCreator implements InvoiceCreatorInterface
 {
     public function __construct(
-        private InvoiceRepositoryInterface $invoiceRepository,
-        private OrderRepositoryInterface $orderRepository,
-        private InvoiceGeneratorInterface $invoiceGenerator,
-        private InvoicePdfFileGeneratorInterface $invoicePdfFileGenerator,
-        private InvoiceFileManagerInterface $invoiceFileManager,
-        private bool $hasEnabledPdfFileGenerator = true
+        private readonly InvoiceRepositoryInterface $invoiceRepository,
+        private readonly OrderRepositoryInterface $orderRepository,
+        private readonly InvoiceGeneratorInterface $invoiceGenerator,
+        private readonly InvoicePdfFileGeneratorInterface $invoicePdfFileGenerator,
+        private readonly InvoiceFileManagerInterface $invoiceFileManager,
+        private readonly bool $hasEnabledPdfFileGenerator = true,
     ) {
     }
 

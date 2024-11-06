@@ -27,7 +27,7 @@ final class SendInvoiceEmailHandlerSpec extends ObjectBehavior
     function let(
         InvoiceRepositoryInterface $invoiceRepository,
         OrderRepositoryInterface $orderRepository,
-        InvoiceEmailSenderInterface $emailSender
+        InvoiceEmailSenderInterface $emailSender,
     ): void {
         $this->beConstructedWith($invoiceRepository, $orderRepository, $emailSender);
     }
@@ -38,7 +38,7 @@ final class SendInvoiceEmailHandlerSpec extends ObjectBehavior
         InvoiceEmailSenderInterface $emailSender,
         InvoiceInterface $invoice,
         OrderInterface $order,
-        CustomerInterface $customer
+        CustomerInterface $customer,
     ): void {
         $orderRepository->findOneByNumber('0000001')->willReturn($order);
 
@@ -58,7 +58,7 @@ final class SendInvoiceEmailHandlerSpec extends ObjectBehavior
         OrderRepositoryInterface $orderRepository,
         InvoiceEmailSenderInterface $emailSender,
         OrderInterface $order,
-        CustomerInterface $customer
+        CustomerInterface $customer,
     ): void {
         $orderRepository->findOneByNumber('0000001')->willReturn($order);
         $invoiceRepository->findOneByOrder($order)->willReturn(null);

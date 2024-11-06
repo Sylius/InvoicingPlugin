@@ -19,17 +19,14 @@ use Twig\TwigFilter;
 
 final class ChannelColorExtension extends AbstractExtension
 {
-    private ChannelColorProviderInterface $channelColorProvider;
-
-    public function __construct(ChannelColorProviderInterface $channelColorProvider)
+    public function __construct(private readonly ChannelColorProviderInterface $channelColorProvider)
     {
-        $this->channelColorProvider = $channelColorProvider;
     }
 
     public function getFilters(): array
     {
         return [
-            new TwigFilter('sylius_channel_color', [$this->channelColorProvider, 'provide']),
+            new TwigFilter('sylius_channel_color', $this->channelColorProvider->provide(...)),
         ];
     }
 }

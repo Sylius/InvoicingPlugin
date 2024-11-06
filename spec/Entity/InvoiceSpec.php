@@ -32,7 +32,7 @@ final class InvoiceSpec extends ObjectBehavior
         TaxItemInterface $taxItem,
         ChannelInterface $channel,
         InvoiceShopBillingDataInterface $shopBillingData,
-        OrderInterface $order
+        OrderInterface $order,
     ): void {
         $issuedAt = \DateTimeImmutable::createFromFormat('Y-m', '2019-01');
 
@@ -49,7 +49,7 @@ final class InvoiceSpec extends ObjectBehavior
             new ArrayCollection([$taxItem->getWrappedObject()]),
             $channel,
             InvoiceInterface::PAYMENT_STATE_COMPLETED,
-            $shopBillingData
+            $shopBillingData,
         );
     }
 
@@ -69,7 +69,7 @@ final class InvoiceSpec extends ObjectBehavior
         TaxItemInterface $taxItem,
         ChannelInterface $channel,
         InvoiceShopBillingDataInterface $shopBillingData,
-        OrderInterface $order
+        OrderInterface $order,
     ): void {
         $this->id()->shouldReturn('7903c83a-4c5e-4bcf-81d8-9dc304c6a353');
         $this->number()->shouldReturn('2019/01/000000001');

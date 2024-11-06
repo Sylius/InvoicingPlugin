@@ -30,7 +30,7 @@ final class UnitNetPriceProviderSpec extends ObjectBehavior
     function it_provides_net_price_for_unit_with_taxes_included_in_price(
         OrderItemUnitInterface $unit,
         OrderItemInterface $orderItem,
-        AdjustmentInterface $taxAdjustment
+        AdjustmentInterface $taxAdjustment,
     ): void {
         $unit->getOrderItem()->willReturn($orderItem);
         $orderItem->getUnitPrice()->willReturn(1000);
@@ -48,7 +48,7 @@ final class UnitNetPriceProviderSpec extends ObjectBehavior
     function it_provides_net_price_for_unit_with_taxes_excluded_of_price(
         OrderItemUnitInterface $unit,
         OrderItemInterface $orderItem,
-        AdjustmentInterface $taxAdjustment
+        AdjustmentInterface $taxAdjustment,
     ): void {
         $unit->getOrderItem()->willReturn($orderItem);
         $orderItem->getUnitPrice()->willReturn(1000);
