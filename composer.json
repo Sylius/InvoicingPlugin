@@ -10,7 +10,7 @@
         "ramsey/uuid": "^4.0",
         "sylius/grid-bundle": "^1.9",
         "sylius/resource-bundle": "^1.9",
-        "sylius/sylius": "~1.13.8 || ~1.14.x-dev",
+        "sylius/sylius": "~1.13.0 || ~1.14.x-dev",
         "symfony/config": "^5.4.21 || ^6.4",
         "symfony/dependency-injection": "^5.4.21 || ^6.4",
         "symfony/form": "^5.4.21 || ^6.4",
