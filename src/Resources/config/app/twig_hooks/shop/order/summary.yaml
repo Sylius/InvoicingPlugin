@@ -1,18 +1,18 @@
 sylius_twig_hooks:
     hooks:
-        'sylius_shop.account.order.show.content.summary':
+        'sylius_shop.account.order.show.content.main.summary':
             invoices:
                 component: 'sylius_invoicing:invoice:list'
                 props:
                     order: '@=_context.order'
                 priority: 350
 
-        'sylius_shop.account.order.show.content.summary.invoices':
+        'sylius_shop.account.order.show.content.main.summary.invoices':
             card:
                 template: '@SyliusInvoicingPlugin/shop/order/show/content/summary/invoices/card.html.twig'
                 priority: 0
 
-        'sylius_shop.account.order.show.content.summary.invoices.card':
+        'sylius_shop.account.order.show.content.main.summary.invoices.card':
             head:
                 template: '@SyliusInvoicingPlugin/shop/order/show/content/summary/invoices/card/head.html.twig'
                 priority: 100
@@ -20,12 +20,12 @@ sylius_twig_hooks:
                 template: '@SyliusInvoicingPlugin/shop/order/show/content/summary/invoices/card/body.html.twig'
                 priority: 0
 
-        'sylius_shop.account.order.show.content.summary.invoices.card.body':
+        'sylius_shop.account.order.show.content.main.summary.invoices.card.body':
             table:
                 template: '@SyliusInvoicingPlugin/shop/order/show/content/summary/invoices/card/body/table.html.twig'
                 priority: 0
 
-        'sylius_shop.account.order.show.content.summary.invoices.card.body.table':
+        'sylius_shop.account.order.show.content.main.summary.invoices.card.body.table':
             head:
                 template: '@SyliusInvoicingPlugin/shop/order/show/content/summary/invoices/card/body/table/head.html.twig'
                 priority: 100
@@ -33,7 +33,7 @@ sylius_twig_hooks:
                 template: '@SyliusInvoicingPlugin/shop/order/show/content/summary/invoices/card/body/table/body.html.twig'
                 priority: 0
 
-        'sylius_shop.account.order.show.content.summary.invoices.card.body.table.head':
+        'sylius_shop.account.order.show.content.main.summary.invoices.card.body.table.head':
             number:
                 template: '@SyliusInvoicingPlugin/shop/order/show/content/summary/invoices/card/body/table/head/number.html.twig'
                 priority: 200
@@ -44,7 +44,7 @@ sylius_twig_hooks:
                 template: '@SyliusInvoicingPlugin/shop/order/show/content/summary/invoices/card/body/table/head/actions.html.twig'
                 priority: 0
 
-        'sylius_shop.account.order.show.content.summary.invoices.card.body.table.body':
+        'sylius_shop.account.order.show.content.main.summary.invoices.card.body.table.body':
             number:
                 template: '@SyliusInvoicingPlugin/shop/order/show/content/summary/invoices/card/body/table/body/number.html.twig'
                 priority: 200
