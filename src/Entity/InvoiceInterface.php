@@ -30,9 +30,6 @@ interface InvoiceInterface extends ResourceInterface
 
     public function order(): OrderInterface;
 
-    /** @deprecated this method is deprecated an will be remove in v1.0 - use InvoiceInterface::order() instead */
-    public function orderNumber(): string;
-
     public function issuedAt(): \DateTimeInterface;
 
     public function billingData(): BillingDataInterface;
