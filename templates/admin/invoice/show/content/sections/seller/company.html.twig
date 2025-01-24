@@ -1,3 +1,7 @@
 {% set shop_billing_data = hookable_metadata.context.resource.shopBillingData %}
 
-{% if shop_billing_data.company %}<strong>{{ shop_billing_data.company }}</strong>{% endif %}
+{% if shop_billing_data.company %}
+    <div>
+        <strong>{{ shop_billing_data.company }}</strong>
+    </div>
+{% endif %}

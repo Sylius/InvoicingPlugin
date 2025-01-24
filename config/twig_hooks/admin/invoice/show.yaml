@@ -16,9 +16,6 @@ sylius_twig_hooks:
         'sylius_admin.invoice.show.content.header.title_block.title':
             number:
                 template: '@SyliusInvoicingPlugin/admin/invoice/show/content/header/title_block/title/number.html.twig'
-                priority: 100
-            subtitle:
-                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/header/title_block/title/subtitle.html.twig'
                 priority: 0
 
         'sylius_admin.invoice.show.content.header.title_block.actions':
@@ -34,6 +31,9 @@ sylius_twig_hooks:
                 priority: 0
 
         'sylius_admin.invoice.show.content.sections':
+            details:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/details.html.twig'
+                priority: 300
             buyer:
                 template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/buyer.html.twig'
                 priority: 200
@@ -90,9 +90,6 @@ sylius_twig_hooks:
         'sylius_admin.invoice.show.content.sections.card':
             body:
                 template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/card/body.html.twig'
-                priority: 100
-            footer:
-                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/card/footer.html.twig'
                 priority: 0
 
         'sylius_admin.invoice.show.content.sections.card.body':

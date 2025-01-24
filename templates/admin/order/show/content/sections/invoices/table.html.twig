@@ -4,7 +4,9 @@
             {{ 'sylius_invoicing.ui.invoices'|trans }}
         </div>
     </div>
-    <table class="table table-borderless align-middle mb-0">
-        {% hook 'table' %}
-    </table>
+    <div class="table-responsive">
+        <table class="table table-hover table-vcenter card-table">
+            {% hook 'table' %}
+        </table>
+    </div>
 </div>
