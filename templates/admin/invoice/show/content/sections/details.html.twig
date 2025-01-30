@@ -1,5 +1,3 @@
-{% set invoice = hookable_metadata.context.resource %}
-
 <div class="col-12 col-md-4 mb-3">
     <div class="card h-full">
         <div class="card-header">
@@ -9,30 +7,7 @@
         </div>
         <div class="card-body">
             <table class="table table-sm table-borderless">
-                <tr>
-                    <td><strong>{{ 'sylius_invoicing.ui.issued_at'|trans }}:</strong></td>
-                    <td><span {{ sylius_test_html_attribute('issued-at') }}>{{ invoice.issuedAt|format_datetime }}</span></td>
-                </tr>
-                <tr>
-                    <td><strong>{{ 'sylius_invoicing.ui.issued_for_order'|trans }}:</strong></td>
-                    <td>#{{ invoice.order.number }}</td>
-                </tr>
-                <tr>
-                    <td><strong>{{ 'sylius_invoicing.ui.issued_from'|trans }}:</strong></td>
-                    <td {{ sylius_test_html_attribute('channel') }}>
-                        {% include '@SyliusAdmin/shared/grid/field/channel.html.twig' with {'data': invoice.channel} %}
-                    </td>
-                </tr>
-                <tr {{ sylius_test_html_attribute('invoice-is-paid') }}>
-                    <td><strong>{{ 'sylius_invoicing.ui.payment.paid'|trans }}: </strong></td>
-                    <td>
-                        {% if hookable_metadata.context.resource.paymentState is constant('Sylius\\InvoicingPlugin\\Entity\\InvoiceInterface::PAYMENT_STATE_COMPLETED') %}
-                            <span class="text-success">{{ 'sylius_invoicing.ui.payment.yes'|trans }}</span>
-                        {% else %}
-                            <span class="text-danger">{{ 'sylius_invoicing.ui.payment.no'|trans }}</span>
-                        {% endif %}
-                    </td>
-                </tr>
+                {% hook 'details' %}
             </table>
         </div>
     </div>

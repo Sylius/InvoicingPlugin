@@ -44,6 +44,52 @@ sylius_twig_hooks:
                 template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/card.html.twig'
                 priority: 0
 
+        'sylius_admin.invoice.show.content.sections.details':
+            date:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/details/date.html.twig'
+                priority: 300
+            order:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/details/order.html.twig'
+                priority: 200
+            channel:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/details/channel.html.twig'
+                priority: 100
+            paid:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/details/paid.html.twig'
+                priority: 0
+
+        'sylius_admin.invoice.show.content.sections.details.date':
+            label:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/details/date/label.html.twig'
+                priority: 100
+            value:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/details/date/value.html.twig'
+                priority: 0
+
+        'sylius_admin.invoice.show.content.sections.details.order':
+            label:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/details/order/label.html.twig'
+                priority: 100
+            value:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/details/order/value.html.twig'
+                priority: 0
+
+        'sylius_admin.invoice.show.content.sections.details.channel':
+            label:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/details/channel/label.html.twig'
+                priority: 100
+            value:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/details/channel/value.html.twig'
+                priority: 0
+
+        'sylius_admin.invoice.show.content.sections.details.paid':
+            label:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/details/paid/label.html.twig'
+                priority: 100
+            value:
+                template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/details/paid/value.html.twig'
+                priority: 0
+
         'sylius_admin.invoice.show.content.sections.buyer':
             first_name:
                 template: '@SyliusInvoicingPlugin/admin/invoice/show/content/sections/buyer/first_name.html.twig'

@@ -1,0 +1,10 @@
+{% set invoice = hookable_metadata.context.resource %}
+{% set payment_state_completed = constant('Sylius\\InvoicingPlugin\\Entity\\InvoiceInterface::PAYMENT_STATE_COMPLETED') %}
+
+<td>
+    {% if invoice.paymentState == payment_state_completed %}
+        <span class="text-success">{{ 'sylius_invoicing.ui.payment.yes'|trans }}</span>
+    {% else %}
+        <span class="text-danger">{{ 'sylius_invoicing.ui.payment.no'|trans }}</span>
+    {% endif %}
+</td>
