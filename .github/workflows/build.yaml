@@ -204,11 +204,15 @@ jobs:
             -
                 name: Run Behat
                 run: |
+                    echo "➡️  Running PDF-specific scenarios"
                     if [ "${{ matrix.wkhtmltopdf }}" != "false" ]; then
-                        vendor/bin/behat --colors --strict -vvv --no-interaction -f progress --tags="~@pdf_disabled" || vendor/bin/behat --colors --strict -vvv --no-interaction -f progress --rerun;
+                        vendor/bin/behat --colors --strict -vvv --no-interaction -f progress --tags='@pdf_enabled' || vendor/bin/behat --colors --strict -vvv --no-interaction -f progress --tags='@pdf_enabled' --rerun
                     else
-                        vendor/bin/behat --colors --strict -vvv --no-interaction -f progress --tags="~@pdf_enabled" || vendor/bin/behat --colors --strict -vvv --no-interaction -f progress --rerun;
+                        vendor/bin/behat --colors --strict -vvv --no-interaction -f progress --tags='@pdf_disabled' || vendor/bin/behat --colors --strict -vvv --no-interaction -f progress --tags='@pdf_disabled' --rerun
                     fi
+                    
+                    echo "➡️  Running all remaining scenarios (excluding PDF-specific)"
+                    vendor/bin/behat --colors --strict -vvv --no-interaction -f progress --tags='~@pdf_enabled&&~@pdf_disabled' || vendor/bin/behat --colors --strict -vvv --no-interaction -f progress --tags='~@pdf_enabled&&~@pdf_disabled' --rerun
 
             -
                 name: Upload Behat logs

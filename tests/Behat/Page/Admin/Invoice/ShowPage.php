@@ -145,7 +145,7 @@ final class ShowPage extends SymfonyPage implements ShowPageInterface
 
     public function download(): void
     {
-        $this->getDocument()->clickLink('Download');
+        $this->getElement('download_button')->click();
     }
 
     public function resend(): void
@@ -165,7 +165,7 @@ final class ShowPage extends SymfonyPage implements ShowPageInterface
 
     public function hasDownloadButton(): bool
     {
-        return $this->getDocument()->hasLink('Download');
+        return $this->hasElement('download_button');
     }
 
     protected function getDefinedElements(): array
@@ -183,7 +183,8 @@ final class ShowPage extends SymfonyPage implements ShowPageInterface
             'issued_at' => '[data-test-issued-at]',
             'paid' => '[data-test-invoice-is-paid]',
             'shop_billing_data' => '[data-test-shop-billing-data]',
-            'table' => '.table',
+            'table' => '[data-test-invoice-items]',
+            'download_button' => '[data-test-download-button]',
         ]);
     }
 
