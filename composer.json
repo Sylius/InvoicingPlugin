@@ -53,6 +53,9 @@
         "symfony/webpack-encore-bundle": "^2.2",
         "symfony/web-profiler-bundle": "^6.4 || ^7.1"
     },
+    "conflict": {
+        "sylius/sylius": "2.0.6"
+    },
     "autoload": {
         "psr-4": {
             "Sylius\\InvoicingPlugin\\": "src/",
