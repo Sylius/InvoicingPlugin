@@ -174,6 +174,7 @@ final class ShowPage extends SymfonyPage implements ShowPageInterface
             'back' => '[data-test-back]',
             'billing_address' => '[data-test-billing-data]',
             'channel' => '[data-test-channel]',
+            'download_button' => '[data-test-download-button]',
             'invoice_net_total' => '[data-test-invoice-net-total]',
             'invoice_net_total_currency_code' => '[data-test-invoice-net-total-currency-code]',
             'invoice_taxes_total' => '[data-test-invoice-taxes-total]',
@@ -184,7 +185,6 @@ final class ShowPage extends SymfonyPage implements ShowPageInterface
             'paid' => '[data-test-invoice-is-paid]',
             'shop_billing_data' => '[data-test-shop-billing-data]',
             'table' => '[data-test-invoice-items]',
-            'download_button' => '[data-test-download-button]',
         ]);
     }
 
