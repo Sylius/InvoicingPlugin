@@ -173,6 +173,7 @@ final class Configuration implements ConfigurationInterface
                     ->children()
                         ->booleanNode('enabled')->defaultTrue()
                     ->end()
+                    ->booleanNode('generate_with_gotenberg')->defaultFalse()
                 ->end()
             ->end()
         ;

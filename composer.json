@@ -8,6 +8,7 @@
         "php": "^8.2",
         "knplabs/knp-snappy-bundle": "^1.10",
         "ramsey/uuid": "^4.7",
+        "sensiolabs/gotenberg-bundle": "^1.0",
         "sylius/grid-bundle": "^1.13",
         "sylius/resource-bundle": "^1.12",
         "sylius/sylius": "^2.0",
