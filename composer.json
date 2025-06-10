@@ -10,7 +10,7 @@
         "ramsey/uuid": "^4.7",
         "sylius/grid-bundle": "^1.13",
         "sylius/resource-bundle": "^1.12",
-        "sylius/sylius": "~2.0.0",
+        "sylius/sylius": "^2.0",
         "symfony/clock": "^6.4 || ^7.1",
         "symfony/config": "^6.4 || ^7.1",
         "symfony/console": "^6.4 || ^7.1",

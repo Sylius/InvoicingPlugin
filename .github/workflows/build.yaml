@@ -21,7 +21,7 @@ jobs:
             matrix:
                 php: ["8.2", "8.3"]
                 symfony: ["^6.4", "^7.1"]
-                sylius: ["~2.0.0"]
+                sylius: ["~2.0.0", "~2.1.0"]
                 node: ["20.x"]
                 database: ["mysql", "postgres"]
                 mysql: ["8.4"]
@@ -34,6 +34,15 @@ jobs:
                         php: "8.3"
                         symfony: "^7.1"
                         sylius: "~2.0.0"
+                        node: "20.x"
+                        database: "mysql"
+                        mysql: "8.4"
+                        wkhtmltopdf: "0.12.6.1-2"
+                        state_machine_adapter: "winzou_state_machine"
+                    -
+                        php: "8.3"
+                        symfony: "^7.1"
+                        sylius: "~2.1.0"
                         node: "20.x"
                         database: "mysql"
                         mysql: "8.4"
