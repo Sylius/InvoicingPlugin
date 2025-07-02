@@ -21,7 +21,7 @@
    The routes have been consolidated into a single `config/routes.yaml` file. It is sufficient to import this file instead of defining each route explicitly:
    ```yaml
        sylius_invoicing:
-           resource: "@SyliusRefundPlugin/config/routes.yaml"
+           resource: "@SyliusInvoicingPlugin/config/routes.yaml"
    ```
    
    However, if you have customized the routes, you need to adjust the paths to reflect the new structure:
