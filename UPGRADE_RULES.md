@@ -230,7 +230,7 @@ npm run build
 ## 🔧 Entity and Service Updates
 
 ### Command Constructor Changes
-Many API command constructors have breaking changes. **Always refer to UPGRADE-2.0.md** for complete list.
+Many API command constructors have breaking changes. **Always refer to UPGRADE-2.0.md and UPGRADE-API-2.0.md** for complete list.
 
 Example - RegisterShopUser:
 ```php
