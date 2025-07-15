@@ -1,8 +1,0 @@
-winzou_state_machine:
-    sylius_payment:
-        callbacks:
-            after:
-                sylius_invoicing_payment_complete_producer:
-                    on: ['complete']
-                    do: ['@sylius_invoicing.event_producer.order_payment_paid', '__invoke']
-                    args: ['object']

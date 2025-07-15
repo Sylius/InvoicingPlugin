@@ -1,3 +1,0 @@
-sylius_invoicing:
-    pdf_generator:
-        enabled: false
