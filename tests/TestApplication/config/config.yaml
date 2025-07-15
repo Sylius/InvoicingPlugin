@@ -1,0 +1,7 @@
+imports:
+    - { resource: "@SyliusInvoicingPlugin/config/config.yaml" }
+    - { resource: "services_test.php" }
+
+twig:
+    paths:
+        '%kernel.project_dir%/../../../tests/TestApplication/templates': ~
