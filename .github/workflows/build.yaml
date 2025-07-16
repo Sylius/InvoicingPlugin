@@ -21,7 +21,7 @@ jobs:
             matrix:
                 php: ["8.3"]
                 symfony: ["^5.4.21", "^6.4"]
-                sylius: ["~1.13.0", "~1.14.0"]
+                sylius: ["~1.14.0"]
                 mysql: ["8.4"]
                 node: ["20.x"]
                 postgres: ["15.8"]
@@ -30,15 +30,6 @@ jobs:
                 state_machine_adapter: ["symfony_workflow"]
 
                 include:
-                    -
-                        php: "8.1"
-                        symfony: "^6.4"
-                        sylius: "~1.14.0"
-                        database: "mysql"
-                        mysql: "8.4"
-                        node: "20.x"
-                        wkhtmltopdf: "0.12.6.1-2"
-                        state_machine_adapter: "symfony_workflow"
                     -
                         php: "8.2"
                         symfony: "^6.4"
@@ -54,15 +45,6 @@ jobs:
                         sylius: "~1.14.0"
                         database: "mysql"
                         mysql: "8.4"
-                        node: "20.x"
-                        wkhtmltopdf: false
-                        state_machine_adapter: "symfony_workflow"
-                    -
-                        php: "8.2"
-                        symfony: "^6.4"
-                        sylius: "~1.14.0"
-                        database: "postgres"
-                        postgres: "15.8"
                         node: "20.x"
                         wkhtmltopdf: false
                         state_machine_adapter: "symfony_workflow"
