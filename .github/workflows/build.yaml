@@ -53,6 +53,7 @@ jobs:
             APP_ENV: test
             DATABASE_URL: ${{ matrix.database == 'mysql' && format('mysql://root:root@127.0.0.1/sylius?serverVersion={0}', matrix.mysql) || format('pgsql://postgres:postgres@127.0.0.1/sylius?serverVersion={0}', matrix.postgres) }}
             TEST_SYLIUS_STATE_MACHINE_ADAPTER: "${{ matrix.state_machine_adapter }}"
+            TEST_SYLIUS_INVOICING_PDF_GENERATION_DISABLED: ${{ matrix.wkhtmltopdf == false }}
 
         steps:
             -
@@ -113,11 +114,9 @@ jobs:
                     sudo dpkg -i wkhtmltox_${{ matrix.wkhtmltopdf }}.jammy_amd64.deb
 
             -
-                name: Disable PDF generation
+                name: Disable running Behat scenarios for PDF generation
                 if: matrix.wkhtmltopdf == false
-                run: |
-                    mv tests/Application/etc/sylius_invoicing_pdf_generation_disabled.yaml tests/Application/config/packages
-                    sed -i 's/pdf_generation_disabled/pdf_generation_enabled/g' behat.yml.dist
+                run: sed -i 's/pdf_generation_disabled/pdf_generation_enabled/g' behat.yml.dist
 
             -
                 name: Get Composer cache directory
@@ -166,27 +165,27 @@ jobs:
 
             -
                 name: Install JS dependencies
-                run: (cd tests/Application && yarn install)
+                run: (cd vendor/sylius/test-application && yarn install)
 
             -
                 name: Prepare test application database
                 run: |
-                    (cd tests/Application && bin/console doctrine:database:create -vvv)
-                    (cd tests/Application && bin/console doctrine:migrations:migrate -n -vvv -q)
+                    vendor/bin/console doctrine:database:create -vvv
+                    vendor/bin/console doctrine:migrations:migrate -n -vvv -q
 
             -
                 name: Prepare test application assets
                 run: |
-                    (cd tests/Application && bin/console assets:install public -vvv)
-                    (cd tests/Application && yarn build:prod)
+                    vendor/bin/console assets:install public -vvv
+                    (cd vendor/sylius/test-application && yarn build:prod)
 
             -
                 name: Prepare test application cache
-                run: (cd tests/Application && bin/console cache:warmup -vvv)
+                run: vendor/bin/console cache:warmup -vvv
 
             -
                 name: Load fixtures in test application
-                run: (cd tests/Application && bin/console sylius:fixtures:load -n)
+                run: vendor/bin/console sylius:fixtures:load -n
 
             -
                 name: Validate composer.json
@@ -221,6 +220,7 @@ jobs:
                 uses: actions/upload-artifact@v4
                 if: failure()
                 with:
-                    name: Behat logs
+                    name: Behat logs - ${{ github.run_id }}-${{ github.run_number }}
                     path: etc/build/
                     if-no-files-found: ignore
+                    overwrite: true

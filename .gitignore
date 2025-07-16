@@ -8,5 +8,6 @@
 /etc/build/*
 !/etc/build/.gitkeep
 
-/tests/Application/yarn.lock
-/tests/Application/private/invoices/*
+/tests/TestApplication/.env.local
+/tests/TestApplication/.env.*.local
+/var/
