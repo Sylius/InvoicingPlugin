@@ -45,7 +45,7 @@
         "phpstan/phpstan-webmozart-assert": "^1.2",
         "phpunit/phpunit": "^9.5",
         "polishsymfonycommunity/symfony-mocker-container": "^1.0",
-        "sylius/test-application": "dev-SYL-5212-prepare-1.14-version",
+        "sylius/test-application": "^1.14.0@alpha",
         "sylius-labs/coding-standard": "^4.4",
         "symfony/browser-kit": "^5.4.21 || ^6.4",
         "symfony/debug-bundle": "^5.4.21 || ^6.4",
@@ -88,11 +88,5 @@
         },
         "public-dir": "vendor/sylius/test-application/public"
     },
-    "prefer-stable": true,
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/GSadee/TestApplication"
-        }
-    ]
+    "prefer-stable": true
 }
