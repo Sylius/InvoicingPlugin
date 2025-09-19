@@ -54,7 +54,7 @@ final class ResendInvoiceAction
         try {
             $this->invoiceEmailSender->sendInvoiceEmail($invoice, $customer->getEmail());
         } catch (\Exception $exception) {
-            $this->getFlashBag()->add('failure', $exception->getMessage());
+            $this->getFlashBag()->add('error', $exception->getMessage());
 
             return new RedirectResponse(
                 $this->urlGenerator->generate('sylius_admin_order_show', ['id' => $order->getId()]),
