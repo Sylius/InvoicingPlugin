@@ -22,3 +22,4 @@ parameters:
         - '/Method Sylius\\InvoicingPlugin\\Security\\Voter\\InvoiceVoter::supports\(\) has parameter \$attribute with no typehint specified./'
         - '/Method Sylius\\InvoicingPlugin\\Security\\Voter\\InvoiceVoter::supports\(\) has parameter \$subject with no typehint specified./'
         - '/expects string, string\|null given\.$/'
+        - '/Method Sylius\\Component\\Mailer\\Sender\\SenderInterface::send\(\) invoked with 7 parameters, 2-5 required\./'

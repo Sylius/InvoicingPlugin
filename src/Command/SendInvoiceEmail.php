@@ -13,14 +13,21 @@ declare(strict_types=1);
 
 namespace Sylius\InvoicingPlugin\Command;
 
-final class SendInvoiceEmail
+final readonly class SendInvoiceEmail
 {
-    public function __construct(private readonly string $orderNumber)
-    {
+    public function __construct(
+        private string $orderNumber,
+        private int $attempt = 0,
+    ) {
     }
 
     public function orderNumber(): string
     {
         return $this->orderNumber;
+    }
+
+    public function attempt(): int
+    {
+        return $this->attempt;
     }
 }

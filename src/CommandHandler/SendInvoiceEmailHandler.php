@@ -20,12 +20,12 @@ use Sylius\InvoicingPlugin\Doctrine\ORM\InvoiceRepositoryInterface;
 use Sylius\InvoicingPlugin\Email\InvoiceEmailSenderInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 
-final class SendInvoiceEmailHandler
+final readonly class SendInvoiceEmailHandler
 {
     public function __construct(
-        private readonly InvoiceRepositoryInterface $invoiceRepository,
-        private readonly OrderRepositoryInterface $orderRepository,
-        private readonly InvoiceEmailSenderInterface $emailSender,
+        private InvoiceRepositoryInterface $invoiceRepository,
+        private OrderRepositoryInterface $orderRepository,
+        private InvoiceEmailSenderInterface $emailSender,
     ) {
     }
 
@@ -48,6 +48,15 @@ final class SendInvoiceEmailHandler
             return;
         }
 
-        $this->emailSender->sendInvoiceEmail($invoice, $customer->getEmail());
+        $customerEmail = $customer->getEmail();
+        if (null === $customerEmail) {
+            return;
+        }
+
+        $this->emailSender->sendInvoiceEmail($invoice, $customerEmail, $command->attempt());
+
+        if ($invoice->isPdfSent()) {
+            $this->invoiceRepository->add($invoice);
+        }
     }
 }

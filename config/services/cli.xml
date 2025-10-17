@@ -24,5 +24,11 @@
             <argument type="service" id="sylius.repository.order" />
             <tag name="console.command" />
         </service>
+        <service id="sylius_invoicing.cli.retry_failed_invoices" class="Sylius\InvoicingPlugin\Cli\RetryFailedInvoicesCommand">
+            <argument type="service" id="sylius_invoicing.repository.invoice" />
+            <argument type="service" id="sylius.command_bus" />
+            <argument type="service" id="logger" />
+            <tag name="console.command" />
+        </service>
     </services>
 </container>

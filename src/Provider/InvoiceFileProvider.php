@@ -16,19 +16,20 @@ namespace Sylius\InvoicingPlugin\Provider;
 use Gaufrette\Exception\FileNotFound;
 use Gaufrette\FilesystemInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
+use Sylius\InvoicingPlugin\Exception\InvoiceFileGenerationFailedException;
 use Sylius\InvoicingPlugin\Generator\InvoiceFileNameGeneratorInterface;
 use Sylius\InvoicingPlugin\Generator\InvoicePdfFileGeneratorInterface;
 use Sylius\InvoicingPlugin\Manager\InvoiceFileManagerInterface;
 use Sylius\InvoicingPlugin\Model\InvoicePdf;
 
-final class InvoiceFileProvider implements InvoiceFileProviderInterface
+final readonly class InvoiceFileProvider implements InvoiceFileProviderInterface
 {
     public function __construct(
-        private readonly InvoiceFileNameGeneratorInterface $invoiceFileNameGenerator,
-        private readonly FilesystemInterface $filesystem,
-        private readonly InvoicePdfFileGeneratorInterface $invoicePdfFileGenerator,
-        private readonly InvoiceFileManagerInterface $invoiceFileManager,
-        private readonly string $invoicesDirectory,
+        private InvoiceFileNameGeneratorInterface $invoiceFileNameGenerator,
+        private FilesystemInterface $filesystem,
+        private InvoicePdfFileGeneratorInterface $invoicePdfFileGenerator,
+        private InvoiceFileManagerInterface $invoiceFileManager,
+        private string $invoicesDirectory,
     ) {
     }
 
@@ -40,8 +41,12 @@ final class InvoiceFileProvider implements InvoiceFileProviderInterface
             $invoiceFile = $this->filesystem->get($invoiceFileName);
             $invoicePdf = new InvoicePdf($invoiceFileName, $invoiceFile->getContent());
         } catch (FileNotFound) {
-            $invoicePdf = $this->invoicePdfFileGenerator->generate($invoice);
-            $this->invoiceFileManager->save($invoicePdf);
+            try {
+                $invoicePdf = $this->invoicePdfFileGenerator->generate($invoice);
+                $this->invoiceFileManager->save($invoicePdf);
+            } catch (\Throwable $exception) {
+                throw InvoiceFileGenerationFailedException::forInvoice($invoice, $exception);
+            }
         }
 
         $invoicePdf->setFullPath($this->invoicesDirectory . '/' . $invoiceFileName);

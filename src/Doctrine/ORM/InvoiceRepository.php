@@ -43,4 +43,19 @@ class InvoiceRepository extends EntityRepository implements InvoiceRepositoryInt
 
         return $invoices;
     }
+
+    public function findUnsent(): array
+    {
+        $invoices = $this
+            ->createQueryBuilder('invoice')
+            ->where('invoice.pdfSent = :pdfSent')
+            ->setParameter('pdfSent', false)
+            ->getQuery()
+            ->getResult()
+        ;
+
+        Assert::isArray($invoices);
+
+        return $invoices;
+    }
 }
