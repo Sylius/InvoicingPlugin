@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace Sylius\InvoicingPlugin\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
-use Doctrine\Migrations\AbstractMigration;
+use Sylius\Bundle\CoreBundle\Doctrine\Migrations\AbstractPostgreSQLMigration;
+
 
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20251016094233 extends AbstractMigration
+final class Version20251016094233 extends AbstractPostgreSQLMigration
 {
     public function getDescription(): string
     {
