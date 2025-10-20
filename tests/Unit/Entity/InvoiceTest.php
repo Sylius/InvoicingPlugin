@@ -97,15 +97,15 @@ final class InvoiceTest extends TestCase
     public function it_has_data(): void
     {
         self::assertSame('7903c83a-4c5e-4bcf-81d8-9dc304c6a353', $this->invoice->id());
-        self::assertSame('2019/01/000000001', $this->invoice->number());
-        self::assertSame($this->order, $this->invoice->order());
-        self::assertSame($this->billingData, $this->invoice->billingData());
-        self::assertSame('USD', $this->invoice->currencyCode());
-        self::assertSame('en_US', $this->invoice->localeCode());
-        self::assertSame(10300, $this->invoice->total());
-        self::assertEquals(new ArrayCollection([$this->lineItem]), $this->invoice->lineItems());
-        $this->assertEquals(new ArrayCollection([$this->taxItem]), $this->invoice->taxItems());
-        $this->assertSame($this->channel, $this->invoice->channel());
-        $this->assertSame($this->shopBillingData, $this->invoice->shopBillingData());
+        self::assertSame('2019/01/000000001', $this->invoice->getNumber());
+        self::assertSame($this->order, $this->invoice->getOrder());
+        self::assertSame($this->billingData, $this->invoice->getBillingData());
+        self::assertSame('USD', $this->invoice->getCurrencyCode());
+        self::assertSame('en_US', $this->invoice->getLocaleCode());
+        self::assertSame(10300, $this->invoice->getTotal());
+        self::assertEquals(new ArrayCollection([$this->lineItem]), $this->invoice->getLineItems());
+        $this->assertEquals(new ArrayCollection([$this->taxItem]), $this->invoice->getTaxItems());
+        $this->assertSame($this->channel, $this->invoice->getChannel());
+        $this->assertSame($this->shopBillingData, $this->invoice->getShopBillingData());
     }
 }
