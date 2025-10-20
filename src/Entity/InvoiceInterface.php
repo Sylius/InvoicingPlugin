@@ -24,33 +24,55 @@ interface InvoiceInterface extends ResourceInterface
 
     public const PAYMENT_STATE_PENDING = 'pending';
 
-    public function id(): string;
+    public function getId(): string;
 
-    public function number(): string;
+    public function getNumber(): string;
 
-    public function order(): OrderInterface;
+    public function setNumber(string $number): void;
 
-    public function issuedAt(): \DateTimeInterface;
+    public function getOrder(): OrderInterface;
 
-    public function billingData(): BillingDataInterface;
+    public function setOrder(OrderInterface $order): void;
 
-    public function currencyCode(): string;
+    public function getIssuedAt(): \DateTimeInterface;
 
-    public function localeCode(): string;
+    public function getBillingData(): BillingDataInterface;
 
-    public function total(): int;
+    public function setBillingData(BillingDataInterface $billingData): void;
 
-    public function lineItems(): Collection;
+    public function getCurrencyCode(): string;
 
-    public function taxItems(): Collection;
+    public function setCurrencyCode(string $currencyCode): void;
 
-    public function subtotal(): int;
+    public function getLocaleCode(): string;
 
-    public function taxesTotal(): int;
+    public function setLocaleCode(string $localeCode): void;
 
-    public function channel(): ChannelInterface;
+    public function getTotal(): int;
 
-    public function shopBillingData(): InvoiceShopBillingDataInterface;
+    public function setTotal(int $total): void;
 
-    public function paymentState(): string;
+    public function getLineItems(): Collection;
+
+    public function addLineItem(LineItemInterface $lineItem): void;
+
+    public function getTaxItems(): Collection;
+
+    public function addTaxItem(TaxItemInterface $taxItem): void;
+
+    public function getSubtotal(): int;
+
+    public function getTaxesTotal(): int;
+
+    public function getChannel(): ChannelInterface;
+
+    public function setChannel(ChannelInterface $channel): void;
+
+    public function getShopBillingData(): InvoiceShopBillingDataInterface;
+
+    public function setShopBillingData(InvoiceShopBillingDataInterface $shopBillingData): void;
+
+    public function getPaymentState(): string;
+
+    public function setPaymentState(string $paymentState): void;
 }
