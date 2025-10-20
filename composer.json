@@ -37,13 +37,12 @@
         "friends-of-behat/variadic-extension": "^1.6",
         "matthiasnoback/symfony-config-test": "^5.1",
         "matthiasnoback/symfony-dependency-injection-test": "^5.1",
-        "phpspec/phpspec": "^7.5",
         "phpstan/extension-installer": "^1.4",
         "phpstan/phpstan": "^1.12",
         "phpstan/phpstan-doctrine": "^1.5",
         "phpstan/phpstan-symfony": "^1.4",
         "phpstan/phpstan-webmozart-assert": "^1.2",
-        "phpunit/phpunit": "^9.5",
+        "phpunit/phpunit": "^10.5",
         "polishsymfonycommunity/symfony-mocker-container": "^1.0",
         "sylius-labs/coding-standard": "^4.4",
         "sylius/test-application": "^2.0.0@alpha",
@@ -70,10 +69,10 @@
         "analyse": [
             "@composer validate --strict",
             "vendor/bin/phpstan analyse -c phpstan.neon -l max",
-            "vendor/bin/ecs check src/ spec/"
+            "vendor/bin/ecs check src/"
         ],
         "fix": [
-            "vendor/bin/ecs check --fix src/ spec/"
+            "vendor/bin/ecs check --fix src/"
         ]
     },
     "config": {

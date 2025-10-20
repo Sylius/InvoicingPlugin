@@ -2,12 +2,12 @@
 
 <phpunit
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/8.1/phpunit.xsd"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
     colors="true"
     bootstrap="vendor/sylius/test-application/config/bootstrap.php"
 >
     <testsuites>
-        <testsuite name="SyliusInvoicingPlugin Test Suite">
+        <testsuite name="sylius_invoicing_plugin_test_suite">
             <directory>tests</directory>
         </testsuite>
     </testsuites>
