@@ -26,7 +26,7 @@ final class InvoiceFileNameGeneratorSpec extends ObjectBehavior
 
     function it_generates_invoice_file_name_based_on_its_number(InvoiceInterface $invoice): void
     {
-        $invoice->number()->willReturn('2020/01/02/000333');
+        $invoice->getNumber()->willReturn('2020/01/02/000333');
 
         $this->generateForPdf($invoice)->shouldReturn('2020_01_02_000333.pdf');
     }

@@ -72,15 +72,15 @@ final class InvoiceSpec extends ObjectBehavior
         OrderInterface $order,
     ): void {
         $this->id()->shouldReturn('7903c83a-4c5e-4bcf-81d8-9dc304c6a353');
-        $this->number()->shouldReturn('2019/01/000000001');
-        $this->order()->shouldReturn($order);
-        $this->billingData()->shouldReturn($billingData);
-        $this->currencyCode()->shouldReturn('USD');
-        $this->localeCode()->shouldReturn('en_US');
-        $this->total()->shouldReturn(10300);
-        $this->lineItems()->shouldBeLike(new ArrayCollection([$lineItem->getWrappedObject()]));
-        $this->taxItems()->shouldBeLike(new ArrayCollection([$taxItem->getWrappedObject()]));
-        $this->channel()->shouldReturn($channel);
-        $this->shopBillingData()->shouldReturn($shopBillingData);
+        $this->getNumber()->shouldReturn('2019/01/000000001');
+        $this->getOrder()->shouldReturn($order);
+        $this->getBillingData()->shouldReturn($billingData);
+        $this->getCurrencyCode()->shouldReturn('USD');
+        $this->getLocaleCode()->shouldReturn('en_US');
+        $this->getTotal()->shouldReturn(10300);
+        $this->getLineItems()->shouldBeLike(new ArrayCollection([$lineItem->getWrappedObject()]));
+        $this->getTaxItems()->shouldBeLike(new ArrayCollection([$taxItem->getWrappedObject()]));
+        $this->getChannel()->shouldReturn($channel);
+        $this->getShopBillingData()->shouldReturn($shopBillingData);
     }
 }

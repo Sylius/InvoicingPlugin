@@ -51,7 +51,7 @@ final class InvoicePdfFileGeneratorSpec extends ObjectBehavior
         ChannelInterface $channel,
     ): void {
         $invoiceFileNameGenerator->generateForPdf($invoice)->willReturn('2015_05_00004444.pdf');
-        $invoice->channel()->willReturn($channel);
+        $invoice->getChannel()->willReturn($channel);
 
         $fileLocator->locate('@SyliusInvoicingPlugin/assets/sylius-logo.png')->willReturn('located-path/sylius-logo.png');
 

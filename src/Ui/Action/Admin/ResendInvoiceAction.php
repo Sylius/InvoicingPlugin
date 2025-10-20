@@ -44,7 +44,7 @@ final class ResendInvoiceAction
         Assert::notNull($invoice);
 
         /** @var OrderInterface|null $order */
-        $order = $this->orderRepository->findOneBy(['number' => $invoice->order()->getNumber()]);
+        $order = $this->orderRepository->findOneBy(['number' => $invoice->getOrder()->getNumber()]);
         Assert::notNull($order);
 
         /** @var CustomerInterface|null $customer */
