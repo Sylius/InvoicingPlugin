@@ -18,6 +18,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceSequenceInterface;
+use Sylius\InvoicingPlugin\Enum\InvoiceSequenceScopeEnum;
 use Symfony\Component\Clock\ClockInterface;
 
 final class SequentialInvoiceNumberGenerator implements InvoiceNumberGenerator
@@ -29,7 +30,17 @@ final class SequentialInvoiceNumberGenerator implements InvoiceNumberGenerator
         private readonly ClockInterface $clock,
         private readonly int $startNumber = 1,
         private readonly int $numberLength = 9,
+        private readonly ?string $scope = null,
     ) {
+        if (null === $this->scope) {
+            trigger_deprecation(
+                'sylius/invoicing-plugin',
+                '2.1',
+                'Not passing a "%s" to "%s" is deprecated and will be required in SyliusInvoicingPlugin 3.0.',
+                InvoiceSequenceScopeEnum::class,
+                self::class,
+            );
+        }
     }
 
     public function generate(): string
@@ -56,15 +67,38 @@ final class SequentialInvoiceNumberGenerator implements InvoiceNumberGenerator
 
     private function getSequence(): InvoiceSequenceInterface
     {
-        /** @var InvoiceSequenceInterface $sequence */
-        $sequence = $this->sequenceRepository->findOneBy([]);
+        $now = $this->clock->now();
+        $scope = InvoiceSequenceScopeEnum::tryFrom($this->scope ?? '') ?? InvoiceSequenceScopeEnum::GLOBAL;
 
-        if (null != $sequence) {
+        $criteria = match ($scope) {
+            InvoiceSequenceScopeEnum::MONTHLY => [
+                'year' => (int) $now->format('Y'),
+                'month' => (int) $now->format('m'),
+            ],
+            InvoiceSequenceScopeEnum::ANNUALLY => [
+                'year' => (int) $now->format('Y'),
+            ],
+            InvoiceSequenceScopeEnum::GLOBAL => [],
+        };
+
+        /** @var InvoiceSequenceInterface|null $sequence */
+        $sequence = $this->sequenceRepository->findOneBy($criteria);
+
+        if (null !== $sequence) {
             return $sequence;
         }
 
         /** @var InvoiceSequenceInterface $sequence */
         $sequence = $this->sequenceFactory->createNew();
+
+        if (isset($criteria['year'])) {
+            $sequence->setYear($criteria['year']);
+        }
+
+        if (isset($criteria['month'])) {
+            $sequence->setMonth($criteria['month']);
+        }
+
         $this->sequenceManager->persist($sequence);
 
         return $sequence;
