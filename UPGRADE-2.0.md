@@ -1,3 +1,17 @@
+# UPGRADE FROM 2.0.2 TO 2.0.3
+
+## Changes
+
+1. Added support for configurable invoice sequence scoping via the SYLIUS_INVOICING_SEQUENCE_SCOPE environment variable:
+
+- monthly: resets invoice numbering each month
+- annually: resets invoice numbering each year
+- global or unset (default): uses a single global sequence (as previously)
+
+## Deprecations
+
+1. Not passing the $scope argument (of type InvoiceSequenceScopeEnum) to the constructor of SequentialInvoiceNumberGenerator is deprecated and will be required starting from version 3.0.
+
 # UPGRADE FROM 1.X TO 2.0
 
 1. Support for Sylius 2.0 has been added, it is now the recommended Sylius version to use with InvoicingPlugin.

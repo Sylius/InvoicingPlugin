@@ -23,9 +23,9 @@ class InvoiceSequence implements InvoiceSequenceInterface
 
     protected ?int $version = 1;
 
-    protected int $year;
+    protected ?int $year;
 
-    protected int $month;
+    protected ?int $month;
 
     /** @return mixed */
     public function getId()
@@ -53,22 +53,22 @@ class InvoiceSequence implements InvoiceSequenceInterface
         $this->version = $version;
     }
 
-    public function getYear(): int
+    public function getYear(): ?int
     {
         return $this->year;
     }
 
-    public function getMonth(): int
-    {
-        return $this->month;
-    }
-
-    public function setYear(int $year): void
+    public function setYear(?int $year): void
     {
         $this->year = $year;
     }
 
-    public function setMonth(int $month): void
+    public function getMonth(): ?int
+    {
+        return $this->month;
+    }
+
+    public function setMonth(?int $month): void
     {
         $this->month = $month;
     }
