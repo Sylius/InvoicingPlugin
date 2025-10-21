@@ -22,11 +22,11 @@ interface InvoiceSequenceInterface extends ResourceInterface, VersionedInterface
 
     public function incrementIndex(): void;
 
-    public function getYear(): int;
+    public function getYear(): ?int;
 
-    public function getMonth(): int;
+    public function getMonth(): ?int;
 
-    public function setYear(int $year): void;
+    public function setYear(?int $year): void;
 
-    public function setMonth(int $month): void;
+    public function setMonth(?int $month): void;
 }
