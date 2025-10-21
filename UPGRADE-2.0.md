@@ -1,4 +1,4 @@
-# UPGRADE FROM 2.0.2 TO 2.0.3
+# UPGRADE FROM 2.0 TO 2.1
 
 ## Changes
 

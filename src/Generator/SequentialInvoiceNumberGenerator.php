@@ -78,7 +78,10 @@ final class SequentialInvoiceNumberGenerator implements InvoiceNumberGenerator
             InvoiceSequenceScopeEnum::ANNUALLY => [
                 'year' => (int) $now->format('Y'),
             ],
-            InvoiceSequenceScopeEnum::GLOBAL => [],
+            InvoiceSequenceScopeEnum::GLOBAL => [
+                'year' => null,
+                'month' => null,
+            ],
         };
 
         /** @var InvoiceSequenceInterface|null $sequence */
