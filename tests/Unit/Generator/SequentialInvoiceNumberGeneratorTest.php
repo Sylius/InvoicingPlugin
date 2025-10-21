@@ -69,7 +69,10 @@ final class SequentialInvoiceNumberGeneratorTest extends TestCase
         $dateTime = new \DateTimeImmutable('now');
         $this->clock->method('now')->willReturn($dateTime);
 
-        $this->sequenceRepository->method('findOneBy')->with([])->willReturn($sequence);
+        $this->sequenceRepository
+            ->method('findOneBy')
+            ->with(['year' => null, 'month' => null])
+            ->willReturn($sequence);
 
         $sequence->method('getVersion')->willReturn(1);
         $sequence->method('getIndex')->willReturn(0);
@@ -96,7 +99,10 @@ final class SequentialInvoiceNumberGeneratorTest extends TestCase
         $dateTime = new \DateTimeImmutable('now');
         $this->clock->method('now')->willReturn($dateTime);
 
-        $this->sequenceRepository->method('findOneBy')->with([])->willReturn(null);
+        $this->sequenceRepository
+            ->method('findOneBy')
+            ->with(['year' => null, 'month' => null])
+            ->willReturn(null);
 
         $this->sequenceFactory->method('createNew')->willReturn($sequence);
 
@@ -119,6 +125,86 @@ final class SequentialInvoiceNumberGeneratorTest extends TestCase
 
         $result = $this->generator->generate();
 
-        $this->assertSame($dateTime->format('Y/m') . '/000000001', $result);
+        self::assertSame($dateTime->format('Y/m') . '/000000001', $result);
+    }
+
+    #[Test]
+    public function it_generates_invoice_number_with_monthly_scope(): void
+    {
+        $sequence = $this->createMock(InvoiceSequenceInterface::class);
+
+        $dateTime = new \DateTimeImmutable('2025-10-15');
+        $this->clock->method('now')->willReturn($dateTime);
+
+        $generator = new SequentialInvoiceNumberGenerator(
+            $this->sequenceRepository,
+            $this->sequenceFactory,
+            $this->sequenceManager,
+            $this->clock,
+            1,
+            9,
+            'monthly'
+        );
+
+        $this->sequenceRepository
+            ->method('findOneBy')
+            ->with(['year' => 2025, 'month' => 10])
+            ->willReturn($sequence);
+
+        $sequence->method('getVersion')->willReturn(1);
+        $sequence->method('getIndex')->willReturn(0);
+
+        $this->sequenceManager
+            ->expects(self::once())
+            ->method('lock')
+            ->with($sequence, LockMode::OPTIMISTIC, 1);
+
+        $sequence
+            ->expects(self::once())
+            ->method('incrementIndex');
+
+        $result = $generator->generate();
+
+        self::assertSame('2025/10/000000001', $result);
+    }
+
+    #[Test]
+    public function it_generates_invoice_number_with_annually_scope(): void
+    {
+        $sequence = $this->createMock(InvoiceSequenceInterface::class);
+
+        $dateTime = new \DateTimeImmutable('2025-11-15');
+        $this->clock->method('now')->willReturn($dateTime);
+
+        $generator = new SequentialInvoiceNumberGenerator(
+            $this->sequenceRepository,
+            $this->sequenceFactory,
+            $this->sequenceManager,
+            $this->clock,
+            1,
+            9,
+            'annually'
+        );
+
+        $this->sequenceRepository
+            ->method('findOneBy')
+            ->with(['year' => 2025])
+            ->willReturn($sequence);
+
+        $sequence->method('getVersion')->willReturn(1);
+        $sequence->method('getIndex')->willReturn(0);
+
+        $this->sequenceManager
+            ->expects(self::once())
+            ->method('lock')
+            ->with($sequence, LockMode::OPTIMISTIC, 1);
+
+        $sequence
+            ->expects(self::once())
+            ->method('incrementIndex');
+
+        $result = $generator->generate();
+
+        self::assertSame('2025/11/000000001', $result);
     }
 }
