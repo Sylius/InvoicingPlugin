@@ -36,8 +36,8 @@ final class SequentialInvoiceNumberGenerator implements InvoiceNumberGenerator
             trigger_deprecation(
                 'sylius/invoicing-plugin',
                 '2.1',
-                'Not passing a "%s" to "%s" is deprecated and will be required in SyliusInvoicingPlugin 3.0.',
-                InvoiceSequenceScopeEnum::class,
+                'Not passing the "%s" argument to "%s::__construct()" is deprecated and will be required in version 3.0. Pass a valid scope explicitly (e.g. "monthly", "annually", or "global").',
+                'scope',
                 self::class,
             );
         }

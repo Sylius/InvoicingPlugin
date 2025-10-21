@@ -11,6 +11,9 @@
         </id>
         <field name="index" column="idx" type="integer" />
         <field name="version" type="integer" version="true" />
+        <field name="year" type="integer" nullable="true"/>
+        <field name="month" type="integer"/>
+
     </mapped-superclass>
 
 </doctrine-mapping>
