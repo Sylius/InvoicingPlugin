@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Sylius package.
+ *
+ * (c) Sylius Sp. z o.o.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 declare(strict_types=1);
 
 namespace Tests\Sylius\InvoicingPlugin\Behat\Context\Domain;
@@ -28,5 +37,19 @@ final class GeneratingInvoiceContext implements Context
         $invoice = $this->invoiceRepository->findByOrderNumber($orderNumber)[0];
 
         $this->invoiceManager->remove($invoice);
+    }
+
+    /**
+     * @Given all invoices have been deleted
+     */
+    public function allInvoicesHaveBeenDeleted(): void
+    {
+        $invoices = $this->invoiceRepository->findAll();
+
+        foreach ($invoices as $invoice) {
+            $this->invoiceManager->remove($invoice);
+        }
+
+        $this->invoiceManager->flush();
     }
 }

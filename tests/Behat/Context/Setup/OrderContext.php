@@ -27,4 +27,14 @@ final class OrderContext implements Context
 
         $this->orderManager->flush();
     }
+
+    /**
+     * @Given /^(this order) has not been placed$/
+     */
+    public function orderHasNotBeenPlaced(OrderInterface $order): void
+    {
+        $order->setNumber(null);
+
+        $this->orderManager->flush();
+    }
 }
