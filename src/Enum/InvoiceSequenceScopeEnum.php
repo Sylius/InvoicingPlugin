@@ -18,13 +18,4 @@ enum InvoiceSequenceScopeEnum: string
     case GLOBAL = 'global';
     case MONTHLY = 'monthly';
     case ANNUALLY = 'annually';
-
-    public static function fromString(?string $value): self
-    {
-        return match ($value) {
-            'monthly' => self::MONTHLY,
-            'annually' => self::ANNUALLY,
-            default => self::GLOBAL,
-        };
-    }
 }
