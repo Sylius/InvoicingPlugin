@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Sylius package.
+ *
+ * (c) Sylius Sp. z o.o.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 declare(strict_types=1);
 
 namespace Tests\Sylius\InvoicingPlugin\Behat\Context\Setup;
@@ -29,9 +38,9 @@ final class OrderContext implements Context
     }
 
     /**
-     * @Given /^(this order) has not been placed$/
+     * @Given /^(this order) has no number assigned$/
      */
-    public function orderHasNotBeenPlaced(OrderInterface $order): void
+    public function orderHasNoNumberAssigned(OrderInterface $order): void
     {
         $order->setNumber(null);
 
