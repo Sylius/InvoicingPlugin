@@ -74,9 +74,11 @@ final class SequentialInvoiceNumberGenerator implements InvoiceNumberGenerator
             InvoiceSequenceScopeEnum::MONTHLY => [
                 'year' => (int) $now->format('Y'),
                 'month' => (int) $now->format('m'),
+                'type' => $scope,
             ],
             InvoiceSequenceScopeEnum::ANNUALLY => [
                 'year' => (int) $now->format('Y'),
+                'type' => $scope,
             ],
             InvoiceSequenceScopeEnum::GLOBAL => [
                 'year' => null,
@@ -100,6 +102,10 @@ final class SequentialInvoiceNumberGenerator implements InvoiceNumberGenerator
 
         if (isset($criteria['month'])) {
             $sequence->setMonth($criteria['month']);
+        }
+
+        if (isset($criteria['type'])) {
+            $sequence->setType($criteria['type']);
         }
 
         $this->sequenceManager->persist($sequence);

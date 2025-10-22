@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Sylius\InvoicingPlugin\Entity;
 
+use Sylius\InvoicingPlugin\Enum\InvoiceSequenceScopeEnum;
+
 /** @final */
 class InvoiceSequence implements InvoiceSequenceInterface
 {
@@ -23,9 +25,11 @@ class InvoiceSequence implements InvoiceSequenceInterface
 
     protected ?int $version = 1;
 
-    protected ?int $year;
+    protected ?InvoiceSequenceScopeEnum $type = null;
 
-    protected ?int $month;
+    protected ?int $year = null;
+
+    protected ?int $month = null;
 
     /** @return mixed */
     public function getId()
@@ -51,6 +55,16 @@ class InvoiceSequence implements InvoiceSequenceInterface
     public function setVersion(?int $version): void
     {
         $this->version = $version;
+    }
+
+    public function getType(): ?InvoiceSequenceScopeEnum
+    {
+        return $this->type;
+    }
+
+    public function setType(?InvoiceSequenceScopeEnum $type): void
+    {
+        $this->type = $type;
     }
 
     public function getYear(): ?int
