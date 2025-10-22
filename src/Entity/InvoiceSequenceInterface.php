@@ -15,12 +15,17 @@ namespace Sylius\InvoicingPlugin\Entity;
 
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Resource\Model\VersionedInterface;
+use Sylius\InvoicingPlugin\Enum\InvoiceSequenceScopeEnum;
 
 interface InvoiceSequenceInterface extends ResourceInterface, VersionedInterface
 {
     public function getIndex(): int;
 
     public function incrementIndex(): void;
+
+    public function getType(): ?InvoiceSequenceScopeEnum;
+
+    public function setType(?InvoiceSequenceScopeEnum $type): void;
 
     public function getYear(): ?int;
 

@@ -20,16 +20,16 @@ final class Version20251021074051 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return 'Add year and month columns to sylius_invoicing_plugin_sequence table';
+        return 'Add year, month and type columns to sylius_invoicing_plugin_sequence table';
     }
 
     public function up(Schema $schema): void
     {
-        $this->addSql('ALTER TABLE sylius_invoicing_plugin_sequence ADD year INT DEFAULT NULL, ADD month INT NOT NULL');
+        $this->addSql('ALTER TABLE sylius_invoicing_plugin_sequence ADD year INT DEFAULT NULL, ADD month INT DEFAULT NULL, ADD type VARCHAR(255) DEFAULT NULL');
     }
 
     public function down(Schema $schema): void
     {
-        $this->addSql('ALTER TABLE sylius_invoicing_plugin_sequence DROP year, DROP month');
+        $this->addSql('ALTER TABLE sylius_invoicing_plugin_sequence DROP year, DROP month, DROP type');
     }
 }

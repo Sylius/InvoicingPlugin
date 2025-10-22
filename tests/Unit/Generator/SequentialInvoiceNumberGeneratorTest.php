@@ -21,6 +21,7 @@ use PHPUnit\Framework\TestCase;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceSequenceInterface;
+use Sylius\InvoicingPlugin\Enum\InvoiceSequenceScopeEnum;
 use Sylius\InvoicingPlugin\Generator\InvoiceNumberGenerator;
 use Sylius\InvoicingPlugin\Generator\SequentialInvoiceNumberGenerator;
 use Symfony\Component\Clock\ClockInterface;
@@ -148,7 +149,7 @@ final class SequentialInvoiceNumberGeneratorTest extends TestCase
 
         $this->sequenceRepository
             ->method('findOneBy')
-            ->with(['year' => 2025, 'month' => 10])
+            ->with(['year' => 2025, 'month' => 10, 'type' => InvoiceSequenceScopeEnum::MONTHLY])
             ->willReturn($sequence);
 
         $sequence->method('getVersion')->willReturn(1);
@@ -188,7 +189,7 @@ final class SequentialInvoiceNumberGeneratorTest extends TestCase
 
         $this->sequenceRepository
             ->method('findOneBy')
-            ->with(['year' => 2025])
+            ->with(['year' => 2025, 'type' => InvoiceSequenceScopeEnum::ANNUALLY])
             ->willReturn($sequence);
 
         $sequence->method('getVersion')->willReturn(1);
@@ -206,5 +207,58 @@ final class SequentialInvoiceNumberGeneratorTest extends TestCase
         $result = $generator->generate();
 
         self::assertSame('2025/11/000000001', $result);
+    }
+
+    #[Test]
+    public function it_generates_invoice_number_when_monthly_sequence_is_null(): void
+    {
+        $sequence = $this->createMock(InvoiceSequenceInterface::class);
+
+        $dateTime = new \DateTimeImmutable('2025-10-15');
+        $this->clock->method('now')->willReturn($dateTime);
+
+        $generator = new SequentialInvoiceNumberGenerator(
+            $this->sequenceRepository,
+            $this->sequenceFactory,
+            $this->sequenceManager,
+            $this->clock,
+            1,
+            9,
+            'monthly'
+        );
+
+        $scope = InvoiceSequenceScopeEnum::MONTHLY;
+
+        $this->sequenceRepository
+            ->expects(self::once())
+            ->method('findOneBy')
+            ->with(['year' => 2025, 'month' => 10, 'type' => $scope])
+            ->willReturn(null);
+
+        $this->sequenceFactory->expects(self::once())->method('createNew')->willReturn($sequence);
+        $sequence->expects(self::once())->method('setYear')->with(2025);
+        $sequence->expects(self::once())->method('setMonth')->with(10);
+        $sequence->expects(self::once())->method('setType')->with($scope);
+
+        $this->sequenceManager
+            ->expects(self::once())
+            ->method('persist')
+            ->with($sequence);
+
+        $sequence->method('getVersion')->willReturn(1);
+        $sequence->method('getIndex')->willReturn(0);
+
+        $this->sequenceManager
+            ->expects(self::once())
+            ->method('lock')
+            ->with($sequence, LockMode::OPTIMISTIC, 1);
+
+        $sequence
+            ->expects(self::once())
+            ->method('incrementIndex');
+
+        $result = $generator->generate();
+
+        self::assertSame('2025/10/000000001', $result);
     }
 }
