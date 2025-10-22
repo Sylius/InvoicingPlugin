@@ -20,26 +20,26 @@
         <defaults public="true" />
 
         <service id="sylius_invoicing.event_producer.order_payment_paid" class="Sylius\InvoicingPlugin\EventProducer\OrderPaymentPaidProducer">
-            <argument type="service" id="sylius.event_bus" />
+            <argument type="service" id="sylius_invoicing.event_bus" />
             <argument type="service" id="clock" />
             <argument type="service" id="sylius_invoicing.repository.invoice" />
         </service>
 
         <service id="sylius_invoicing.listener.order_placed" class="Sylius\InvoicingPlugin\EventListener\CreateInvoiceOnOrderPlacedListener">
             <argument type="service" id="sylius_invoicing.creator.invoice" />
-            <tag name="messenger.message_handler" bus="sylius.event_bus" />
+            <tag name="messenger.message_handler" bus="sylius_invoicing.event_bus" />
         </service>
 
         <service id="sylius_invoicing.event_producer.order_placed" class="Sylius\InvoicingPlugin\EventProducer\OrderPlacedProducer">
-            <argument type="service" id="sylius.event_bus" />
+            <argument type="service" id="sylius_invoicing.event_bus" />
             <argument type="service" id="clock" />
             <tag name="doctrine.event_listener" event="postPersist" />
             <tag name="doctrine.event_listener" event="postUpdate" />
         </service>
 
         <service id="sylius_invoicing.listener.order_payment_paid" class="Sylius\InvoicingPlugin\EventListener\OrderPaymentPaidListener">
-            <argument type="service" id="sylius.command_bus" />
-            <tag name="messenger.message_handler" bus="sylius.event_bus" />
+            <argument type="service" id="sylius_invoicing.command_bus" />
+            <tag name="messenger.message_handler" bus="sylius_invoicing.event_bus" />
         </service>
     </services>
 </container>

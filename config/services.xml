@@ -37,7 +37,7 @@
             <argument type="service" id="sylius_invoicing.repository.invoice" />
             <argument type="service" id="sylius.repository.order" />
             <argument type="service" id="sylius_invoicing.email.invoice_email_sender" />
-            <tag name="messenger.message_handler" />
+            <tag name="messenger.message_handler" bus="sylius_invoicing.command_bus"/>
         </service>
 
         <service id="sylius_invoicing.security.voter.invoice" class="Sylius\InvoicingPlugin\Security\Voter\InvoiceVoter">
