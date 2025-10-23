@@ -27,10 +27,14 @@ use Sylius\InvoicingPlugin\Entity\InvoiceShopBillingData;
 use Sylius\InvoicingPlugin\Entity\InvoiceShopBillingDataInterface;
 use Sylius\InvoicingPlugin\Factory\InvoiceFactory;
 use Sylius\InvoicingPlugin\Factory\InvoiceFactoryInterface;
+use Sylius\InvoicingPlugin\Generator\InvoiceFileNameGenerator;
+use Sylius\InvoicingPlugin\Generator\InvoiceFileNameGeneratorInterface;
 
 final class InvoiceFactoryTest extends TestCase
 {
     private FactoryInterface&MockObject $invoiceShopBillingDataFactory;
+
+    private InvoiceFileNameGeneratorInterface&MockObject $invoiceFileNameGenerator;
 
     private InvoiceFactory $invoiceFactory;
 
@@ -38,10 +42,11 @@ final class InvoiceFactoryTest extends TestCase
     {
         parent::setUp();
         $this->invoiceShopBillingDataFactory = $this->createMock(FactoryInterface::class);
-
+        $this->invoiceFileNameGenerator = $this->createMock(InvoiceFileNameGeneratorInterface::class);
         $this->invoiceFactory = new InvoiceFactory(
             Invoice::class,
             $this->invoiceShopBillingDataFactory,
+            $this->invoiceFileNameGenerator,
         );
     }
 
@@ -49,6 +54,7 @@ final class InvoiceFactoryTest extends TestCase
     public function it_implements_invoice_factory_interface(): void
     {
         self::assertInstanceOf(InvoiceFactoryInterface::class, $this->invoiceFactory);
+
     }
 
     #[Test]
@@ -60,6 +66,12 @@ final class InvoiceFactoryTest extends TestCase
         $order = $this->createMock(OrderInterface::class);
 
         $date = new \DateTimeImmutable('2019-03-06');
+
+        $this->invoiceFileNameGenerator
+            ->expects(self::once())
+            ->method('generateForPdf')
+            ->with('2019/03/0000001')
+            ->willReturn('2019_03_0000001.pdf');
 
         $result = $this->invoiceFactory->createForData(
             '7903c83a-4c5e-4bcf-81d8-9dc304c6a353',
@@ -93,6 +105,12 @@ final class InvoiceFactoryTest extends TestCase
             ->expects(self::once())
             ->method('createNew')
             ->willReturn(new InvoiceShopBillingData());
+
+        $this->invoiceFileNameGenerator
+            ->expects(self::once())
+            ->method('generateForPdf')
+            ->with('2019/03/0000001')
+            ->willReturn('2019_03_0000001.pdf');
 
         $result = $this->invoiceFactory->createForData(
             '7903c83a-4c5e-4bcf-81d8-9dc304c6a353',

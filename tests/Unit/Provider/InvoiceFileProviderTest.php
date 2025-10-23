@@ -29,8 +29,6 @@ use Sylius\InvoicingPlugin\Provider\InvoiceFileProviderInterface;
 
 final class InvoiceFileProviderTest extends TestCase
 {
-    private InvoiceFileNameGeneratorInterface&MockObject $invoiceFileNameGenerator;
-
     private FilesystemInterface&MockObject $filesystem;
 
     private InvoicePdfFileGeneratorInterface&MockObject $invoicePdfFileGenerator;
@@ -42,13 +40,11 @@ final class InvoiceFileProviderTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->invoiceFileNameGenerator = $this->createMock(InvoiceFileNameGeneratorInterface::class);
         $this->filesystem = $this->createMock(FilesystemInterface::class);
         $this->invoicePdfFileGenerator = $this->createMock(InvoicePdfFileGeneratorInterface::class);
         $this->invoiceFileManager = $this->createMock(InvoiceFileManagerInterface::class);
 
         $this->provider = new InvoiceFileProvider(
-            $this->invoiceFileNameGenerator,
             $this->filesystem,
             $this->invoicePdfFileGenerator,
             $this->invoiceFileManager,
@@ -68,10 +64,9 @@ final class InvoiceFileProviderTest extends TestCase
         $invoice = $this->createMock(InvoiceInterface::class);
         $invoiceFile = $this->createMock(File::class);
 
-        $this->invoiceFileNameGenerator
+        $invoice
             ->expects(self::once())
-            ->method('generateForPdf')
-            ->with($invoice)
+            ->method('path')
             ->willReturn('invoice.pdf');
 
         $this->filesystem
@@ -98,10 +93,9 @@ final class InvoiceFileProviderTest extends TestCase
     {
         $invoice = $this->createMock(InvoiceInterface::class);
 
-        $this->invoiceFileNameGenerator
+        $invoice
             ->expects(self::once())
-            ->method('generateForPdf')
-            ->with($invoice)
+            ->method('path')
             ->willReturn('invoice.pdf');
 
         $this->filesystem
