@@ -17,5 +17,5 @@ use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 
 interface InvoiceFileNameGeneratorInterface
 {
-    public function generateForPdf(InvoiceInterface $invoice): string;
+    public function generateForPdf(string $invoiceNumber): string;
 }

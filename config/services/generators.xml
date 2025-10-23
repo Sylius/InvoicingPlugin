@@ -39,16 +39,14 @@
         </service>
         <service id="Sylius\InvoicingPlugin\Generator\InvoiceGeneratorInterface" alias="sylius_invoicing.generator.invoice" />
 
-        <service
-            id="sylius_invoicing.generator.invoice_file_name"
-            class="Sylius\InvoicingPlugin\Generator\InvoiceFileNameGenerator"
-        />
+        <service id="sylius_invoicing.generator.invoice_file_name" class="Sylius\InvoicingPlugin\Generator\InvoiceFileNameGenerator">
+            <argument>%sylius_invoicing.sequence_scope%</argument>
+        </service>
         <service id="Sylius\InvoicingPlugin\Generator\InvoiceFileNameGeneratorInterface" alias="sylius_invoicing.generator.invoice_file_name" />
 
         <service id="sylius_invoicing.generator.invoice_pdf_file" class="Sylius\InvoicingPlugin\Generator\InvoicePdfFileGenerator">
             <argument type="service" id="sylius_invoicing.generator.twig_to_pdf" />
             <argument type="service" id="file_locator" />
-            <argument type="service" id="sylius_invoicing.generator.invoice_file_name" />
             <argument>@SyliusInvoicingPlugin/shared/download/pdf.html.twig</argument>
             <argument>%sylius_invoicing.template.logo_file%</argument>
         </service>
@@ -58,9 +56,6 @@
             <argument type="service" id="sylius_invoicing.repository.invoice" />
             <argument type="service" id="sylius.repository.order" />
             <argument type="service" id="sylius_invoicing.generator.invoice" />
-            <argument type="service" id="sylius_invoicing.generator.invoice_pdf_file" />
-            <argument type="service" id="sylius_invoicing.manager.invoice_file" />
-            <argument>%sylius_invoicing.pdf_generator.enabled%</argument>
         </service>
         <service id="Sylius\InvoicingPlugin\Creator\InvoiceCreatorInterface" alias="sylius_invoicing.creator.invoice" />
 

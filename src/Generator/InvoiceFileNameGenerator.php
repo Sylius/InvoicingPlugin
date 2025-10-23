@@ -13,14 +13,28 @@ declare(strict_types=1);
 
 namespace Sylius\InvoicingPlugin\Generator;
 
-use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
+use Sylius\InvoicingPlugin\Enum\InvoiceSequenceScopeEnum;
 
 final class InvoiceFileNameGenerator implements InvoiceFileNameGeneratorInterface
 {
     private const PDF_FILE_EXTENSION = '.pdf';
 
-    public function generateForPdf(InvoiceInterface $invoice): string
+    public function __construct(
+        private readonly ?string $scope = null,
+    ) {
+    }
+
+    public function generateForPdf(string $invoiceNumber): string
     {
-        return str_replace('/', '_', $invoice->number()) . self::PDF_FILE_EXTENSION;
+        $scope = InvoiceSequenceScopeEnum::tryFrom($this->scope ?? '') ?? InvoiceSequenceScopeEnum::GLOBAL;
+        $prefix = $scope->value . '/';
+
+        if ($scope === InvoiceSequenceScopeEnum::GLOBAL) {
+            $prefix = '';
+        }
+
+        $fileName = str_replace('/', '_', $invoiceNumber) . self::PDF_FILE_EXTENSION;
+
+        return $prefix . $fileName;
     }
 }

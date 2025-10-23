@@ -51,6 +51,7 @@
         <service id="sylius_invoicing.custom_factory.invoice" class="Sylius\InvoicingPlugin\Factory\InvoiceFactory">
             <argument>%sylius_invoicing.model.invoice.class%</argument>
             <argument type="service" id="sylius_invoicing.factory.shop_billing_data" />
+            <argument type="service" id="sylius_invoicing.generator.invoice_file_name" />
         </service>
         <service id="Sylius\InvoicingPlugin\Factory\InvoiceFactoryInterface" alias="sylius_invoicing.custom_factory.invoice" />
 
@@ -60,11 +61,11 @@
         <service id="Sylius\InvoicingPlugin\Manager\InvoiceFileManagerInterface" alias="sylius_invoicing.manager.invoice_file" />
 
         <service id="sylius_invoicing.provider.invoice_file" class="Sylius\InvoicingPlugin\Provider\InvoiceFileProvider">
-            <argument type="service" id="sylius_invoicing.generator.invoice_file_name" />
             <argument type="service" id="gaufrette.sylius_invoicing_invoice_filesystem" />
             <argument type="service" id="sylius_invoicing.generator.invoice_pdf_file" />
             <argument type="service" id="sylius_invoicing.manager.invoice_file" />
             <argument>%sylius_invoicing.invoice_save_path%</argument>
+            <argument>%sylius_invoicing.pdf_generator.enabled%</argument>
         </service>
         <service id="Sylius\InvoicingPlugin\Provider\InvoiceFileProviderInterface" alias="sylius_invoicing.provider.invoice_file" />
 

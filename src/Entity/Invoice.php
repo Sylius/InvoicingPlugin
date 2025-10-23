@@ -36,6 +36,7 @@ class Invoice implements InvoiceInterface
         protected ChannelInterface $channel,
         protected string $paymentState,
         protected InvoiceShopBillingDataInterface $shopBillingData,
+        protected string $path,
     ) {
         $this->issuedAt = clone $issuedAt;
 
@@ -142,5 +143,10 @@ class Invoice implements InvoiceInterface
     public function paymentState(): string
     {
         return $this->paymentState;
+    }
+
+    public function path(): string
+    {
+        return $this->path;
     }
 }
