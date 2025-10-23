@@ -13,15 +13,12 @@ declare(strict_types=1);
 
 namespace Sylius\InvoicingPlugin\Creator;
 
-use Doctrine\ORM\Exception\ORMException;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Repository\OrderRepositoryInterface;
 use Sylius\InvoicingPlugin\Doctrine\ORM\InvoiceRepositoryInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Sylius\InvoicingPlugin\Exception\InvoiceAlreadyGenerated;
 use Sylius\InvoicingPlugin\Generator\InvoiceGeneratorInterface;
-use Sylius\InvoicingPlugin\Generator\InvoicePdfFileGeneratorInterface;
-use Sylius\InvoicingPlugin\Manager\InvoiceFileManagerInterface;
 
 final class InvoiceCreator implements InvoiceCreatorInterface
 {
@@ -29,9 +26,6 @@ final class InvoiceCreator implements InvoiceCreatorInterface
         private readonly InvoiceRepositoryInterface $invoiceRepository,
         private readonly OrderRepositoryInterface $orderRepository,
         private readonly InvoiceGeneratorInterface $invoiceGenerator,
-        private readonly InvoicePdfFileGeneratorInterface $invoicePdfFileGenerator,
-        private readonly InvoiceFileManagerInterface $invoiceFileManager,
-        private readonly bool $hasEnabledPdfFileGenerator = true,
     ) {
     }
 
@@ -49,19 +43,6 @@ final class InvoiceCreator implements InvoiceCreatorInterface
 
         $invoice = $this->invoiceGenerator->generateForOrder($order, $dateTime);
 
-        if (!$this->hasEnabledPdfFileGenerator) {
-            $this->invoiceRepository->add($invoice);
-
-            return;
-        }
-
-        $invoicePdf = $this->invoicePdfFileGenerator->generate($invoice);
-        $this->invoiceFileManager->save($invoicePdf);
-
-        try {
-            $this->invoiceRepository->add($invoice);
-        } catch (ORMException) {
-            $this->invoiceFileManager->remove($invoicePdf);
-        }
+        $this->invoiceRepository->add($invoice);
     }
 }

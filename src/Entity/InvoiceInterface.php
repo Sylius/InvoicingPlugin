@@ -53,4 +53,6 @@ interface InvoiceInterface extends ResourceInterface
     public function shopBillingData(): InvoiceShopBillingDataInterface;
 
     public function paymentState(): string;
+
+    public function path(): string;
 }
