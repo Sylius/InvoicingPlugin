@@ -163,57 +163,6 @@ final class InvoiceCreatorTest extends TestCase
     }
 
     #[Test]
-    public function it_removes_saved_invoice_file_if_database_update_fails(): void
-    {
-        $order = $this->createMock(OrderInterface::class);
-        $invoice = $this->createMock(InvoiceInterface::class);
-        $invoicePdf = new InvoicePdf('invoice.pdf', 'CONTENT');
-        $invoiceDateTime = new \DateTimeImmutable('2019-02-25');
-
-        $this->orderRepository
-            ->expects(self::once())
-            ->method('findOneByNumber')
-            ->with('0000001')
-            ->willReturn($order);
-
-        $this->invoiceRepository
-            ->expects(self::once())
-            ->method('findOneByOrder')
-            ->with($order)
-            ->willReturn(null);
-
-        $this->invoiceGenerator
-            ->expects(self::once())
-            ->method('generateForOrder')
-            ->with($order, $invoiceDateTime)
-            ->willReturn($invoice);
-
-        $this->invoicePdfFileGenerator
-            ->expects(self::once())
-            ->method('generate')
-            ->with($invoice)
-            ->willReturn($invoicePdf);
-
-        $this->invoiceFileManager
-            ->expects(self::once())
-            ->method('save')
-            ->with($invoicePdf);
-
-        $this->invoiceRepository
-            ->expects(self::once())
-            ->method('add')
-            ->with($invoice)
-            ->willThrowException(new EntityNotFoundException());
-
-        $this->invoiceFileManager
-            ->expects(self::once())
-            ->method('remove')
-            ->with($invoicePdf);
-
-        ($this->creator)('0000001', $invoiceDateTime);
-    }
-
-    #[Test]
     public function it_throws_an_exception_when_invoice_was_already_created_for_given_order(): void
     {
         $order = $this->createMock(OrderInterface::class);
