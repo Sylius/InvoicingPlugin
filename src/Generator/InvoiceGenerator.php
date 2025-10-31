@@ -36,7 +36,23 @@ final class InvoiceGenerator implements InvoiceGeneratorInterface
         private readonly LineItemsConverterInterface $orderItemUnitsToLineItemsConverter,
         private readonly LineItemsConverterInterface $shippingAdjustmentsToLineItemsConverter,
         private readonly TaxItemsConverterInterface $taxItemsConverter,
+        private readonly ?LineItemsConverterInterface $orderItemsToLineItemsConverter = null,
     ) {
+        if (null === $this->orderItemsToLineItemsConverter) {
+            trigger_deprecation(
+                'sylius/invoicing-plugin',
+                '2.0',
+                'Not passing a "%s" to "%s" is deprecated and will be required in Sylius Invoicing Plugin 3.0.',
+                LineItemsConverterInterface::class,
+                self::class,
+            );
+            trigger_deprecation(
+                'sylius/invoicing-plugin',
+                '2.0',
+                'Deprecated constructor argument "$orderItemUnitsToLineItemsConverter" passed to %s. Use "$orderItemsToLineItemsConverter" instead.',
+                self::class,
+            );
+        }
     }
 
     public function generateForOrder(OrderInterface $order, \DateTimeInterface $date): InvoiceInterface
@@ -50,6 +66,10 @@ final class InvoiceGenerator implements InvoiceGeneratorInterface
         $paymentState = $order->getPaymentState() === OrderPaymentStates::STATE_PAID ?
             InvoiceInterface::PAYMENT_STATE_COMPLETED : InvoiceInterface::PAYMENT_STATE_PENDING;
 
+        $lineItemsFromOrder = $this->orderItemsToLineItemsConverter !== null
+            ? $this->orderItemsToLineItemsConverter->convert($order)
+            : $this->orderItemUnitsToLineItemsConverter->convert($order);
+
         return $this->invoiceFactory->createForData(
             $this->uuidInvoiceIdentifierGenerator->generate(),
             $this->sequentialInvoiceNumberGenerator->generate(),
@@ -60,7 +80,7 @@ final class InvoiceGenerator implements InvoiceGeneratorInterface
             $order->getLocaleCode(),
             $order->getTotal(),
             new ArrayCollection(array_merge(
-                $this->orderItemUnitsToLineItemsConverter->convert($order),
+                $lineItemsFromOrder,
                 $this->shippingAdjustmentsToLineItemsConverter->convert($order),
             )),
             $this->taxItemsConverter->convert($order),

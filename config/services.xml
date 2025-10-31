@@ -73,5 +73,10 @@
             class="Sylius\InvoicingPlugin\Provider\UnitNetPriceProvider"
         />
         <service id="Sylius\InvoicingPlugin\Provider\UnitNetPriceProviderInterface" alias="sylius_invoicing.provider.unit_net_price" />
+
+        <service id="sylius_invoicing.provider.item_net_prices" class="Sylius\InvoicingPlugin\Provider\ItemNetPricesProvider">
+            <argument type="service" id="sylius.distributor.integer" />
+        </service>
+        <service id="Sylius\InvoicingPlugin\Provider\ItemNetPricesProviderInterface" alias="sylius_invoicing.provider.item_net_prices" />
     </services>
 </container>

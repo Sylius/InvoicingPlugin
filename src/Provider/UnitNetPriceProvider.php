@@ -16,6 +16,7 @@ namespace Sylius\InvoicingPlugin\Provider;
 use Sylius\Component\Core\Model\AdjustmentInterface;
 use Sylius\Component\Core\Model\OrderItemUnitInterface;
 
+/** @deprecated since Sylius Invoicing Plugin 2.0 and will be removed in Sylius Invoicing Plugin 3.0. */
 final class UnitNetPriceProvider implements UnitNetPriceProviderInterface
 {
     public function getUnitNetPrice(OrderItemUnitInterface $orderItemUnit): int

@@ -23,6 +23,12 @@
             <argument type="service" id="sylius_invoicing.provider.unit_net_price" />
         </service>
 
+        <service id="sylius_invoicing.converter.order_item_to_line_items" class="Sylius\InvoicingPlugin\Converter\OrderItemsToLineItemsConverter">
+            <argument type="service" id="sylius_invoicing.provider.tax_rate_percentage" />
+            <argument type="service" id="sylius_invoicing.factory.line_item" />
+            <argument type="service" id="sylius_invoicing.provider.item_net_prices" />
+        </service>
+
         <service id="sylius_invoicing.converter.shipping_adjustments_to_line_items" class="Sylius\InvoicingPlugin\Converter\ShippingAdjustmentsToLineItemsConverter">
             <argument type="service" id="sylius_invoicing.provider.tax_rate_percentage" />
             <argument type="service" id="sylius_invoicing.factory.line_item" />
