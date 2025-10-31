@@ -60,52 +60,98 @@ class Invoice implements InvoiceInterface
         return $this->id;
     }
 
-    public function number(): string
+    public function getNumber(): string
     {
         return $this->number;
     }
 
-    public function order(): OrderInterface
+    public function setNumber(string $number): void
+    {
+        $this->number = $number;
+    }
+
+    public function getOrder(): OrderInterface
     {
         return $this->order;
     }
 
-    public function issuedAt(): \DateTimeInterface
+    public function setOrder(OrderInterface $order): void
+    {
+        $this->order = $order;
+    }
+
+    public function getIssuedAt(): \DateTimeInterface
     {
         return clone $this->issuedAt;
     }
 
-    public function billingData(): BillingDataInterface
+    public function getBillingData(): BillingDataInterface
     {
         return $this->billingData;
     }
 
-    public function currencyCode(): string
+    public function setBillingData(BillingDataInterface $billingData): void
+    {
+        $this->billingData = $billingData;
+    }
+
+    public function getCurrencyCode(): string
     {
         return $this->currencyCode;
     }
 
-    public function localeCode(): string
+    public function setCurrencyCode(string $currencyCode): void
+    {
+        $this->currencyCode = $currencyCode;
+    }
+
+    public function getLocaleCode(): string
     {
         return $this->localeCode;
     }
 
-    public function total(): int
+    public function setLocaleCode(string $localeCode): void
+    {
+        $this->localeCode = $localeCode;
+    }
+
+    public function getTotal(): int
     {
         return $this->total;
     }
 
-    public function lineItems(): Collection
+    public function setTotal(int $total): void
+    {
+        $this->total = $total;
+    }
+
+    public function getLineItems(): Collection
     {
         return $this->lineItems;
     }
 
-    public function taxItems(): Collection
+    public function addLineItem(LineItemInterface $lineItem): void
+    {
+        if (!$this->lineItems->contains($lineItem)) {
+            $this->lineItems->add($lineItem);
+            $lineItem->setInvoice($this);
+        }
+    }
+
+    public function getTaxItems(): Collection
     {
         return $this->taxItems;
     }
 
-    public function subtotal(): int
+    public function addTaxItem(TaxItemInterface $taxItem): void
+    {
+        if (!$this->taxItems->contains($taxItem)) {
+            $this->taxItems->add($taxItem);
+            $taxItem->setInvoice($this);
+        }
+    }
+
+    public function getSubtotal(): int
     {
         $subtotal = 0;
 
@@ -117,7 +163,7 @@ class Invoice implements InvoiceInterface
         return $subtotal;
     }
 
-    public function taxesTotal(): int
+    public function getTaxesTotal(): int
     {
         $taxesTotal = 0;
 
@@ -129,18 +175,33 @@ class Invoice implements InvoiceInterface
         return $taxesTotal;
     }
 
-    public function channel(): ChannelInterface
+    public function getChannel(): ChannelInterface
     {
         return $this->channel;
     }
 
-    public function shopBillingData(): InvoiceShopBillingDataInterface
+    public function setChannel(ChannelInterface $channel): void
+    {
+        $this->channel = $channel;
+    }
+
+    public function getShopBillingData(): InvoiceShopBillingDataInterface
     {
         return $this->shopBillingData;
     }
 
-    public function paymentState(): string
+    public function setShopBillingData(InvoiceShopBillingDataInterface $shopBillingData): void
+    {
+        $this->shopBillingData = $shopBillingData;
+    }
+
+    public function getPaymentState(): string
     {
         return $this->paymentState;
+    }
+
+    public function setPaymentState(string $paymentState): void
+    {
+        $this->paymentState = $paymentState;
     }
 }

@@ -21,6 +21,6 @@ final class InvoiceFileNameGenerator implements InvoiceFileNameGeneratorInterfac
 
     public function generateForPdf(InvoiceInterface $invoice): string
     {
-        return str_replace('/', '_', $invoice->number()) . self::PDF_FILE_EXTENSION;
+        return str_replace('/', '_', $invoice->getNumber()) . self::PDF_FILE_EXTENSION;
     }
 }

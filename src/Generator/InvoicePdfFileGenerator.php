@@ -36,7 +36,7 @@ final class InvoicePdfFileGenerator implements InvoicePdfFileGeneratorInterface
             $this->template,
             [
                 'invoice' => $invoice,
-                'channel' => $invoice->channel(),
+                'channel' => $invoice->getChannel(),
                 'invoiceLogoPath' => $this->fileLocator->locate($this->invoiceLogoPath),
             ],
         );

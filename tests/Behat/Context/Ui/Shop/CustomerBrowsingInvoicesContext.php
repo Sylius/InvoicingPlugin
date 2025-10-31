@@ -53,7 +53,7 @@ final class CustomerBrowsingInvoicesContext implements Context
         /** @var InvoiceInterface $invoice */
         $invoice = $this->invoiceRepository->findByOrderNumber($orderNumber)[0];
 
-        $this->downloadInvoicePage->tryToOpen(['id' => $invoice->id()]);
+        $this->downloadInvoicePage->tryToOpen(['id' => $invoice->getId()]);
     }
 
     /**
@@ -64,7 +64,7 @@ final class CustomerBrowsingInvoicesContext implements Context
         /** @var InvoiceInterface $invoice */
         $invoice = $this->invoiceRepository->findByOrderNumber($orderNumber)[0];
 
-        Assert::false($this->downloadInvoicePage->isOpen(['id' => $invoice->id()]));
+        Assert::false($this->downloadInvoicePage->isOpen(['id' => $invoice->getId()]));
     }
 
     /**

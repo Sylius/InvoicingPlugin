@@ -30,7 +30,7 @@ final class ManagingInvoicesContext implements Context
     {
         /** @var InvoiceInterface $invoice */
         $invoice = $this->invoiceRepository->findOneByOrder($order);
-        $filePath = $this->invoicesSavePath.'/'.str_replace('/', '_', $invoice->number()).'.pdf';
+        $filePath = $this->invoicesSavePath.'/'.str_replace('/', '_', $invoice->getNumber()).'.pdf';
 
         Assert::true(file_exists($filePath));
     }

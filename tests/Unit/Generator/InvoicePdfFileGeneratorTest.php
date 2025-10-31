@@ -69,7 +69,7 @@ final class InvoicePdfFileGeneratorTest extends TestCase
             ->with($invoice)
             ->willReturn('2015_05_00004444.pdf');
 
-        $invoice->method('channel')->willReturn($channel);
+        $invoice->method('getChannel')->willReturn($channel);
 
         $this->fileLocator
             ->expects(self::once())

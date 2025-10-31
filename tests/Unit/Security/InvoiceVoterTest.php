@@ -102,7 +102,7 @@ final class InvoiceVoterTest extends TestCase
         $customer = $this->createMock(CustomerInterface::class);
         $order = $this->createMock(OrderInterface::class);
 
-        $invoice->method('order')->willReturn($order);
+        $invoice->method('getOrder')->willReturn($order);
         $order->method('getNumber')->willReturn('1337');
         $token->method('getUser')->willReturn($shopUser);
         $shopUser->method('getCustomer')->willReturn($customer);
@@ -124,7 +124,7 @@ final class InvoiceVoterTest extends TestCase
         $customer = $this->createMock(CustomerInterface::class);
         $order = $this->createMock(OrderInterface::class);
 
-        $invoice->method('order')->willReturn($order);
+        $invoice->method('getOrder')->willReturn($order);
         $order->method('getNumber')->willReturn('1337');
         $token->method('getUser')->willReturn($shopUser);
         $shopUser->method('getCustomer')->willReturn($customer);

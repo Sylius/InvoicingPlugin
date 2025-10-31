@@ -39,7 +39,7 @@ final class InvoiceFileNameGeneratorTest extends TestCase
     public function it_generates_invoice_file_name_based_on_its_number(): void
     {
         $invoice = $this->createMock(InvoiceInterface::class);
-        $invoice->method('number')->willReturn('2020/01/02/000333');
+        $invoice->method('getNumber')->willReturn('2020/01/02/000333');
 
         $result = $this->generator->generateForPdf($invoice);
 

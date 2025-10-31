@@ -73,7 +73,7 @@ final class InvoiceVoter extends Voter
 
             Assert::isInstanceOf($customer, CustomerInterface::class);
 
-            return null !== $this->orderRepository->findOneByNumberAndCustomer($invoice->order()->getNumber(), $customer);
+            return null !== $this->orderRepository->findOneByNumberAndCustomer($invoice->getOrder()->getNumber(), $customer);
         }
 
         return false;
