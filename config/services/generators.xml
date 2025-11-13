@@ -60,6 +60,7 @@
             <argument type="service" id="sylius_invoicing.generator.invoice_pdf_file" />
             <argument type="service" id="sylius_invoicing.manager.invoice_file" />
             <argument>%sylius_invoicing.pdf_generator.enabled%</argument>
+            <argument type="tagged_iterator" tag="sylius_invoicing.modifier.invoice" />
         </service>
         <service id="Sylius\InvoicingPlugin\Creator\InvoiceCreatorInterface" alias="sylius_invoicing.creator.invoice" />
 

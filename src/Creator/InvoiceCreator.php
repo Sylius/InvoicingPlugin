@@ -22,6 +22,7 @@ use Sylius\InvoicingPlugin\Exception\InvoiceAlreadyGenerated;
 use Sylius\InvoicingPlugin\Generator\InvoiceGeneratorInterface;
 use Sylius\InvoicingPlugin\Generator\InvoicePdfFileGeneratorInterface;
 use Sylius\InvoicingPlugin\Manager\InvoiceFileManagerInterface;
+use Sylius\InvoicingPlugin\Modifier\InvoiceModifierInterface;
 
 final class InvoiceCreator implements InvoiceCreatorInterface
 {
@@ -32,7 +33,17 @@ final class InvoiceCreator implements InvoiceCreatorInterface
         private readonly InvoicePdfFileGeneratorInterface $invoicePdfFileGenerator,
         private readonly InvoiceFileManagerInterface $invoiceFileManager,
         private readonly bool $hasEnabledPdfFileGenerator = true,
+        private readonly ?iterable $invoiceModifiers = null,
     ) {
+        if (null === $this->invoiceModifiers) {
+            trigger_deprecation(
+                'sylius/invoicing-plugin',
+                '2.1',
+                'Not passing a "%s" to "%s" is deprecated and will be required in Sylius Invoicing Plugin 3.0.',
+                InvoiceModifierInterface::class,
+                self::class,
+            );
+        }
     }
 
     public function __invoke(string $orderNumber, \DateTimeInterface $dateTime): void
@@ -48,6 +59,12 @@ final class InvoiceCreator implements InvoiceCreatorInterface
         }
 
         $invoice = $this->invoiceGenerator->generateForOrder($order, $dateTime);
+
+        if (null !== $this->invoiceModifiers) {
+            foreach ($this->invoiceModifiers as $modifier) {
+                $invoice = $modifier->modify($invoice);
+            }
+        }
 
         if (!$this->hasEnabledPdfFileGenerator) {
             $this->invoiceRepository->add($invoice);
