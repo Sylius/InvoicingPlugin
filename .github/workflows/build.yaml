@@ -41,7 +41,7 @@ jobs:
 
                     -
                         php: "8.3"
-                        symfony: "~7.2.0"
+                        symfony: "~7.3.0"
                         sylius: "~2.1.0"
                         node: "24.x"
                         database: "mysql"
