@@ -1,0 +1,5 @@
+{% set billing_data = hookable_metadata.context.resource.billingData %}
+
+{% if billing_data.countryCode %}
+    {{ ux_icon('flagpack:' ~ billing_data.countryCode|lower, {'class': 'icon me-1'}) }}
+{% endif %}

@@ -1,0 +1,3 @@
+{% set shop_billing_data = hookable_metadata.context.resource.shopBillingData %}
+
+{% if shop_billing_data.representative %}<strong>{{ shop_billing_data.representative }}</strong>{% endif %}

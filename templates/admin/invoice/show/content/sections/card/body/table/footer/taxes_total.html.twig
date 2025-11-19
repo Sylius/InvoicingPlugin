@@ -1,0 +1,5 @@
+<tr>
+    <th colspan="8" class="text-end"><strong>{{ 'sylius_invoicing.ui.taxes_total'|trans }}</strong>:</th>
+    <th class="text-end" {{ sylius_test_html_attribute('invoice-taxes-total') }}>{{ '%0.2f'|format(hookable_metadata.context.resource.taxesTotal/100) }}</th>
+    <th {{ sylius_test_html_attribute('invoice-taxes-total-currency-code') }}>{{ hookable_metadata.context.resource.currencyCode }}</th>
+</tr>

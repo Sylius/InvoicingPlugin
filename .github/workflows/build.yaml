@@ -12,41 +12,51 @@ on:
 
 jobs:
     tests:
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-22.04
 
         name: "Sylius ${{ matrix.sylius }}, PHP ${{ matrix.php }}, Symfony ${{ matrix.symfony }}, ${{ matrix.database == 'mysql' && format('MySQL {0}', matrix.mysql) || matrix.database == 'postgres' && format('PostgreSQL {0}', matrix.postgres) }}, wkhtmltopdf: ${{ matrix.wkhtmltopdf }}, State Machine Adapter ${{ matrix.state_machine_adapter }}"
 
         strategy:
             fail-fast: false
             matrix:
-                php: ["8.3"]
-                symfony: ["^5.4.21", "^6.4"]
-                sylius: ["~1.14.0"]
+                php: ["8.2", "8.3"]
+                symfony: ["^6.4", "~7.3.0"]
+                sylius: ["~2.0.0", "~2.1.0"]
+                node: ["22.x"]
+                database: ["mysql"]
                 mysql: ["8.4"]
-                node: ["20.x"]
-                postgres: ["15.8"]
-                database: ["mysql", "postgres"]
                 wkhtmltopdf: ["0.12.6.1-2"]
                 state_machine_adapter: ["symfony_workflow"]
 
                 include:
                     -
-                        php: "8.2"
-                        symfony: "^6.4"
-                        sylius: "~1.14.0"
+                        php: "8.3"
+                        symfony: "~7.3.0"
+                        sylius: "~2.1.0"
+                        node: "24.x"
                         database: "mysql"
                         mysql: "8.4"
-                        node: "20.x"
                         wkhtmltopdf: "0.12.6.1-2"
                         state_machine_adapter: "winzou_state_machine"
+
                     -
-                        php: "8.2"
-                        symfony: "^6.4"
-                        sylius: "~1.14.0"
+                        php: "8.3"
+                        symfony: "~7.3.0"
+                        sylius: "~2.1.0"
+                        node: "24.x"
                         database: "mysql"
                         mysql: "8.4"
-                        node: "20.x"
                         wkhtmltopdf: false
+                        state_machine_adapter: "symfony_workflow"
+
+                    -
+                        php: "8.3"
+                        symfony: "~7.3.0"
+                        sylius: "~2.1.0"
+                        node: "24.x"
+                        database: "postgres"
+                        postgres: "15.8"
+                        wkhtmltopdf: "0.12.6.1-2"
                         state_machine_adapter: "symfony_workflow"
 
         env:
@@ -114,11 +124,6 @@ jobs:
                     sudo dpkg -i wkhtmltox_${{ matrix.wkhtmltopdf }}.jammy_amd64.deb
 
             -
-                name: Disable running Behat scenarios for PDF generation
-                if: matrix.wkhtmltopdf == false
-                run: sed -i 's/pdf_generation_disabled/pdf_generation_enabled/g' behat.yml.dist
-
-            -
                 name: Get Composer cache directory
                 id: composer-cache
                 run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
@@ -144,6 +149,13 @@ jobs:
                 name: Restrict Sylius version
                 if: matrix.sylius != ''
                 run: composer require "sylius/sylius:${{ matrix.sylius }}" --no-update --no-scripts --no-interaction
+
+            -
+                name: Require Winzou State Machine
+                if: "${{ matrix.state_machine_adapter == 'winzou_state_machine' }}"
+                run: |
+                  composer require winzou/state-machine:^0.4 --no-update   
+                  composer require winzou/state-machine-bundle:^0.6 --no-update   
 
             -
                 name: Install PHP dependencies
@@ -188,24 +200,12 @@ jobs:
                 run: vendor/bin/console sylius:fixtures:load -n
 
             -
-                name: Validate composer.json
-                run: composer validate --ansi --strict --no-check-publish
-
-            -
-                name: Run ECS
-                run: vendor/bin/ecs check src/ spec/
-
-            -
                 name: Run security check
                 run: symfony security:check
 
             -
-                name: Run PHPStan
-                run: vendor/bin/phpstan analyse -c phpstan.neon -l max src/
-
-            -
-                name: Run PHPSpec
-                run: vendor/bin/phpspec run --ansi -f progress --no-interaction
+                name: Run analysis
+                run: composer analyse
 
             -
                 name: Run PHPUnit
@@ -213,7 +213,12 @@ jobs:
 
             -
                 name: Run Behat
-                run: vendor/bin/behat --colors --strict -vvv --no-interaction -f progress || vendor/bin/behat --colors --strict -vvv --no-interaction -f progress --rerun
+                run: |
+                    if [ "${{ matrix.wkhtmltopdf }}" != "false" ]; then
+                        vendor/bin/behat --colors --strict -vvv --no-interaction -f progress --tags="~@pdf_disabled" || vendor/bin/behat --colors --strict -vvv --no-interaction -f progress --rerun;
+                    else
+                        vendor/bin/behat --colors --strict -vvv --no-interaction -f progress --tags="~@pdf_enabled" || vendor/bin/behat --colors --strict -vvv --no-interaction -f progress --rerun;
+                    fi
 
             -
                 name: Upload Behat logs

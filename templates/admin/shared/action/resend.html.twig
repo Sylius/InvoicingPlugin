@@ -1,0 +1,14 @@
+{% if hookable_metadata.context.invoice is defined %}
+    {% set invoice = hookable_metadata.context.invoice %}
+{% elseif hookable_metadata.context.resource is defined %}
+    {% set invoice = hookable_metadata.context.resource %}
+{% else %}
+    {% set invoice = data %}
+{% endif %}
+
+{% set path = path('sylius_invoicing_admin_invoice_resend', {'id': invoice.id}) %}
+
+<a href="{{ path }}" class="btn">
+    {{ ux_icon('tabler:send', {'class': 'icon'}) }}
+    {{ 'sylius_invoicing.ui.resend_invoice'|trans }}
+</a>

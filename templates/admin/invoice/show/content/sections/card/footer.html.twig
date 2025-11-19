@@ -1,0 +1,12 @@
+<div class="card-footer text-end">
+    <div class="d-inline-block" {{ sylius_test_html_attribute('invoice-is-paid') }}>
+        <strong>{{ 'sylius_invoicing.ui.payment.paid'|trans }}: </strong>
+        <span>
+            {% if hookable_metadata.context.resource.paymentState is constant('Sylius\\InvoicingPlugin\\Entity\\InvoiceInterface::PAYMENT_STATE_COMPLETED') %}
+                {{ 'sylius_invoicing.ui.payment.yes'|trans }}
+            {% else %}
+                {{ 'sylius_invoicing.ui.payment.no'|trans }}
+            {% endif %}
+        </span>
+    </div>
+</div>
