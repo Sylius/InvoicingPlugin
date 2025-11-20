@@ -197,7 +197,7 @@ jobs:
 
             -
                 name: Run security check
-                run: symfony security:check
+                run: composer audit --abandoned=ignore
 
             -
                 name: Run PHPStan
