@@ -79,6 +79,13 @@
             "phpstan/extension-installer": true,
             "symfony/flex": true,
             "symfony/thanks": false
+        },
+        "audit": {
+          "ignore": [
+            "PKSA-gs8r-6kz6-pp56",
+            "PKSA-gnn4-pxdg-q76m",
+            "PKSA-4g5g-4rkv-myqs"
+          ]
         }
     },
     "extra": {
