@@ -2,12 +2,12 @@
 
 <phpunit
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
     colors="true"
     bootstrap="vendor/sylius/test-application/config/bootstrap.php"
 >
     <testsuites>
-        <testsuite name="SyliusInvoicingPlugin Test Suite">
+        <testsuite name="sylius_invoicing_plugin_test_suite">
             <directory>tests</directory>
         </testsuite>
     </testsuites>
@@ -18,6 +18,6 @@
         <env name="APP_ENV" value="test"/>
         <env name="SHELL_VERBOSITY" value="-1" />
 
-        <server name="KERNEL_CLASS" value="Sylius\TestApplication\Kernel" />
+        <server name="KERNEL_CLASS" value="Tests\Sylius\InvoicingPlugin\Application\Kernel" />
     </php>
 </phpunit>

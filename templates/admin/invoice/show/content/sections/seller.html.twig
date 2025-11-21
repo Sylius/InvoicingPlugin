@@ -1,0 +1,20 @@
+{% set shop_billing_data = hookable_metadata.context.resource.shopBillingData %}
+
+{% if shop_billing_data %}
+    <div class="col">
+        <div class="card mb-3">
+            <div class="card-header">
+                <div class="card-title">
+                    {{ 'sylius_invoicing.ui.seller'|trans }}
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <address {{ sylius_test_html_attribute('shop-billing-data') }}>
+                        {% hook 'seller' %}
+                    </address>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}

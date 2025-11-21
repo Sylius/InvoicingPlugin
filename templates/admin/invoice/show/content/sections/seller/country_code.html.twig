@@ -1,0 +1,5 @@
+{% set shop_billing_data = hookable_metadata.context.resource.shopBillingData %}
+
+{% if shop_billing_data.countryCode %}
+    {{ ux_icon('flagpack:' ~ shop_billing_data.countryCode|lower, {'class': 'icon me-1'}) }}
+{% endif %}

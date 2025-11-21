@@ -1,0 +1,14 @@
+{% if hookable_metadata.context.resource.taxItems.count() > 0 %}
+    <tr>
+        <th colspan="8" class="text-end"><strong>{{ 'sylius_invoicing.ui.tax_rate'|trans }}</strong></th>
+        <th class="text-end"><strong>{{ 'sylius_invoicing.ui.tax_amount'|trans }}</strong></th>
+        <th><strong>{{ 'sylius.ui.currency'|trans }}</strong></th>
+    </tr>
+    {% for item in hookable_metadata.context.resource.taxItems %}
+        <tr class="tax-item" {{ sylius_test_html_attribute('invoice-tax-item') }}>
+            <th colspan="8" class="text-end"><strong {{ sylius_test_html_attribute('invoice-tax-item-label') }}>{{ item.label }}</strong>:</th>
+            <th class="text-end" {{ sylius_test_html_attribute('invoice-tax-item-amount') }}>{{ '%0.2f'|format(item.amount/100) }}</th>
+            <th {{ sylius_test_html_attribute('invoice-tax-item-currency-code') }}>{{ hookable_metadata.context.resource.currencyCode }}</th>
+        </tr>
+    {% endfor %}
+{% endif %}

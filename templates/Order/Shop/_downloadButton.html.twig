@@ -1,5 +1,0 @@
-{% import '@SyliusUi/Macro/buttons.html.twig' as buttons %}
-
-{% set path = path('sylius_invoicing_shop_invoice_download', { 'id': invoice.id }) %}
-
-{{ buttons.default(path, 'sylius_invoicing.ui.download_invoice'|trans, invoice.id, 'download') }}

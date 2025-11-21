@@ -13,7 +13,7 @@ Feature: Saving invoices on server during generation
         And the store allows paying with "Cash on Delivery"
         And channel "United States" has shop billing data set as "Ragnarok", "1100110011", "Pacific Coast Hwy", "90806" "Los Angeles", "United States"
 
-    @application
+    @application @pdf_enabled
     Scenario: Having invoice saved on the server after the order is placed
         Given there is a customer "lucy@teamlucifer.com" that placed an order "#00000666"
         When the customer bought 2 "Angel T-Shirt" products

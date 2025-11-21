@@ -1,0 +1,57 @@
+sylius_twig_hooks:
+    hooks:
+        'sylius_shop.account.order.show.content.main.summary':
+            invoices:
+                component: 'sylius_invoicing:invoice:list'
+                props:
+                    order: '@=_context.order'
+                priority: 350
+
+        'sylius_shop.account.order.show.content.main.summary.invoices':
+            card:
+                template: '@SyliusInvoicingPlugin/shop/order/show/content/summary/invoices/card.html.twig'
+                priority: 0
+
+        'sylius_shop.account.order.show.content.main.summary.invoices.card':
+            head:
+                template: '@SyliusInvoicingPlugin/shop/order/show/content/summary/invoices/card/head.html.twig'
+                priority: 100
+            body:
+                template: '@SyliusInvoicingPlugin/shop/order/show/content/summary/invoices/card/body.html.twig'
+                priority: 0
+
+        'sylius_shop.account.order.show.content.main.summary.invoices.card.body':
+            table:
+                template: '@SyliusInvoicingPlugin/shop/order/show/content/summary/invoices/card/body/table.html.twig'
+                priority: 0
+
+        'sylius_shop.account.order.show.content.main.summary.invoices.card.body.table':
+            head:
+                template: '@SyliusInvoicingPlugin/shop/order/show/content/summary/invoices/card/body/table/head.html.twig'
+                priority: 100
+            body:
+                template: '@SyliusInvoicingPlugin/shop/order/show/content/summary/invoices/card/body/table/body.html.twig'
+                priority: 0
+
+        'sylius_shop.account.order.show.content.main.summary.invoices.card.body.table.head':
+            number:
+                template: '@SyliusInvoicingPlugin/shop/order/show/content/summary/invoices/card/body/table/head/number.html.twig'
+                priority: 200
+            issued_at:
+                template: '@SyliusInvoicingPlugin/shop/order/show/content/summary/invoices/card/body/table/head/issued_at.html.twig'
+                priority: 100
+            actions:
+                template: '@SyliusInvoicingPlugin/shop/order/show/content/summary/invoices/card/body/table/head/actions.html.twig'
+                priority: 0
+
+        'sylius_shop.account.order.show.content.main.summary.invoices.card.body.table.body':
+            number:
+                template: '@SyliusInvoicingPlugin/shop/order/show/content/summary/invoices/card/body/table/body/number.html.twig'
+                priority: 200
+            issued_at:
+                template: '@SyliusInvoicingPlugin/shop/order/show/content/summary/invoices/card/body/table/body/issued_at.html.twig'
+                priority: 100
+            download:
+                template: '@SyliusInvoicingPlugin/shop/order/show/content/summary/invoices/card/body/table/body/download.html.twig'
+                enabled: '%sylius_invoicing.pdf_generator.enabled%'
+                priority: 0

@@ -1,0 +1,5 @@
+{% set billing_data = hookable_metadata.context.resource.billingData %}
+
+{% if billing_data.company %}
+    {{ billing_data.company }}<br/>
+{% endif %}

@@ -10,8 +10,8 @@
             <argument type="service" id="Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Invoice\IndexPageInterface" />
             <argument type="service" id="Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Invoice\ShowPageInterface" />
             <argument type="service" id="Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Order\ShowPageInterface" />
-            <argument type="service" id="sylius_invoicing.repository.invoice" />
-            <argument type="service" id="sylius.behat.notification_checker"/>
+            <argument type="service" id="sylius_invoicing.repository.invoice"/>
+            <argument type="service" id="sylius.behat.notification_checker.admin"/>
         </service>
 
         <service id="Tests\Sylius\InvoicingPlugin\Behat\Context\Ui\Shop\CustomerBrowsingInvoicesContext" public="true">
@@ -42,7 +42,7 @@
 
         <service id="Tests\Sylius\InvoicingPlugin\Behat\Context\Order\OrderContext" public="true">
             <argument type="service" id="doctrine.orm.entity_manager" />
-            <argument type="service" id="sm.factory" />
+            <argument type="service" id="sylius_abstraction.state_machine" />
         </service>
 
         <service id="Tests\Sylius\InvoicingPlugin\Behat\Context\Ui\Admin\ManagingChannelsContext" public="true">
