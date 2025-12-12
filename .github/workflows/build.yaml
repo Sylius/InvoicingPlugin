@@ -1,20 +1,28 @@
 name: Build
 
 on:
-    push: ~
-    pull_request: ~
+    push:
+        paths-ignore:
+            - "*.md"
+    pull_request:
+        paths-ignore:
+            - "*.md"
     release:
         types: [created]
     schedule:
         -
-            cron: "0 1 * * 6" # Run at 1am every Saturday
+            cron: "0 1 * * *" # Run at 1am every day
     workflow_dispatch: ~
+
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
 
 jobs:
     tests:
-        runs-on: ubuntu-22.04
+        runs-on: ubuntu-latest
 
-        name: "Sylius ${{ matrix.sylius }}, PHP ${{ matrix.php }}, Symfony ${{ matrix.symfony }}, ${{ matrix.database == 'mysql' && format('MySQL {0}', matrix.mysql) || matrix.database == 'postgres' && format('PostgreSQL {0}', matrix.postgres) }}, wkhtmltopdf: ${{ matrix.wkhtmltopdf }}, State Machine Adapter ${{ matrix.state_machine_adapter }}"
+        name: "Sylius ${{ matrix.sylius }}, PHP ${{ matrix.php }}, Symfony ${{ matrix.symfony }}, ${{ matrix.database == 'mysql' && format('MySQL {0}', matrix.database_version) || format('PostgreSQL {0}', matrix.database_version) }}, wkhtmltopdf: ${{ matrix.wkhtmltopdf }}, State Machine Adapter ${{ matrix.state_machine_adapter }}"
 
         strategy:
             fail-fast: false
@@ -24,7 +32,7 @@ jobs:
                 sylius: ["~2.0.0", "~2.1.0"]
                 node: ["22.x"]
                 database: ["mysql"]
-                mysql: ["8.4"]
+                database_version: ["8.4"]
                 wkhtmltopdf: ["0.12.6.1-2"]
                 state_machine_adapter: ["symfony_workflow"]
 
@@ -35,7 +43,7 @@ jobs:
                         sylius: "~2.1.0"
                         node: "24.x"
                         database: "mysql"
-                        mysql: "8.4"
+                        database_version: "8.4"
                         wkhtmltopdf: "0.12.6.1-2"
                         state_machine_adapter: "winzou_state_machine"
 
@@ -45,7 +53,7 @@ jobs:
                         sylius: "~2.1.0"
                         node: "24.x"
                         database: "mysql"
-                        mysql: "8.4"
+                        database_version: "8.4"
                         wkhtmltopdf: false
                         state_machine_adapter: "symfony_workflow"
 
@@ -55,56 +63,19 @@ jobs:
                         sylius: "~2.1.0"
                         node: "24.x"
                         database: "postgres"
-                        postgres: "15.8"
+                        database_version: "15.8"
                         wkhtmltopdf: "0.12.6.1-2"
                         state_machine_adapter: "symfony_workflow"
 
         env:
             APP_ENV: test
-            DATABASE_URL: ${{ matrix.database == 'mysql' && format('mysql://root:root@127.0.0.1/sylius?serverVersion={0}', matrix.mysql) || format('pgsql://postgres:postgres@127.0.0.1/sylius?serverVersion={0}', matrix.postgres) }}
+            DATABASE_URL: ${{ matrix.database == 'mysql' && format('mysql://root:root@127.0.0.1/sylius?serverVersion={0}', matrix.database_version) || format('pgsql://postgres:postgres@127.0.0.1/sylius?serverVersion={0}', matrix.database_version) }}
             TEST_SYLIUS_STATE_MACHINE_ADAPTER: "${{ matrix.state_machine_adapter }}"
             TEST_SYLIUS_INVOICING_PDF_GENERATION_DISABLED: ${{ matrix.wkhtmltopdf == false }}
 
         steps:
             -
                 uses: actions/checkout@v4
-
-            -
-                name: Setup PHP
-                uses: shivammathur/setup-php@v2
-                with:
-                    php-version: "${{ matrix.php }}"
-                    extensions: intl
-                    tools: symfony
-                    coverage: none
-
-            -
-                name: Setup Node
-                uses: actions/setup-node@v4
-                with:
-                    node-version: "${{ matrix.node }}"
-
-            -
-                name: Shutdown default database services
-                run: |
-                      sudo service mysql stop || true
-                      sudo service postgresql stop || true
-
-            -
-                name: Setup MySQL
-                if: matrix.database == 'mysql'
-                uses: mirromutth/mysql-action@v1.1
-                with:
-                      mysql version: "${{ matrix.mysql }}"
-                      mysql root password: "root"
-
-            -
-                name: Setup PostgreSQL
-                if: matrix.database == 'postgres'
-                uses: harmon758/postgresql-action@v1
-                with:
-                    postgresql version: "${{ matrix.postgres }}"
-                    postgresql password: "postgres"
 
             -
                 name: Setup cache for wkhtmltopdf
@@ -124,84 +95,29 @@ jobs:
                     sudo dpkg -i wkhtmltox_${{ matrix.wkhtmltopdf }}.jammy_amd64.deb
 
             -
-                name: Get Composer cache directory
-                id: composer-cache
-                run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
-
-            -
-                name: Cache Composer
-                uses: actions/cache@v4
-                with:
-                    path: ${{ steps.composer-cache.outputs.dir }}
-                    key: ${{ runner.os }}-php-${{ matrix.php }}-composer-${{ hashFiles('**/composer.json **/composer.lock') }}
-                    restore-keys: |
-                        ${{ runner.os }}-php-${{ matrix.php }}-composer-
-
-            -
-                name: Restrict Symfony version
-                if: matrix.symfony != ''
-                run: |
-                    composer global config --no-plugins allow-plugins.symfony/flex true
-                    composer global require --no-progress --no-scripts --no-plugins "symfony/flex:^1.10"
-                    composer config extra.symfony.require "${{ matrix.symfony }}"
-
-            -
-                name: Restrict Sylius version
-                if: matrix.sylius != ''
-                run: composer require "sylius/sylius:${{ matrix.sylius }}" --no-update --no-scripts --no-interaction
-
-            -
                 name: Require Winzou State Machine
                 if: "${{ matrix.state_machine_adapter == 'winzou_state_machine' }}"
                 run: |
-                  composer require winzou/state-machine:^0.4 --no-update   
-                  composer require winzou/state-machine-bundle:^0.6 --no-update   
+                    composer require winzou/state-machine:^0.4 --no-update
+                    composer require winzou/state-machine-bundle:^0.6 --no-update
 
             -
-                name: Install PHP dependencies
-                run: composer install --no-interaction --no-scripts
-
-            -
-                name: Get Yarn cache directory
-                id: yarn-cache
-                run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
-
-            -
-                name: Cache Yarn
-                uses: actions/cache@v4
+                name: Build Sylius Test Application
+                uses: SyliusLabs/BuildTestAppAction@v3.2.0
                 with:
-                    path: ${{ steps.yarn-cache.outputs.dir }}
-                    key: ${{ runner.os }}-node-${{ matrix.node }}-yarn-${{ hashFiles('**/package.json **/yarn.lock') }}
-                    restore-keys: |
-                        ${{ runner.os }}-node-${{ matrix.node }}-yarn-
-
-            -
-                name: Install JS dependencies
-                run: (cd vendor/sylius/test-application && yarn install)
-
-            -
-                name: Prepare test application database
-                run: |
-                    vendor/bin/console doctrine:database:create -vvv
-                    vendor/bin/console doctrine:migrations:migrate -n -vvv -q
-
-            -
-                name: Prepare test application assets
-                run: |
-                    vendor/bin/console assets:install public -vvv
-                    (cd vendor/sylius/test-application && yarn build:prod)
-
-            -
-                name: Prepare test application cache
-                run: vendor/bin/console cache:warmup -vvv
-
-            -
-                name: Load fixtures in test application
-                run: vendor/bin/console sylius:fixtures:load -n
+                    e2e_js: "yes"
+                    cache_key: "${{ runner.os }}-php-${{ matrix.php }}-composer-${{ hashFiles('**/composer.json') }}"
+                    cache_restore_key: "${{ runner.os }}-php-${{ matrix.php }}-composer-"
+                    database: "${{ matrix.database }}"
+                    database_version: "${{ matrix.database_version }}"
+                    node_version: "${{ matrix.node }}"
+                    php_version: "${{ matrix.php }}"
+                    sylius_version: "${{ matrix.sylius }}"
+                    symfony_version: "${{ matrix.symfony }}"
 
             -
                 name: Run security check
-                run: symfony security:check
+                run: composer audit --abandoned=ignore
 
             -
                 name: Run analysis
@@ -215,9 +131,9 @@ jobs:
                 name: Run Behat
                 run: |
                     if [ "${{ matrix.wkhtmltopdf }}" != "false" ]; then
-                        vendor/bin/behat --colors --strict -vvv --no-interaction -f progress --tags="~@pdf_disabled" || vendor/bin/behat --colors --strict -vvv --no-interaction -f progress --rerun;
+                      vendor/bin/behat --colors --strict -vvv --no-interaction -f progress --tags="~@pdf_disabled" || vendor/bin/behat --colors --strict -vvv --no-interaction -f progress --tags="~@pdf_disabled" --rerun
                     else
-                        vendor/bin/behat --colors --strict -vvv --no-interaction -f progress --tags="~@pdf_enabled" || vendor/bin/behat --colors --strict -vvv --no-interaction -f progress --rerun;
+                      vendor/bin/behat --colors --strict -vvv --no-interaction -f progress --tags="~@pdf_enabled" || vendor/bin/behat --colors --strict -vvv --no-interaction -f progress --tags="~@pdf_enabled" --rerun
                     fi
 
             -
@@ -225,7 +141,8 @@ jobs:
                 uses: actions/upload-artifact@v4
                 if: failure()
                 with:
-                    name: Behat logs - ${{ github.run_id }}-${{ github.run_number }}
+                    name: "Behat logs - Sylius ${{ matrix.sylius }}, PHP ${{ matrix.php }}, Symfony ${{ matrix.symfony }}, ${{ matrix.database }} ${{ matrix.database_version }}"
                     path: etc/build/
                     if-no-files-found: ignore
+                    compression-level: 6
                     overwrite: true
