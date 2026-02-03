@@ -1,7 +1,13 @@
 {
     "name": "sylius/invoicing-plugin",
     "type": "sylius-plugin",
-    "keywords": ["sylius", "sylius-plugin", "symfony", "e-commerce", "invoicing"],
+    "keywords": [
+        "sylius",
+        "sylius-plugin",
+        "symfony",
+        "e-commerce",
+        "invoicing"
+    ],
     "description": "Invoicing plugin for Sylius.",
     "license": "MIT",
     "require": {
@@ -11,6 +17,7 @@
         "sylius/grid-bundle": "^1.13",
         "sylius/resource-bundle": "^1.12",
         "sylius/sylius": "^2.0",
+        "sylius/telemetry": "^1.0",
         "symfony/clock": "^6.4 || ^7.4",
         "symfony/config": "^6.4 || ^7.4",
         "symfony/console": "^6.4 || ^7.4",
@@ -92,7 +99,7 @@
             "require": "~7.4.0"
         },
         "branch-alias": {
-            "dev-2.0": "2.0-dev"
+            "dev-2.1": "2.1-dev"
         },
         "public-dir": "vendor/sylius/test-application/public"
     },
