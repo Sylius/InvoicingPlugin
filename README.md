@@ -155,3 +155,8 @@ More instructions on the [fixtures configuration instructions](docs/fixtures.md)
 
 If you think that you have found a security issue, please do not use the issue tracker and do not post it publicly.
 Instead, all security issues must be sent to `security@sylius.com`.
+
+## Telemetry
+
+This plugin enforces telemetry data collection when used with Sylius.
+Details are described in [TELEMETRY_POLICY.md](./TELEMETRY_POLICY.md).
