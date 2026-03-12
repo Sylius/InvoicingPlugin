@@ -26,6 +26,8 @@ use Sylius\InvoicingPlugin\Manager\InvoiceFileManagerInterface;
 use Sylius\InvoicingPlugin\Model\InvoicePdf;
 use Sylius\InvoicingPlugin\Provider\InvoiceFileProvider;
 use Sylius\InvoicingPlugin\Provider\InvoiceFileProviderInterface;
+use Sylius\PdfGenerationBundle\Core\Filesystem\Manager\PdfFileManagerInterface;
+use Sylius\PdfGenerationBundle\Core\Model\PdfFile;
 
 final class InvoiceFileProviderTest extends TestCase
 {
@@ -128,6 +130,105 @@ final class InvoiceFileProviderTest extends TestCase
 
         $expected = new InvoicePdf('invoice.pdf', 'CONTENT');
         $expected->setFullPath('/path/to/invoices/invoice.pdf');
+
+        self::assertEquals($expected, $result);
+    }
+
+    #[Test]
+    public function it_provides_invoice_file_using_pdf_bundle_file_manager(): void
+    {
+        $pdfFileManager = $this->createMock(PdfFileManagerInterface::class);
+        $provider = new InvoiceFileProvider(
+            $this->invoiceFileNameGenerator,
+            $pdfFileManager,
+            $this->invoicePdfFileGenerator,
+        );
+
+        $invoice = $this->createMock(InvoiceInterface::class);
+        $pdfFile = new PdfFile('invoice.pdf', 'CONTENT');
+
+        $this->invoiceFileNameGenerator
+            ->expects(self::once())
+            ->method('generateForPdf')
+            ->with($invoice)
+            ->willReturn('invoice.pdf');
+
+        $pdfFileManager
+            ->expects(self::once())
+            ->method('has')
+            ->with('invoice.pdf', 'sylius_invoicing')
+            ->willReturn(true);
+
+        $pdfFileManager
+            ->expects(self::once())
+            ->method('get')
+            ->with('invoice.pdf', 'sylius_invoicing')
+            ->willReturn($pdfFile);
+
+        $pdfFileManager
+            ->expects(self::once())
+            ->method('resolveLocalPath')
+            ->with('invoice.pdf', 'sylius_invoicing')
+            ->willReturn('/local/path/invoice.pdf');
+
+        $result = $provider->provide($invoice);
+
+        $expected = new InvoicePdf('invoice.pdf', 'CONTENT');
+        $expected->setFullPath('/local/path/invoice.pdf');
+
+        self::assertEquals($expected, $result);
+    }
+
+    #[Test]
+    public function it_generates_and_saves_invoice_using_pdf_bundle_if_it_does_not_exist(): void
+    {
+        $pdfFileManager = $this->createMock(PdfFileManagerInterface::class);
+        $provider = new InvoiceFileProvider(
+            $this->invoiceFileNameGenerator,
+            $pdfFileManager,
+            $this->invoicePdfFileGenerator,
+        );
+
+        $invoice = $this->createMock(InvoiceInterface::class);
+
+        $this->invoiceFileNameGenerator
+            ->expects(self::once())
+            ->method('generateForPdf')
+            ->with($invoice)
+            ->willReturn('invoice.pdf');
+
+        $pdfFileManager
+            ->expects(self::once())
+            ->method('has')
+            ->with('invoice.pdf', 'sylius_invoicing')
+            ->willReturn(false);
+
+        $invoicePdf = new InvoicePdf('invoice.pdf', 'CONTENT');
+
+        $this->invoicePdfFileGenerator
+            ->expects(self::once())
+            ->method('generate')
+            ->with($invoice)
+            ->willReturn($invoicePdf);
+
+        $pdfFileManager
+            ->expects(self::once())
+            ->method('save')
+            ->with(
+                self::callback(fn (PdfFile $file) => $file->filename() === 'invoice.pdf' && $file->content() === 'CONTENT'),
+                'sylius_invoicing',
+            );
+
+        $pdfFileManager
+            ->expects(self::once())
+            ->method('resolveLocalPath')
+            ->with('invoice.pdf', 'sylius_invoicing')
+            ->willReturn('/local/path/invoice.pdf');
+
+        $result = $provider->provide($invoice);
+
+        $expected = new InvoicePdf('invoice.pdf', 'CONTENT');
+        $expected->setFullPath('/local/path/invoice.pdf');
 
         self::assertEquals($expected, $result);
     }

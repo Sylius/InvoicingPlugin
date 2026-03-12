@@ -5,6 +5,7 @@ declare(strict_types=1);
 $bundles = [
     Knp\Bundle\SnappyBundle\KnpSnappyBundle::class => ['all' => true],
     Sylius\InvoicingPlugin\SyliusInvoicingPlugin::class => ['all' => true],
+    Sylius\PdfGenerationBundle\SyliusPdfGenerationBundle::class => ['all' => true],
 ];
 
 if (class_exists('winzou\Bundle\StateMachineBundle\winzouStateMachineBundle')) {

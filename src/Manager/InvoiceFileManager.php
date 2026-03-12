@@ -16,6 +16,9 @@ namespace Sylius\InvoicingPlugin\Manager;
 use Gaufrette\FilesystemInterface;
 use Sylius\InvoicingPlugin\Model\InvoicePdf;
 
+/**
+ * @deprecated since sylius/invoicing-plugin 2.2, use Sylius\PdfGenerationBundle\Core\Filesystem\Manager\PdfFileManager from sylius/pdf-generation-bundle instead.
+ */
 final class InvoiceFileManager implements InvoiceFileManagerInterface
 {
     public function __construct(private readonly FilesystemInterface $filesystem)
