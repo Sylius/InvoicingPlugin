@@ -23,11 +23,10 @@ return static function (ECSConfig $config): void {
     $config->import('vendor/sylius-labs/coding-standard/ecs.php');
 
     $config->parallel();
-    $config->paths(['src', 'spec']);
+    $config->paths(['src', 'tests/DependencyInjection', 'tests/Unit', 'tests/Behat']);
     $config->skip([
         InlineDocCommentDeclarationSniff::class . '.MissingVariable',
         InlineDocCommentDeclarationSniff::class . '.NoAssignment',
-        VisibilityRequiredFixer::class => ['*Spec.php'],
         '**/var/*',
         'src/Migrations/*',
     ]);
