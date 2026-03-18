@@ -25,6 +25,7 @@ final class InvoicePdfFileGenerator implements InvoicePdfFileGeneratorInterface
         private readonly InvoiceFileNameGeneratorInterface $invoiceFileNameGenerator,
         private readonly string $template,
         private readonly string $invoiceLogoPath,
+        private readonly bool $generateWithGotenberg,
     ) {
     }
 
@@ -38,6 +39,7 @@ final class InvoicePdfFileGenerator implements InvoicePdfFileGeneratorInterface
                 'invoice' => $invoice,
                 'channel' => $invoice->channel(),
                 'invoiceLogoPath' => $this->fileLocator->locate($this->invoiceLogoPath),
+                'generateWithGotenberg' => $this->generateWithGotenberg,
             ],
         );
 

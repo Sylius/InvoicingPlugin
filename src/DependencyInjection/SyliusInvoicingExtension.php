@@ -15,11 +15,14 @@ namespace Sylius\InvoicingPlugin\DependencyInjection;
 
 use Sylius\Bundle\CoreBundle\DependencyInjection\PrependDoctrineMigrationsTrait;
 use Sylius\Bundle\ResourceBundle\DependencyInjection\Extension\AbstractResourceExtension;
+use Sylius\InvoicingPlugin\Generator\TwigToGotenbergPdfGenerator;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\DependencyInjection\Reference;
 
 final class SyliusInvoicingExtension extends AbstractResourceExtension implements PrependExtensionInterface
 {
@@ -35,6 +38,15 @@ final class SyliusInvoicingExtension extends AbstractResourceExtension implement
 
         $config = $this->processConfiguration($configuration, $configs);
         $container->setParameter('sylius_invoicing.pdf_generator.allowed_files', $config['pdf_generator']['allowed_files']);
+        $container->setParameter('sylius_invoicing.pdf_generator.generate_with_gotenberg', $config['pdf_generator']['generate_with_gotenberg']);
+
+        if ($config['pdf_generator']['generate_with_gotenberg'] === true) {
+            $definition = new Definition(TwigToGotenbergPdfGenerator::class);
+            $definition->addArgument(new Reference('sensiolabs_gotenberg'));
+            $definition->setDecoratedService('sylius_invoicing.generator.twig_to_pdf');
+
+            $container->setDefinition('sylius_invoicing.gotenberg_generator.twig_to_pdf', $definition);
+        }
     }
 
     public function prepend(ContainerBuilder $container): void

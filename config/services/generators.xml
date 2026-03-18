@@ -50,6 +50,7 @@
             <argument type="service" id="sylius_invoicing.generator.invoice_file_name" />
             <argument>@SyliusInvoicingPlugin/shared/download/pdf.html.twig</argument>
             <argument>%sylius_invoicing.template.logo_file%</argument>
+            <argument>%sylius_invoicing.pdf_generator.generate_with_gotenberg%</argument>
         </service>
         <service id="Sylius\InvoicingPlugin\Generator\InvoicePdfFileGeneratorInterface" alias="sylius_invoicing.generator.invoice_pdf_file" />
 
