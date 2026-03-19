@@ -6,6 +6,15 @@
     </parameters>
 
     <services>
+        <service id="Tests\Sylius\InvoicingPlugin\Behat\Page\Shop\Account\Order\IndexPageInterface"
+                 class="Tests\Sylius\InvoicingPlugin\Behat\Page\Shop\Account\Order\IndexPage"
+                 parent="sylius.behat.page.shop.account.order.index"
+                 public="true"
+        />
+
+        <service id="Tests\Sylius\InvoicingPlugin\Behat\Context\Ui\Shop\AccountContext" public="true">
+            <argument type="service" id="Tests\Sylius\InvoicingPlugin\Behat\Page\Shop\Account\Order\IndexPageInterface" />
+        </service>
         <service id="Tests\Sylius\InvoicingPlugin\Behat\Context\Ui\Admin\ManagingInvoicesContext" public="true">
             <argument type="service" id="Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Invoice\IndexPageInterface" />
             <argument type="service" id="Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Invoice\ShowPageInterface" />

@@ -102,6 +102,15 @@ sylius_grid:
                                 parameters:
                                     id: resource.id
 
+        sylius_shop_account_order:
+            fields:
+                invoices:
+                    type: twig
+                    label: sylius_invoicing.ui.invoices
+                    path: .
+                    options:
+                        template: "@SyliusInvoicingPlugin/shop/account/order/grid/field/invoices.html.twig"
+
 framework:
     messenger:
         buses:

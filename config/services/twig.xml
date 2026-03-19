@@ -11,6 +11,12 @@
 
 <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
+        <service id="sylius_invoicing.twig.extension.invoices" class="Sylius\InvoicingPlugin\Twig\InvoicesExtension">
+            <argument type="service" id="sylius_invoicing.repository.invoice" />
+            <argument>%sylius_invoicing.pdf_generator.enabled%</argument>
+            <tag name="twig.extension" />
+        </service>
+
         <service
                 id="sylius_invoicing.twig.component.invoice.list"
                 class="Sylius\InvoicingPlugin\Twig\Component\Invoice\ListComponent"

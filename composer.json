@@ -18,17 +18,17 @@
         "sylius/resource-bundle": "^1.12",
         "sylius/sylius": "^2.0",
         "sylius/telemetry": "^1.0",
-        "symfony/clock": "^6.4 || ^7.1",
-        "symfony/config": "^6.4 || ^7.1",
-        "symfony/console": "^6.4 || ^7.1",
-        "symfony/dependency-injection": "^6.4 || ^7.1",
-        "symfony/form": "^6.4 || ^7.1",
-        "symfony/framework-bundle": "^6.4 || ^7.1",
-        "symfony/http-foundation": "^6.4 || ^7.1",
-        "symfony/http-kernel": "^6.4 || ^7.1",
-        "symfony/messenger": "^6.4 || ^7.1",
-        "symfony/options-resolver": "^6.4 || ^7.1",
-        "symfony/routing": "^6.4 || ^7.1"
+        "symfony/clock": "^6.4 || ^7.4",
+        "symfony/config": "^6.4 || ^7.4",
+        "symfony/console": "^6.4 || ^7.4",
+        "symfony/dependency-injection": "^6.4 || ^7.4",
+        "symfony/form": "^6.4 || ^7.4",
+        "symfony/framework-bundle": "^6.4 || ^7.4",
+        "symfony/http-foundation": "^6.4 || ^7.4",
+        "symfony/http-kernel": "^6.4 || ^7.4",
+        "symfony/messenger": "^6.4 || ^7.4",
+        "symfony/options-resolver": "^6.4 || ^7.4",
+        "symfony/routing": "^6.4 || ^7.4"
     },
     "require-dev": {
         "behat/behat": "^3.14",
@@ -53,12 +53,12 @@
         "polishsymfonycommunity/symfony-mocker-container": "^1.0",
         "sylius-labs/coding-standard": "^4.4",
         "sylius/test-application": "^2.0.0@alpha",
-        "symfony/browser-kit": "^6.4 || ^7.1",
-        "symfony/debug-bundle": "^6.4 || ^7.1",
-        "symfony/dotenv": "^6.4 || ^7.1",
-        "symfony/intl": "^6.4 || ^7.1",
+        "symfony/browser-kit": "^6.4 || ^7.4",
+        "symfony/debug-bundle": "^6.4 || ^7.4",
+        "symfony/dotenv": "^6.4 || ^7.4",
+        "symfony/intl": "^6.4 || ^7.4",
         "symfony/webpack-encore-bundle": "^2.2",
-        "symfony/web-profiler-bundle": "^6.4 || ^7.1"
+        "symfony/web-profiler-bundle": "^6.4 || ^7.4"
     },
     "autoload": {
         "psr-4": {
@@ -96,10 +96,10 @@
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "~7.2.0"
+            "require": "~7.4.0"
         },
         "branch-alias": {
-            "dev-2.0": "2.0-dev"
+            "dev-2.1": "2.1-dev"
         },
         "public-dir": "vendor/sylius/test-application/public"
     },

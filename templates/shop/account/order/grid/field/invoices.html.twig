@@ -1,0 +1,17 @@
+{% set invoices = invoices_for_order(data) %}
+{% if invoices is empty %}
+    <span class="text-muted">—</span>
+{% else %}
+    {% set pdf_enabled = invoices_pdf_enabled() %}
+    {% for invoice in invoices %}
+        {% if pdf_enabled %}
+            <div>
+                <a href="{{ path('sylius_invoicing_shop_invoice_download', {'id': invoice.id}) }}" {{ sylius_test_html_attribute('invoice-link') }}>{{ invoice.number }}</a>
+            </div>
+        {% else %}
+            <div>
+                <span {{ sylius_test_html_attribute('invoice-number') }}>{{ invoice.number }}</span>
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endif %}
