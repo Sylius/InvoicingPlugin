@@ -21,12 +21,6 @@ jobs:
             matrix:
                 include:
                     -
-                        base_branch: "1.0"
-                        target_branch: "1.1"
-                    -
-                        base_branch: "1.1"
-                        target_branch: "2.0"
-                    -
                         base_branch: "2.0"
                         target_branch: "2.1"
 
