@@ -15,7 +15,7 @@ namespace Sylius\InvoicingPlugin\Email;
 
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 
-interface InvoiceEmailSenderInterface
+interface InvoiceEmailRetrySchedulerInterface
 {
-    public function sendInvoiceEmail(InvoiceInterface $invoice, string $customerEmail, int $attempt = 0): void;
+    public function scheduleRetry(InvoiceInterface $invoice, string $customerEmail, int $attempt): void;
 }

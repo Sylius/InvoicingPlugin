@@ -36,6 +36,7 @@ class Invoice implements InvoiceInterface
         protected ChannelInterface $channel,
         protected string $paymentState,
         protected InvoiceShopBillingDataInterface $shopBillingData,
+        protected bool $pdfSent = false,
     ) {
         $this->issuedAt = clone $issuedAt;
 
@@ -142,5 +143,15 @@ class Invoice implements InvoiceInterface
     public function paymentState(): string
     {
         return $this->paymentState;
+    }
+
+    public function isPdfSent(): bool
+    {
+        return $this->pdfSent;
+    }
+
+    public function setPdfSent(bool $pdfSent): void
+    {
+        $this->pdfSent = $pdfSent;
     }
 }

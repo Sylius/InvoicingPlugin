@@ -16,10 +16,12 @@ namespace Tests\Sylius\InvoicingPlugin\Unit\Provider;
 use Gaufrette\Exception\FileNotFound;
 use Gaufrette\File;
 use Gaufrette\FilesystemInterface;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
+use Sylius\InvoicingPlugin\Exception\InvoiceFileGenerationFailedException;
 use Sylius\InvoicingPlugin\Generator\InvoiceFileNameGeneratorInterface;
 use Sylius\InvoicingPlugin\Generator\InvoicePdfFileGeneratorInterface;
 use Sylius\InvoicingPlugin\Manager\InvoiceFileManagerInterface;
@@ -29,6 +31,12 @@ use Sylius\InvoicingPlugin\Provider\InvoiceFileProviderInterface;
 
 final class InvoiceFileProviderTest extends TestCase
 {
+    private const INVOICE_FILENAME = 'invoice_2024_11_0001.pdf';
+
+    private const INVOICES_DIRECTORY = '/path/to/invoices';
+
+    private const PDF_CONTENT = 'PDF_CONTENT';
+
     private InvoiceFileNameGeneratorInterface&MockObject $invoiceFileNameGenerator;
 
     private FilesystemInterface&MockObject $filesystem;
@@ -36,6 +44,8 @@ final class InvoiceFileProviderTest extends TestCase
     private InvoicePdfFileGeneratorInterface&MockObject $invoicePdfFileGenerator;
 
     private InvoiceFileManagerInterface&MockObject $invoiceFileManager;
+
+    private InvoiceInterface&MockObject $invoice;
 
     private InvoiceFileProvider $provider;
 
@@ -46,13 +56,14 @@ final class InvoiceFileProviderTest extends TestCase
         $this->filesystem = $this->createMock(FilesystemInterface::class);
         $this->invoicePdfFileGenerator = $this->createMock(InvoicePdfFileGeneratorInterface::class);
         $this->invoiceFileManager = $this->createMock(InvoiceFileManagerInterface::class);
+        $this->invoice = $this->createMock(InvoiceInterface::class);
 
         $this->provider = new InvoiceFileProvider(
             $this->invoiceFileNameGenerator,
             $this->filesystem,
             $this->invoicePdfFileGenerator,
             $this->invoiceFileManager,
-            '/path/to/invoices',
+            self::INVOICES_DIRECTORY,
         );
     }
 
@@ -63,72 +74,168 @@ final class InvoiceFileProviderTest extends TestCase
     }
 
     #[Test]
-    public function it_provides_invoice_file_for_invoice(): void
+    #[DataProvider('invoiceFileDataProvider')]
+    public function it_provides_existing_invoice_file_from_filesystem(string $fileName, string $content): void
     {
-        $invoice = $this->createMock(InvoiceInterface::class);
         $invoiceFile = $this->createMock(File::class);
 
         $this->invoiceFileNameGenerator
             ->expects(self::once())
             ->method('generateForPdf')
-            ->with($invoice)
-            ->willReturn('invoice.pdf');
+            ->with($this->invoice)
+            ->willReturn($fileName);
 
         $this->filesystem
             ->expects(self::once())
             ->method('get')
-            ->with('invoice.pdf')
+            ->with($fileName)
             ->willReturn($invoiceFile);
 
         $invoiceFile
             ->expects(self::once())
             ->method('getContent')
-            ->willReturn('CONTENT');
+            ->willReturn($content);
 
-        $result = $this->provider->provide($invoice);
+        $this->invoicePdfFileGenerator
+            ->expects(self::never())
+            ->method('generate');
 
-        $expected = new InvoicePdf('invoice.pdf', 'CONTENT');
-        $expected->setFullPath('/path/to/invoices/invoice.pdf');
+        $this->invoiceFileManager
+            ->expects(self::never())
+            ->method('save');
+
+        $result = $this->provider->provide($this->invoice);
+
+        $expected = $this->createExpectedInvoicePdf($fileName, $content);
 
         self::assertEquals($expected, $result);
     }
 
     #[Test]
-    public function it_generates_invoice_if_it_does_not_exist_and_provides_it(): void
+    #[DataProvider('invoiceFileDataProvider')]
+    public function it_generates_and_saves_invoice_when_file_not_found(string $fileName, string $content): void
     {
-        $invoice = $this->createMock(InvoiceInterface::class);
-
         $this->invoiceFileNameGenerator
             ->expects(self::once())
             ->method('generateForPdf')
-            ->with($invoice)
-            ->willReturn('invoice.pdf');
+            ->with($this->invoice)
+            ->willReturn($fileName);
 
         $this->filesystem
             ->expects(self::once())
             ->method('get')
-            ->with('invoice.pdf')
-            ->willThrowException(new FileNotFound('invoice.pdf'));
+            ->with($fileName)
+            ->willThrowException(new FileNotFound($fileName));
 
-        $invoicePdf = new InvoicePdf('invoice.pdf', 'CONTENT');
-        $invoicePdf->setFullPath('/path/to/invoices/invoice.pdf');
+        $generatedInvoicePdf = new InvoicePdf($fileName, $content);
 
         $this->invoicePdfFileGenerator
             ->expects(self::once())
             ->method('generate')
-            ->with($invoice)
-            ->willReturn($invoicePdf);
+            ->with($this->invoice)
+            ->willReturn($generatedInvoicePdf);
 
         $this->invoiceFileManager
             ->expects(self::once())
             ->method('save')
-            ->with($invoicePdf);
+            ->with($generatedInvoicePdf);
 
-        $result = $this->provider->provide($invoice);
+        $result = $this->provider->provide($this->invoice);
 
-        $expected = new InvoicePdf('invoice.pdf', 'CONTENT');
-        $expected->setFullPath('/path/to/invoices/invoice.pdf');
+        $expected = $this->createExpectedInvoicePdf($fileName, $content);
 
         self::assertEquals($expected, $result);
+    }
+
+    #[Test]
+    #[DataProvider('generationExceptionProvider')]
+    public function it_throws_invoice_file_generation_failed_exception_when_generation_fails(\Throwable $exception): void
+    {
+        $this->expectException(InvoiceFileGenerationFailedException::class);
+
+        $this->expectInvoiceFileNameGeneration();
+
+        $this->filesystem
+            ->expects(self::once())
+            ->method('get')
+            ->with(self::INVOICE_FILENAME)
+            ->willThrowException(new FileNotFound(self::INVOICE_FILENAME));
+
+        $this->invoicePdfFileGenerator
+            ->expects(self::once())
+            ->method('generate')
+            ->with($this->invoice)
+            ->willThrowException($exception);
+
+        $this->invoiceFileManager
+            ->expects(self::never())
+            ->method('save');
+
+        $this->provider->provide($this->invoice);
+    }
+
+    #[Test]
+    public function it_throws_invoice_file_generation_failed_exception_when_save_fails(): void
+    {
+        $this->expectException(InvoiceFileGenerationFailedException::class);
+
+        $this->expectInvoiceFileNameGeneration();
+
+        $this->filesystem
+            ->expects(self::once())
+            ->method('get')
+            ->with(self::INVOICE_FILENAME)
+            ->willThrowException(new FileNotFound(self::INVOICE_FILENAME));
+
+        $generatedInvoicePdf = new InvoicePdf(self::INVOICE_FILENAME, self::PDF_CONTENT);
+
+        $this->invoicePdfFileGenerator
+            ->expects(self::once())
+            ->method('generate')
+            ->with($this->invoice)
+            ->willReturn($generatedInvoicePdf);
+
+        $this->invoiceFileManager
+            ->expects(self::once())
+            ->method('save')
+            ->with($generatedInvoicePdf)
+            ->willThrowException(new \RuntimeException('Failed to save file'));
+
+        $this->provider->provide($this->invoice);
+    }
+
+    public static function invoiceFileDataProvider(): array
+    {
+        return [
+            'standard filename and content' => ['invoice_2024_11_0001.pdf', 'PDF_CONTENT'],
+            'custom filename' => ['custom_invoice.pdf', 'CUSTOM_CONTENT'],
+            'filename with special chars' => ['invoice-special_#123.pdf', 'SPECIAL_CONTENT'],
+        ];
+    }
+
+    public static function generationExceptionProvider(): array
+    {
+        return [
+            'RuntimeException' => [new \RuntimeException('Failed to generate PDF')],
+            'InvalidArgumentException' => [new \InvalidArgumentException('Invalid template')],
+            'LogicException' => [new \LogicException('Logic error in generation')],
+        ];
+    }
+
+    private function expectInvoiceFileNameGeneration(): void
+    {
+        $this->invoiceFileNameGenerator
+            ->expects(self::once())
+            ->method('generateForPdf')
+            ->with($this->invoice)
+            ->willReturn(self::INVOICE_FILENAME);
+    }
+
+    private function createExpectedInvoicePdf(string $fileName = self::INVOICE_FILENAME, string $content = self::PDF_CONTENT): InvoicePdf
+    {
+        $invoicePdf = new InvoicePdf($fileName, $content);
+        $invoicePdf->setFullPath(self::INVOICES_DIRECTORY . '/' . $fileName);
+
+        return $invoicePdf;
     }
 }

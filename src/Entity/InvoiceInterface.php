@@ -53,4 +53,8 @@ interface InvoiceInterface extends ResourceInterface
     public function shopBillingData(): InvoiceShopBillingDataInterface;
 
     public function paymentState(): string;
+
+    public function isPdfSent(): bool;
+
+    public function setPdfSent(bool $pdfSent): void;
 }
