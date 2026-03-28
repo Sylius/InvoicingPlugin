@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### v2.0.3 (2025-10-31)
+
+- [#400](https://github.com/Sylius/InvoicingPlugin/pull/400) Fix InvoiceLineItem net price calculator ([@tomkalon](https://github.com/tomkalon))
+
 ### v2.0.2 (2025-07-03)
 
 - [#373](https://github.com/Sylius/InvoicingPlugin/pull/373) Add sylius/test-application ([@Wojdylak](https://github.com/Wojdylak))
