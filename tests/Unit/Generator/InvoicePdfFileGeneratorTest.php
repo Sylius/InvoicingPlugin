@@ -63,6 +63,9 @@ final class InvoicePdfFileGeneratorTest extends TestCase
         $invoice = $this->createMock(InvoiceInterface::class);
         $channel = $this->createMock(ChannelInterface::class);
 
+        $logoPath = __DIR__ . '/../../../assets/sylius-logo.png';
+        $logoDataUri = 'data:image/png;base64,' . base64_encode((string) file_get_contents($logoPath));
+
         $this->invoiceFileNameGenerator
             ->expects(self::once())
             ->method('generateForPdf')
@@ -75,12 +78,17 @@ final class InvoicePdfFileGeneratorTest extends TestCase
             ->expects(self::once())
             ->method('locate')
             ->with('@SyliusInvoicingPlugin/assets/sylius-logo.png')
-            ->willReturn('located-path/sylius-logo.png');
+            ->willReturn($logoPath);
 
         $twigToPdfGenerator
             ->expects(self::once())
             ->method('generate')
-            ->with('invoiceTemplate.html.twig', ['invoice' => $invoice, 'channel' => $channel, 'invoiceLogoPath' => 'located-path/sylius-logo.png'])
+            ->with('invoiceTemplate.html.twig', [
+                'invoice' => $invoice,
+                'channel' => $channel,
+                'invoiceLogoPath' => $logoPath,
+                'invoiceLogo' => $logoDataUri,
+            ])
             ->willReturn('PDF FILE');
 
         $result = $generator->generate($invoice);
@@ -107,6 +115,9 @@ final class InvoicePdfFileGeneratorTest extends TestCase
         $invoice = $this->createMock(InvoiceInterface::class);
         $channel = $this->createMock(ChannelInterface::class);
 
+        $logoPath = __DIR__ . '/../../../assets/sylius-logo.png';
+        $logoDataUri = 'data:image/png;base64,' . base64_encode((string) file_get_contents($logoPath));
+
         $this->invoiceFileNameGenerator
             ->expects(self::once())
             ->method('generateForPdf')
@@ -119,14 +130,19 @@ final class InvoicePdfFileGeneratorTest extends TestCase
             ->expects(self::once())
             ->method('locate')
             ->with('@SyliusInvoicingPlugin/assets/sylius-logo.png')
-            ->willReturn('located-path/sylius-logo.png');
+            ->willReturn($logoPath);
 
         $twigToPdfRenderer
             ->expects(self::once())
             ->method('render')
             ->with(
                 'invoiceTemplate.html.twig',
-                ['invoice' => $invoice, 'channel' => $channel, 'invoiceLogoPath' => 'located-path/sylius-logo.png'],
+                [
+                    'invoice' => $invoice,
+                    'channel' => $channel,
+                    'invoiceLogoPath' => $logoPath,
+                    'invoiceLogo' => $logoDataUri,
+                ],
                 'sylius_invoicing',
             )
             ->willReturn('PDF FILE');

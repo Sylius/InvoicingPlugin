@@ -231,10 +231,8 @@ class SyliusInvoicingExtensionTest extends AbstractExtensionTestCase
             PdfFileManagerInterface::class,
             (string) $definition->getArgument(1),
         );
-        self::assertEquals(
-            PdfFileManagerInterface::class,
-            (string) $definition->getArgument(3),
-        );
+        self::assertNull($definition->getArgument(3));
+        self::assertNull($definition->getArgument(4));
     }
 
     /** @test */

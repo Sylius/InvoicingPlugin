@@ -52,7 +52,8 @@ final class SyliusInvoicingExtension extends AbstractResourceExtension implement
 
             $container->getDefinition('sylius_invoicing.provider.invoice_file')
                 ->replaceArgument(1, new Reference(PdfFileManagerInterface::class))
-                ->replaceArgument(3, new Reference(PdfFileManagerInterface::class))
+                ->replaceArgument(3, null)
+                ->replaceArgument(4, null)
             ;
 
             $this->registerAllowedFilesProcessor($container, $config['pdf_generator']['allowed_files']);
