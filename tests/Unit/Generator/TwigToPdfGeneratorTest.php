@@ -53,7 +53,7 @@ final class TwigToPdfGeneratorTest extends TestCase
     }
 
     #[Test]
-    public function it_generates_pdf_from_twig_template(): void
+    public function it_generates_pdf_from_twig_template_using_knp_snappy(): void
     {
         $this->twig
             ->expects(self::once())

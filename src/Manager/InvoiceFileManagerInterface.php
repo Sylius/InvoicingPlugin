@@ -15,6 +15,9 @@ namespace Sylius\InvoicingPlugin\Manager;
 
 use Sylius\InvoicingPlugin\Model\InvoicePdf;
 
+/**
+ * @deprecated since sylius/invoicing-plugin 2.2, use Sylius\PdfGenerationBundle\Core\Filesystem\Manager\PdfFileManagerInterface from sylius/pdf-generation-bundle instead.
+ */
 interface InvoiceFileManagerInterface
 {
     public function save(InvoicePdf $file): void;

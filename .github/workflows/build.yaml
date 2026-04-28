@@ -22,7 +22,7 @@ jobs:
     tests:
         runs-on: ubuntu-latest
 
-        name: "Sylius ${{ matrix.sylius }}, PHP ${{ matrix.php }}, Symfony ${{ matrix.symfony }}, ${{ matrix.database == 'mysql' && format('MySQL {0}', matrix.database_version) || format('PostgreSQL {0}', matrix.database_version) }}, wkhtmltopdf: ${{ matrix.wkhtmltopdf }}, State Machine Adapter ${{ matrix.state_machine_adapter }}"
+        name: "Sylius ${{ matrix.sylius }}, PHP ${{ matrix.php }}, Symfony ${{ matrix.symfony }}, ${{ matrix.database == 'mysql' && format('MySQL {0}', matrix.database_version) || format('PostgreSQL {0}', matrix.database_version) }}, wkhtmltopdf: ${{ matrix.wkhtmltopdf }}, State Machine Adapter ${{ matrix.state_machine_adapter }}, legacy: ${{ matrix.legacy }}"
 
         strategy:
             fail-fast: false
@@ -35,6 +35,7 @@ jobs:
                 database_version: ["8.4"]
                 wkhtmltopdf: ["0.12.6.1-2"]
                 state_machine_adapter: ["symfony_workflow"]
+                legacy: [true, false]
 
                 include:
                     -
@@ -46,6 +47,18 @@ jobs:
                         database_version: "8.4"
                         wkhtmltopdf: "0.12.6.1-2"
                         state_machine_adapter: "winzou_state_machine"
+                        legacy: true
+
+                    -
+                        php: "8.3"
+                        symfony: "~7.4.0"
+                        sylius: "~2.2.0"
+                        node: "24.x"
+                        database: "mysql"
+                        database_version: "8.4"
+                        wkhtmltopdf: "0.12.6.1-2"
+                        state_machine_adapter: "winzou_state_machine"
+                        legacy: false
 
                     -
                         php: "8.3"
@@ -56,6 +69,18 @@ jobs:
                         database_version: "8.4"
                         wkhtmltopdf: false
                         state_machine_adapter: "symfony_workflow"
+                        legacy: true
+
+                    -
+                        php: "8.3"
+                        symfony: "~7.4.0"
+                        sylius: "~2.2.0"
+                        node: "24.x"
+                        database: "mysql"
+                        database_version: "8.4"
+                        wkhtmltopdf: false
+                        state_machine_adapter: "symfony_workflow"
+                        legacy: false
 
                     -
                         php: "8.3"
@@ -66,12 +91,25 @@ jobs:
                         database_version: "15.8"
                         wkhtmltopdf: "0.12.6.1-2"
                         state_machine_adapter: "symfony_workflow"
+                        legacy: true
+
+                    -
+                        php: "8.3"
+                        symfony: "~7.4.0"
+                        sylius: "~2.2.0"
+                        node: "24.x"
+                        database: "postgres"
+                        database_version: "15.8"
+                        wkhtmltopdf: "0.12.6.1-2"
+                        state_machine_adapter: "symfony_workflow"
+                        legacy: false
 
         env:
             APP_ENV: test
             DATABASE_URL: ${{ matrix.database == 'mysql' && format('mysql://root:root@127.0.0.1/sylius?serverVersion={0}', matrix.database_version) || format('pgsql://postgres:postgres@127.0.0.1/sylius?serverVersion={0}', matrix.database_version) }}
             TEST_SYLIUS_STATE_MACHINE_ADAPTER: "${{ matrix.state_machine_adapter }}"
             TEST_SYLIUS_INVOICING_PDF_GENERATION_DISABLED: ${{ matrix.wkhtmltopdf == false }}
+            TEST_SYLIUS_INVOICING_PDF_LEGACY: "${{ matrix.legacy }}"
 
         steps:
             -
@@ -141,7 +179,7 @@ jobs:
                 uses: actions/upload-artifact@v4
                 if: failure()
                 with:
-                    name: "Behat logs - Sylius ${{ matrix.sylius }}, PHP ${{ matrix.php }}, Symfony ${{ matrix.symfony }}, ${{ matrix.database }} ${{ matrix.database_version }}"
+                    name: "Behat logs - Sylius ${{ matrix.sylius }}, PHP ${{ matrix.php }}, Symfony ${{ matrix.symfony }}, ${{ matrix.database }} ${{ matrix.database_version }}, legacy ${{ matrix.legacy }}"
                     path: etc/build/
                     if-no-files-found: ignore
                     compression-level: 6

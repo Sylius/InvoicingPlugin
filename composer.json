@@ -15,6 +15,7 @@
         "knplabs/knp-snappy-bundle": "^1.10",
         "ramsey/uuid": "^4.7",
         "sylius/grid-bundle": "^1.13",
+        "sylius/pdf-generation-bundle": "^1.0",
         "sylius/resource-bundle": "^1.12",
         "sylius/sylius": "^2.0",
         "sylius/telemetry": "^1.0",

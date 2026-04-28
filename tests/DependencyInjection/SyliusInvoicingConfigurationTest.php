@@ -61,6 +61,26 @@ final class SyliusInvoicingConfigurationTest extends TestCase
         );
     }
 
+    /** @test */
+    public function it_has_legacy_enabled_by_default(): void
+    {
+        $this->assertProcessedConfigurationEquals(
+            [],
+            ['pdf_generator' => ['legacy' => true]],
+            'pdf_generator.legacy',
+        );
+    }
+
+    /** @test */
+    public function it_allows_to_disable_legacy(): void
+    {
+        $this->assertProcessedConfigurationEquals(
+            [['pdf_generator' => ['legacy' => false]]],
+            ['pdf_generator' => ['legacy' => false]],
+            'pdf_generator.legacy',
+        );
+    }
+
     protected function getConfiguration(): Configuration
     {
         return new Configuration();

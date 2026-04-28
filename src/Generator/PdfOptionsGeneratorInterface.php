@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace Sylius\InvoicingPlugin\Generator;
 
+/**
+ * @deprecated since sylius/invoicing-plugin 2.2, use sylius/pdf-generation-bundle's adapter options instead.
+ */
 interface PdfOptionsGeneratorInterface
 {
     public function generate(): array;
