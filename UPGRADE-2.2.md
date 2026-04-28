@@ -12,6 +12,10 @@
 
    The bundle is preconfigured with `knp_snappy` adapter and `gaufrette` storage by default, with a `sylius_invoicing` context making it a drop-in replacement.
 
+   The `sylius_invoicing.pdf_generator.legacy` option itself is deprecated and will be removed in 3.0,
+   together with the entire legacy PDF generation path. The `SyliusPdfGenerationBundle` integration will become
+   the only supported mode.
+
 1. The following services now accept new argument types from the `SyliusPdfGenerationBundle`. Passing the old types is deprecated and will be removed in 3.0:
 
    - `Sylius\InvoicingPlugin\Generator\InvoicePdfFileGenerator`:
