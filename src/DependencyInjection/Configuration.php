@@ -172,7 +172,14 @@ final class Configuration implements ConfigurationInterface
                     ->end()
                     ->children()
                         ->booleanNode('enabled')->defaultTrue()->end()
-                        ->booleanNode('legacy')->defaultTrue()->end()
+                        ->booleanNode('legacy')
+                            ->defaultTrue()
+                            ->setDeprecated(
+                                'sylius/invoicing-plugin',
+                                '2.2',
+                                'The "%node%" option is deprecated and will be removed in 3.0. The "sylius/pdf-generation-bundle" integration will become the only supported PDF generation mode.',
+                            )
+                        ->end()
                     ->end()
                 ->end()
             ->end()
