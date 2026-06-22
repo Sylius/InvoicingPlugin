@@ -71,7 +71,9 @@
         <service
             id="sylius_invoicing.provider.unit_net_price"
             class="Sylius\InvoicingPlugin\Provider\UnitNetPriceProvider"
-        />
+        >
+            <argument type="service" id="sylius.tax_calculator.default" />
+        </service>
         <service id="Sylius\InvoicingPlugin\Provider\UnitNetPriceProviderInterface" alias="sylius_invoicing.provider.unit_net_price" />
     </services>
 </container>
