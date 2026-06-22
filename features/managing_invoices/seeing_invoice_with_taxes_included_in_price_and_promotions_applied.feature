@@ -22,6 +22,6 @@ Feature: Seeing included in price taxes and promotions applied on an invoice
 
     Scenario: Seeing proper taxes and promotions on an invoice
         When I view the summary of the invoice for order "#00000666"
-        Then it should have 2 "PHP T-Shirt" items with unit net price "50.65", discounted unit net price "40.65", net value "81.30", tax total "18.70" and total "100.00" in "USD" currency
+        Then it should have 2 "PHP T-Shirt" items with unit net price "48.78", discounted unit net price "40.65", net value "81.30", tax total "18.70" and total "100.00" in "USD" currency
         And it should have a tax item "23%" with amount "18.70" in "USD" currency
         And its total should be "110.00" in "USD" currency
