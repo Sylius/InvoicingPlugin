@@ -52,8 +52,8 @@ final class OrderPaymentPaidProducer
         /** @var OrderInterface $order */
         $order = $payment->getOrder();
 
-        return null !== $order
-            && $order->getPaymentState() === OrderPaymentStates::STATE_PAID
-            && null !== $this->invoiceRepository->findOneByOrder($order);
+        return null !== $order &&
+            $order->getPaymentState() === OrderPaymentStates::STATE_PAID &&
+            null !== $this->invoiceRepository->findOneByOrder($order);
     }
 }
