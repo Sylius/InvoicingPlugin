@@ -18,19 +18,22 @@ use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceSequenceInterface;
-use Sylius\InvoicingPlugin\Enum\InvoiceSequenceScopeEnum;
+use Sylius\InvoicingPlugin\Exception\SequenceScopeNotSupported;
+use Sylius\InvoicingPlugin\Resolver\SequenceScopeResolverInterface;
 use Symfony\Component\Clock\ClockInterface;
 
 final class SequentialInvoiceNumberGenerator implements InvoiceNumberGenerator
 {
+    /** @param iterable<SequenceScopeResolverInterface> $scopeResolvers */
     public function __construct(
         private readonly RepositoryInterface $sequenceRepository,
         private readonly FactoryInterface $sequenceFactory,
         private readonly EntityManagerInterface $sequenceManager,
         private readonly ClockInterface $clock,
+        private readonly iterable $scopeResolvers,
         private readonly int $startNumber = 1,
         private readonly int $numberLength = 9,
-        private readonly InvoiceSequenceScopeEnum $scope = InvoiceSequenceScopeEnum::GLOBAL,
+        private readonly string $scope = InvoiceSequenceInterface::SCOPE_GLOBAL,
     ) {
     }
 
@@ -58,19 +61,10 @@ final class SequentialInvoiceNumberGenerator implements InvoiceNumberGenerator
 
     private function getSequence(): InvoiceSequenceInterface
     {
-        $now = $this->clock->now();
-
-        $criteria = [
-            'type' => $this->scope,
-            'year' => match ($this->scope) {
-                InvoiceSequenceScopeEnum::MONTHLY, InvoiceSequenceScopeEnum::ANNUALLY => (int) $now->format('Y'),
-                InvoiceSequenceScopeEnum::GLOBAL => 0,
-            },
-            'month' => match ($this->scope) {
-                InvoiceSequenceScopeEnum::MONTHLY => (int) $now->format('m'),
-                InvoiceSequenceScopeEnum::ANNUALLY, InvoiceSequenceScopeEnum::GLOBAL => 0,
-            },
-        ];
+        $criteria = array_merge(
+            ['type' => $this->scope],
+            $this->resolveScopeCriteria($this->clock->now()),
+        );
 
         /** @var InvoiceSequenceInterface|null $sequence */
         $sequence = $this->sequenceRepository->findOneBy($criteria);
@@ -88,5 +82,17 @@ final class SequentialInvoiceNumberGenerator implements InvoiceNumberGenerator
         $this->sequenceManager->persist($sequence);
 
         return $sequence;
+    }
+
+    /** @return array{year: int, month: int} */
+    private function resolveScopeCriteria(\DateTimeImmutable $now): array
+    {
+        foreach ($this->scopeResolvers as $scopeResolver) {
+            if ($scopeResolver->supports($this->scope)) {
+                return $scopeResolver->resolve($now);
+            }
+        }
+
+        throw SequenceScopeNotSupported::withScope($this->scope);
     }
 }

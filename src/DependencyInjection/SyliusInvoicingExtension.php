@@ -15,7 +15,6 @@ namespace Sylius\InvoicingPlugin\DependencyInjection;
 
 use Sylius\Bundle\CoreBundle\DependencyInjection\PrependDoctrineMigrationsTrait;
 use Sylius\Bundle\ResourceBundle\DependencyInjection\Extension\AbstractResourceExtension;
-use Sylius\InvoicingPlugin\Enum\InvoiceSequenceScopeEnum;
 use Sylius\InvoicingPlugin\Generator\InvoicingAllowedFilesOptionsProcessor;
 use Sylius\PdfGenerationBundle\Core\Filesystem\Manager\PdfFileManagerInterface;
 use Sylius\PdfGenerationBundle\Core\Renderer\TwigToPdfRendererInterface;
@@ -43,7 +42,7 @@ final class SyliusInvoicingExtension extends AbstractResourceExtension implement
         $container->setParameter('sylius_invoicing.pdf_generator.allowed_files', $config['pdf_generator']['allowed_files']);
 
         $container->getDefinition('sylius_invoicing.generator.invoice_number')
-            ->setArgument('$scope', InvoiceSequenceScopeEnum::from($config['sequence']['scope']))
+            ->setArgument('$scope', $config['sequence']['scope'])
         ;
 
         // TODO: Remove in 3.0 — once the legacy PDF generator is dropped, the service should be defined directly with its non-legacy arguments instead of being rewired here.

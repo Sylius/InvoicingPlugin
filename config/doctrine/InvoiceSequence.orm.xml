@@ -21,7 +21,7 @@
                 <option name="default">0</option>
             </options>
         </field>
-        <field name="type" enum-type="Sylius\InvoicingPlugin\Enum\InvoiceSequenceScopeEnum">
+        <field name="type" type="string">
             <options>
                 <option name="default">global</option>
             </options>

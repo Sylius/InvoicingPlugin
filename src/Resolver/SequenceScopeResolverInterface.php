@@ -11,11 +11,12 @@
 
 declare(strict_types=1);
 
-namespace Sylius\InvoicingPlugin\Enum;
+namespace Sylius\InvoicingPlugin\Resolver;
 
-enum InvoiceSequenceScopeEnum: string
+interface SequenceScopeResolverInterface
 {
-    case GLOBAL = 'global';
-    case MONTHLY = 'monthly';
-    case ANNUALLY = 'annually';
+    public function supports(string $scope): bool;
+
+    /** @return array{year: int, month: int} */
+    public function resolve(\DateTimeImmutable $now): array;
 }

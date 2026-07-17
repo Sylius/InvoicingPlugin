@@ -28,7 +28,6 @@ use Sylius\InvoicingPlugin\Entity\LineItem;
 use Sylius\InvoicingPlugin\Entity\LineItemInterface;
 use Sylius\InvoicingPlugin\Entity\TaxItem;
 use Sylius\InvoicingPlugin\Entity\TaxItemInterface;
-use Sylius\InvoicingPlugin\Enum\InvoiceSequenceScopeEnum;
 use Sylius\InvoicingPlugin\Factory\BillingDataFactory;
 use Sylius\InvoicingPlugin\Factory\InvoiceShopBillingDataFactory;
 use Sylius\InvoicingPlugin\Factory\LineItemFactory;
@@ -58,13 +57,10 @@ final class Configuration implements ConfigurationInterface
                 ->arrayNode('sequence')
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->enumNode('scope')
-                            ->info('Scope of invoice number sequences: "global", "monthly" or "annually".')
-                            ->values(array_map(
-                                static fn (InvoiceSequenceScopeEnum $scope): string => $scope->value,
-                                InvoiceSequenceScopeEnum::cases(),
-                            ))
-                            ->defaultValue(InvoiceSequenceScopeEnum::GLOBAL->value)
+                        ->scalarNode('scope')
+                            ->info('Scope of invoice number sequences: "global", "monthly" or "annually". Custom scopes can be added by registering a service tagged with "sylius_invoicing.sequence_scope_resolver".')
+                            ->cannotBeEmpty()
+                            ->defaultValue(InvoiceSequenceInterface::SCOPE_GLOBAL)
                         ->end()
                     ->end()
                 ->end()

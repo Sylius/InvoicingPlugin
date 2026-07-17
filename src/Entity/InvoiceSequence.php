@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace Sylius\InvoicingPlugin\Entity;
 
-use Sylius\InvoicingPlugin\Enum\InvoiceSequenceScopeEnum;
-
 /** @final */
 class InvoiceSequence implements InvoiceSequenceInterface
 {
@@ -25,7 +23,7 @@ class InvoiceSequence implements InvoiceSequenceInterface
 
     protected ?int $version = 1;
 
-    protected InvoiceSequenceScopeEnum $type = InvoiceSequenceScopeEnum::GLOBAL;
+    protected string $type = InvoiceSequenceInterface::SCOPE_GLOBAL;
 
     protected int $year = 0;
 
@@ -57,12 +55,12 @@ class InvoiceSequence implements InvoiceSequenceInterface
         $this->version = $version;
     }
 
-    public function getType(): InvoiceSequenceScopeEnum
+    public function getType(): string
     {
         return $this->type;
     }
 
-    public function setType(InvoiceSequenceScopeEnum $type): void
+    public function setType(string $type): void
     {
         $this->type = $type;
     }
