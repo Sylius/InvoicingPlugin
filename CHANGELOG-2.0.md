@@ -1,5 +1,10 @@
 # CHANGELOG
 
+### v2.0.3 (2025-10-21)
+
+- [#373](https://github.com/Sylius/InvoicingPlugin/pull/373) Add configurable invoice sequence scope (`monthly`/`annually`/`global`)
+  via SYLIUS_INVOICING_SEQUENCE_SCOPE ENV ([@tomkalon](https://github.com/tomkalon))
+
 ### v2.0.2 (2025-07-03)
 
 - [#373](https://github.com/Sylius/InvoicingPlugin/pull/373) Add sylius/test-application ([@Wojdylak](https://github.com/Wojdylak))

@@ -23,7 +23,6 @@ final class InvoicePdfFileGenerator implements InvoicePdfFileGeneratorInterface
     public function __construct(
         private readonly TwigToPdfGeneratorInterface|TwigToPdfRendererInterface $twigToPdfRenderer,
         private readonly FileLocatorInterface $fileLocator,
-        private readonly InvoiceFileNameGeneratorInterface $invoiceFileNameGenerator,
         private readonly string $template,
         private readonly string $invoiceLogoPath,
     ) {
@@ -41,7 +40,7 @@ final class InvoicePdfFileGenerator implements InvoicePdfFileGeneratorInterface
 
     public function generate(InvoiceInterface $invoice): InvoicePdf
     {
-        $filename = $this->invoiceFileNameGenerator->generateForPdf($invoice);
+        $filename = $invoice->path();
         $logoPath = $this->fileLocator->locate($this->invoiceLogoPath);
 
         $templateParams = [

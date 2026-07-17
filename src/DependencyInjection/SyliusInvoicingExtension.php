@@ -15,6 +15,7 @@ namespace Sylius\InvoicingPlugin\DependencyInjection;
 
 use Sylius\Bundle\CoreBundle\DependencyInjection\PrependDoctrineMigrationsTrait;
 use Sylius\Bundle\ResourceBundle\DependencyInjection\Extension\AbstractResourceExtension;
+use Sylius\InvoicingPlugin\Enum\InvoiceSequenceScopeEnum;
 use Sylius\InvoicingPlugin\Generator\InvoicingAllowedFilesOptionsProcessor;
 use Sylius\PdfGenerationBundle\Core\Filesystem\Manager\PdfFileManagerInterface;
 use Sylius\PdfGenerationBundle\Core\Renderer\TwigToPdfRendererInterface;
@@ -41,20 +42,24 @@ final class SyliusInvoicingExtension extends AbstractResourceExtension implement
         $config = $this->processConfiguration($configuration, $configs);
         $container->setParameter('sylius_invoicing.pdf_generator.allowed_files', $config['pdf_generator']['allowed_files']);
 
+        $sequenceScope = InvoiceSequenceScopeEnum::from($config['sequence']['scope']);
+        $container->getDefinition('sylius_invoicing.generator.invoice_number')
+            ->setArgument('$scope', $sequenceScope)
+        ;
+        $container->getDefinition('sylius_invoicing.generator.invoice_file_name')
+            ->setArgument('$scope', $sequenceScope)
+        ;
+
         // TODO: Remove in 3.0 — once the legacy PDF generator is dropped, the service should be defined directly with its non-legacy arguments instead of being rewired here.
         if (!$config['pdf_generator']['legacy']) {
             $container->getDefinition('sylius_invoicing.generator.invoice_pdf_file')
                 ->replaceArgument(0, new Reference(TwigToPdfRendererInterface::class))
             ;
 
-            $container->getDefinition('sylius_invoicing.creator.invoice')
-                ->replaceArgument(4, new Reference(PdfFileManagerInterface::class))
-            ;
-
             $container->getDefinition('sylius_invoicing.provider.invoice_file')
-                ->replaceArgument(1, new Reference(PdfFileManagerInterface::class))
+                ->replaceArgument(0, new Reference(PdfFileManagerInterface::class))
+                ->replaceArgument(2, null)
                 ->replaceArgument(3, null)
-                ->replaceArgument(4, null)
             ;
 
             $this->registerAllowedFilesProcessor($container, $config['pdf_generator']['allowed_files']);

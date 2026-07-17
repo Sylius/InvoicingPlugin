@@ -49,8 +49,10 @@ final class DownloadInvoiceAction
         $invoiceFile = $this->invoiceFilePathProvider->provide($invoice);
 
         $response = new Response($invoiceFile->content(), Response::HTTP_OK, ['Content-Type' => 'application/pdf']);
+        $filename = basename($invoiceFile->filename());
+
         $response->headers->add([
-            'Content-Disposition' => $response->headers->makeDisposition('attachment', $invoiceFile->filename()),
+            'Content-Disposition' => $response->headers->makeDisposition('attachment', $filename),
         ]);
 
         return $response;
