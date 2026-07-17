@@ -20,7 +20,6 @@ use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
-use Sylius\InvoicingPlugin\Generator\InvoiceFileNameGeneratorInterface;
 use Sylius\InvoicingPlugin\Generator\InvoicePdfFileGeneratorInterface;
 use Sylius\InvoicingPlugin\Manager\InvoiceFileManagerInterface;
 use Sylius\InvoicingPlugin\Model\InvoicePdf;
@@ -133,7 +132,6 @@ final class InvoiceFileProviderTest extends TestCase
     {
         $pdfFileManager = $this->createMock(PdfFileManagerInterface::class);
         $provider = new InvoiceFileProvider(
-            $this->invoiceFileNameGenerator,
             $pdfFileManager,
             $this->invoicePdfFileGenerator,
         );
@@ -141,10 +139,9 @@ final class InvoiceFileProviderTest extends TestCase
         $invoice = $this->createMock(InvoiceInterface::class);
         $pdfFile = new PdfFile('invoice.pdf', 'CONTENT');
 
-        $this->invoiceFileNameGenerator
+        $invoice
             ->expects(self::once())
-            ->method('generateForPdf')
-            ->with($invoice)
+            ->method('path')
             ->willReturn('invoice.pdf');
 
         $pdfFileManager
@@ -178,17 +175,15 @@ final class InvoiceFileProviderTest extends TestCase
     {
         $pdfFileManager = $this->createMock(PdfFileManagerInterface::class);
         $provider = new InvoiceFileProvider(
-            $this->invoiceFileNameGenerator,
             $pdfFileManager,
             $this->invoicePdfFileGenerator,
         );
 
         $invoice = $this->createMock(InvoiceInterface::class);
 
-        $this->invoiceFileNameGenerator
+        $invoice
             ->expects(self::once())
-            ->method('generateForPdf')
-            ->with($invoice)
+            ->method('path')
             ->willReturn('invoice.pdf');
 
         $pdfFileManager

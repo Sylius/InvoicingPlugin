@@ -27,7 +27,6 @@ use Sylius\InvoicingPlugin\Entity\InvoiceShopBillingData;
 use Sylius\InvoicingPlugin\Entity\InvoiceShopBillingDataInterface;
 use Sylius\InvoicingPlugin\Factory\InvoiceFactory;
 use Sylius\InvoicingPlugin\Factory\InvoiceFactoryInterface;
-use Sylius\InvoicingPlugin\Generator\InvoiceFileNameGenerator;
 use Sylius\InvoicingPlugin\Generator\InvoiceFileNameGeneratorInterface;
 
 final class InvoiceFactoryTest extends TestCase
@@ -54,7 +53,6 @@ final class InvoiceFactoryTest extends TestCase
     public function it_implements_invoice_factory_interface(): void
     {
         self::assertInstanceOf(InvoiceFactoryInterface::class, $this->invoiceFactory);
-
     }
 
     #[Test]

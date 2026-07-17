@@ -144,7 +144,7 @@ final class SequentialInvoiceNumberGeneratorTest extends TestCase
             $this->clock,
             1,
             9,
-            'monthly'
+            'monthly',
         );
 
         $this->sequenceRepository
@@ -184,7 +184,7 @@ final class SequentialInvoiceNumberGeneratorTest extends TestCase
             $this->clock,
             1,
             9,
-            'annually'
+            'annually',
         );
 
         $this->sequenceRepository
@@ -224,7 +224,7 @@ final class SequentialInvoiceNumberGeneratorTest extends TestCase
             $this->clock,
             1,
             9,
-            'monthly'
+            'monthly',
         );
 
         $scope = InvoiceSequenceScopeEnum::MONTHLY;
