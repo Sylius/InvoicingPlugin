@@ -72,7 +72,7 @@ final class SequentialInvoiceNumberGeneratorTest extends TestCase
 
         $this->sequenceRepository
             ->method('findOneBy')
-            ->with(['year' => null, 'month' => null])
+            ->with(['type' => InvoiceSequenceScopeEnum::GLOBAL, 'year' => 0, 'month' => 0])
             ->willReturn($sequence);
 
         $sequence->method('getVersion')->willReturn(1);
@@ -102,10 +102,13 @@ final class SequentialInvoiceNumberGeneratorTest extends TestCase
 
         $this->sequenceRepository
             ->method('findOneBy')
-            ->with(['year' => null, 'month' => null])
+            ->with(['type' => InvoiceSequenceScopeEnum::GLOBAL, 'year' => 0, 'month' => 0])
             ->willReturn(null);
 
         $this->sequenceFactory->method('createNew')->willReturn($sequence);
+        $sequence->expects(self::once())->method('setType')->with(InvoiceSequenceScopeEnum::GLOBAL);
+        $sequence->expects(self::once())->method('setYear')->with(0);
+        $sequence->expects(self::once())->method('setMonth')->with(0);
 
         $this->sequenceManager
             ->expects(self::once())
@@ -144,12 +147,12 @@ final class SequentialInvoiceNumberGeneratorTest extends TestCase
             $this->clock,
             1,
             9,
-            'monthly',
+            InvoiceSequenceScopeEnum::MONTHLY,
         );
 
         $this->sequenceRepository
             ->method('findOneBy')
-            ->with(['year' => 2025, 'month' => 10, 'type' => InvoiceSequenceScopeEnum::MONTHLY])
+            ->with(['type' => InvoiceSequenceScopeEnum::MONTHLY, 'year' => 2025, 'month' => 10])
             ->willReturn($sequence);
 
         $sequence->method('getVersion')->willReturn(1);
@@ -184,12 +187,12 @@ final class SequentialInvoiceNumberGeneratorTest extends TestCase
             $this->clock,
             1,
             9,
-            'annually',
+            InvoiceSequenceScopeEnum::ANNUALLY,
         );
 
         $this->sequenceRepository
             ->method('findOneBy')
-            ->with(['year' => 2025, 'type' => InvoiceSequenceScopeEnum::ANNUALLY])
+            ->with(['type' => InvoiceSequenceScopeEnum::ANNUALLY, 'year' => 2025, 'month' => 0])
             ->willReturn($sequence);
 
         $sequence->method('getVersion')->willReturn(1);
@@ -224,7 +227,7 @@ final class SequentialInvoiceNumberGeneratorTest extends TestCase
             $this->clock,
             1,
             9,
-            'monthly',
+            InvoiceSequenceScopeEnum::MONTHLY,
         );
 
         $scope = InvoiceSequenceScopeEnum::MONTHLY;
@@ -232,7 +235,7 @@ final class SequentialInvoiceNumberGeneratorTest extends TestCase
         $this->sequenceRepository
             ->expects(self::once())
             ->method('findOneBy')
-            ->with(['year' => 2025, 'month' => 10, 'type' => $scope])
+            ->with(['type' => $scope, 'year' => 2025, 'month' => 10])
             ->willReturn(null);
 
         $this->sequenceFactory->expects(self::once())->method('createNew')->willReturn($sequence);

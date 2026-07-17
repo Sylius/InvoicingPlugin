@@ -20,21 +20,14 @@ final class InvoiceFileNameGenerator implements InvoiceFileNameGeneratorInterfac
     private const PDF_FILE_EXTENSION = '.pdf';
 
     public function __construct(
-        private readonly ?string $scope = null,
+        private readonly InvoiceSequenceScopeEnum $scope = InvoiceSequenceScopeEnum::GLOBAL,
     ) {
     }
 
     public function generateForPdf(string $invoiceNumber): string
     {
-        $scope = InvoiceSequenceScopeEnum::tryFrom($this->scope ?? '') ?? InvoiceSequenceScopeEnum::GLOBAL;
-        $prefix = $scope->value . '/';
+        $prefix = InvoiceSequenceScopeEnum::GLOBAL === $this->scope ? '' : $this->scope->value . '/';
 
-        if ($scope === InvoiceSequenceScopeEnum::GLOBAL) {
-            $prefix = '';
-        }
-
-        $fileName = str_replace('/', '_', $invoiceNumber) . self::PDF_FILE_EXTENSION;
-
-        return $prefix . $fileName;
+        return $prefix . str_replace('/', '_', $invoiceNumber) . self::PDF_FILE_EXTENSION;
     }
 }

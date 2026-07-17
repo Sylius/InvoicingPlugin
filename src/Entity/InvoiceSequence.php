@@ -25,11 +25,11 @@ class InvoiceSequence implements InvoiceSequenceInterface
 
     protected ?int $version = 1;
 
-    protected ?InvoiceSequenceScopeEnum $type = null;
+    protected InvoiceSequenceScopeEnum $type = InvoiceSequenceScopeEnum::GLOBAL;
 
-    protected ?int $year = null;
+    protected int $year = 0;
 
-    protected ?int $month = null;
+    protected int $month = 0;
 
     /** @return mixed */
     public function getId()
@@ -57,32 +57,32 @@ class InvoiceSequence implements InvoiceSequenceInterface
         $this->version = $version;
     }
 
-    public function getType(): ?InvoiceSequenceScopeEnum
+    public function getType(): InvoiceSequenceScopeEnum
     {
         return $this->type;
     }
 
-    public function setType(?InvoiceSequenceScopeEnum $type): void
+    public function setType(InvoiceSequenceScopeEnum $type): void
     {
         $this->type = $type;
     }
 
-    public function getYear(): ?int
+    public function getYear(): int
     {
         return $this->year;
     }
 
-    public function setYear(?int $year): void
+    public function setYear(int $year): void
     {
         $this->year = $year;
     }
 
-    public function getMonth(): ?int
+    public function getMonth(): int
     {
         return $this->month;
     }
 
-    public function setMonth(?int $month): void
+    public function setMonth(int $month): void
     {
         $this->month = $month;
     }

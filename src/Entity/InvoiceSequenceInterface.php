@@ -23,15 +23,15 @@ interface InvoiceSequenceInterface extends ResourceInterface, VersionedInterface
 
     public function incrementIndex(): void;
 
-    public function getType(): ?InvoiceSequenceScopeEnum;
+    public function getType(): InvoiceSequenceScopeEnum;
 
-    public function setType(?InvoiceSequenceScopeEnum $type): void;
+    public function setType(InvoiceSequenceScopeEnum $type): void;
 
-    public function getYear(): ?int;
+    public function getYear(): int;
 
-    public function getMonth(): ?int;
+    public function getMonth(): int;
 
-    public function setYear(?int $year): void;
+    public function setYear(int $year): void;
 
-    public function setMonth(?int $month): void;
+    public function setMonth(int $month): void;
 }

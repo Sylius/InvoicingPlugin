@@ -11,9 +11,21 @@
         </id>
         <field name="index" column="idx" type="integer" />
         <field name="version" type="integer" version="true" />
-        <field name="year" type="integer" nullable="true"/>
-        <field name="month" type="integer" nullable="true"/>
-        <field name="type" enum-type="Sylius\InvoicingPlugin\Enum\InvoiceSequenceScopeEnum" nullable="true" />
+        <field name="year" type="integer">
+            <options>
+                <option name="default">0</option>
+            </options>
+        </field>
+        <field name="month" type="integer">
+            <options>
+                <option name="default">0</option>
+            </options>
+        </field>
+        <field name="type" enum-type="Sylius\InvoicingPlugin\Enum\InvoiceSequenceScopeEnum">
+            <options>
+                <option name="default">global</option>
+            </options>
+        </field>
     </mapped-superclass>
 
 </doctrine-mapping>

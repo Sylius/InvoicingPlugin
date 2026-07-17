@@ -30,17 +30,8 @@ final class SequentialInvoiceNumberGenerator implements InvoiceNumberGenerator
         private readonly ClockInterface $clock,
         private readonly int $startNumber = 1,
         private readonly int $numberLength = 9,
-        private readonly ?string $scope = null,
+        private readonly InvoiceSequenceScopeEnum $scope = InvoiceSequenceScopeEnum::GLOBAL,
     ) {
-        if (null === $this->scope) {
-            trigger_deprecation(
-                'sylius/invoicing-plugin',
-                '2.1',
-                'Not passing the "%s" argument to "%s::__construct()" is deprecated and will be required in version 3.0. Pass a valid scope explicitly (e.g. "monthly", "annually", or "global").',
-                'scope',
-                self::class,
-            );
-        }
     }
 
     public function generate(): string
@@ -68,23 +59,18 @@ final class SequentialInvoiceNumberGenerator implements InvoiceNumberGenerator
     private function getSequence(): InvoiceSequenceInterface
     {
         $now = $this->clock->now();
-        $scope = InvoiceSequenceScopeEnum::tryFrom($this->scope ?? '') ?? InvoiceSequenceScopeEnum::GLOBAL;
 
-        $criteria = match ($scope) {
-            InvoiceSequenceScopeEnum::MONTHLY => [
-                'year' => (int) $now->format('Y'),
-                'month' => (int) $now->format('m'),
-                'type' => $scope,
-            ],
-            InvoiceSequenceScopeEnum::ANNUALLY => [
-                'year' => (int) $now->format('Y'),
-                'type' => $scope,
-            ],
-            InvoiceSequenceScopeEnum::GLOBAL => [
-                'year' => null,
-                'month' => null,
-            ],
-        };
+        $criteria = [
+            'type' => $this->scope,
+            'year' => match ($this->scope) {
+                InvoiceSequenceScopeEnum::MONTHLY, InvoiceSequenceScopeEnum::ANNUALLY => (int) $now->format('Y'),
+                InvoiceSequenceScopeEnum::GLOBAL => 0,
+            },
+            'month' => match ($this->scope) {
+                InvoiceSequenceScopeEnum::MONTHLY => (int) $now->format('m'),
+                InvoiceSequenceScopeEnum::ANNUALLY, InvoiceSequenceScopeEnum::GLOBAL => 0,
+            },
+        ];
 
         /** @var InvoiceSequenceInterface|null $sequence */
         $sequence = $this->sequenceRepository->findOneBy($criteria);
@@ -95,18 +81,9 @@ final class SequentialInvoiceNumberGenerator implements InvoiceNumberGenerator
 
         /** @var InvoiceSequenceInterface $sequence */
         $sequence = $this->sequenceFactory->createNew();
-
-        if (isset($criteria['year'])) {
-            $sequence->setYear($criteria['year']);
-        }
-
-        if (isset($criteria['month'])) {
-            $sequence->setMonth($criteria['month']);
-        }
-
-        if (isset($criteria['type'])) {
-            $sequence->setType($criteria['type']);
-        }
+        $sequence->setType($this->scope);
+        $sequence->setYear($criteria['year']);
+        $sequence->setMonth($criteria['month']);
 
         $this->sequenceManager->persist($sequence);
 

@@ -75,7 +75,22 @@ public function generateForPdf(InvoiceInterface $invoice): string;
 public function generateForPdf(string $invoiceNumber): string;
 ```
 
-6. Can prefix filenames based on `SYLIUS_INVOICING_SEQUENCE_SCOPE`:
+6. Invoice sequence scope is configured via semantic configuration (validated at container build time):
+
+```yaml
+sylius_invoicing:
+    sequence:
+        scope: global # one of: "global" (default), "monthly", "annually"
+```
+
+An invalid value fails at container compilation instead of silently falling back to `global`.
+The `SYLIUS_INVOICING_SEQUENCE_SCOPE` environment variable and the `sylius_invoicing.sequence_scope`
+parameter are no longer supported.
+
+`SequentialInvoiceNumberGenerator` and `InvoiceFileNameGenerator` now receive the scope as an
+`InvoiceSequenceScopeEnum` instance (default: `InvoiceSequenceScopeEnum::GLOBAL`) instead of a nullable string.
+
+The generated file name is prefixed based on the configured scope:
 
 >global (default): no prefix
 > 
@@ -83,7 +98,25 @@ public function generateForPdf(string $invoiceNumber): string;
 > 
 >annually: annually/…
 
-7. `InvoicePdfFileGenerator` simplified:
+7. `InvoiceSequence` scope columns are non-nullable:
+
+`year`, `month` (default `0`) and `type` (default `global`) are `NOT NULL`, and sequences are guarded
+by a unique index on `(type, year, month)` preventing duplicate sequences created by concurrent requests.
+`InvoiceSequenceInterface` getters/setters use non-nullable types accordingly:
+
+```php
+// before:
+public function getType(): ?InvoiceSequenceScopeEnum;
+public function getYear(): ?int;
+public function getMonth(): ?int;
+
+// after:
+public function getType(): InvoiceSequenceScopeEnum;
+public function getYear(): int;
+public function getMonth(): int;
+```
+
+8. `InvoicePdfFileGenerator` simplified:
 
 - Removed dependency on InvoiceFileNameGeneratorInterface.
 

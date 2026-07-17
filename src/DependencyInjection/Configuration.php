@@ -28,6 +28,7 @@ use Sylius\InvoicingPlugin\Entity\LineItem;
 use Sylius\InvoicingPlugin\Entity\LineItemInterface;
 use Sylius\InvoicingPlugin\Entity\TaxItem;
 use Sylius\InvoicingPlugin\Entity\TaxItemInterface;
+use Sylius\InvoicingPlugin\Enum\InvoiceSequenceScopeEnum;
 use Sylius\InvoicingPlugin\Factory\BillingDataFactory;
 use Sylius\InvoicingPlugin\Factory\InvoiceShopBillingDataFactory;
 use Sylius\InvoicingPlugin\Factory\LineItemFactory;
@@ -45,8 +46,30 @@ final class Configuration implements ConfigurationInterface
 
         $this->addResourcesSection($rootNode);
         $this->addPdfGeneratorSection($rootNode);
+        $this->addSequenceSection($rootNode);
 
         return $treeBuilder;
+    }
+
+    private function addSequenceSection(ArrayNodeDefinition $node): void
+    {
+        $node
+            ->children()
+                ->arrayNode('sequence')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->enumNode('scope')
+                            ->info('Scope of invoice number sequences: "global", "monthly" or "annually".')
+                            ->values(array_map(
+                                static fn (InvoiceSequenceScopeEnum $scope): string => $scope->value,
+                                InvoiceSequenceScopeEnum::cases(),
+                            ))
+                            ->defaultValue(InvoiceSequenceScopeEnum::GLOBAL->value)
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
     }
 
     private function addResourcesSection(ArrayNodeDefinition $node): void

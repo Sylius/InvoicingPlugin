@@ -15,6 +15,7 @@ namespace Tests\Sylius\InvoicingPlugin\Unit\Generator;
 
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
+use Sylius\InvoicingPlugin\Enum\InvoiceSequenceScopeEnum;
 use Sylius\InvoicingPlugin\Generator\InvoiceFileNameGenerator;
 use Sylius\InvoicingPlugin\Generator\InvoiceFileNameGeneratorInterface;
 
@@ -44,9 +45,9 @@ final class InvoiceFileNameGeneratorTest extends TestCase
     }
 
     #[Test]
-    public function it_generates_scoped_file_name_when_scope_is_set(): void
+    public function it_generates_scoped_file_name_when_monthly_scope_is_set(): void
     {
-        $generator = new InvoiceFileNameGenerator('monthly');
+        $generator = new InvoiceFileNameGenerator(InvoiceSequenceScopeEnum::MONTHLY);
 
         $result = $generator->generateForPdf('2020/01/02/000333');
 
@@ -54,12 +55,12 @@ final class InvoiceFileNameGeneratorTest extends TestCase
     }
 
     #[Test]
-    public function it_uses_global_scope_when_scope_is_invalid_or_null(): void
+    public function it_generates_scoped_file_name_when_annually_scope_is_set(): void
     {
-        $generator = new InvoiceFileNameGenerator('invalid_scope');
+        $generator = new InvoiceFileNameGenerator(InvoiceSequenceScopeEnum::ANNUALLY);
 
         $result = $generator->generateForPdf('2020/01/02/000333');
 
-        self::assertSame('2020_01_02_000333.pdf', $result);
+        self::assertSame('annually/2020_01_02_000333.pdf', $result);
     }
 }

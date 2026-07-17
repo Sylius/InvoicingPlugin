@@ -5,8 +5,6 @@ imports:
 parameters:
     sylius_invoicing.invoice_save_path: "%kernel.project_dir%/private/invoices/"
     sylius_invoicing.filesystem_adapter.invoice: "sylius_invoicing_invoice"
-    sylius_invoicing.sequence_scope: '%env(default::SYLIUS_INVOICING_SEQUENCE_SCOPE)%'
-    env(SYLIUS_INVOICING_SEQUENCE_SCOPE): 'global'
 
 sylius_invoicing:
     pdf_generator:
