@@ -19,4 +19,6 @@ interface SequenceScopeResolverInterface
 
     /** @return array{year: int, month: int} */
     public function resolve(\DateTimeImmutable $now): array;
+
+    public function prefix(\DateTimeImmutable $now): string;
 }

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Sylius package.
+ *
+ * (c) Sylius Sp. z o.o.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 declare(strict_types=1);
 
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
@@ -12,11 +21,11 @@ return function (ContainerConfigurator $container) {
         $container->import('@SyliusInvoicingPlugin/tests/Behat/Resources/services.xml');
     }
 
-    if (filter_var($_ENV['TEST_SYLIUS_INVOICING_PDF_GENERATION_DISABLED'], FILTER_VALIDATE_BOOLEAN)) {
+    if (filter_var($_ENV['TEST_SYLIUS_INVOICING_PDF_GENERATION_DISABLED'], \FILTER_VALIDATE_BOOLEAN)) {
         $container->import('sylius_invoicing_pdf_generation_disabled.yaml');
     }
 
-    if (!filter_var($_ENV['TEST_SYLIUS_INVOICING_PDF_LEGACY'] ?? 'true', FILTER_VALIDATE_BOOLEAN)) {
+    if (!filter_var($_ENV['TEST_SYLIUS_INVOICING_PDF_LEGACY'] ?? 'true', \FILTER_VALIDATE_BOOLEAN)) {
         $container->extension('sylius_invoicing', [
             'pdf_generator' => ['legacy' => false],
         ]);

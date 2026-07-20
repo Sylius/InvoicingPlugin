@@ -19,37 +19,59 @@ use Sylius\Component\Resource\Factory\FactoryInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceSequenceInterface;
 use Sylius\InvoicingPlugin\Exception\SequenceScopeNotSupported;
+use Sylius\InvoicingPlugin\Resolver\AnnuallySequenceScopeResolver;
+use Sylius\InvoicingPlugin\Resolver\GlobalSequenceScopeResolver;
+use Sylius\InvoicingPlugin\Resolver\MonthlySequenceScopeResolver;
 use Sylius\InvoicingPlugin\Resolver\SequenceScopeResolverInterface;
 use Symfony\Component\Clock\ClockInterface;
 
 final class SequentialInvoiceNumberGenerator implements InvoiceNumberGenerator
 {
-    /** @param iterable<SequenceScopeResolverInterface> $scopeResolvers */
+    /** @var iterable<SequenceScopeResolverInterface> */
+    private readonly iterable $scopeResolvers;
+
+    /** @param iterable<SequenceScopeResolverInterface>|null $scopeResolvers */
     public function __construct(
         private readonly RepositoryInterface $sequenceRepository,
         private readonly FactoryInterface $sequenceFactory,
         private readonly EntityManagerInterface $sequenceManager,
         private readonly ClockInterface $clock,
-        private readonly iterable $scopeResolvers,
         private readonly int $startNumber = 1,
         private readonly int $numberLength = 9,
+        ?iterable $scopeResolvers = null,
         private readonly string $scope = InvoiceSequenceInterface::SCOPE_GLOBAL,
     ) {
+        if (null === $scopeResolvers) {
+            trigger_deprecation(
+                'sylius/invoicing-plugin',
+                '2.3',
+                'Not passing a value for the "$scopeResolvers" argument to "%s" is deprecated and the argument will be required in 3.0.',
+                self::class,
+            );
+
+            $scopeResolvers = [
+                new GlobalSequenceScopeResolver(),
+                new MonthlySequenceScopeResolver(),
+                new AnnuallySequenceScopeResolver(),
+            ];
+        }
+
+        $this->scopeResolvers = $scopeResolvers;
     }
 
     public function generate(): string
     {
-        $invoiceIdentifierPrefix = $this->clock->now()->format('Y/m') . '/';
+        $now = $this->clock->now();
+        $scopeResolver = $this->getScopeResolver();
 
-        /** @var InvoiceSequenceInterface $sequence */
-        $sequence = $this->getSequence();
+        $sequence = $this->getSequence($scopeResolver->resolve($now));
 
         $this->sequenceManager->lock($sequence, LockMode::OPTIMISTIC, $sequence->getVersion());
 
         $number = $this->generateNumber($sequence->getIndex());
         $sequence->incrementIndex();
 
-        return $invoiceIdentifierPrefix . $number;
+        return $scopeResolver->prefix($now) . $number;
     }
 
     private function generateNumber(int $index): string
@@ -59,12 +81,10 @@ final class SequentialInvoiceNumberGenerator implements InvoiceNumberGenerator
         return str_pad((string) $number, $this->numberLength, '0', \STR_PAD_LEFT);
     }
 
-    private function getSequence(): InvoiceSequenceInterface
+    /** @param array{year: int, month: int} $scopeCriteria */
+    private function getSequence(array $scopeCriteria): InvoiceSequenceInterface
     {
-        $criteria = array_merge(
-            ['type' => $this->scope],
-            $this->resolveScopeCriteria($this->clock->now()),
-        );
+        $criteria = array_merge(['type' => $this->scope], $scopeCriteria);
 
         /** @var InvoiceSequenceInterface|null $sequence */
         $sequence = $this->sequenceRepository->findOneBy($criteria);
@@ -84,12 +104,11 @@ final class SequentialInvoiceNumberGenerator implements InvoiceNumberGenerator
         return $sequence;
     }
 
-    /** @return array{year: int, month: int} */
-    private function resolveScopeCriteria(\DateTimeImmutable $now): array
+    private function getScopeResolver(): SequenceScopeResolverInterface
     {
         foreach ($this->scopeResolvers as $scopeResolver) {
             if ($scopeResolver->supports($this->scope)) {
-                return $scopeResolver->resolve($now);
+                return $scopeResolver;
             }
         }
 

@@ -22,7 +22,7 @@
             <argument type="service" id="sylius_invoicing.factory.invoice_sequence" />
             <argument type="service" id="sylius_invoicing.manager.invoice_sequence" />
             <argument type="service" id="clock" />
-            <argument type="tagged_iterator" tag="sylius_invoicing.sequence_scope_resolver" />
+            <argument key="$scopeResolvers" type="tagged_iterator" tag="sylius_invoicing.sequence_scope_resolver" />
         </service>
 
         <service id="sylius_invoicing.generator.invoice_identifier" class="Sylius\InvoicingPlugin\Generator\UuidInvoiceIdentifierGenerator" />

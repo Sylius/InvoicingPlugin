@@ -26,4 +26,9 @@ final class AnnuallySequenceScopeResolver implements SequenceScopeResolverInterf
     {
         return ['year' => (int) $now->format('Y'), 'month' => 0];
     }
+
+    public function prefix(\DateTimeImmutable $now): string
+    {
+        return $now->format('Y/m') . '/';
+    }
 }

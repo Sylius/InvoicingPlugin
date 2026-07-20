@@ -26,4 +26,9 @@ final class GlobalSequenceScopeResolver implements SequenceScopeResolverInterfac
     {
         return ['year' => 0, 'month' => 0];
     }
+
+    public function prefix(\DateTimeImmutable $now): string
+    {
+        return $now->format('Y/m') . '/';
+    }
 }

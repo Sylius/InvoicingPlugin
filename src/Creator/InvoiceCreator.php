@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Sylius\InvoicingPlugin\Creator;
 
-use Doctrine\ORM\Exception\ORMException;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Repository\OrderRepositoryInterface;
 use Sylius\InvoicingPlugin\Doctrine\ORM\InvoiceRepositoryInterface;
@@ -61,9 +60,9 @@ final class InvoiceCreator implements InvoiceCreatorInterface
 
         $invoice = $this->invoiceGenerator->generateForOrder($order, $dateTime);
 
-        if (!$this->hasEnabledPdfFileGenerator) {
-            $this->invoiceRepository->add($invoice);
+        $this->invoiceRepository->add($invoice);
 
+        if (!$this->hasEnabledPdfFileGenerator) {
             return;
         }
 
@@ -74,16 +73,6 @@ final class InvoiceCreator implements InvoiceCreatorInterface
             $this->invoiceFileManager->save($pdfFile, 'sylius_invoicing');
         } else {
             $this->invoiceFileManager->save($invoicePdf);
-        }
-
-        try {
-            $this->invoiceRepository->add($invoice);
-        } catch (ORMException) {
-            if ($this->invoiceFileManager instanceof PdfFileManagerInterface) {
-                $this->invoiceFileManager->remove($invoicePdf->filename(), 'sylius_invoicing');
-            } else {
-                $this->invoiceFileManager->remove($invoicePdf);
-            }
         }
     }
 }

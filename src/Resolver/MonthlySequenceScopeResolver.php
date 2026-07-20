@@ -26,4 +26,9 @@ final class MonthlySequenceScopeResolver implements SequenceScopeResolverInterfa
     {
         return ['year' => (int) $now->format('Y'), 'month' => (int) $now->format('m')];
     }
+
+    public function prefix(\DateTimeImmutable $now): string
+    {
+        return $now->format('Y/m') . '/';
+    }
 }
