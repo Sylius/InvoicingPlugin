@@ -1,0 +1,44 @@
+default:
+    suites:
+        invoice_number_sequence:
+            contexts:
+                - sylius.behat.context.hook.doctrine_orm
+                - sylius.behat.context.hook.calendar
+                - Tests\Sylius\InvoicingPlugin\Behat\Context\Hook\InvoicesContext
+                - Tests\Sylius\InvoicingPlugin\Behat\Context\Hook\SequenceScopeContext
+
+                - sylius.behat.context.setup.calendar
+                - sylius.behat.context.setup.channel
+                - sylius.behat.context.setup.currency
+                - sylius.behat.context.setup.customer
+                - sylius.behat.context.setup.geographical
+                - sylius.behat.context.setup.order
+                - sylius.behat.context.setup.payment
+                - sylius.behat.context.setup.product
+                - sylius.behat.context.setup.shipping
+                - sylius.behat.context.setup.taxation
+                - sylius.behat.context.setup.zone
+                - Tests\Sylius\InvoicingPlugin\Behat\Context\Setup\ChannelContext
+                - Tests\Sylius\InvoicingPlugin\Behat\Context\Setup\SequenceContext
+
+                - sylius.behat.context.transform.address
+                - sylius.behat.context.transform.channel
+                - sylius.behat.context.transform.country
+                - sylius.behat.context.transform.currency
+                - sylius.behat.context.transform.customer
+                - sylius.behat.context.transform.lexical
+                - sylius.behat.context.transform.order
+                - sylius.behat.context.transform.payment
+                - sylius.behat.context.transform.product
+                - sylius.behat.context.transform.product_variant
+                - sylius.behat.context.transform.shipping_method
+                - sylius.behat.context.transform.tax_category
+                - sylius.behat.context.transform.taxon
+                - sylius.behat.context.transform.zone
+                - sylius.behat.context.transform.shared_storage
+
+                - Tests\Sylius\InvoicingPlugin\Behat\Context\Domain\GeneratingInvoiceContext
+                - Tests\Sylius\InvoicingPlugin\Behat\Context\Domain\InvoiceNumberContext
+                - Tests\Sylius\InvoicingPlugin\Behat\Context\Application\ManagingInvoicesContext
+            filters:
+                tags: "@invoice_number_sequence"

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Sylius package.
+ *
+ * (c) Sylius Sp. z o.o.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 declare(strict_types=1);
 
 namespace Tests\Sylius\InvoicingPlugin\Behat\Context\Ui\Admin;
@@ -41,7 +50,7 @@ final class ManagingChannelsContext implements Context
         string $street,
         string $postcode,
         string $city,
-        CountryInterface $country
+        CountryInterface $country,
     ): void {
         $this->updatePage->specifyBillingAddress($street, $postcode, $city, $country->getCode());
     }
@@ -69,7 +78,7 @@ final class ManagingChannelsContext implements Context
         string $street,
         string $postcode,
         string $city,
-        CountryInterface $country
+        CountryInterface $country,
     ): void {
         Assert::true($this->updatePage->hasBillingAddress($street, $postcode, $city, $country->getCode()));
     }

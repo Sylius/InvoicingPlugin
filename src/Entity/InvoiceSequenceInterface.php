@@ -18,7 +18,25 @@ use Sylius\Component\Resource\Model\VersionedInterface;
 
 interface InvoiceSequenceInterface extends ResourceInterface, VersionedInterface
 {
+    public const SCOPE_GLOBAL = 'global';
+
+    public const SCOPE_MONTHLY = 'monthly';
+
+    public const SCOPE_ANNUALLY = 'annually';
+
     public function getIndex(): int;
 
     public function incrementIndex(): void;
+
+    public function getType(): string;
+
+    public function setType(string $type): void;
+
+    public function getYear(): int;
+
+    public function setYear(int $year): void;
+
+    public function getMonth(): int;
+
+    public function setMonth(int $month): void;
 }

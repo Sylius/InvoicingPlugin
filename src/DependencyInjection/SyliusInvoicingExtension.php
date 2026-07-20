@@ -41,6 +41,10 @@ final class SyliusInvoicingExtension extends AbstractResourceExtension implement
         $config = $this->processConfiguration($configuration, $configs);
         $container->setParameter('sylius_invoicing.pdf_generator.allowed_files', $config['pdf_generator']['allowed_files']);
 
+        $container->getDefinition('sylius_invoicing.generator.invoice_number')
+            ->setArgument('$scope', $config['sequence']['scope'])
+        ;
+
         // TODO: Remove in 3.0 — once the legacy PDF generator is dropped, the service should be defined directly with its non-legacy arguments instead of being rewired here.
         if (!$config['pdf_generator']['legacy']) {
             $container->getDefinition('sylius_invoicing.generator.invoice_pdf_file')

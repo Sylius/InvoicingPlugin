@@ -45,8 +45,27 @@ final class Configuration implements ConfigurationInterface
 
         $this->addResourcesSection($rootNode);
         $this->addPdfGeneratorSection($rootNode);
+        $this->addSequenceSection($rootNode);
 
         return $treeBuilder;
+    }
+
+    private function addSequenceSection(ArrayNodeDefinition $node): void
+    {
+        $node
+            ->children()
+                ->arrayNode('sequence')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('scope')
+                            ->info('Scope of invoice number sequences: "global", "monthly" or "annually". Custom scopes can be added by registering a service tagged with "sylius_invoicing.sequence_scope_resolver".')
+                            ->cannotBeEmpty()
+                            ->defaultValue(InvoiceSequenceInterface::SCOPE_GLOBAL)
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
     }
 
     private function addResourcesSection(ArrayNodeDefinition $node): void

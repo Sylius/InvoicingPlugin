@@ -23,6 +23,12 @@ class InvoiceSequence implements InvoiceSequenceInterface
 
     protected ?int $version = 1;
 
+    protected string $type = InvoiceSequenceInterface::SCOPE_GLOBAL;
+
+    protected int $year = 0;
+
+    protected int $month = 0;
+
     /** @return mixed */
     public function getId()
     {
@@ -47,5 +53,35 @@ class InvoiceSequence implements InvoiceSequenceInterface
     public function setVersion(?int $version): void
     {
         $this->version = $version;
+    }
+
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): void
+    {
+        $this->type = $type;
+    }
+
+    public function getYear(): int
+    {
+        return $this->year;
+    }
+
+    public function setYear(int $year): void
+    {
+        $this->year = $year;
+    }
+
+    public function getMonth(): int
+    {
+        return $this->month;
+    }
+
+    public function setMonth(int $month): void
+    {
+        $this->month = $month;
     }
 }

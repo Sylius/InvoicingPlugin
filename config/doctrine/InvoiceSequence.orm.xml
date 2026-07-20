@@ -6,11 +6,30 @@
                                       http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
     <mapped-superclass name="Sylius\InvoicingPlugin\Entity\InvoiceSequence" table="sylius_invoicing_plugin_sequence">
+        <unique-constraints>
+            <unique-constraint name="UNIQ_SYLIUS_INVOICING_SEQUENCE_SCOPE" columns="type,year,month" />
+        </unique-constraints>
+
         <id name="id" column="id" type="integer">
             <generator strategy="AUTO" />
         </id>
         <field name="index" column="idx" type="integer" />
         <field name="version" type="integer" version="true" />
+        <field name="year" type="integer">
+            <options>
+                <option name="default">0</option>
+            </options>
+        </field>
+        <field name="month" type="integer">
+            <options>
+                <option name="default">0</option>
+            </options>
+        </field>
+        <field name="type" type="string">
+            <options>
+                <option name="default">global</option>
+            </options>
+        </field>
     </mapped-superclass>
 
 </doctrine-mapping>
