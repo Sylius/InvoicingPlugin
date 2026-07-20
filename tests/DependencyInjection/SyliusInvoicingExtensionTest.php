@@ -20,6 +20,7 @@ use Sylius\InvoicingPlugin\DependencyInjection\SyliusInvoicingExtension;
 use Sylius\InvoicingPlugin\Entity\BillingData;
 use Sylius\InvoicingPlugin\Entity\Invoice;
 use Sylius\InvoicingPlugin\Entity\InvoiceSequence;
+use Sylius\InvoicingPlugin\Entity\InvoiceSequenceInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceShopBillingData;
 use Sylius\InvoicingPlugin\Entity\LineItem;
 use Sylius\InvoicingPlugin\Entity\TaxItem;
@@ -28,6 +29,7 @@ use Sylius\InvoicingPlugin\Generator\TwigToPdfGenerator;
 use Sylius\PdfGenerationBundle\Core\Filesystem\Manager\PdfFileManagerInterface;
 use Sylius\PdfGenerationBundle\Core\Renderer\TwigToPdfRendererInterface;
 use SyliusLabs\DoctrineMigrationsExtraBundle\DependencyInjection\SyliusLabsDoctrineMigrationsExtraExtension;
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 
 class SyliusInvoicingExtensionTest extends AbstractExtensionTestCase
@@ -42,11 +44,11 @@ class SyliusInvoicingExtensionTest extends AbstractExtensionTestCase
         $doctrineMigrationsExtensionConfig = $this->container->getExtensionConfig('doctrine_migrations');
 
         self::assertTrue(isset(
-            $doctrineMigrationsExtensionConfig[0]['migrations_paths']['Sylius\InvoicingPlugin\Migrations']
+            $doctrineMigrationsExtensionConfig[0]['migrations_paths']['Sylius\InvoicingPlugin\Migrations'],
         ));
         self::assertSame(
             '@SyliusInvoicingPlugin/src/Migrations',
-            $doctrineMigrationsExtensionConfig[0]['migrations_paths']['Sylius\InvoicingPlugin\Migrations']
+            $doctrineMigrationsExtensionConfig[0]['migrations_paths']['Sylius\InvoicingPlugin\Migrations'],
         );
 
         $syliusLabsDoctrineMigrationsExtraExtensionConfig = $this
@@ -55,11 +57,11 @@ class SyliusInvoicingExtensionTest extends AbstractExtensionTestCase
         ;
 
         self::assertTrue(isset(
-            $syliusLabsDoctrineMigrationsExtraExtensionConfig[0]['migrations']['Sylius\InvoicingPlugin\Migrations']
+            $syliusLabsDoctrineMigrationsExtraExtensionConfig[0]['migrations']['Sylius\InvoicingPlugin\Migrations'],
         ));
         self::assertSame(
             'Sylius\Bundle\CoreBundle\Migrations',
-            $syliusLabsDoctrineMigrationsExtraExtensionConfig[0]['migrations']['Sylius\InvoicingPlugin\Migrations'][0]
+            $syliusLabsDoctrineMigrationsExtraExtensionConfig[0]['migrations']['Sylius\InvoicingPlugin\Migrations'][0],
         );
     }
 
@@ -91,7 +93,7 @@ class SyliusInvoicingExtensionTest extends AbstractExtensionTestCase
 
         $this->assertContainerBuilderHasParameter(
             'sylius_invoicing.pdf_generator.allowed_files',
-            ['swans.png', 'product.png']
+            ['swans.png', 'product.png'],
         );
     }
 
@@ -100,7 +102,7 @@ class SyliusInvoicingExtensionTest extends AbstractExtensionTestCase
     {
         $this->container->prependExtensionConfig(
             'sylius_invoicing',
-            ['pdf_generator' => ['enabled' => false]]
+            ['pdf_generator' => ['enabled' => false]],
         );
 
         $this->prepend();
@@ -258,6 +260,47 @@ class SyliusInvoicingExtensionTest extends AbstractExtensionTestCase
     }
 
     /** @test */
+    public function it_injects_global_sequence_scope_by_default(): void
+    {
+        $this->load();
+
+        self::assertSame(
+            InvoiceSequenceInterface::SCOPE_GLOBAL,
+            $this->container->getDefinition('sylius_invoicing.generator.invoice_number')->getArgument('$scope'),
+        );
+    }
+
+    /** @test */
+    public function it_injects_configured_sequence_scope(): void
+    {
+        $this->load(['sequence' => ['scope' => 'monthly']]);
+
+        self::assertSame(
+            InvoiceSequenceInterface::SCOPE_MONTHLY,
+            $this->container->getDefinition('sylius_invoicing.generator.invoice_number')->getArgument('$scope'),
+        );
+    }
+
+    /** @test */
+    public function it_injects_custom_sequence_scope(): void
+    {
+        $this->load(['sequence' => ['scope' => 'weekly']]);
+
+        self::assertSame(
+            'weekly',
+            $this->container->getDefinition('sylius_invoicing.generator.invoice_number')->getArgument('$scope'),
+        );
+    }
+
+    /** @test */
+    public function it_throws_an_exception_when_sequence_scope_is_empty(): void
+    {
+        $this->expectException(InvalidConfigurationException::class);
+
+        $this->load(['sequence' => ['scope' => '']]);
+    }
+
+    /** @test */
     public function it_prepends_sylius_pdf_storage_configuration_when_legacy_is_disabled(): void
     {
         $this->container->prependExtensionConfig(
@@ -330,12 +373,12 @@ class SyliusInvoicingExtensionTest extends AbstractExtensionTestCase
 
         $this->assertContainerBuilderHasParameter(
             'sylius_invoicing.model.invoice.class',
-            Invoice::class
+            Invoice::class,
         );
 
         $this->assertContainerBuilderHasService(
             'sylius_invoicing.controller.invoice',
-            ResourceController::class
+            ResourceController::class,
         );
     }
 
@@ -346,12 +389,12 @@ class SyliusInvoicingExtensionTest extends AbstractExtensionTestCase
 
         $this->assertContainerBuilderHasParameter(
             'sylius_invoicing.model.billing_data.class',
-            BillingData::class
+            BillingData::class,
         );
 
         $this->assertContainerBuilderHasService(
             'sylius_invoicing.controller.billing_data',
-            ResourceController::class
+            ResourceController::class,
         );
     }
 
@@ -362,12 +405,12 @@ class SyliusInvoicingExtensionTest extends AbstractExtensionTestCase
 
         $this->assertContainerBuilderHasParameter(
             'sylius_invoicing.model.shop_billing_data.class',
-            InvoiceShopBillingData::class
+            InvoiceShopBillingData::class,
         );
 
         $this->assertContainerBuilderHasService(
             'sylius_invoicing.controller.shop_billing_data',
-            ResourceController::class
+            ResourceController::class,
         );
     }
 
@@ -378,12 +421,12 @@ class SyliusInvoicingExtensionTest extends AbstractExtensionTestCase
 
         $this->assertContainerBuilderHasParameter(
             'sylius_invoicing.model.line_item.class',
-            LineItem::class
+            LineItem::class,
         );
 
         $this->assertContainerBuilderHasService(
             'sylius_invoicing.controller.line_item',
-            ResourceController::class
+            ResourceController::class,
         );
     }
 
@@ -394,12 +437,12 @@ class SyliusInvoicingExtensionTest extends AbstractExtensionTestCase
 
         $this->assertContainerBuilderHasParameter(
             'sylius_invoicing.model.tax_item.class',
-            TaxItem::class
+            TaxItem::class,
         );
 
         $this->assertContainerBuilderHasService(
             'sylius_invoicing.controller.tax_item',
-            ResourceController::class
+            ResourceController::class,
         );
     }
 
@@ -410,12 +453,12 @@ class SyliusInvoicingExtensionTest extends AbstractExtensionTestCase
 
         $this->assertContainerBuilderHasParameter(
             'sylius_invoicing.model.invoice_sequence.class',
-            InvoiceSequence::class
+            InvoiceSequence::class,
         );
 
         $this->assertContainerBuilderHasService(
             'sylius_invoicing.controller.invoice_sequence',
-            ResourceController::class
+            ResourceController::class,
         );
     }
 

@@ -165,11 +165,10 @@ final class InvoiceCreatorTest extends TestCase
     }
 
     #[Test]
-    public function it_removes_saved_invoice_file_if_database_update_fails(): void
+    public function it_does_not_write_invoice_file_when_persisting_an_invoice_fails(): void
     {
         $order = $this->createMock(OrderInterface::class);
         $invoice = $this->createMock(InvoiceInterface::class);
-        $invoicePdf = new InvoicePdf('invoice.pdf', 'CONTENT');
         $invoiceDateTime = new \DateTimeImmutable('2019-02-25');
 
         $this->orderRepository
@@ -190,27 +189,21 @@ final class InvoiceCreatorTest extends TestCase
             ->with($order, $invoiceDateTime)
             ->willReturn($invoice);
 
-        $this->invoicePdfFileGenerator
-            ->expects(self::once())
-            ->method('generate')
-            ->with($invoice)
-            ->willReturn($invoicePdf);
-
-        $this->invoiceFileManager
-            ->expects(self::once())
-            ->method('save')
-            ->with($invoicePdf);
-
         $this->invoiceRepository
             ->expects(self::once())
             ->method('add')
             ->with($invoice)
             ->willThrowException(new EntityNotFoundException());
 
+        $this->invoicePdfFileGenerator
+            ->expects($this->never())
+            ->method('generate');
+
         $this->invoiceFileManager
-            ->expects(self::once())
-            ->method('remove')
-            ->with($invoicePdf);
+            ->expects($this->never())
+            ->method('save');
+
+        $this->expectException(EntityNotFoundException::class);
 
         ($this->creator)('0000001', $invoiceDateTime);
     }
@@ -274,7 +267,7 @@ final class InvoiceCreatorTest extends TestCase
     }
 
     #[Test]
-    public function it_removes_saved_invoice_file_using_pdf_bundle_if_database_update_fails(): void
+    public function it_does_not_write_invoice_file_using_pdf_bundle_when_persisting_an_invoice_fails(): void
     {
         $pdfFileManager = $this->createMock(PdfFileManagerInterface::class);
 
@@ -288,7 +281,6 @@ final class InvoiceCreatorTest extends TestCase
 
         $order = $this->createMock(OrderInterface::class);
         $invoice = $this->createMock(InvoiceInterface::class);
-        $invoicePdf = new InvoicePdf('invoice.pdf', 'CONTENT');
         $invoiceDateTime = new \DateTimeImmutable('2019-02-25');
 
         $this->orderRepository
@@ -309,30 +301,21 @@ final class InvoiceCreatorTest extends TestCase
             ->with($order, $invoiceDateTime)
             ->willReturn($invoice);
 
-        $this->invoicePdfFileGenerator
-            ->expects(self::once())
-            ->method('generate')
-            ->with($invoice)
-            ->willReturn($invoicePdf);
-
-        $pdfFileManager
-            ->expects(self::once())
-            ->method('save')
-            ->with(
-                self::callback(fn (PdfFile $file) => $file->filename() === 'invoice.pdf'),
-                'sylius_invoicing',
-            );
-
         $this->invoiceRepository
             ->expects(self::once())
             ->method('add')
             ->with($invoice)
             ->willThrowException(new EntityNotFoundException());
 
+        $this->invoicePdfFileGenerator
+            ->expects($this->never())
+            ->method('generate');
+
         $pdfFileManager
-            ->expects(self::once())
-            ->method('remove')
-            ->with('invoice.pdf', 'sylius_invoicing');
+            ->expects($this->never())
+            ->method('save');
+
+        $this->expectException(EntityNotFoundException::class);
 
         $creator('0000001', $invoiceDateTime);
     }
