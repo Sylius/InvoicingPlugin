@@ -14,26 +14,26 @@ declare(strict_types=1);
 namespace Sylius\InvoicingPlugin\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
-use Sylius\Bundle\CoreBundle\Doctrine\Migrations\AbstractMigration;
+use Sylius\Bundle\CoreBundle\Doctrine\Migrations\AbstractPostgreSQLMigration;
 
-final class Version20260717121814 extends AbstractMigration
+final class Version20260720100000 extends AbstractPostgreSQLMigration
 {
     public function getDescription(): string
     {
-        return 'Add unique index for invoice number and sequence scope on MySQL';
+        return 'Add unique index for invoice number and sequence scope on PostgreSQL';
     }
 
     public function up(Schema $schema): void
     {
         $this->addSql('CREATE UNIQUE INDEX UNIQ_SYLIUS_INVOICING_INVOICE_NUMBER ON sylius_invoicing_plugin_invoice (number)');
-        $this->addSql('ALTER TABLE sylius_invoicing_plugin_sequence ADD year INT DEFAULT 0 NOT NULL, ADD month INT DEFAULT 0 NOT NULL, ADD type VARCHAR(255) DEFAULT \'global\' NOT NULL');
+        $this->addSql('ALTER TABLE sylius_invoicing_plugin_sequence ADD COLUMN year INT DEFAULT 0 NOT NULL, ADD COLUMN month INT DEFAULT 0 NOT NULL, ADD COLUMN type VARCHAR(255) DEFAULT \'global\' NOT NULL');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_SYLIUS_INVOICING_SEQUENCE_SCOPE ON sylius_invoicing_plugin_sequence (type, year, month)');
     }
 
     public function down(Schema $schema): void
     {
-        $this->addSql('DROP INDEX UNIQ_SYLIUS_INVOICING_INVOICE_NUMBER ON sylius_invoicing_plugin_invoice');
-        $this->addSql('DROP INDEX UNIQ_SYLIUS_INVOICING_SEQUENCE_SCOPE ON sylius_invoicing_plugin_sequence');
-        $this->addSql('ALTER TABLE sylius_invoicing_plugin_sequence DROP year, DROP month, DROP type');
+        $this->addSql('DROP INDEX UNIQ_SYLIUS_INVOICING_INVOICE_NUMBER');
+        $this->addSql('DROP INDEX UNIQ_SYLIUS_INVOICING_SEQUENCE_SCOPE');
+        $this->addSql('ALTER TABLE sylius_invoicing_plugin_sequence DROP COLUMN year, DROP COLUMN month, DROP COLUMN type');
     }
 }

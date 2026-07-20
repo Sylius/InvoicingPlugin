@@ -9,17 +9,30 @@
             scope: global # one of "global", "monthly", "annually"
     ```
 
+   - `global` — a single, ever-increasing counter for the whole store, never reset.
+   - `monthly` — a separate counter per year and month, reset on the 1st of every month.
+   - `annually` — a separate counter per year, reset on the 1st of January.
+
+   All three produce the same `Y/m/index` number format; only the counter's reset behavior differs.
+
    Custom scopes can be added by registering a service implementing
    `Sylius\InvoicingPlugin\Resolver\SequenceScopeResolverInterface`, tagged with
    `sylius_invoicing.sequence_scope_resolver`, and setting its name as the `scope` option.
    Keep in mind that the number prefix returned by `prefix()` must make invoice numbers unique
    across all periods of the scope, as invoice files are stored under names derived from invoice numbers.
 
+   Changing the `scope` on a store that already has invoices is not risk-free: each scope keeps
+   its own counter, so switching scopes does not carry over or reset any existing counter — a fresh
+   one is started instead. If the new scope's counter produces a number that was already issued
+   under the previous scope for the current period, invoice generation will fail on the database's
+   unique constraint. To avoid this, only change the `scope` at the very start of a new period (e.g.
+   right after midnight on the 1st of a month), before any invoice has been issued in it.
+
 1. Run doctrine migrations when upgrading — the `sylius_invoicing_plugin_sequence` table gains
    `type`, `year` and `month` columns, and unique indexes are created on the sequence scope and on
-   the invoice number. In the unlikely case your database contains duplicated invoice numbers,
-   the migration will fail and the duplicates have to be resolved manually first. You can check
-   for duplicates upfront with:
+   the invoice number. Migrations are provided for both MySQL and PostgreSQL. In the unlikely case
+   your database contains duplicated invoice numbers, the migration will fail and the duplicates
+   have to be resolved manually first. You can check for duplicates upfront with:
 
     ```sql
     SELECT number, COUNT(*) FROM sylius_invoicing_plugin_invoice GROUP BY number HAVING COUNT(*) > 1;
