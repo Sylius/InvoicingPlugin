@@ -66,6 +66,34 @@
             <argument type="service" id="sylius.manager.order" />
         </service>
 
+        <service id="Tests\Sylius\InvoicingPlugin\Behat\Service\SwitchableSequenceScopeResolver" public="true">
+            <argument type="collection">
+                <argument type="service" id="sylius_invoicing.resolver.sequence_scope.global" />
+                <argument type="service" id="sylius_invoicing.resolver.sequence_scope.monthly" />
+                <argument type="service" id="sylius_invoicing.resolver.sequence_scope.annually" />
+            </argument>
+            <tag name="sylius_invoicing.sequence_scope_resolver" priority="128" />
+        </service>
+
+        <service id="Tests\Sylius\InvoicingPlugin\Behat\Context\Hook\SequenceScopeContext" public="true">
+            <argument type="service" id="Tests\Sylius\InvoicingPlugin\Behat\Service\SwitchableSequenceScopeResolver" />
+        </service>
+
+        <service id="Tests\Sylius\InvoicingPlugin\Behat\Context\Setup\SequenceContext" public="true">
+            <argument type="service" id="sylius_invoicing.repository.invoice_sequence" />
+            <argument type="service" id="sylius_invoicing.manager.invoice_sequence" />
+        </service>
+
+        <service id="Tests\Sylius\InvoicingPlugin\Behat\Context\Domain\InvoiceNumberContext" public="true">
+            <argument type="service" id="sylius_invoicing.repository.invoice" />
+            <argument type="service" id="sylius_invoicing.creator.invoice" />
+            <argument type="service" id="sylius_invoicing.provider.invoice_file" />
+            <argument type="service" id="sylius_invoicing.generator.invoice_file_name" />
+            <argument type="service" id="doctrine" />
+            <argument type="service" id="clock" />
+            <argument>%sylius_invoicing.invoice_save_path%</argument>
+        </service>
+
         <service id="Tests\Sylius\InvoicingPlugin\Behat\Context\Application\ManagingInvoicesContext" public="true">
             <argument>%sylius_invoicing.invoice_save_path%</argument>
             <argument type="service" id="sylius_invoicing.repository.invoice" />

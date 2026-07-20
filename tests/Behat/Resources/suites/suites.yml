@@ -1,3 +1,4 @@
 imports:
     - admin/managing_invoices.yml
     - customer.yml
+    - invoice_number_sequence.yml
