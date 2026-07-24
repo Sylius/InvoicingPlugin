@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Sylius package.
+ *
+ * (c) Sylius Sp. z o.o.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 declare(strict_types=1);
 
 namespace Tests\Sylius\InvoicingPlugin\Behat\Context\Ui\Admin;
@@ -31,7 +40,7 @@ final class ManagingInvoicesContext implements Context
         ShowPageInterface $showPage,
         OrderShowPageInterface $orderShowPage,
         InvoiceRepositoryInterface $invoiceRepository,
-        NotificationCheckerInterface $notificationChecker
+        NotificationCheckerInterface $notificationChecker,
     ) {
         $this->indexPage = $indexPage;
         $this->showPage = $showPage;
@@ -99,7 +108,7 @@ final class ManagingInvoicesContext implements Context
     public function shouldBeIssuedInTheLastHour(): void
     {
         Assert::true(
-            ((new \DateTimeImmutable('now'))->getTimestamp() - $this->showPage->getIssuedAtDate()->getTimestamp()) <= 3600
+            ((new \DateTimeImmutable('now'))->getTimestamp() - $this->showPage->getIssuedAtDate()->getTimestamp()) <= 3600,
         );
     }
 
@@ -160,7 +169,7 @@ final class ManagingInvoicesContext implements Context
         string $street,
         string $postcode,
         string $city,
-        string $countryName
+        string $countryName,
     ): void {
         Assert::true($this->showPage->hasBillingData($customerName, $street, $postcode, $city, $countryName));
     }
@@ -175,7 +184,7 @@ final class ManagingInvoicesContext implements Context
         string $countryName,
         string $street,
         string $postcode,
-        string $city
+        string $city,
     ): void {
         Assert::true($this->showPage->hasShopBillingData($company, $taxId, $countryName, $street, $city, $postcode));
     }
@@ -196,10 +205,10 @@ final class ManagingInvoicesContext implements Context
         string $unitPrice,
         int $quantity,
         string $taxTotal,
-        string $total
+        string $total,
     ): void {
         Assert::true(
-            $this->showPage->hasItemWithData(sprintf('%s (%s)', $name, $name), $unitPrice, $unitPrice, $quantity, $taxTotal, $total)
+            $this->showPage->hasItemWithData(sprintf('%s (%s)', $name, $name), $unitPrice, $unitPrice, $quantity, $taxTotal, $total),
         );
     }
 
@@ -243,7 +252,7 @@ final class ManagingInvoicesContext implements Context
         string $unitPrice,
         int $quantity,
         string $taxTotal,
-        string $total
+        string $total,
     ): void {
         Assert::true($this->showPage->hasItemWithData($name, $unitPrice, $unitPrice, $quantity, $taxTotal, $total));
     }
@@ -295,7 +304,7 @@ final class ManagingInvoicesContext implements Context
     {
         $this->notificationChecker->checkNotification(
             'Invoice has been successfully resent to the customer',
-            NotificationType::success()
+            NotificationType::success(),
         );
     }
 
@@ -310,10 +319,17 @@ final class ManagingInvoicesContext implements Context
         string $netValue,
         string $taxTotal,
         string $total,
-        string $currencyCode
+        string $currencyCode,
     ): void {
         Assert::true($this->showPage->hasItemWithData(
-            $name, $unitNetPrice, $discountedUnitNetPrice, $quantity, $taxTotal, $total, $currencyCode, $netValue
+            $name,
+            $unitNetPrice,
+            $discountedUnitNetPrice,
+            $quantity,
+            $taxTotal,
+            $total,
+            $currencyCode,
+            $netValue,
         ));
     }
 
@@ -329,10 +345,17 @@ final class ManagingInvoicesContext implements Context
         string $netValue,
         string $taxTotal,
         string $total,
-        string $currencyCode
+        string $currencyCode,
     ): void {
         Assert::true($this->showPage->hasItemWithData(
-            $name, $unitNetPrice, $discountedUnitNetPrice, $quantity, $taxTotal, $total, $currencyCode, $netValue
+            $name,
+            $unitNetPrice,
+            $discountedUnitNetPrice,
+            $quantity,
+            $taxTotal,
+            $total,
+            $currencyCode,
+            $netValue,
         ));
     }
 
