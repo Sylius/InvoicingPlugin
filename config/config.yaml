@@ -20,7 +20,7 @@ sylius_mailer:
 knp_snappy:
     pdf:
         enabled: true
-        binary: '%env(WKHTMLTOPDF_PATH)%'
+        binary: '%env(resolve:WKHTMLTOPDF_PATH)%'
 
 sylius_grid:
     templates:

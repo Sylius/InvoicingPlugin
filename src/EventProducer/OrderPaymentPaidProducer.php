@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Sylius\InvoicingPlugin\EventProducer;
 
-use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\PaymentInterface;
 use Sylius\Component\Core\OrderPaymentStates;
 use Sylius\InvoicingPlugin\Doctrine\ORM\InvoiceRepositoryInterface;
@@ -49,11 +48,11 @@ final class OrderPaymentPaidProducer
 
     private function shouldEventBeDispatched(PaymentInterface $payment): bool
     {
-        /** @var OrderInterface $order */
         $order = $payment->getOrder();
+        if (null === $order) {
+            return false;
+        }
 
-        return null !== $order &&
-            $order->getPaymentState() === OrderPaymentStates::STATE_PAID &&
-            null !== $this->invoiceRepository->findOneByOrder($order);
+        return $order->getPaymentState() === OrderPaymentStates::STATE_PAID && null !== $this->invoiceRepository->findOneByOrder($order);
     }
 }
