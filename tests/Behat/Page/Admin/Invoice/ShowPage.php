@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Sylius package.
+ *
+ * (c) Sylius Sp. z o.o.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 declare(strict_types=1);
 
 namespace Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Invoice;
@@ -17,7 +26,7 @@ final class ShowPage extends SymfonyPage implements ShowPageInterface
         Session $session,
         $parameters,
         RouterInterface $router,
-        TableAccessorInterface $tableAccessor
+        TableAccessorInterface $tableAccessor,
     ) {
         parent::__construct($session, $parameters, $router);
 
@@ -41,7 +50,7 @@ final class ShowPage extends SymfonyPage implements ShowPageInterface
         string $street,
         string $postcode,
         string $city,
-        string $countryName
+        string $countryName,
     ): bool {
         $billingDataText = $this->getElement('billing_address')->getText();
 
@@ -59,7 +68,7 @@ final class ShowPage extends SymfonyPage implements ShowPageInterface
         string $countryName,
         string $street,
         string $city,
-        string $postcode
+        string $postcode,
     ): bool {
         $billingDataText = $this->getElement('shop_billing_data')->getText();
 
@@ -84,8 +93,8 @@ final class ShowPage extends SymfonyPage implements ShowPageInterface
         int $quantity,
         string $taxTotal,
         string $total,
-        string $currencyCode = null,
-        string $netValue = null
+        ?string $currencyCode = null,
+        ?string $netValue = null,
     ): bool {
         $row = $this->tableAccessor->getRowsWithFields($this->getElement('table'), [
             'name' => $name,
@@ -99,7 +108,7 @@ final class ShowPage extends SymfonyPage implements ShowPageInterface
         return null !== $row;
     }
 
-    public function hasTaxItem(string $label, string $amount,  string $currencyCode): bool
+    public function hasTaxItem(string $label, string $amount, string $currencyCode): bool
     {
         foreach ($this->getDocument()->findAll('css', '[data-test-invoice-tax-item]') as $item) {
             if (
