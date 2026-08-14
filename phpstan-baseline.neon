@@ -1,0 +1,157 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Call to static method Webmozart\\Assert\\Assert\:\:isInstanceOf\(\) with Sylius\\Component\\Core\\Model\\ShipmentInterface and ''Sylius\\\\Component\\\\Order\\\\Model\\\\AdjustableInterface'' will always evaluate to true\.$#'
+			identifier: staticMethod.alreadyNarrowedType
+			count: 1
+			path: src/Converter/ShippingAdjustmentsToLineItemsConverter.php
+
+		-
+			message: '#^Cannot access offset ''allowed_files'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: src/DependencyInjection/SyliusInvoicingExtension.php
+
+		-
+			message: '#^Cannot access offset ''enabled'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/DependencyInjection/SyliusInvoicingExtension.php
+
+		-
+			message: '#^Cannot access offset ''legacy'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: src/DependencyInjection/SyliusInvoicingExtension.php
+
+		-
+			message: '#^Parameter \#2 \$allowedFiles of method Sylius\\InvoicingPlugin\\DependencyInjection\\SyliusInvoicingExtension\:\:registerAllowedFilesProcessor\(\) expects list\<string\>, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/DependencyInjection/SyliusInvoicingExtension.php
+
+		-
+			message: '#^Parameter \#2 \$value of method Symfony\\Component\\DependencyInjection\\Container\:\:setParameter\(\) expects array\|bool\|float\|int\|string\|UnitEnum\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/DependencyInjection/SyliusInvoicingExtension.php
+
+		-
+			message: '#^Parameter \#3 \$registeredResources of method Sylius\\Bundle\\ResourceBundle\\DependencyInjection\\Extension\\AbstractResourceExtension\:\:registerResources\(\) expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/DependencyInjection/SyliusInvoicingExtension.php
+
+		-
+			message: '#^Strict comparison using \!\=\= between null and Sylius\\Component\\Core\\Model\\OrderInterface will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
+			count: 1
+			path: src/EventProducer/OrderPaymentPaidProducer.php
+
+		-
+			message: '#^Call to static method Webmozart\\Assert\\Assert\:\:isInstanceOf\(\) with Sylius\\InvoicingPlugin\\Entity\\BillingDataInterface and ''Sylius\\\\InvoicingPlugin\\\\Entity\\\\BillingDataInterface'' will always evaluate to true\.$#'
+			identifier: staticMethod.alreadyNarrowedType
+			count: 1
+			path: src/Factory/BillingDataFactory.php
+
+		-
+			message: '#^Call to static method Webmozart\\Assert\\Assert\:\:isInstanceOf\(\) with Sylius\\InvoicingPlugin\\Entity\\InvoiceInterface and ''Sylius\\\\InvoicingPlugin\\\\Entity\\\\InvoiceInterface'' will always evaluate to true\.$#'
+			identifier: staticMethod.alreadyNarrowedType
+			count: 1
+			path: src/Factory/InvoiceFactory.php
+
+		-
+			message: '#^Call to static method Webmozart\\Assert\\Assert\:\:isInstanceOf\(\) with Sylius\\InvoicingPlugin\\Entity\\InvoiceShopBillingDataInterface and ''Sylius\\\\InvoicingPlugin\\\\Entity\\\\InvoiceShopBillingDataInterface'' will always evaluate to true\.$#'
+			identifier: staticMethod.alreadyNarrowedType
+			count: 1
+			path: src/Factory/InvoiceShopBillingDataFactory.php
+
+		-
+			message: '#^Call to static method Webmozart\\Assert\\Assert\:\:isInstanceOf\(\) with Sylius\\InvoicingPlugin\\Entity\\LineItemInterface and ''Sylius\\\\InvoicingPlugin\\\\Entity\\\\LineItemInterface'' will always evaluate to true\.$#'
+			identifier: staticMethod.alreadyNarrowedType
+			count: 1
+			path: src/Factory/LineItemFactory.php
+
+		-
+			message: '#^Call to static method Webmozart\\Assert\\Assert\:\:isInstanceOf\(\) with Sylius\\InvoicingPlugin\\Entity\\TaxItemInterface and ''Sylius\\\\InvoicingPlugin\\\\Entity\\\\TaxItemInterface'' will always evaluate to true\.$#'
+			identifier: staticMethod.alreadyNarrowedType
+			count: 1
+			path: src/Factory/TaxItemFactory.php
+
+		-
+			message: '#^Parameter \#1 \$city of method Sylius\\Component\\Core\\Model\\ShopBillingData\:\:setCity\(\) expects string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Fixture/Factory/ShopBillingDataExampleFactory.php
+
+		-
+			message: '#^Parameter \#1 \$code of method Sylius\\Component\\Channel\\Repository\\ChannelRepositoryInterface\<Sylius\\Component\\Channel\\Model\\ChannelInterface\>\:\:findOneByCode\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Fixture/Factory/ShopBillingDataExampleFactory.php
+
+		-
+			message: '#^Parameter \#1 \$company of method Sylius\\Component\\Core\\Model\\ShopBillingData\:\:setCompany\(\) expects string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Fixture/Factory/ShopBillingDataExampleFactory.php
+
+		-
+			message: '#^Parameter \#1 \$countryCode of method Sylius\\Component\\Core\\Model\\ShopBillingData\:\:setCountryCode\(\) expects string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Fixture/Factory/ShopBillingDataExampleFactory.php
+
+		-
+			message: '#^Parameter \#1 \$postcode of method Sylius\\Component\\Core\\Model\\ShopBillingData\:\:setPostcode\(\) expects string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Fixture/Factory/ShopBillingDataExampleFactory.php
+
+		-
+			message: '#^Parameter \#1 \$street of method Sylius\\Component\\Core\\Model\\ShopBillingData\:\:setStreet\(\) expects string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Fixture/Factory/ShopBillingDataExampleFactory.php
+
+		-
+			message: '#^Parameter \#1 \$taxId of method Sylius\\Component\\Core\\Model\\ShopBillingData\:\:setTaxId\(\) expects string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Fixture/Factory/ShopBillingDataExampleFactory.php
+
+		-
+			message: '#^Parameter \#2 \.\.\.\$values of function sprintf expects bool\|float\|int\|string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Fixture/Factory/ShopBillingDataExampleFactory.php
+
+		-
+			message: '#^Parameter \#1 \.\.\.\$arrays of function array_merge expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Generator/InvoicingAllowedFilesOptionsProcessor.php
+
+		-
+			message: '#^Parameter \#1 \$name of method Symfony\\Component\\Config\\FileLocatorInterface\:\:locate\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Generator/PdfOptionsGenerator.php
+
+		-
+			message: '#^Binary operation "\*" between mixed and 100 results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: src/Provider/TaxRatePercentageProvider.php
+
+		-
+			message: '#^Method Sylius\\InvoicingPlugin\\Provider\\TaxRatePercentageProvider\:\:provideFromAdjustment\(\) never returns null so it can be removed from the return type\.$#'
+			identifier: return.unusedType
+			count: 1
+			path: src/Provider/TaxRatePercentageProvider.php
+
+		-
+			message: '#^Method Sylius\\InvoicingPlugin\\Twig\\Component\\Invoice\\ListComponent\:\:getInvoices\(\) should return array\<Sylius\\InvoicingPlugin\\Entity\\InvoiceInterface\> but returns array\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Twig/Component/Invoice/ListComponent.php
