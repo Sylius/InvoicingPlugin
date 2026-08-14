@@ -1,3 +1,6 @@
+includes:
+    - phpstan-baseline.neon
+
 parameters:
     level: max
     reportUnmatchedIgnoredErrors: false
@@ -18,5 +21,6 @@ parameters:
         - '/Method Sylius\\InvoicingPlugin\\[a-zA-Z\\]+::getFlashBag\(\) should return Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface but returns Symfony\\Component\\HttpFoundation\\Session\\SessionBagInterface\./'
         - '/Method Sylius\\InvoicingPlugin\\Security\\Voter\\InvoiceVoter::supports\(\) has parameter \$attribute with no typehint specified./'
         - '/Method Sylius\\InvoicingPlugin\\Security\\Voter\\InvoiceVoter::supports\(\) has parameter \$subject with no typehint specified./'
+        - '/Method Sylius\\InvoicingPlugin\\Security\\Voter\\InvoiceVoter::voteOnAttribute\(\) has parameter \$vote with no type specified./'
         - '/Call to method scalarNode\(\) on an unknown class Symfony\\Component\\Config\\Definition\\Builder\\NodeBuilder<Symfony\\Component\\Config\\Definition\\Builder\\ArrayNodeDefinition>./'
         - '/expects string, string\|null given\.$/'

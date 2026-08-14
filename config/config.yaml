@@ -20,6 +20,7 @@ sylius_mailer:
 knp_snappy:
     pdf:
         enabled: true
+        binary: '%env(WKHTMLTOPDF_PATH)%'
 
 sylius_grid:
     templates:
@@ -120,16 +121,6 @@ framework:
                 middleware:
                     - 'validation'
                     - 'doctrine_transaction'
-
-knp_gaufrette:
-    adapters:
-        sylius_invoicing_invoice:
-            local:
-                directory: "%sylius_invoicing.invoice_save_path%"
-                create: true
-    filesystems:
-        sylius_invoicing_invoice:
-            adapter: "%sylius_invoicing.filesystem_adapter.invoice%"
 
 sylius_fixtures:
     suites:
