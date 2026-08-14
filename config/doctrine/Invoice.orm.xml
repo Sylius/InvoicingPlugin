@@ -5,7 +5,7 @@
         <id name="id" column="id" type="string" />
 
         <field name="number" column="number" />
-        <field name="issuedAt" column="issued_at" type="datetime" />
+        <field name="issuedAt" column="issued_at" type="datetime_immutable" />
         <field name="currencyCode" column="currency_code" length="3" />
         <field name="localeCode" column="locale_code" />
         <field name="total" column="total" type="integer" />
