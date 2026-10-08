@@ -40,7 +40,7 @@ final class TaxRatePercentageProvider implements TaxRatePercentageProviderInterf
         return $this->provideFromAdjustment($adjustment);
     }
 
-    public function provideFromAdjustment(AdjustmentInterface $adjustment): ?string
+    public function provideFromAdjustment(AdjustmentInterface $adjustment): string
     {
         $details = $adjustment->getDetails();
 
@@ -49,6 +49,7 @@ final class TaxRatePercentageProvider implements TaxRatePercentageProviderInterf
             'taxRateAmount',
             'There is no tax rate amount in details of this adjustment',
         );
+        Assert::numeric($details['taxRateAmount']);
 
         return $details['taxRateAmount'] * 100 . '%';
     }

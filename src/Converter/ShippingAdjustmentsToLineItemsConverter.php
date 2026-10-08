@@ -16,7 +16,6 @@ namespace Sylius\InvoicingPlugin\Converter;
 use Sylius\Component\Core\Model\AdjustmentInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\ShipmentInterface;
-use Sylius\Component\Order\Model\AdjustableInterface;
 use Sylius\InvoicingPlugin\Entity\LineItemInterface;
 use Sylius\InvoicingPlugin\Exception\MoreThanOneTaxAdjustment;
 use Sylius\InvoicingPlugin\Factory\LineItemFactoryInterface;
@@ -50,7 +49,6 @@ final class ShippingAdjustmentsToLineItemsConverter implements LineItemsConverte
         /** @var ShipmentInterface|null $shipment */
         $shipment = $shippingAdjustment->getShipment();
         Assert::notNull($shipment);
-        Assert::isInstanceOf($shipment, AdjustableInterface::class);
 
         $grossValue = $shipment->getAdjustmentsTotal();
         $taxAdjustment = $this->getShipmentTaxAdjustment($shipment);

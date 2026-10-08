@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Tests\Sylius\InvoicingPlugin\Behat\Context\Setup;
 
 use Behat\Behat\Context\Context;
+use Behat\Step\Given;
 use Doctrine\Persistence\ObjectManager;
 use Sylius\Component\Addressing\Model\CountryInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
@@ -28,10 +29,8 @@ final class ChannelContext implements Context
         $this->channelManager = $channelManager;
     }
 
-    /**
-     * @Given I set shop billing data for channel :channel as :company, :taxId, :street, :postcode :city, :country
-     * @Given channel :channel has shop billing data set as :company, :taxId, :street, :postcode :city, :country
-     */
+    #[Given('I set shop billing data for channel :channel as :company, :taxId, :street, :postcode :city, :country')]
+    #[Given('channel :channel has shop billing data set as :company, :taxId, :street, :postcode :city, :country')]
     public function setShopBillingDataForChannel(
         ChannelInterface $channel,
         string $company,

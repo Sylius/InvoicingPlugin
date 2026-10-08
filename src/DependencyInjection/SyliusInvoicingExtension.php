@@ -23,7 +23,7 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
-use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
 
 final class SyliusInvoicingExtension extends AbstractResourceExtension implements PrependExtensionInterface
@@ -32,12 +32,13 @@ final class SyliusInvoicingExtension extends AbstractResourceExtension implement
 
     public function load(array $configs, ContainerBuilder $container): void
     {
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../../config'));
-        $loader->load('services.xml');
+        $loader = new PhpFileLoader($container, new FileLocator(__DIR__ . '/../../config'));
+        $loader->load('services.php');
 
         /** @var ConfigurationInterface $configuration */
         $configuration = $this->getConfiguration([], $container);
 
+        /** @var array{pdf_generator: array{enabled: bool, legacy: bool, allowed_files: list<string>}, resources: array<string, mixed>} $config */
         $config = $this->processConfiguration($configuration, $configs);
         $container->setParameter('sylius_invoicing.pdf_generator.allowed_files', $config['pdf_generator']['allowed_files']);
 
@@ -92,6 +93,7 @@ final class SyliusInvoicingExtension extends AbstractResourceExtension implement
         return ['Sylius\Bundle\CoreBundle\Migrations'];
     }
 
+    /** @return array{pdf_generator: array{enabled: bool, legacy: bool, allowed_files: list<string>}, resources: array<string, mixed>} */
     private function getCurrentConfiguration(ContainerBuilder $container): array
     {
         /** @var ConfigurationInterface $configuration */
@@ -99,7 +101,10 @@ final class SyliusInvoicingExtension extends AbstractResourceExtension implement
 
         $configs = $container->getExtensionConfig($this->getAlias());
 
-        return $this->processConfiguration($configuration, $configs);
+        /** @var array{pdf_generator: array{enabled: bool, legacy: bool, allowed_files: list<string>}, resources: array<string, mixed>} $config */
+        $config = $this->processConfiguration($configuration, $configs);
+
+        return $config;
     }
 
     private function prependPdfBundleConfiguration(ContainerBuilder $container): void

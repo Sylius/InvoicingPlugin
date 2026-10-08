@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Tests\Sylius\InvoicingPlugin\Behat\Context\Setup;
 
 use Behat\Behat\Context\Context;
+use Behat\Step\Given;
 use Doctrine\Persistence\ObjectManager;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\OrderInterface;
@@ -27,9 +28,7 @@ final class OrderContext implements Context
         $this->orderManager = $orderManager;
     }
 
-    /**
-     * @Given /^(this order) has been placed in ("[^"]+" channel)$/
-     */
+    #[Given('/^(this order) has been placed in ("[^"]+" channel)$/')]
     public function orderHasBeenPlacedInChannel(OrderInterface $order, ChannelInterface $channel): void
     {
         $order->setChannel($channel);
@@ -37,9 +36,7 @@ final class OrderContext implements Context
         $this->orderManager->flush();
     }
 
-    /**
-     * @Given /^(this order) has no number assigned$/
-     */
+    #[Given('/^(this order) has no number assigned$/')]
     public function orderHasNoNumberAssigned(OrderInterface $order): void
     {
         $order->setNumber(null);

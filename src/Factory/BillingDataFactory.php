@@ -38,7 +38,6 @@ final class BillingDataFactory implements BillingDataFactoryInterface
 
     public function createFromAddress(AddressInterface $address): BillingDataInterface
     {
-        /** @var BillingDataInterface $billingData */
         $billingData = new $this->className(
             $address->getFirstName(),
             $address->getLastName(),

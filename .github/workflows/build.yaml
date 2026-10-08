@@ -27,15 +27,24 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                php: ["8.2", "8.3"]
-                symfony: ["^6.4", "~7.4.0"]
-                sylius: ["~2.1.0", "~2.2.0"]
-                node: ["22.x"]
+                php: ["8.3", "8.4"]
+                symfony: ["^6.4", "~7.4.0", "^8.0"]
+                sylius: ["~2.2.0", "~2.3.0"]
+                node: ["24.x"]
                 database: ["mysql"]
                 database_version: ["8.4"]
                 wkhtmltopdf: ["0.12.6.1-2"]
                 state_machine_adapter: ["symfony_workflow"]
                 legacy_pdf_generation: [true, false]
+
+                exclude:
+                    -
+                        php: "8.3"
+                        symfony: "^8.0"
+
+                    -
+                        sylius: "~2.2.0"
+                        symfony: "^8.0"
 
                 include:
                     -
@@ -152,6 +161,7 @@ jobs:
                     php_version: "${{ matrix.php }}"
                     sylius_version: "${{ matrix.sylius }}"
                     symfony_version: "${{ matrix.symfony }}"
+                    composer_prefer_stable: "yes"
 
             -
                 name: Run security check

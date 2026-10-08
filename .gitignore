@@ -4,6 +4,7 @@
 /vendor/
 
 /.phpunit.result.cache
+/behat.php
 /behat.yml
 
 /etc/build/*

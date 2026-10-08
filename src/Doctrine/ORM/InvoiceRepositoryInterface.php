@@ -21,5 +21,6 @@ interface InvoiceRepositoryInterface extends RepositoryInterface
 {
     public function findOneByOrder(OrderInterface $order): ?InvoiceInterface;
 
+    /** @return InvoiceInterface[] */
     public function findByOrderNumber(string $orderNumber): array;
 }
