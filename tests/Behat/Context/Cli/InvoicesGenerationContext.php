@@ -51,12 +51,12 @@ final class InvoicesGenerationContext implements Context
     {
         /** @var Application $application */
         $application = new Application($this->kernel);
-        $application->add(
+        $application->addCommands([
             new GenerateInvoicesCommand(
                 $this->massInvoicesCreator,
                 $this->orderRepository,
             ),
-        );
+        ]);
 
         /** @var Command $command */
         $command = $application->find('sylius-invoicing:generate-invoices');
