@@ -27,7 +27,7 @@ final class SyliusInvoicingConfigurationTest extends TestCase
         $this->assertProcessedConfigurationEquals(
             [[]],
             ['pdf_generator' => ['allowed_files' => []]],
-            'pdf_generator.allowed_files'
+            'pdf_generator.allowed_files',
         );
     }
 
@@ -37,7 +37,7 @@ final class SyliusInvoicingConfigurationTest extends TestCase
         $this->assertProcessedConfigurationEquals(
             [['pdf_generator' => ['allowed_files' => ['swans.png', 'product.png']]]],
             ['pdf_generator' => ['allowed_files' => ['swans.png', 'product.png']]],
-            'pdf_generator.allowed_files'
+            'pdf_generator.allowed_files',
         );
     }
 
@@ -47,7 +47,7 @@ final class SyliusInvoicingConfigurationTest extends TestCase
         $this->assertProcessedConfigurationEquals(
             [],
             ['pdf_generator' => ['enabled' => true]],
-            'pdf_generator.enabled'
+            'pdf_generator.enabled',
         );
     }
 
@@ -57,7 +57,7 @@ final class SyliusInvoicingConfigurationTest extends TestCase
         $this->assertProcessedConfigurationEquals(
             [['pdf_generator' => ['enabled' => false]]],
             ['pdf_generator' => ['enabled' => false]],
-            'pdf_generator.enabled'
+            'pdf_generator.enabled',
         );
     }
 
