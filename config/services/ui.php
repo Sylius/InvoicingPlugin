@@ -19,6 +19,6 @@ return static function (ContainerConfigurator $container) {
     $services->defaults()
         ->public();
 
-    $services->set('sylius_invoicing.listener.admin_menu ', AdminMenuListener::class)
+    $services->set('sylius_invoicing.listener.admin_menu', AdminMenuListener::class)
         ->tag('kernel.event_listener', ['event' => 'sylius.menu.admin.main', 'method' => '__invoke']);
 };

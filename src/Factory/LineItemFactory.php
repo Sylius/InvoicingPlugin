@@ -47,7 +47,6 @@ final class LineItemFactory implements LineItemFactoryInterface
         ?string $variantCode = null,
         ?string $taxRate = null,
     ): LineItemInterface {
-        /** @var LineItemInterface $lineItem */
         $lineItem = new $this->className(
             $name,
             $quantity,

@@ -37,7 +37,6 @@ final class TaxItemFactory implements TaxItemFactoryInterface
 
     public function createWithData(string $label, int $amount): TaxItemInterface
     {
-        /** @var TaxItemInterface $taxItem */
         $taxItem = new $this->className($label, $amount);
 
         Assert::isInstanceOf($taxItem, TaxItemInterface::class);

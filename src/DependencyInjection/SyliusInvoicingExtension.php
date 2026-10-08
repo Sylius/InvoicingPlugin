@@ -38,6 +38,7 @@ final class SyliusInvoicingExtension extends AbstractResourceExtension implement
         /** @var ConfigurationInterface $configuration */
         $configuration = $this->getConfiguration([], $container);
 
+        /** @var array{pdf_generator: array{enabled: bool, legacy: bool, allowed_files: list<string>}, resources: array<string, mixed>} $config */
         $config = $this->processConfiguration($configuration, $configs);
         $container->setParameter('sylius_invoicing.pdf_generator.allowed_files', $config['pdf_generator']['allowed_files']);
 
@@ -92,6 +93,7 @@ final class SyliusInvoicingExtension extends AbstractResourceExtension implement
         return ['Sylius\Bundle\CoreBundle\Migrations'];
     }
 
+    /** @return array{pdf_generator: array{enabled: bool, legacy: bool, allowed_files: list<string>}, resources: array<string, mixed>} */
     private function getCurrentConfiguration(ContainerBuilder $container): array
     {
         /** @var ConfigurationInterface $configuration */
@@ -99,7 +101,10 @@ final class SyliusInvoicingExtension extends AbstractResourceExtension implement
 
         $configs = $container->getExtensionConfig($this->getAlias());
 
-        return $this->processConfiguration($configuration, $configs);
+        /** @var array{pdf_generator: array{enabled: bool, legacy: bool, allowed_files: list<string>}, resources: array<string, mixed>} $config */
+        $config = $this->processConfiguration($configuration, $configs);
+
+        return $config;
     }
 
     private function prependPdfBundleConfiguration(ContainerBuilder $container): void

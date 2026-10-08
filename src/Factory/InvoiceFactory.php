@@ -48,7 +48,6 @@ final class InvoiceFactory implements InvoiceFactoryInterface
         string $paymentState,
         ?InvoiceShopBillingDataInterface $shopBillingData = null,
     ): InvoiceInterface {
-        /** @var InvoiceInterface $invoice */
         $invoice = new $this->className(
             $id,
             $number,

@@ -30,7 +30,6 @@ final class InvoiceShopBillingDataFactory implements InvoiceShopBillingDataFacto
 
     public function createNew(): InvoiceShopBillingDataInterface
     {
-        /** @var InvoiceShopBillingDataInterface $invoiceShopBillingData */
         $invoiceShopBillingData = new $this->className();
 
         Assert::isInstanceOf($invoiceShopBillingData, InvoiceShopBillingDataInterface::class);

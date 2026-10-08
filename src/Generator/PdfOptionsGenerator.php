@@ -20,6 +20,7 @@ use Symfony\Component\Config\FileLocatorInterface;
  */
 final class PdfOptionsGenerator implements PdfOptionsGeneratorInterface
 {
+    /** @param list<string> $allowedFiles */
     public function __construct(
         private readonly FileLocatorInterface $fileLocator,
         private readonly array $knpSnappyOptions,

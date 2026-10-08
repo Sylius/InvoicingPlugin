@@ -40,6 +40,7 @@ class InvoiceRepository extends EntityRepository implements InvoiceRepositoryInt
         ;
 
         Assert::isArray($invoices);
+        Assert::allIsInstanceOf($invoices, InvoiceInterface::class);
 
         return $invoices;
     }

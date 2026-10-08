@@ -46,9 +46,7 @@ final class InvoiceVoter extends Voter
         return true;
     }
 
-    // $vote is untyped because Symfony\Component\Security\Core\Authorization\Voter\Vote,
-    // required by this parameter on Symfony 8, does not exist on Symfony 6.4.
-    protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token, $vote = null): bool
+    protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token, mixed $vote = null): bool
     {
         Assert::isInstanceOf($subject, InvoiceInterface::class);
 

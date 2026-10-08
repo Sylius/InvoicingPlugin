@@ -31,7 +31,7 @@ class ListComponent
     {
     }
 
-    /** @return array|InvoiceInterface[] */
+    /** @return InvoiceInterface[] */
     #[ExposeInTemplate('invoices')]
     public function getInvoices(): array
     {

@@ -13,43 +13,51 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
+use Tests\Sylius\InvoicingPlugin\Behat\Context\Application\ManagingInvoicesContext as ApplicationManagingInvoicesContext;
 use Tests\Sylius\InvoicingPlugin\Behat\Context\Cli\InvoicesGenerationContext;
 use Tests\Sylius\InvoicingPlugin\Behat\Context\Domain\GeneratingInvoiceContext;
 use Tests\Sylius\InvoicingPlugin\Behat\Context\Domain\InvoiceEmailContext;
 use Tests\Sylius\InvoicingPlugin\Behat\Context\Hook\InvoicesContext;
-use Tests\Sylius\InvoicingPlugin\Behat\Context\Order\OrderContext;
+use Tests\Sylius\InvoicingPlugin\Behat\Context\Order\OrderContext as OrderOrderContext;
 use Tests\Sylius\InvoicingPlugin\Behat\Context\Setup\ChannelContext;
+use Tests\Sylius\InvoicingPlugin\Behat\Context\Setup\OrderContext as SetupOrderContext;
 use Tests\Sylius\InvoicingPlugin\Behat\Context\Ui\Admin\ManagingChannelsContext;
-use Tests\Sylius\InvoicingPlugin\Behat\Context\Ui\Admin\ManagingInvoicesContext;
+use Tests\Sylius\InvoicingPlugin\Behat\Context\Ui\Admin\ManagingInvoicesContext as AdminManagingInvoicesContext;
 use Tests\Sylius\InvoicingPlugin\Behat\Context\Ui\Shop\AccountContext;
 use Tests\Sylius\InvoicingPlugin\Behat\Context\Ui\Shop\CustomerBrowsingInvoicesContext;
 use Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Channel\UpdatePage;
-use Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Invoice\ShowPage;
-use Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Invoice\ShowPageInterface;
-use Tests\Sylius\InvoicingPlugin\Behat\Page\Shop\Account\Order\IndexPage;
-use Tests\Sylius\InvoicingPlugin\Behat\Page\Shop\Account\Order\IndexPageInterface;
+use Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Invoice\IndexPage as AdminInvoiceIndexPage;
+use Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Invoice\IndexPageInterface as AdminInvoiceIndexPageInterface;
+use Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Invoice\ShowPage as AdminInvoiceShowPage;
+use Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Invoice\ShowPageInterface as AdminInvoiceShowPageInterface;
+use Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Order\ShowPage as AdminOrderShowPage;
+use Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Order\ShowPageInterface as AdminOrderShowPageInterface;
+use Tests\Sylius\InvoicingPlugin\Behat\Page\Shop\Account\Order\IndexPage as ShopAccountOrderIndexPage;
+use Tests\Sylius\InvoicingPlugin\Behat\Page\Shop\Account\Order\IndexPageInterface as ShopAccountOrderIndexPageInterface;
 use Tests\Sylius\InvoicingPlugin\Behat\Page\Shop\Order\DownloadInvoicePage;
 use Tests\Sylius\InvoicingPlugin\Behat\Page\Shop\Order\DownloadInvoicePageInterface;
+use Tests\Sylius\InvoicingPlugin\Behat\Page\Shop\Order\ShowPage as ShopOrderShowPage;
+use Tests\Sylius\InvoicingPlugin\Behat\Page\Shop\Order\ShowPageInterface as ShopOrderShowPageInterface;
 
 return static function (ContainerConfigurator $container) {
     $services = $container->services();
     $parameters = $container->parameters();
     $parameters->set('sylius.behat.page.admin.channel.update.class', UpdatePage::class);
 
-    $services->set(IndexPageInterface::class, IndexPage::class)
+    $services->set(ShopAccountOrderIndexPageInterface::class, ShopAccountOrderIndexPage::class)
         ->public()
         ->parent('sylius.behat.page.shop.account.order.index');
 
     $services->set(AccountContext::class)
         ->public()
-        ->args([service(IndexPageInterface::class)]);
+        ->args([service(ShopAccountOrderIndexPageInterface::class)]);
 
-    $services->set(ManagingInvoicesContext::class)
+    $services->set(AdminManagingInvoicesContext::class)
         ->public()
         ->args([
-            service(\Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Invoice\IndexPageInterface::class),
-            service(ShowPageInterface::class),
-            service(\Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Order\ShowPageInterface::class),
+            service(AdminInvoiceIndexPageInterface::class),
+            service(AdminInvoiceShowPageInterface::class),
+            service(AdminOrderShowPageInterface::class),
             service('sylius_invoicing.repository.invoice'),
             service('sylius.behat.notification_checker.admin'),
         ]);
@@ -57,7 +65,7 @@ return static function (ContainerConfigurator $container) {
     $services->set(CustomerBrowsingInvoicesContext::class)
         ->public()
         ->args([
-            service(\Tests\Sylius\InvoicingPlugin\Behat\Page\Shop\Order\ShowPageInterface::class),
+            service(ShopOrderShowPageInterface::class),
             service(DownloadInvoicePageInterface::class),
             service('sylius_invoicing.repository.invoice'),
         ]);
@@ -86,7 +94,7 @@ return static function (ContainerConfigurator $container) {
             service('sylius.repository.order'),
         ]);
 
-    $services->set(OrderContext::class)
+    $services->set(OrderOrderContext::class)
         ->public()
         ->args([
             service('doctrine.orm.entity_manager'),
@@ -101,23 +109,23 @@ return static function (ContainerConfigurator $container) {
         ->public()
         ->args([service('sylius.manager.channel')]);
 
-    $services->set(\Tests\Sylius\InvoicingPlugin\Behat\Context\Setup\OrderContext::class)
+    $services->set(SetupOrderContext::class)
         ->public()
         ->args([service('sylius.manager.order')]);
 
-    $services->set(\Tests\Sylius\InvoicingPlugin\Behat\Context\Application\ManagingInvoicesContext::class)
+    $services->set(ApplicationManagingInvoicesContext::class)
         ->public()
         ->args([
             '%sylius_invoicing.invoice_save_path%',
             service('sylius_invoicing.repository.invoice'),
         ]);
 
-    $services->set(\Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Invoice\IndexPageInterface::class, \Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Invoice\IndexPage::class)
+    $services->set(AdminInvoiceIndexPageInterface::class, AdminInvoiceIndexPage::class)
         ->public()
         ->parent('sylius.behat.page.admin.crud.index')
         ->args(['sylius_invoicing_admin_invoice_index']);
 
-    $services->set(ShowPageInterface::class, ShowPage::class)
+    $services->set(AdminInvoiceShowPageInterface::class, AdminInvoiceShowPage::class)
         ->public()
         ->parent('sylius.behat.symfony_page')
         ->args([service('sylius.behat.table_accessor')]);
@@ -126,11 +134,11 @@ return static function (ContainerConfigurator $container) {
         ->public()
         ->parent('sylius.behat.symfony_page');
 
-    $services->set(\Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Order\ShowPageInterface::class, \Tests\Sylius\InvoicingPlugin\Behat\Page\Admin\Order\ShowPage::class)
+    $services->set(AdminOrderShowPageInterface::class, AdminOrderShowPage::class)
         ->public()
         ->parent('sylius.behat.symfony_page');
 
-    $services->set(\Tests\Sylius\InvoicingPlugin\Behat\Page\Shop\Order\ShowPageInterface::class, \Tests\Sylius\InvoicingPlugin\Behat\Page\Shop\Order\ShowPage::class)
+    $services->set(ShopOrderShowPageInterface::class, ShopOrderShowPage::class)
         ->public()
         ->parent('sylius.behat.symfony_page');
 };

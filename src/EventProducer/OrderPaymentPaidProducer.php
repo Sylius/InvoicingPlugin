@@ -48,7 +48,7 @@ final class OrderPaymentPaidProducer
 
     private function shouldEventBeDispatched(PaymentInterface $payment): bool
     {
-        /** @var OrderInterface $order */
+        /** @var OrderInterface|null $order */
         $order = $payment->getOrder();
 
         return null !== $order && null !== $this->invoiceRepository->findOneByOrder($order);

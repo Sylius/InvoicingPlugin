@@ -29,7 +29,7 @@ final class InvoicingAllowedFilesOptionsProcessor implements OptionsProcessorInt
     /** @param AbstractGenerator $generator */
     public function process(object $generator, string $context = 'default'): void
     {
-        $defaultAllowedFiles = $generator->getOptions()['allow'] ?? [];
+        $defaultAllowedFiles = (array) ($generator->getOptions()['allow'] ?? []);
 
         if ([] === $this->allowedFiles && [] === $defaultAllowedFiles) {
             return;
