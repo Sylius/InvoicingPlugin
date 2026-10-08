@@ -27,16 +27,24 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                php: ["8.2", "8.3"]
-                symfony: ["^6.4", "~7.4.0"]
-                sylius: ["~2.1.0", "~2.2.0"]
-                node: ["22.x"]
+                php: ["8.3", "8.4"]
+                symfony: ["^6.4", "~7.4.0", "^8.0"]
+                sylius: ["~2.2.0", "~2.3.0"]
+                node: ["24.x"]
                 database: ["mysql"]
                 database_version: ["8.4"]
                 wkhtmltopdf: ["0.12.6.1-2"]
                 state_machine_adapter: ["symfony_workflow"]
                 legacy_pdf_generation: [true, false]
-                composer_minimum_stability: [""]
+
+                exclude:
+                    -
+                        php: "8.3"
+                        symfony: "^8.0"
+
+                    -
+                        sylius: "~2.2.0"
+                        symfony: "^8.0"
 
                 include:
                     -
@@ -49,7 +57,6 @@ jobs:
                         wkhtmltopdf: "0.12.6.1-2"
                         state_machine_adapter: "winzou_state_machine"
                         legacy_pdf_generation: true
-                        composer_minimum_stability: ""
 
                     -
                         php: "8.3"
@@ -61,7 +68,6 @@ jobs:
                         wkhtmltopdf: "0.12.6.1-2"
                         state_machine_adapter: "winzou_state_machine"
                         legacy_pdf_generation: false
-                        composer_minimum_stability: ""
 
                     -
                         php: "8.3"
@@ -73,7 +79,6 @@ jobs:
                         wkhtmltopdf: false
                         state_machine_adapter: "symfony_workflow"
                         legacy_pdf_generation: true
-                        composer_minimum_stability: ""
 
                     -
                         php: "8.3"
@@ -85,7 +90,6 @@ jobs:
                         wkhtmltopdf: false
                         state_machine_adapter: "symfony_workflow"
                         legacy_pdf_generation: false
-                        composer_minimum_stability: ""
 
                     -
                         php: "8.3"
@@ -97,7 +101,6 @@ jobs:
                         wkhtmltopdf: "0.12.6.1-2"
                         state_machine_adapter: "symfony_workflow"
                         legacy_pdf_generation: true
-                        composer_minimum_stability: ""
 
                     -
                         php: "8.3"
@@ -109,31 +112,6 @@ jobs:
                         wkhtmltopdf: "0.12.6.1-2"
                         state_machine_adapter: "symfony_workflow"
                         legacy_pdf_generation: false
-                        composer_minimum_stability: ""
-
-                    -
-                        php: "8.4"
-                        symfony: "^8.0"
-                        sylius: "~2.3.0"
-                        node: "24.x"
-                        database: "mysql"
-                        database_version: "8.4"
-                        wkhtmltopdf: "0.12.6.1-2"
-                        state_machine_adapter: "symfony_workflow"
-                        legacy_pdf_generation: true
-                        composer_minimum_stability: "alpha"
-
-                    -
-                        php: "8.4"
-                        symfony: "^8.0"
-                        sylius: "~2.3.0"
-                        node: "24.x"
-                        database: "mysql"
-                        database_version: "8.4"
-                        wkhtmltopdf: false
-                        state_machine_adapter: "symfony_workflow"
-                        legacy_pdf_generation: false
-                        composer_minimum_stability: "alpha"
 
         env:
             APP_ENV: test
@@ -141,7 +119,6 @@ jobs:
             TEST_SYLIUS_STATE_MACHINE_ADAPTER: "${{ matrix.state_machine_adapter }}"
             TEST_SYLIUS_INVOICING_PDF_GENERATION_DISABLED: ${{ matrix.wkhtmltopdf == false }}
             TEST_SYLIUS_INVOICING_PDF_LEGACY: "${{ matrix.legacy_pdf_generation }}"
-            TEST_SYLIUS_INVOICING_BEHAT_ENABLED: ${{ matrix.sylius != '~2.3.0' }}
 
         steps:
             -
@@ -177,14 +154,6 @@ jobs:
                     composer require winzou/state-machine-bundle:^0.6 --no-update
 
             -
-                name: Point sylius/test-application at the Sylius 2.3 prep fork, drop the Behat toolchain
-                if: matrix.sylius == '~2.3.0'
-                run: |
-                    composer config repositories.sylius-test-application-fork vcs https://github.com/rust-le/TestApplication.git
-                    composer require sylius/test-application:dev-sylius-2.3-symfony-8 --no-update --no-scripts --no-interaction
-                    composer remove behat/behat behat/mink dmore/behat-chrome-extension dmore/chrome-mink-driver friends-of-behat/mink-browserkit-driver friends-of-behat/mink-debug-extension friends-of-behat/mink-extension friends-of-behat/page-object-extension friends-of-behat/suite-settings-extension friends-of-behat/symfony-extension friends-of-behat/variadic-extension --dev --no-update --no-interaction
-
-            -
                 name: Build Sylius Test Application
                 uses: SyliusLabs/BuildTestAppAction@v3.2.0
                 with:
@@ -197,7 +166,6 @@ jobs:
                     php_version: "${{ matrix.php }}"
                     sylius_version: "${{ matrix.sylius }}"
                     symfony_version: "${{ matrix.symfony }}"
-                    composer_minimum_stability: "${{ matrix.composer_minimum_stability }}"
                     composer_prefer_stable: "yes"
 
             -
@@ -214,7 +182,6 @@ jobs:
 
             -
                 name: Run Behat
-                if: matrix.sylius != '~2.3.0'
                 run: |
                     if [ "${{ matrix.wkhtmltopdf }}" != "false" ]; then
                       vendor/bin/behat --colors --strict -vvv --no-interaction -f progress --tags="~@pdf_disabled" || vendor/bin/behat --colors --strict -vvv --no-interaction -f progress --tags="~@pdf_disabled" --rerun
