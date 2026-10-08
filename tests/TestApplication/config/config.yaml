@@ -5,3 +5,9 @@ imports:
 twig:
     paths:
         '%kernel.project_dir%/../../../tests/TestApplication/templates': ~
+
+knp_snappy:
+    pdf:
+        enabled: true
+        binary: '%env(resolve:WKHTMLTOPDF_PATH)%'
+        options: []
