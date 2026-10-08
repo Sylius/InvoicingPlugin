@@ -108,4 +108,11 @@ final class InvoiceTest extends TestCase
         $this->assertSame($this->channel, $this->invoice->channel());
         $this->assertSame($this->shopBillingData, $this->invoice->shopBillingData());
     }
+
+    #[Test]
+    public function it_stores_issued_at_as_mutable_date_time(): void
+    {
+        self::assertInstanceOf(\DateTime::class, $this->invoice->issuedAt());
+        self::assertSame($this->issuedAt->format(\DATE_ATOM), $this->invoice->issuedAt()->format(\DATE_ATOM));
+    }
 }

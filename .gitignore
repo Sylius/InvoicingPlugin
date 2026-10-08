@@ -11,3 +11,7 @@
 
 /tests/TestApplication/.env.local
 /tests/TestApplication/.env.*.local
+
+###> docker ###
+docker-compose.override.yml
+###< docker ###

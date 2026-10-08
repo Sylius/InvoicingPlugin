@@ -37,7 +37,7 @@ class Invoice implements InvoiceInterface
         protected string $paymentState,
         protected InvoiceShopBillingDataInterface $shopBillingData,
     ) {
-        $this->issuedAt = clone $issuedAt;
+        $this->issuedAt = \DateTime::createFromInterface($issuedAt);
 
         /** @var LineItemInterface $lineItem */
         foreach ($this->lineItems as $lineItem) {
