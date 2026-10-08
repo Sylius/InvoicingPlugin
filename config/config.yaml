@@ -131,6 +131,13 @@ knp_gaufrette:
         sylius_invoicing_invoice:
             adapter: "%sylius_invoicing.filesystem_adapter.invoice%"
 
+flysystem:
+    storages:
+        sylius_invoicing.storage.invoice:
+            adapter: "local"
+            options:
+                directory: "%sylius_invoicing.invoice_save_path%"
+
 sylius_fixtures:
     suites:
         default:
