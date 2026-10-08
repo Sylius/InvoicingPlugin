@@ -12,6 +12,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "knplabs/knp-gaufrette-bundle": "^0.9 || ^1.0",
         "knplabs/knp-snappy-bundle": "^1.10",
         "ramsey/uuid": "^4.7",
         "sylius/grid-bundle": "^1.13",
