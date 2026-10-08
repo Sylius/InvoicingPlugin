@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Tests\Sylius\InvoicingPlugin\Behat\Context\Order;
 
 use Behat\Behat\Context\Context;
+use Behat\Step\When;
 use Doctrine\Persistence\ObjectManager;
 use Sylius\Abstraction\StateMachine\StateMachineInterface;
 use Sylius\Component\Core\Model\OrderInterface;
@@ -25,9 +26,7 @@ final class OrderContext implements Context
     {
     }
 
-    /**
-     * @When the order :order has just been paid
-     */
+    #[When('the order :order has just been paid')]
     public function orderHasJustBeenPaid(OrderInterface $order): void
     {
         $this->applyPaymentTransitionOnOrder($order, PaymentTransitions::TRANSITION_COMPLETE);

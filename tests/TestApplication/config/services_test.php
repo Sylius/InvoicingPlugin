@@ -7,8 +7,9 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 return function (ContainerConfigurator $container) {
     $env = $_ENV['APP_ENV'] ?? 'dev';
 
-    if (str_starts_with($env, 'test') && filter_var(getenv('TEST_SYLIUS_INVOICING_BEHAT_ENABLED') ?: 'true', FILTER_VALIDATE_BOOLEAN)) {
-        $container->import('../../../vendor/sylius/sylius/src/Sylius/Behat/Resources/config/services.xml');
+    if (str_starts_with($env, 'test')) {
+        $syliusBehatServices = '../../../vendor/sylius/sylius/src/Sylius/Behat/Resources/config/services';
+        $container->import(is_file(__DIR__ . '/' . $syliusBehatServices . '.php') ? $syliusBehatServices . '.php' : $syliusBehatServices . '.xml');
         $container->import('@SyliusInvoicingPlugin/tests/Behat/Resources/services.php');
     }
 

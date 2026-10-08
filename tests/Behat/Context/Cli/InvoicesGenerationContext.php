@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Tests\Sylius\InvoicingPlugin\Behat\Context\Cli;
 
 use Behat\Behat\Context\Context;
+use Behat\Step\Given;
 use Sylius\Component\Core\Repository\OrderRepositoryInterface;
 use Sylius\InvoicingPlugin\Cli\GenerateInvoicesCommand;
 use Sylius\InvoicingPlugin\Creator\MassInvoicesCreatorInterface;
@@ -45,9 +46,7 @@ final class InvoicesGenerationContext implements Context
         $this->orderRepository = $orderRepository;
     }
 
-    /**
-     * @Given I generate invoices for previously placed orders
-     */
+    #[Given('I generate invoices for previously placed orders')]
     public function generateInvoicesForPreviouslyPlacedOrders(): void
     {
         /** @var Application $application */

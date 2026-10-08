@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Tests\Sylius\InvoicingPlugin\Behat\Context\Application;
 
 use Behat\Behat\Context\Context;
+use Behat\Step\Then;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\InvoicingPlugin\Doctrine\ORM\InvoiceRepositoryInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
@@ -31,9 +32,7 @@ final class ManagingInvoicesContext implements Context
         $this->invoiceRepository = $invoiceRepository;
     }
 
-    /**
-     * @Then the invoice for order :order should be saved on the server
-     */
+    #[Then('the invoice for order :order should be saved on the server')]
     public function theInvoiceForOrderShouldBeSavedOnTheServer(OrderInterface $order): void
     {
         /** @var InvoiceInterface $invoice */

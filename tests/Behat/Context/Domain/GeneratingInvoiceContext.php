@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Tests\Sylius\InvoicingPlugin\Behat\Context\Domain;
 
 use Behat\Behat\Context\Context;
+use Behat\Step\Given;
 use Doctrine\Persistence\ObjectManager;
 use Sylius\InvoicingPlugin\Doctrine\ORM\InvoiceRepositoryInterface;
 
@@ -29,9 +30,7 @@ final class GeneratingInvoiceContext implements Context
         $this->invoiceRepository = $invoiceRepository;
     }
 
-    /**
-     * @Given the order :orderNumber has lost all of its invoices
-     */
+    #[Given('the order :orderNumber has lost all of its invoices')]
     public function orderHasLostAllOfItsInvoices(string $orderNumber): void
     {
         $invoice = $this->invoiceRepository->findByOrderNumber($orderNumber)[0];
@@ -39,9 +38,7 @@ final class GeneratingInvoiceContext implements Context
         $this->invoiceManager->remove($invoice);
     }
 
-    /**
-     * @Given all invoices have been deleted
-     */
+    #[Given('all invoices have been deleted')]
     public function allInvoicesHaveBeenDeleted(): void
     {
         $invoices = $this->invoiceRepository->findAll();

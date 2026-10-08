@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Tests\Sylius\InvoicingPlugin\Behat\Context\Hook;
 
 use Behat\Behat\Context\Context;
+use Behat\Hook\BeforeScenario;
 
 final class InvoicesContext implements Context
 {
@@ -21,9 +22,7 @@ final class InvoicesContext implements Context
     {
     }
 
-    /**
-     * @BeforeScenario
-     */
+    #[BeforeScenario]
     public function clearInvoicesPath(): void
     {
         if (!is_dir($this->invoicesSavePath)) {

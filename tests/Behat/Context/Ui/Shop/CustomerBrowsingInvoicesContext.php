@@ -14,6 +14,8 @@ declare(strict_types=1);
 namespace Tests\Sylius\InvoicingPlugin\Behat\Context\Ui\Shop;
 
 use Behat\Behat\Context\Context;
+use Behat\Step\Then;
+use Behat\Step\When;
 use Sylius\InvoicingPlugin\Doctrine\ORM\InvoiceRepositoryInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Tests\Sylius\InvoicingPlugin\Behat\Page\Shop\Order\DownloadInvoicePageInterface;
@@ -38,25 +40,19 @@ final class CustomerBrowsingInvoicesContext implements Context
         $this->invoiceRepository = $invoiceRepository;
     }
 
-    /**
-     * @When I download the first invoice
-     */
+    #[When('I download the first invoice')]
     public function downloadFirstInvoice(): void
     {
         $this->orderShowPage->downloadFirstInvoice();
     }
 
-    /**
-     * @Then the pdf file for this invoice should be downloaded successfully
-     */
+    #[Then('the pdf file for this invoice should be downloaded successfully')]
     public function pdfFileForThisInvoiceShouldBeDownloadedSuccessfully(): void
     {
         Assert::true($this->orderShowPage->isPdfFileDownloaded());
     }
 
-    /**
-     * @When I try to download the invoice for the order :orderNumber
-     */
+    #[When('I try to download the invoice for the order :orderNumber')]
     public function tryToDownloadInvoiceForOrder(string $orderNumber): void
     {
         /** @var InvoiceInterface $invoice */
@@ -65,9 +61,7 @@ final class CustomerBrowsingInvoicesContext implements Context
         $this->downloadInvoicePage->tryToOpen(['id' => $invoice->id()]);
     }
 
-    /**
-     * @Then the invoice for the order :orderNumber should not be downloaded
-     */
+    #[Then('the invoice for the order :orderNumber should not be downloaded')]
     public function invoiceForOrderShouldNotBeDownloaded(string $orderNumber): void
     {
         /** @var InvoiceInterface $invoice */
@@ -76,9 +70,7 @@ final class CustomerBrowsingInvoicesContext implements Context
         Assert::false($this->downloadInvoicePage->isOpen(['id' => $invoice->id()]));
     }
 
-    /**
-     * @Then I should not be able to download the first invoice
-     */
+    #[Then('I should not be able to download the first invoice')]
     public function iShouldNotBeAbleToDownloadTheFirstInvoice(): void
     {
         Assert::false($this->orderShowPage->hasDownloadButtonForInvoice());
