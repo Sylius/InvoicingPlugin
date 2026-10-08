@@ -142,11 +142,6 @@ jobs:
                     sudo dpkg -i wkhtmltox_${{ matrix.wkhtmltopdf }}.jammy_amd64.deb
 
             -
-                name: Ensure wkhtmltopdf is executable
-                if: matrix.wkhtmltopdf != false
-                run: chmod +x /usr/local/bin/wkhtmltopdf
-
-            -
                 name: Require Winzou State Machine
                 if: "${{ matrix.state_machine_adapter == 'winzou_state_machine' }}"
                 run: |
