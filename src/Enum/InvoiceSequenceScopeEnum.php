@@ -11,9 +11,11 @@
 
 declare(strict_types=1);
 
-namespace Sylius\InvoicingPlugin\Generator;
+namespace Sylius\InvoicingPlugin\Enum;
 
-interface InvoiceFileNameGeneratorInterface
+enum InvoiceSequenceScopeEnum: string
 {
-    public function generateForPdf(string $invoiceNumber): string;
+    case GLOBAL = 'global';
+    case MONTHLY = 'monthly';
+    case ANNUALLY = 'annually';
 }

@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Tests\Sylius\InvoicingPlugin\Unit\Creator;
 
-use Doctrine\ORM\EntityNotFoundException;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -25,11 +24,6 @@ use Sylius\InvoicingPlugin\Doctrine\ORM\InvoiceRepositoryInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Sylius\InvoicingPlugin\Exception\InvoiceAlreadyGenerated;
 use Sylius\InvoicingPlugin\Generator\InvoiceGeneratorInterface;
-use Sylius\InvoicingPlugin\Generator\InvoicePdfFileGeneratorInterface;
-use Sylius\InvoicingPlugin\Manager\InvoiceFileManagerInterface;
-use Sylius\InvoicingPlugin\Model\InvoicePdf;
-use Sylius\PdfGenerationBundle\Core\Filesystem\Manager\PdfFileManagerInterface;
-use Sylius\PdfGenerationBundle\Core\Model\PdfFile;
 
 final class InvoiceCreatorTest extends TestCase
 {
@@ -39,10 +33,6 @@ final class InvoiceCreatorTest extends TestCase
 
     private InvoiceGeneratorInterface&MockObject $invoiceGenerator;
 
-    private InvoicePdfFileGeneratorInterface&MockObject $invoicePdfFileGenerator;
-
-    private InvoiceFileManagerInterface&MockObject $invoiceFileManager;
-
     private InvoiceCreator $creator;
 
     protected function setUp(): void
@@ -51,15 +41,11 @@ final class InvoiceCreatorTest extends TestCase
         $this->invoiceRepository = $this->createMock(InvoiceRepositoryInterface::class);
         $this->orderRepository = $this->createMock(OrderRepositoryInterface::class);
         $this->invoiceGenerator = $this->createMock(InvoiceGeneratorInterface::class);
-        $this->invoicePdfFileGenerator = $this->createMock(InvoicePdfFileGeneratorInterface::class);
-        $this->invoiceFileManager = $this->createMock(InvoiceFileManagerInterface::class);
 
         $this->creator = new InvoiceCreator(
             $this->invoiceRepository,
             $this->orderRepository,
             $this->invoiceGenerator,
-            $this->invoicePdfFileGenerator,
-            $this->invoiceFileManager,
         );
     }
 
@@ -74,7 +60,6 @@ final class InvoiceCreatorTest extends TestCase
     {
         $order = $this->createMock(OrderInterface::class);
         $invoice = $this->createMock(InvoiceInterface::class);
-        $invoicePdf = new InvoicePdf('invoice.pdf', 'CONTENT');
         $invoiceDateTime = new \DateTimeImmutable('2019-02-25');
 
         $this->orderRepository
@@ -94,17 +79,6 @@ final class InvoiceCreatorTest extends TestCase
             ->method('generateForOrder')
             ->with($order, $invoiceDateTime)
             ->willReturn($invoice);
-
-        $this->invoicePdfFileGenerator
-            ->expects(self::once())
-            ->method('generate')
-            ->with($invoice)
-            ->willReturn($invoicePdf);
-
-        $this->invoiceFileManager
-            ->expects(self::once())
-            ->method('save')
-            ->with($invoicePdf);
 
         $this->invoiceRepository
             ->expects(self::once())
@@ -112,229 +86,6 @@ final class InvoiceCreatorTest extends TestCase
             ->with($invoice);
 
         ($this->creator)('0000001', $invoiceDateTime);
-    }
-
-    #[Test]
-    public function it_creates_invoice_without_generating_pdf_file(): void
-    {
-        $creator = new InvoiceCreator(
-            $this->invoiceRepository,
-            $this->orderRepository,
-            $this->invoiceGenerator,
-            $this->invoicePdfFileGenerator,
-            $this->invoiceFileManager,
-            false,
-        );
-
-        $order = $this->createMock(OrderInterface::class);
-        $invoice = $this->createMock(InvoiceInterface::class);
-        $invoiceDateTime = new \DateTimeImmutable('2019-02-25');
-
-        $this->orderRepository
-            ->expects(self::once())
-            ->method('findOneByNumber')
-            ->with('0000001')
-            ->willReturn($order);
-
-        $this->invoiceRepository
-            ->expects(self::once())
-            ->method('findOneByOrder')
-            ->with($order)
-            ->willReturn(null);
-
-        $this->invoiceGenerator
-            ->expects(self::once())
-            ->method('generateForOrder')
-            ->with($order, $invoiceDateTime)
-            ->willReturn($invoice);
-
-        $this->invoicePdfFileGenerator
-            ->expects($this->never())
-            ->method('generate');
-
-        $this->invoiceFileManager
-            ->expects($this->never())
-            ->method('save');
-
-        $this->invoiceRepository
-            ->expects(self::once())
-            ->method('add')
-            ->with($invoice);
-
-        $creator('0000001', $invoiceDateTime);
-    }
-
-    #[Test]
-    public function it_removes_saved_invoice_file_if_database_update_fails(): void
-    {
-        $order = $this->createMock(OrderInterface::class);
-        $invoice = $this->createMock(InvoiceInterface::class);
-        $invoicePdf = new InvoicePdf('invoice.pdf', 'CONTENT');
-        $invoiceDateTime = new \DateTimeImmutable('2019-02-25');
-
-        $this->orderRepository
-            ->expects(self::once())
-            ->method('findOneByNumber')
-            ->with('0000001')
-            ->willReturn($order);
-
-        $this->invoiceRepository
-            ->expects(self::once())
-            ->method('findOneByOrder')
-            ->with($order)
-            ->willReturn(null);
-
-        $this->invoiceGenerator
-            ->expects(self::once())
-            ->method('generateForOrder')
-            ->with($order, $invoiceDateTime)
-            ->willReturn($invoice);
-
-        $this->invoicePdfFileGenerator
-            ->expects(self::once())
-            ->method('generate')
-            ->with($invoice)
-            ->willReturn($invoicePdf);
-
-        $this->invoiceFileManager
-            ->expects(self::once())
-            ->method('save')
-            ->with($invoicePdf);
-
-        $this->invoiceRepository
-            ->expects(self::once())
-            ->method('add')
-            ->with($invoice)
-            ->willThrowException(new EntityNotFoundException());
-
-        $this->invoiceFileManager
-            ->expects(self::once())
-            ->method('remove')
-            ->with($invoicePdf);
-
-        ($this->creator)('0000001', $invoiceDateTime);
-    }
-
-    #[Test]
-    public function it_creates_invoice_for_order_using_pdf_bundle_file_manager(): void
-    {
-        $pdfFileManager = $this->createMock(PdfFileManagerInterface::class);
-
-        $creator = new InvoiceCreator(
-            $this->invoiceRepository,
-            $this->orderRepository,
-            $this->invoiceGenerator,
-            $this->invoicePdfFileGenerator,
-            $pdfFileManager,
-        );
-
-        $order = $this->createMock(OrderInterface::class);
-        $invoice = $this->createMock(InvoiceInterface::class);
-        $invoicePdf = new InvoicePdf('invoice.pdf', 'CONTENT');
-        $invoiceDateTime = new \DateTimeImmutable('2019-02-25');
-
-        $this->orderRepository
-            ->expects(self::once())
-            ->method('findOneByNumber')
-            ->with('0000001')
-            ->willReturn($order);
-
-        $this->invoiceRepository
-            ->expects(self::once())
-            ->method('findOneByOrder')
-            ->with($order)
-            ->willReturn(null);
-
-        $this->invoiceGenerator
-            ->expects(self::once())
-            ->method('generateForOrder')
-            ->with($order, $invoiceDateTime)
-            ->willReturn($invoice);
-
-        $this->invoicePdfFileGenerator
-            ->expects(self::once())
-            ->method('generate')
-            ->with($invoice)
-            ->willReturn($invoicePdf);
-
-        $pdfFileManager
-            ->expects(self::once())
-            ->method('save')
-            ->with(
-                self::callback(fn (PdfFile $file) => $file->filename() === 'invoice.pdf' && $file->content() === 'CONTENT'),
-                'sylius_invoicing',
-            );
-
-        $this->invoiceRepository
-            ->expects(self::once())
-            ->method('add')
-            ->with($invoice);
-
-        $creator('0000001', $invoiceDateTime);
-    }
-
-    #[Test]
-    public function it_removes_saved_invoice_file_using_pdf_bundle_if_database_update_fails(): void
-    {
-        $pdfFileManager = $this->createMock(PdfFileManagerInterface::class);
-
-        $creator = new InvoiceCreator(
-            $this->invoiceRepository,
-            $this->orderRepository,
-            $this->invoiceGenerator,
-            $this->invoicePdfFileGenerator,
-            $pdfFileManager,
-        );
-
-        $order = $this->createMock(OrderInterface::class);
-        $invoice = $this->createMock(InvoiceInterface::class);
-        $invoicePdf = new InvoicePdf('invoice.pdf', 'CONTENT');
-        $invoiceDateTime = new \DateTimeImmutable('2019-02-25');
-
-        $this->orderRepository
-            ->expects(self::once())
-            ->method('findOneByNumber')
-            ->with('0000001')
-            ->willReturn($order);
-
-        $this->invoiceRepository
-            ->expects(self::once())
-            ->method('findOneByOrder')
-            ->with($order)
-            ->willReturn(null);
-
-        $this->invoiceGenerator
-            ->expects(self::once())
-            ->method('generateForOrder')
-            ->with($order, $invoiceDateTime)
-            ->willReturn($invoice);
-
-        $this->invoicePdfFileGenerator
-            ->expects(self::once())
-            ->method('generate')
-            ->with($invoice)
-            ->willReturn($invoicePdf);
-
-        $pdfFileManager
-            ->expects(self::once())
-            ->method('save')
-            ->with(
-                self::callback(fn (PdfFile $file) => $file->filename() === 'invoice.pdf'),
-                'sylius_invoicing',
-            );
-
-        $this->invoiceRepository
-            ->expects(self::once())
-            ->method('add')
-            ->with($invoice)
-            ->willThrowException(new EntityNotFoundException());
-
-        $pdfFileManager
-            ->expects(self::once())
-            ->method('remove')
-            ->with('invoice.pdf', 'sylius_invoicing');
-
-        $creator('0000001', $invoiceDateTime);
     }
 
     #[Test]

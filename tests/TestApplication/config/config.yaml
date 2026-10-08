@@ -2,6 +2,10 @@ imports:
     - { resource: "@SyliusInvoicingPlugin/config/config.yaml" }
     - { resource: "services_test.php" }
 
+knp_snappy:
+    pdf:
+        binary: '%env(WKHTMLTOPDF_PATH)%'
+
 twig:
     paths:
         '%kernel.project_dir%/../../../tests/TestApplication/templates': ~

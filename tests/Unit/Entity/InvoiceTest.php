@@ -78,6 +78,7 @@ final class InvoiceTest extends TestCase
             $this->channel,
             InvoiceInterface::PAYMENT_STATE_COMPLETED,
             $this->shopBillingData,
+            'invoice.pdf',
         );
     }
 
@@ -98,6 +99,7 @@ final class InvoiceTest extends TestCase
     {
         self::assertSame('7903c83a-4c5e-4bcf-81d8-9dc304c6a353', $this->invoice->id());
         self::assertSame('2019/01/000000001', $this->invoice->number());
+        self::assertSame('invoice.pdf', $this->invoice->path());
         self::assertSame($this->order, $this->invoice->order());
         self::assertSame($this->billingData, $this->invoice->billingData());
         self::assertSame('USD', $this->invoice->currencyCode());

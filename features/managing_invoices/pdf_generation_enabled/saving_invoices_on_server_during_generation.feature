@@ -14,10 +14,11 @@ Feature: Saving invoices on server during generation
         And channel "United States" has shop billing data set as "Ragnarok", "1100110011", "Pacific Coast Hwy", "90806" "Los Angeles", "United States"
 
     @application @pdf_enabled
-    Scenario: Having invoice saved on the server after the order is placed
+    Scenario: Having invoice saved on the server once the order is paid
         Given there is a customer "lucy@teamlucifer.com" that placed an order "#00000666"
         When the customer bought 2 "Angel T-Shirt" products
         And the customer "Lucifer Morningstar" addressed it to "Seaside Fwy", "90802" "Los Angeles" in the "United States"
         And for the billing address of "Mazikeen Lilim" in the "Pacific Coast Hwy", "90806" "Los Angeles", "United States"
         And the customer chose "UPS" shipping method with "Cash on Delivery" payment
+        And the order "#00000666" has just been paid
         Then the invoice for order "#00000666" should be saved on the server

@@ -20,6 +20,7 @@ use Sylius\Component\Resource\Factory\FactoryInterface;
 use Sylius\InvoicingPlugin\Entity\BillingDataInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceShopBillingDataInterface;
+use Sylius\InvoicingPlugin\Generator\InvoiceFileNameGeneratorInterface;
 use Webmozart\Assert\Assert;
 
 final class InvoiceFactory implements InvoiceFactoryInterface
@@ -30,6 +31,7 @@ final class InvoiceFactory implements InvoiceFactoryInterface
     public function __construct(
         private readonly string $className,
         private readonly FactoryInterface $invoiceShopBillingDataFactory,
+        private readonly InvoiceFileNameGeneratorInterface $invoiceFileNameGenerator,
     ) {
     }
 
@@ -48,6 +50,8 @@ final class InvoiceFactory implements InvoiceFactoryInterface
         string $paymentState,
         ?InvoiceShopBillingDataInterface $shopBillingData = null,
     ): InvoiceInterface {
+        $fileName = $this->invoiceFileNameGenerator->generateForPdf($number);
+
         /** @var InvoiceInterface $invoice */
         $invoice = new $this->className(
             $id,
@@ -63,6 +67,7 @@ final class InvoiceFactory implements InvoiceFactoryInterface
             $channel,
             $paymentState,
             $shopBillingData ?? $this->invoiceShopBillingDataFactory->createNew(),
+            $fileName,
         );
 
         Assert::isInstanceOf($invoice, InvoiceInterface::class);

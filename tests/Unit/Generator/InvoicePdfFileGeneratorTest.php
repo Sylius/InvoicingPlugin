@@ -18,7 +18,6 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
-use Sylius\InvoicingPlugin\Generator\InvoiceFileNameGeneratorInterface;
 use Sylius\InvoicingPlugin\Generator\InvoicePdfFileGenerator;
 use Sylius\InvoicingPlugin\Generator\InvoicePdfFileGeneratorInterface;
 use Sylius\InvoicingPlugin\Generator\TwigToPdfGeneratorInterface;
@@ -30,15 +29,12 @@ final class InvoicePdfFileGeneratorTest extends TestCase
 {
     private FileLocatorInterface&MockObject $fileLocator;
 
-    private InvoiceFileNameGeneratorInterface&MockObject $invoiceFileNameGenerator;
-
     #[Test]
     public function it_implements_invoice_pdf_file_generator_interface(): void
     {
         $generator = new InvoicePdfFileGenerator(
             $this->createMock(TwigToPdfGeneratorInterface::class),
             $this->createMock(FileLocatorInterface::class),
-            $this->createMock(InvoiceFileNameGeneratorInterface::class),
             'invoiceTemplate.html.twig',
             '@SyliusInvoicingPlugin/assets/sylius-logo.png',
         );
@@ -55,7 +51,6 @@ final class InvoicePdfFileGeneratorTest extends TestCase
         $generator = new InvoicePdfFileGenerator(
             $twigToPdfGenerator,
             $this->fileLocator,
-            $this->invoiceFileNameGenerator,
             'invoiceTemplate.html.twig',
             '@SyliusInvoicingPlugin/assets/sylius-logo.png',
         );
@@ -66,11 +61,10 @@ final class InvoicePdfFileGeneratorTest extends TestCase
         $logoPath = __DIR__ . '/../../../assets/sylius-logo.png';
         $logoDataUri = 'data:image/png;base64,' . base64_encode((string) file_get_contents($logoPath));
 
-        $this->invoiceFileNameGenerator
+        $invoice
             ->expects(self::once())
-            ->method('generateForPdf')
-            ->with($invoice)
-            ->willReturn('2015_05_00004444.pdf');
+            ->method('path')
+            ->willReturn('invoice.pdf');
 
         $invoice->method('channel')->willReturn($channel);
 
@@ -93,7 +87,7 @@ final class InvoicePdfFileGeneratorTest extends TestCase
 
         $result = $generator->generate($invoice);
 
-        $expected = new InvoicePdf('2015_05_00004444.pdf', 'PDF FILE');
+        $expected = new InvoicePdf('invoice.pdf', 'PDF FILE');
 
         self::assertEquals($expected, $result);
     }
@@ -107,7 +101,6 @@ final class InvoicePdfFileGeneratorTest extends TestCase
         $generator = new InvoicePdfFileGenerator(
             $twigToPdfRenderer,
             $this->fileLocator,
-            $this->invoiceFileNameGenerator,
             'invoiceTemplate.html.twig',
             '@SyliusInvoicingPlugin/assets/sylius-logo.png',
         );
@@ -118,10 +111,9 @@ final class InvoicePdfFileGeneratorTest extends TestCase
         $logoPath = __DIR__ . '/../../../assets/sylius-logo.png';
         $logoDataUri = 'data:image/png;base64,' . base64_encode((string) file_get_contents($logoPath));
 
-        $this->invoiceFileNameGenerator
+        $invoice
             ->expects(self::once())
-            ->method('generateForPdf')
-            ->with($invoice)
+            ->method('path')
             ->willReturn('2015_05_00004444.pdf');
 
         $invoice->method('channel')->willReturn($channel);
@@ -157,6 +149,5 @@ final class InvoicePdfFileGeneratorTest extends TestCase
     private function setUpCommonDependencies(): void
     {
         $this->fileLocator = $this->createMock(FileLocatorInterface::class);
-        $this->invoiceFileNameGenerator = $this->createMock(InvoiceFileNameGeneratorInterface::class);
     }
 }

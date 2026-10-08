@@ -18,6 +18,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceSequenceInterface;
+use Sylius\InvoicingPlugin\Enum\InvoiceSequenceScopeEnum;
 use Symfony\Component\Clock\ClockInterface;
 
 final class SequentialInvoiceNumberGenerator implements InvoiceNumberGenerator
@@ -29,6 +30,7 @@ final class SequentialInvoiceNumberGenerator implements InvoiceNumberGenerator
         private readonly ClockInterface $clock,
         private readonly int $startNumber = 1,
         private readonly int $numberLength = 9,
+        private readonly InvoiceSequenceScopeEnum $scope = InvoiceSequenceScopeEnum::GLOBAL,
     ) {
     }
 
@@ -56,15 +58,33 @@ final class SequentialInvoiceNumberGenerator implements InvoiceNumberGenerator
 
     private function getSequence(): InvoiceSequenceInterface
     {
-        /** @var InvoiceSequenceInterface $sequence */
-        $sequence = $this->sequenceRepository->findOneBy([]);
+        $now = $this->clock->now();
 
-        if (null != $sequence) {
+        $criteria = [
+            'type' => $this->scope,
+            'year' => match ($this->scope) {
+                InvoiceSequenceScopeEnum::MONTHLY, InvoiceSequenceScopeEnum::ANNUALLY => (int) $now->format('Y'),
+                InvoiceSequenceScopeEnum::GLOBAL => 0,
+            },
+            'month' => match ($this->scope) {
+                InvoiceSequenceScopeEnum::MONTHLY => (int) $now->format('m'),
+                InvoiceSequenceScopeEnum::ANNUALLY, InvoiceSequenceScopeEnum::GLOBAL => 0,
+            },
+        ];
+
+        /** @var InvoiceSequenceInterface|null $sequence */
+        $sequence = $this->sequenceRepository->findOneBy($criteria);
+
+        if (null !== $sequence) {
             return $sequence;
         }
 
         /** @var InvoiceSequenceInterface $sequence */
         $sequence = $this->sequenceFactory->createNew();
+        $sequence->setType($this->scope);
+        $sequence->setYear($criteria['year']);
+        $sequence->setMonth($criteria['month']);
+
         $this->sequenceManager->persist($sequence);
 
         return $sequence;

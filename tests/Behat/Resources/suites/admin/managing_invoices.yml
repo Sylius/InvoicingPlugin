@@ -99,6 +99,7 @@ default:
                 - sylius.behat.context.transform.zone
                 - sylius.behat.context.transform.shared_storage
 
+                - Tests\Sylius\InvoicingPlugin\Behat\Context\Order\OrderContext
                 - Tests\Sylius\InvoicingPlugin\Behat\Context\Application\ManagingInvoicesContext
 
             filters:
