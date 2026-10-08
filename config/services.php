@@ -11,8 +11,6 @@
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use Gaufrette\Adapter\Local;
-use Gaufrette\Filesystem;
 use Sylius\InvoicingPlugin\CommandHandler\SendInvoiceEmailHandler;
 use Sylius\InvoicingPlugin\Email\InvoiceEmailSender;
 use Sylius\InvoicingPlugin\Email\InvoiceEmailSenderInterface;
@@ -68,12 +66,6 @@ return static function (ContainerConfigurator $container) {
         ]);
 
     $services->alias(InvoiceFactoryInterface::class, 'sylius_invoicing.custom_factory.invoice');
-
-    $services->set('gaufrette.sylius_invoicing_invoice_filesystem', Filesystem::class)
-        ->args([service('sylius_invoicing.gaufrette.adapter.invoice')]);
-
-    $services->set('sylius_invoicing.gaufrette.adapter.invoice', Local::class)
-        ->args(['%sylius_invoicing.invoice_save_path%', true]);
 
     $services->set('sylius_invoicing.manager.invoice_file', InvoiceFileManager::class)
         ->args([service('gaufrette.sylius_invoicing_invoice_filesystem')]);
