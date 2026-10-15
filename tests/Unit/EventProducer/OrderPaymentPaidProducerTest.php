@@ -17,6 +17,7 @@ use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\PaymentInterface;
+use Sylius\Component\Core\OrderPaymentStates;
 use Sylius\InvoicingPlugin\Doctrine\ORM\InvoiceRepositoryInterface;
 use Sylius\InvoicingPlugin\Entity\InvoiceInterface;
 use Sylius\InvoicingPlugin\Event\OrderPaymentPaid;
@@ -42,6 +43,7 @@ final class OrderPaymentPaidProducerTest extends TestCase
 
         $payment->method('getOrder')->willReturn($order);
         $order->method('getNumber')->willReturn('0000001');
+        $order->method('getPaymentState')->willReturn(OrderPaymentStates::STATE_PAID);
         $clock->method('now')->willReturn($dateTime);
         $invoiceRepository->method('findOneByOrder')->with($order)->willReturn($invoice);
 
@@ -83,7 +85,30 @@ final class OrderPaymentPaidProducerTest extends TestCase
 
         $payment->method('getOrder')->willReturn($order);
         $order->method('getNumber')->willReturn('0000001');
+        $order->method('getPaymentState')->willReturn(OrderPaymentStates::STATE_PAID);
         $invoiceRepository->method('findOneByOrder')->with($order)->willReturn(null);
+
+        $eventBus->expects($this->never())->method('dispatch');
+        $clock->expects($this->never())->method('now');
+
+        $producer = new OrderPaymentPaidProducer($eventBus, $clock, $invoiceRepository);
+        $producer($payment);
+    }
+
+    #[Test]
+    public function it_does_not_dispatch_event_when_order_is_only_partially_paid(): void
+    {
+        $eventBus = $this->createMock(MessageBusInterface::class);
+        $clock = $this->createMock(ClockInterface::class);
+        $invoiceRepository = $this->createMock(InvoiceRepositoryInterface::class);
+        $payment = $this->createMock(PaymentInterface::class);
+        $order = $this->createMock(OrderInterface::class);
+        $invoice = $this->createMock(InvoiceInterface::class);
+
+        $payment->method('getOrder')->willReturn($order);
+        $order->method('getNumber')->willReturn('0000001');
+        $order->method('getPaymentState')->willReturn(OrderPaymentStates::STATE_PARTIALLY_PAID);
+        $invoiceRepository->method('findOneByOrder')->with($order)->willReturn($invoice);
 
         $eventBus->expects($this->never())->method('dispatch');
         $clock->expects($this->never())->method('now');
