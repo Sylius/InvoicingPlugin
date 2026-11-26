@@ -72,3 +72,16 @@
    | `Sylius\InvoicingPlugin\Manager\InvoiceFileManager`             | `Sylius\PdfGenerationBundle\Core\Filesystem\Manager\PdfFileManager`          |
 
    The corresponding services (`sylius_invoicing.generator.twig_to_pdf` and `sylius_invoicing.generator.pdf_options`) are also deprecated.
+
+1. `Sylius\InvoicingPlugin\Provider\UnitNetPriceProvider` now accepts a `CalculatorInterface` argument used to compute the
+   tax included in the unit price. Not passing it is deprecated and it will be required in 3.0:
+
+    ```diff
+    public function __construct(
+    +   private ?CalculatorInterface $taxCalculator = null,
+    )
+    ```
+
+   When no calculator is passed, the provider falls back to recalculating the included tax from the full unit price.
+   This replaces the previous behaviour of subtracting the neutral tax adjustment amount directly, which was computed on
+   the discounted (post-promotion) price and therefore produced a net price that diverged from the actual one.
